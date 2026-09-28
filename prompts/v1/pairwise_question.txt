@@ -1,0 +1,1 @@
+Assume the user has the stated intention. Is this utterance a plausible expression of that intention?

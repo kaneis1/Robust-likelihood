@@ -1,0 +1,8 @@
+Utterance:
+<<UTTERANCE>>
+
+Stated intention: <<INTENTION>>
+Intention description: <<INTENTION_DESCRIPTION>>
+
+<<QUESTION>>
+Reply with JSON only. Use plausibility_yes_probability for the probability that the answer is yes.

@@ -1,1 +1,11 @@
 API_key.txt
+Api_key.txt
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+*.egg-info/
+results/
+data/massive/**/*.jsonl
+data/massive/**/*.tar.gz
+data/massive/**/*.jsonl.gz

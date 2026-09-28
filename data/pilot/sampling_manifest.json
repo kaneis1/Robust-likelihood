@@ -1,0 +1,50 @@
+{
+  "config": "en-US",
+  "dataset": "AmazonScience/massive",
+  "dataset_checksum_sha256": "3dcd9a5083c463a73d81c6888ff58deb82e773a5e1360371616e3c8e68b2a03c",
+  "dataset_checksum_verified": true,
+  "dataset_revision": "1.1",
+  "example_ids": [
+    "722",
+    "1721",
+    "3180",
+    "3498",
+    "4929",
+    "650",
+    "1037",
+    "4529",
+    "5120",
+    "6019",
+    "1002",
+    "2878",
+    "3537",
+    "3828",
+    "4970"
+  ],
+  "intents": [
+    "alarm_set",
+    "alarm_query",
+    "alarm_remove"
+  ],
+  "locale": "en-US",
+  "official_test_split": "untouched",
+  "per_intent": 5,
+  "python_version": "3.13.5",
+  "sampler": "For each intent, keep partition train, sort by numeric id, draw Random(seed).sample, then sort the chosen ids.",
+  "schema_transformations": [
+    "original",
+    "paraphrase",
+    "minor_typo",
+    "repetition",
+    "polite_restatement",
+    "meaning_change"
+  ],
+  "seed": 20260927,
+  "split": "train",
+  "transformations_emitted": [
+    "original",
+    "paraphrase",
+    "minor_typo",
+    "repetition"
+  ]
+}

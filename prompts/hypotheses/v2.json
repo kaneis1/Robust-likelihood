@@ -1,0 +1,8 @@
+{
+  "version": "v2",
+  "descriptions": {
+    "alarm_set": "The user is asking for a new alarm to be created.",
+    "alarm_query": "The user is asking for information about alarms that already exist.",
+    "alarm_remove": "The user is asking for an existing alarm to be deleted."
+  }
+}

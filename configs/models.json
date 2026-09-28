@@ -1,0 +1,24 @@
+{
+  "default_comparison": ["jev", "gpt"],
+  "endpoints": {
+    "claude": "https://api.anthropic.com/v1/messages",
+    "gpt": "https://api.openai.com/v1/chat/completions",
+    "jev": "https://api.typesafe.ai/v1/systemone"
+  },
+  "models": {
+    "claude": "claude-sonnet-4-5-20250929",
+    "gpt": "gpt-4.1-2025-04-14",
+    "jev": "jev-1.13.0"
+  },
+  "temperature": {
+    "claude": 0,
+    "gpt": 0
+  },
+  "claude_max_tokens": 512,
+  "timeout_seconds": 60,
+  "max_retries": 2,
+  "retry_backoff_seconds": 1.0,
+  "prompt_version": "v1",
+  "hypothesis_description_version": "v1",
+  "anthropic_version": "2023-06-01"
+}

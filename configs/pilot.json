@@ -1,0 +1,12 @@
+{
+  "dataset": "AmazonScience/massive",
+  "dataset_revision": "1.1",
+  "config": "en-US",
+  "locale": "en-US",
+  "split": "train",
+  "seed": 20260927,
+  "per_intent": 5,
+  "intents": ["alarm_set", "alarm_query", "alarm_remove"],
+  "source_url": "https://amazon-massive-nlu-dataset.s3.amazonaws.com/amazon-massive-dataset-1.1.tar.gz",
+  "archive_member": "1.1/data/en-US.jsonl"
+}

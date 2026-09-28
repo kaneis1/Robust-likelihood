@@ -1,0 +1,10 @@
+Utterance:
+<<UTTERANCE>>
+
+Intentions:
+alarm_set: <<ALARM_SET>>
+alarm_query: <<ALARM_QUERY>>
+alarm_remove: <<ALARM_REMOVE>>
+
+<<QUESTION>>
+Reply with JSON only. Include one probability for each intention and no other keys.
