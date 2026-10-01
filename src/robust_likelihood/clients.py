@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import time
 import urllib.error
 import urllib.request
@@ -150,6 +151,86 @@ def parse_json_object(text: str) -> dict | None:
     return value
 
 
+_NUMBER = re.compile(
+    r"(?<![\d.])(?:(?P<pct>\d{1,3}(?:\.\d+)?)\s*%|(?P<unit>0(?:\.\d+)?|1(?:\.0+)?))(?!\d)"
+)
+_RANGE_PHRASE = re.compile(r"between\s+0(?:\.0+)?\s+and\s+1(?:\.0+)?", re.IGNORECASE)
+
+
+def _probability_token(match: re.Match[str]) -> float | None:
+    if match.group("pct") is not None:
+        value = float(match.group("pct")) / 100.0
+    else:
+        value = float(match.group("unit"))
+    if is_probability(value):
+        return value
+    return None
+
+
+def _probabilities_in(text: str) -> list[float]:
+    cleaned = _RANGE_PHRASE.sub(" ", text)
+    found = []
+    for match in _NUMBER.finditer(cleaned):
+        value = _probability_token(match)
+        if value is not None:
+            found.append(value)
+    return found
+
+
+def extract_json_object(text: str) -> dict | None:
+    """Return a JSON object from the whole reply, or the first object inside it."""
+    direct = parse_json_object(text)
+    if direct is not None:
+        return direct
+    decoder = json.JSONDecoder()
+    for index, char in enumerate(text):
+        if char != "{":
+            continue
+        try:
+            value, _end = decoder.raw_decode(text[index:])
+        except json.JSONDecodeError:
+            continue
+        if isinstance(value, dict):
+            return value
+    return None
+
+
+def parse_yes_probability(text: str) -> float | None:
+    embedded = extract_json_object(text)
+    if embedded is not None and is_probability(embedded.get("plausibility_yes_probability")):
+        return float(embedded["plausibility_yes_probability"])
+    sentences = re.split(r"(?<=[.!?])\s+", text.strip())
+    for sentence in sentences:
+        if "probab" not in sentence.lower():
+            continue
+        found = _probabilities_in(sentence)
+        if found:
+            return found[0]
+    found = _probabilities_in(text)
+    if len(found) == 1:
+        return found[0]
+    return None
+
+
+def parse_intent_distribution(text: str) -> dict[str, float] | None:
+    embedded = extract_json_object(text)
+    parsed = validate_distribution(embedded)
+    if parsed is not None:
+        return parsed
+    scores: dict[str, float] = {}
+    for intent in INTENTS:
+        label = re.compile(rf"{re.escape(intent)}|{re.escape(intent.replace('_', ' '))}", re.IGNORECASE)
+        match = label.search(text)
+        if match is None:
+            return None
+        window = text[match.end(): match.end() + 100]
+        found = _probabilities_in(window)
+        if not found:
+            return None
+        scores[intent] = found[0]
+    return validate_distribution(scores)
+
+
 def parse_experiment_payload(provider: str, task: str, payload: dict) -> tuple[dict | None, str | None]:
     if provider == "jev":
         answers = payload.get("answers")
@@ -180,17 +261,14 @@ def parse_experiment_payload(provider: str, task: str, payload: dict) -> tuple[d
         text = _message_text(payload.get("content"))
     else:
         return None, "unknown provider"
-    parsed_json = parse_json_object(text)
-    if parsed_json is None:
-        return None, "response was not a JSON object"
     if task == "pairwise":
-        value = parsed_json.get("plausibility_yes_probability")
-        if not is_probability(value):
-            return None, "plausibility_yes_probability outside [0, 1]"
-        return {"plausibility_yes_probability": float(value)}, None
-    parsed = validate_distribution(parsed_json)
+        value = parse_yes_probability(text)
+        if value is None:
+            return None, "could not find a yes probability"
+        return {"plausibility_yes_probability": value}, None
+    parsed = parse_intent_distribution(text)
     if parsed is None:
-        return None, "malformed classification distribution"
+        return None, "could not find a classification distribution"
     return {"distribution": parsed}, None
 
 

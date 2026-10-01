@@ -134,6 +134,60 @@ def test_malformed_distribution_is_invalid_and_not_renormalized():
     assert parsed["plausibility_yes_probability"] == 0.5
 
 
+def test_natural_language_answers_are_scored():
+    prompts = load_prompts(repo_root(), "v2")
+    hypotheses = load_hypotheses(repo_root(), "v1")
+    spec = _spec("gpt", "pairwise")
+    rendered = render_prompt(spec, prompts, hypotheses)
+    assert "not JSON" in rendered
+    assert "Reply with JSON only" not in rendered
+    prose = {
+        "model": "gpt-6-astra",
+        "choices": [
+            {
+                "message": {
+                    "content": (
+                        "The utterance asks for a new alarm. "
+                        "The probability that the answer is yes is 0.82."
+                    )
+                }
+            }
+        ],
+    }
+    parsed, error = parse_experiment_payload("gpt", "pairwise", prose)
+    assert error is None
+    assert parsed == {"plausibility_yes_probability": 0.82}
+    fenced = {
+        "model": "claude-fable-5-1",
+        "content": [
+            {
+                "type": "text",
+                "text": '```json\n{"plausibility_yes_probability": 0.05}\n```\n\nThis is a request to set an alarm.',
+            }
+        ],
+    }
+    parsed, error = parse_experiment_payload("claude", "pairwise", fenced)
+    assert error is None
+    assert parsed == {"plausibility_yes_probability": 0.05}
+    classes = {
+        "model": "gpt-6-astra",
+        "choices": [
+            {
+                "message": {
+                    "content": (
+                        "The probability of alarm_set is 0.7. "
+                        "The probability of alarm_query is 0.2. "
+                        "The probability of alarm_remove is 0.1."
+                    )
+                }
+            }
+        ],
+    }
+    parsed, error = parse_experiment_payload("gpt", "classification", classes)
+    assert error is None
+    assert parsed == {"distribution": {"alarm_set": 0.7, "alarm_query": 0.2, "alarm_remove": 0.1}}
+
+
 def test_http_401_is_not_retried_by_the_client_flag():
     spec = _spec("jev", "pairwise")
     transport = Capture({"error": "unauthorized"}, status=401)

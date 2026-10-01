@@ -8,15 +8,15 @@ The first comparison asks Jev and GPT the same yes/no question about each uttera
 
 > Assume the user has the stated intention. Is this utterance a plausible expression of that intention?
 
-Jev answers with a `noul` probability. GPT is asked for the probability of yes. The stored field is `plausibility_yes_probability`. Classification is a separate task: one distribution over `alarm_set`, `alarm_query`, and `alarm_remove`. One pairwise request carries one hypothesis and one utterance.
+Jev answers with a `noul` probability. GPT and Claude are asked the same question in ordinary sentences. The stored field is `plausibility_yes_probability`. Prompt version `v1` is the earlier JSON-only wording. Classification is a separate task: one distribution over `alarm_set`, `alarm_query`, and `alarm_remove`. One pairwise request carries one hypothesis and one utterance.
 
-Claude, a second hypothesis wording, and a token log-probability baseline are in the tree and are not part of the default comparison.
+The default comparison is Jev, GPT, and Claude. A second hypothesis wording and a token log-probability baseline are in the tree and are not part of that comparison.
 
 ## Layout
 
 - `data/massive/` — English MASSIVE, config `en-US`. Raw jsonl is gitignored. `checksum.json` is the dataset fingerprint.
 - `data/pilot/` — 15 training originals, 60 draft inputs, meaning-change controls, the sampling manifest, and the review manifest.
-- `prompts/` — versioned instructions, stored as sent. `prompts/hypotheses/v2.json` is an alternate wording and is not the default.
+- `prompts/` — versioned instructions, stored as sent. `prompts/v2/` asks GPT and Claude in sentences. `prompts/hypotheses/v2.json` is an alternate wording and is not the default.
 - `configs/` — pinned model ids, endpoints, seed, and inference settings.
 - `src/robust_likelihood/` — download, draft preparation, clients, runner, evaluation, and the log-probability module.
 - `results/` — gitignored responses, metrics, and the disagreement list.
@@ -52,19 +52,19 @@ Review `data/pilot/review_manifest.json` before a real comparison. For each appr
 
 ## First comparison
 
-Default models are pinned `jev-1.13.0` and `gpt-4.1-2025-04-14`. The comparison refuses an unpinned Jev id such as `jev-latest`. Connectivity may use an alias and does not start the comparison:
+Default models are pinned `jev-1.13.0`, `gpt-6-astra`, and `claude-fable-5-1`. `jev-latest` currently resolves to `jev-1.13.0`, and the comparison refuses an unpinned Jev id such as `jev-latest`. Connectivity may use an alias and does not start the comparison:
 
 ```powershell
 python -m robust_likelihood connect --models jev --jev-model jev-latest
 ```
 
-Jev is not sent a temperature. GPT and Claude are sent temperature 0 because those APIs accept it. The returned model id is stored beside the requested pin and does not replace the pin.
+Jev is not sent a temperature. GPT-6 Astra accepts only its default temperature, and Claude Fable rejects `temperature`, so neither is sent one. Claude is allowed 16000 output tokens so adaptive thinking can finish before the JSON answer. The returned model id is stored beside the requested pin and does not replace the pin.
 
 Baseline workload, one pair per request, before controls, repeats, and retries:
 
-- Classification: 60 x 2 = 120
-- Pairwise scoring: 60 x 3 x 2 = 360
-- Total: 480
+- Classification: 60 x 3 = 180
+- Pairwise scoring: 60 x 3 x 3 = 540
+- Total: 720
 
 ```powershell
 python -m robust_likelihood run --dry-run

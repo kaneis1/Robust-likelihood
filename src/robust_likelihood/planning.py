@@ -28,16 +28,19 @@ def assert_comparison_pins(model_ids: dict[str, str]) -> None:
 def inference_settings_for(provider: str, config: dict) -> dict:
     if provider == "jev":
         return {}
+    temperature = config.get("temperature", {}).get(provider)
     if provider == "gpt":
-        return {
-            "temperature": config["temperature"]["gpt"],
-            "response_format": {"type": "json_object"},
-        }
+        settings = {}
+        if temperature is not None:
+            settings["temperature"] = temperature
+        if config.get("prompt_version") == "v1":
+            settings["response_format"] = {"type": "json_object"}
+        return settings
     if provider == "claude":
-        return {
-            "temperature": config["temperature"]["claude"],
-            "max_tokens": config["claude_max_tokens"],
-        }
+        settings = {"max_tokens": config["claude_max_tokens"]}
+        if temperature is not None:
+            settings["temperature"] = temperature
+        return settings
     raise KeyError(provider)
 
 

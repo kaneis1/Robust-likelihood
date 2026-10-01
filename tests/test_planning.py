@@ -83,9 +83,15 @@ def test_inference_settings_omit_jev_temperature():
     config = read_json(repo_root() / "configs" / "models.json")
     assert inference_settings_for("jev", config) == {}
     assert "temperature" not in inference_settings_for("jev", config)
-    assert inference_settings_for("gpt", config)["temperature"] == 0
-    assert config["default_comparison"] == ["jev", "gpt"]
-    assert "claude" not in config["default_comparison"]
+    assert "temperature" not in inference_settings_for("gpt", config)
+    assert "temperature" not in inference_settings_for("claude", config)
+    assert inference_settings_for("claude", config)["max_tokens"] == 16000
+    assert config["models"]["jev"] == "jev-1.13.0"
+    assert config["models"]["gpt"] == "gpt-6-astra"
+    assert config["models"]["claude"] == "claude-fable-5-1"
+    assert config["default_comparison"] == ["jev", "gpt", "claude"]
+    assert config["prompt_version"] == "v2"
+    assert "response_format" not in inference_settings_for("gpt", config)
 
 
 def test_prompt_files_and_hypothesis_versions():
