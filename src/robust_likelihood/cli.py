@@ -46,7 +46,12 @@ def main(argv: list[str] | None = None) -> int:
     run_parser.add_argument("--hypothesis-version", default=None)
     run_parser.add_argument("--include-controls", action="store_true")
     run_parser.add_argument("--resume", default=None)
-    run_parser.add_argument("--dataset", choices=["massive", "synthetic"], default="massive")
+    run_parser.add_argument(
+        "--dataset",
+        choices=["massive", "synthetic", "synthetic_v2", "synthetic_families", "toy_likelihood"],
+        default="massive",
+    )
+    run_parser.add_argument("--split", choices=["dev", "holdout", "all"], default=None)
 
     connect_parser = sub.add_parser("connect")
     connect_parser.add_argument("--models", default="jev")
@@ -102,6 +107,7 @@ def _dispatch(args) -> int:
             include_controls=args.include_controls,
             resume=None if args.resume is None else Path(args.resume),
             dataset=args.dataset,
+            split=args.split,
         )
         return 0
     if args.command == "connect":

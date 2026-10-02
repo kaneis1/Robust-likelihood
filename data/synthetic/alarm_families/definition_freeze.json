@@ -1,0 +1,10 @@
+{
+  "files": {
+    "prompts/hypotheses/synthetic_v2.json": "98479f3a655d18f69aff0e6dca8b9b22a6daedbbf6e90e548ea7f34fc5232f46",
+    "prompts/v2/chat_classification.txt": "ff2382ad84865bc84d8ab2858b61d12c9dd58e5efcb6b58b515a016e607f1db6",
+    "prompts/v2/chat_pairwise.txt": "9602a02476db2f638f2053348cbb1359437d22fc959fc2e8c0eaa3e6147cadab",
+    "prompts/v2/classification_question.txt": "62f9d6c73feddd88da516c600f77ca4563329002825fe21effae2cc8677cb5ea",
+    "prompts/v2/pairwise_question.txt": "c3bd03dcae7d605715b999de4b48a35a1bd666f118cc07eea4db8312c5dced43"
+  },
+  "frozen_before_development_run": true
+}

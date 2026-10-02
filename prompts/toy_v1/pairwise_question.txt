@@ -1,0 +1,1 @@
+Using only the rules in the utterance, will the toy system emit the stated sentence when the hidden intention is the stated one? The yes probability is the emission probability given by those rules.

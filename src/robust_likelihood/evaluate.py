@@ -565,6 +565,18 @@ def write_evaluation(run_dir) -> dict:
         from robust_likelihood.synthetic import evaluate_synthetic_records
 
         metrics, disagreements = evaluate_synthetic_records(records, manifest.get("items") or [])
+    elif manifest.get("dataset") == "synthetic_alarm_v2":
+        from robust_likelihood.synthetic_v2 import evaluate_synthetic_v2_records
+
+        metrics, disagreements = evaluate_synthetic_v2_records(records, manifest.get("items") or [])
+    elif manifest.get("dataset") == "synthetic_alarm_families":
+        from robust_likelihood.synthetic_families import evaluate_family_records
+
+        metrics, disagreements = evaluate_family_records(records, manifest.get("items") or [])
+    elif manifest.get("dataset") == "toy_likelihood":
+        from robust_likelihood.toy_likelihood import evaluate_toy_records
+
+        metrics, disagreements = evaluate_toy_records(records, manifest.get("items") or [])
     else:
         metrics, disagreements = evaluate_records(records)
     if manifest_path.is_file():

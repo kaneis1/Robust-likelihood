@@ -1,0 +1,108 @@
+{
+  "dataset_version": "toy_likelihood",
+  "evaluation_rule_version": "toy_likelihood_v1",
+  "hypothesis_version": "toy_v1",
+  "instructions": "The probabilities are rules of a toy generator. They are not frequencies from real users. Each row is approved when the sentence and the target table match.",
+  "items": [
+    {
+      "approved": true,
+      "evaluation": "known_likelihood",
+      "example_id": "toy-by_intention-change",
+      "family": "toy_likelihood",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "change",
+      "utt": "Rules:\nA toy system has exactly one hidden intention, which is Create, Disable, or Query. It then emits exactly one of three sentences. These probabilities are defined rules of the toy system, not estimates from real users. If the intention is Create, it emits 'Please change my alarm' with probability 0.60, 'Please stop my alarm' with probability 0.10, and 'Please check my alarm' with probability 0.30. If the intention is Disable, it emits 'Please change my alarm' with probability 0.30, 'Please stop my alarm' with probability 0.60, and 'Please check my alarm' with probability 0.10. If the intention is Query, it emits 'Please change my alarm' with probability 0.10, 'Please stop my alarm' with probability 0.30, and 'Please check my alarm' with probability 0.60.\n\nEmitted sentence:\nPlease change my alarm"
+    },
+    {
+      "approved": true,
+      "evaluation": "known_likelihood",
+      "example_id": "toy-by_intention-stop",
+      "family": "toy_likelihood",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "stop",
+      "utt": "Rules:\nA toy system has exactly one hidden intention, which is Create, Disable, or Query. It then emits exactly one of three sentences. These probabilities are defined rules of the toy system, not estimates from real users. If the intention is Create, it emits 'Please change my alarm' with probability 0.60, 'Please stop my alarm' with probability 0.10, and 'Please check my alarm' with probability 0.30. If the intention is Disable, it emits 'Please change my alarm' with probability 0.30, 'Please stop my alarm' with probability 0.60, and 'Please check my alarm' with probability 0.10. If the intention is Query, it emits 'Please change my alarm' with probability 0.10, 'Please stop my alarm' with probability 0.30, and 'Please check my alarm' with probability 0.60.\n\nEmitted sentence:\nPlease stop my alarm"
+    },
+    {
+      "approved": true,
+      "evaluation": "known_likelihood",
+      "example_id": "toy-by_intention-check",
+      "family": "toy_likelihood",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "check",
+      "utt": "Rules:\nA toy system has exactly one hidden intention, which is Create, Disable, or Query. It then emits exactly one of three sentences. These probabilities are defined rules of the toy system, not estimates from real users. If the intention is Create, it emits 'Please change my alarm' with probability 0.60, 'Please stop my alarm' with probability 0.10, and 'Please check my alarm' with probability 0.30. If the intention is Disable, it emits 'Please change my alarm' with probability 0.30, 'Please stop my alarm' with probability 0.60, and 'Please check my alarm' with probability 0.10. If the intention is Query, it emits 'Please change my alarm' with probability 0.10, 'Please stop my alarm' with probability 0.30, and 'Please check my alarm' with probability 0.60.\n\nEmitted sentence:\nPlease check my alarm"
+    },
+    {
+      "approved": true,
+      "evaluation": "known_likelihood",
+      "example_id": "toy-by_sentence-change",
+      "family": "toy_likelihood",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "change",
+      "utt": "Rules:\nA toy system emits exactly one sentence, and the hidden intention is exactly one of Create, Disable, or Query. These are defined rules, not frequencies from real users. The sentence 'Please change my alarm' is emitted with probability 0.60 when the intention is Create, 0.30 when the intention is Disable, and 0.10 when the intention is Query. The sentence 'Please stop my alarm' is emitted with probability 0.10 when the intention is Create, 0.60 when the intention is Disable, and 0.30 when the intention is Query. The sentence 'Please check my alarm' is emitted with probability 0.30 when the intention is Create, 0.10 when the intention is Disable, and 0.60 when the intention is Query.\n\nEmitted sentence:\nPlease change my alarm"
+    },
+    {
+      "approved": true,
+      "evaluation": "known_likelihood",
+      "example_id": "toy-by_sentence-stop",
+      "family": "toy_likelihood",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "stop",
+      "utt": "Rules:\nA toy system emits exactly one sentence, and the hidden intention is exactly one of Create, Disable, or Query. These are defined rules, not frequencies from real users. The sentence 'Please change my alarm' is emitted with probability 0.60 when the intention is Create, 0.30 when the intention is Disable, and 0.10 when the intention is Query. The sentence 'Please stop my alarm' is emitted with probability 0.10 when the intention is Create, 0.60 when the intention is Disable, and 0.30 when the intention is Query. The sentence 'Please check my alarm' is emitted with probability 0.30 when the intention is Create, 0.10 when the intention is Disable, and 0.60 when the intention is Query.\n\nEmitted sentence:\nPlease stop my alarm"
+    },
+    {
+      "approved": true,
+      "evaluation": "known_likelihood",
+      "example_id": "toy-by_sentence-check",
+      "family": "toy_likelihood",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "check",
+      "utt": "Rules:\nA toy system emits exactly one sentence, and the hidden intention is exactly one of Create, Disable, or Query. These are defined rules, not frequencies from real users. The sentence 'Please change my alarm' is emitted with probability 0.60 when the intention is Create, 0.30 when the intention is Disable, and 0.10 when the intention is Query. The sentence 'Please stop my alarm' is emitted with probability 0.10 when the intention is Create, 0.60 when the intention is Disable, and 0.30 when the intention is Query. The sentence 'Please check my alarm' is emitted with probability 0.30 when the intention is Create, 0.10 when the intention is Disable, and 0.60 when the intention is Query.\n\nEmitted sentence:\nPlease check my alarm"
+    },
+    {
+      "approved": true,
+      "evaluation": "known_likelihood",
+      "example_id": "toy-intention_reversed-change",
+      "family": "toy_likelihood",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "change",
+      "utt": "Rules:\nThese rules define a toy system. They are not claims about real users. The system has one hidden intention and emits one sentence. When the intention is Query, the emission probabilities are 0.10 for 'Please change my alarm', 0.30 for 'Please stop my alarm', and 0.60 for 'Please check my alarm'. When the intention is Disable, the emission probabilities are 0.30 for 'Please change my alarm', 0.60 for 'Please stop my alarm', and 0.10 for 'Please check my alarm'. When the intention is Create, the emission probabilities are 0.60 for 'Please change my alarm', 0.10 for 'Please stop my alarm', and 0.30 for 'Please check my alarm'.\n\nEmitted sentence:\nPlease change my alarm"
+    },
+    {
+      "approved": true,
+      "evaluation": "known_likelihood",
+      "example_id": "toy-intention_reversed-stop",
+      "family": "toy_likelihood",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "stop",
+      "utt": "Rules:\nThese rules define a toy system. They are not claims about real users. The system has one hidden intention and emits one sentence. When the intention is Query, the emission probabilities are 0.10 for 'Please change my alarm', 0.30 for 'Please stop my alarm', and 0.60 for 'Please check my alarm'. When the intention is Disable, the emission probabilities are 0.30 for 'Please change my alarm', 0.60 for 'Please stop my alarm', and 0.10 for 'Please check my alarm'. When the intention is Create, the emission probabilities are 0.60 for 'Please change my alarm', 0.10 for 'Please stop my alarm', and 0.30 for 'Please check my alarm'.\n\nEmitted sentence:\nPlease stop my alarm"
+    },
+    {
+      "approved": true,
+      "evaluation": "known_likelihood",
+      "example_id": "toy-intention_reversed-check",
+      "family": "toy_likelihood",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "check",
+      "utt": "Rules:\nThese rules define a toy system. They are not claims about real users. The system has one hidden intention and emits one sentence. When the intention is Query, the emission probabilities are 0.10 for 'Please change my alarm', 0.30 for 'Please stop my alarm', and 0.60 for 'Please check my alarm'. When the intention is Disable, the emission probabilities are 0.30 for 'Please change my alarm', 0.60 for 'Please stop my alarm', and 0.10 for 'Please check my alarm'. When the intention is Create, the emission probabilities are 0.60 for 'Please change my alarm', 0.10 for 'Please stop my alarm', and 0.30 for 'Please check my alarm'.\n\nEmitted sentence:\nPlease check my alarm"
+    }
+  ],
+  "prompt_version": "toy_v1"
+}

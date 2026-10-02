@@ -1,0 +1,33 @@
+{
+  "version": "synthetic_v2",
+  "kind": "synthetic_alarm",
+  "prompt_version": "v2",
+  "dataset_version": "synthetic_alarm_v2",
+  "evaluation_rule_version": "synthetic_eval_v2",
+  "intention_order": [
+    "intend_create",
+    "intend_enable",
+    "intend_disable",
+    "intend_delete",
+    "intend_query"
+  ],
+  "descriptions": {
+    "intend_create": "The user is currently requesting that a new alarm be created. A polite question that asks for this operation, such as 'Could you ...?', is still that request. This is an alarm-changing operation.",
+    "intend_enable": "The user is currently requesting that an existing alarm be turned on. A polite question that asks for this operation is still that request. This is an alarm-changing operation.",
+    "intend_disable": "The user is currently requesting that an existing alarm be turned off while the saved alarm is kept. Under this task's convention, 'turn off' is this request. 'Cancel' is this request only when the utterance says the alarm is kept. A polite question that asks for this operation is still that request.",
+    "intend_delete": "The user is currently requesting that an existing alarm be deleted entirely. 'Cancel' is this request only when the utterance says the saved alarm is deleted. A polite question that asks for this operation is still that request.",
+    "intend_query": "The user is currently requesting information about an alarm or about previous alarm instructions, and is not issuing an alarm-changing operation. Asking whether an instruction was said earlier is this request. A polite question that asks the assistant to create, enable, disable, or delete an alarm is not this request."
+  },
+  "state_questions": {
+    "alarm_is_enabled": "The named alarm is currently enabled.",
+    "alarm_exists": "The named alarm currently exists."
+  },
+  "conventions": {
+    "create": "Create a new alarm.",
+    "enable": "Enable an existing alarm.",
+    "disable": "Disable an alarm while keeping it saved. 'Turn off my alarm' uses this convention.",
+    "delete": "Delete an alarm entirely.",
+    "cancel": "Ambiguous unless the utterance specifies disabling or deletion. A bare cancel sentence is an ambiguity probe and is not scored.",
+    "currently_requesting": "The user is issuing the operation in this utterance. Quoting it, asking whether it was said, or prohibiting it is not issuing it. A polite question that asks for the operation is issuing it."
+  }
+}

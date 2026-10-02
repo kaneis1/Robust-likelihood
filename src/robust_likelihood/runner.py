@@ -19,6 +19,13 @@ from robust_likelihood.planning import (
     summarize_plan,
 )
 from robust_likelihood.synthetic import build_synthetic_plan, load_synthetic
+from robust_likelihood.synthetic_families import (
+    build_family_plan,
+    load_synthetic_families,
+    select_split,
+)
+from robust_likelihood.synthetic_v2 import build_synthetic_v2_plan, load_synthetic_v2
+from robust_likelihood.toy_likelihood import build_toy_plan, load_toy_likelihood
 from robust_likelihood.prompting import load_hypotheses, load_prompts
 from robust_likelihood.storage import append_jsonl, read_json, read_jsonl, write_json
 
@@ -128,6 +135,7 @@ def execute(
     sleeper,
     success_cache: dict[str, dict],
     skip_keys: set[str],
+    on_record=None,
 ) -> dict:
     new_records = []
     http_calls = 0
@@ -150,7 +158,20 @@ def execute(
             copied = dict(cached)
             copied["cache_hit"] = True
             copied["latency_ms"] = None
+            copied["example_id"] = spec.example_id
+            copied["original_example_id"] = spec.original_example_id
+            copied["transformation"] = spec.transformation
+            copied["family"] = spec.family
+            copied["pair_id"] = spec.pair_id
+            copied["role"] = spec.role
+            copied["dataset"] = spec.dataset
+            copied["massive_lump_label"] = spec.massive_lump_label
+            copied["intent"] = spec.intent
+            copied["original_intent"] = spec.original_intent
+            copied["label_changed"] = spec.label_changed
             new_records.append(copied)
+            if on_record is not None:
+                on_record(copied)
             cache_hits += 1
             continue
         for attempt in range(max_retries + 1):
@@ -160,7 +181,10 @@ def execute(
             if attempt:
                 sleeper(backoff_seconds * (2 ** (attempt - 1)))
             result = clients[spec.provider].perform(spec, prompts, hypotheses)
-            new_records.append(_record(spec, result, attempt, key, cache_hit=False))
+            record = _record(spec, result, attempt, key, cache_hit=False)
+            new_records.append(record)
+            if on_record is not None:
+                on_record(record)
             if result.status == "success" or not result.retryable:
                 break
         if stopped:
@@ -201,11 +225,15 @@ def run_comparison(
     now: datetime | None = None,
     model_id_overrides: dict[str, str] | None = None,
     dataset: str = "massive",
+    split: str | None = None,
 ) -> dict:
     if max_requests is not None and max_requests < 0:
         raise ValueError("max_requests must be >= 0")
-    if dataset not in {"massive", "synthetic"}:
-        raise ValueError("dataset must be massive or synthetic")
+    allowed = {"massive", "synthetic", "synthetic_v2", "synthetic_families", "toy_likelihood"}
+    if dataset not in allowed:
+        raise ValueError("dataset must be massive, synthetic, synthetic_v2, synthetic_families, or toy_likelihood")
+    if split is not None and dataset != "synthetic_families":
+        raise ValueError("split is only used with synthetic_families")
     config = _load_config(root)
     overrides = model_id_overrides or {}
     model_ids = {provider: overrides.get(provider, config["models"][provider]) for provider in providers}
@@ -232,6 +260,59 @@ def run_comparison(
         )
         sampling = {}
         dataset_name = "synthetic_alarm"
+    elif dataset == "synthetic_v2":
+        if include_controls:
+            raise ValueError("synthetic_alarm_v2 has no MASSIVE meaning-change controls")
+        if hypothesis_version not in {None, "synthetic_v2"}:
+            raise ValueError("synthetic_alarm_v2 uses hypothesis version synthetic_v2")
+        if prompts.version != "v2":
+            raise ValueError("synthetic_alarm_v2 uses prompt template v2")
+        items, review, atomic_descriptions = load_synthetic_v2(root)
+        synthetic_items = items
+        specs = build_synthetic_v2_plan(
+            items,
+            providers,
+            model_ids,
+            atomic_descriptions,
+            prompts.version,
+            settings,
+            repeats=repeats,
+        )
+        hypotheses = load_hypotheses(root, "synthetic_v2")
+        sampling = {}
+        dataset_name = "synthetic_alarm_v2"
+    elif dataset == "synthetic_families":
+        if include_controls:
+            raise ValueError("synthetic_alarm_families has no MASSIVE meaning-change controls")
+        if hypothesis_version not in {None, "synthetic_v2"}:
+            raise ValueError("synthetic_alarm_families uses the frozen hypothesis version synthetic_v2")
+        if prompts.version != "v2":
+            raise ValueError("synthetic_alarm_families uses frozen prompt template v2")
+        items, review, atomic_descriptions = load_synthetic_families(root)
+        items, review = select_split(items, review, split)
+        synthetic_items = items
+        specs = build_family_plan(
+            items,
+            providers,
+            model_ids,
+            atomic_descriptions,
+            prompts.version,
+            settings,
+            repeats=repeats,
+        )
+        hypotheses = load_hypotheses(root, "synthetic_v2")
+        sampling = {}
+        dataset_name = "synthetic_alarm_families"
+    elif dataset == "toy_likelihood":
+        if include_controls:
+            raise ValueError("toy_likelihood has no MASSIVE meaning-change controls")
+        if hypothesis_version not in {None, "toy_v1"}:
+            raise ValueError("toy_likelihood uses hypothesis version toy_v1")
+        items, review, hypotheses, prompts = load_toy_likelihood(root)
+        synthetic_items = items
+        specs = build_toy_plan(items, providers, model_ids, hypotheses, settings, repeats=repeats)
+        sampling = {}
+        dataset_name = "toy_likelihood"
     else:
         drafts, controls, review, sampling = load_pilot(root)
         items = _items(drafts, controls, include_controls)
@@ -264,6 +345,7 @@ def run_comparison(
             "live_run_allowed": allow_unreviewed or not bad,
             "exploratory_if_run": allow_unreviewed,
             "dataset": dataset_name,
+            "split": split,
             "quantity": QUANTITY,
             "before_retries": True,
         }
@@ -284,13 +366,24 @@ def run_comparison(
         manifest = read_json(run_dir / "run_manifest.json")
     else:
         stamp = (now or datetime.now(timezone.utc)).strftime("%Y%m%dT%H%M%SZ")
-        folder = f"synthetic-{stamp}" if dataset_name == "synthetic_alarm" else stamp
+        if dataset_name == "synthetic_alarm":
+            folder = f"synthetic-{stamp}"
+        elif dataset_name == "synthetic_alarm_v2":
+            folder = f"synthetic-v2-{stamp}"
+        elif dataset_name == "synthetic_alarm_families":
+            prefix = "families" if split in {None, "all"} else f"families-{split}"
+            folder = f"{prefix}-{stamp}"
+        elif dataset_name == "toy_likelihood":
+            folder = f"toy-{stamp}"
+        else:
+            folder = stamp
         if allow_unreviewed:
             folder = f"exploratory-{folder}"
         run_dir = results_parent / folder
         existing = []
         manifest = {
             "dataset": dataset_name,
+            "split": split,
             "exploratory": allow_unreviewed,
             "quantity": QUANTITY,
             "prompt_version": prompts.version,
@@ -320,6 +413,13 @@ def run_comparison(
         }
         write_json(run_dir / "run_manifest.json", manifest)
     skip_keys = set(_success_map(existing))
+    responses_path = run_dir / "responses.jsonl"
+
+    def _keep(record: dict) -> None:
+        append_jsonl(responses_path, [record])
+        if record.get("status") == "success" and not record.get("cache_hit"):
+            append_jsonl(cache_path, [record])
+
     outcome = execute(
         specs,
         clients,
@@ -331,14 +431,10 @@ def run_comparison(
         sleeper=sleeper,
         success_cache=success_cache,
         skip_keys=skip_keys,
+        on_record=_keep,
     )
-    append_jsonl(run_dir / "responses.jsonl", outcome["records"])
-    fresh_successes = [
-        record
-        for record in outcome["records"]
-        if record.get("status") == "success" and not record.get("cache_hit")
-    ]
-    append_jsonl(cache_path, fresh_successes)
+    if not responses_path.exists():
+        append_jsonl(responses_path, [])
     manifest["stopped_reason"] = outcome["stopped_reason"]
     manifest["http_requests"] = manifest.get("http_requests", 0) + outcome["http_requests"]
     manifest["cache_hits"] = outcome["cache_hits"]

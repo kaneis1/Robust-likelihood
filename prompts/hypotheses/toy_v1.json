@@ -1,0 +1,16 @@
+{
+  "version": "toy_v1",
+  "kind": "synthetic_alarm",
+  "prompt_version": "toy_v1",
+  "dataset_version": "toy_likelihood",
+  "evaluation_rule_version": "toy_likelihood_v1",
+  "intention_order": ["toy_create", "toy_disable", "toy_query"],
+  "descriptions": {
+    "toy_create": "The hidden intention is Create.",
+    "toy_disable": "The hidden intention is Disable.",
+    "toy_query": "The hidden intention is Query."
+  },
+  "state_questions": {
+    "toy_rules_are_given": "The emission rules are stated in the input. This state question is not sent."
+  }
+}

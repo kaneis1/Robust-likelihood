@@ -1,0 +1,152 @@
+{
+  "dataset_version": "synthetic_alarm_v2",
+  "evaluation_rule_version": "synthetic_eval_v2",
+  "hypothesis_version": "synthetic_v2",
+  "instructions": "Approved is JSON true only after the utterance is checked against the support map or the plan hypotheses. Bare cancel is not scored. These rows are not the synthetic_v1 set.",
+  "items": [
+    {
+      "approved": true,
+      "evaluation": "scored",
+      "example_id": "v2-op-create",
+      "family": "explicit_operation",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "source",
+      "utt": "Create a new alarm."
+    },
+    {
+      "approved": true,
+      "evaluation": "scored",
+      "example_id": "v2-op-create-polite",
+      "family": "explicit_operation",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "polite",
+      "utt": "Could you create a new alarm?"
+    },
+    {
+      "approved": true,
+      "evaluation": "scored",
+      "example_id": "v2-op-enable",
+      "family": "explicit_operation",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "item",
+      "utt": "Enable my existing alarm."
+    },
+    {
+      "approved": true,
+      "evaluation": "scored",
+      "example_id": "v2-op-disable",
+      "family": "explicit_operation",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "source",
+      "utt": "Disable my alarm, but keep it saved."
+    },
+    {
+      "approved": true,
+      "evaluation": "scored",
+      "example_id": "v2-op-delete",
+      "family": "explicit_operation",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "source",
+      "utt": "Delete my alarm entirely."
+    },
+    {
+      "approved": true,
+      "evaluation": "scored",
+      "example_id": "v2-op-turn-off",
+      "family": "explicit_operation",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "item",
+      "utt": "Turn off my alarm."
+    },
+    {
+      "approved": true,
+      "evaluation": "scored",
+      "example_id": "v2-op-delete-polite",
+      "family": "explicit_operation",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "item",
+      "utt": "Could you delete my alarm entirely?"
+    },
+    {
+      "approved": true,
+      "evaluation": "scored",
+      "example_id": "v2-op-cancel-explicit-delete",
+      "family": "explicit_operation",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "item",
+      "utt": "Cancel it by deleting the saved alarm."
+    },
+    {
+      "approved": true,
+      "evaluation": "not_scored",
+      "example_id": "v2-amb-cancel",
+      "family": "ambiguity_probe",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "item",
+      "utt": "Cancel my alarm."
+    },
+    {
+      "approved": true,
+      "evaluation": "scored",
+      "example_id": "v2-quote-delete",
+      "family": "quoted_command",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "mention",
+      "utt": "Did I say 'delete my alarm entirely'?"
+    },
+    {
+      "approved": true,
+      "evaluation": "scored",
+      "example_id": "v2-quote-disable",
+      "family": "quoted_command",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "mention",
+      "utt": "Did I say 'disable my alarm, but keep it saved'?"
+    },
+    {
+      "approved": true,
+      "evaluation": "scored_plan",
+      "example_id": "v2-plan-delete-then-create",
+      "family": "ordered_plan",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "forward",
+      "utt": "Delete the morning alarm, and after that create one for nine."
+    },
+    {
+      "approved": true,
+      "evaluation": "scored_plan",
+      "example_id": "v2-plan-create-then-delete",
+      "family": "ordered_plan",
+      "label_changed": false,
+      "reviewed_at": "2026-10-02",
+      "reviewer": "assistant wording check",
+      "role": "reversed",
+      "utt": "Create one for nine, and after that delete the morning alarm."
+    }
+  ],
+  "prompt_version": "v2"
+}

@@ -1,0 +1,7 @@
+<<UTTERANCE>>
+
+Hidden intention: <<INTENTION>>
+<<INTENTION_DESCRIPTION>>
+
+<<QUESTION>>
+Answer in ordinary sentences, not JSON. Include one sentence that states the probability that the system emits the sentence, as a number between 0 and 1. In that sentence, state only the probability for this hidden intention.
