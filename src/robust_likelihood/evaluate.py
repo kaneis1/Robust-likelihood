@@ -559,10 +559,15 @@ def _disagreement_row(left, right, hypothesis, left_prediction, right_prediction
 
 def write_evaluation(run_dir) -> dict:
     records = read_jsonl(run_dir / "responses.jsonl")
-    metrics, disagreements = evaluate_records(records)
     manifest_path = run_dir / "run_manifest.json"
+    manifest = read_json(manifest_path) if manifest_path.is_file() else {}
+    if manifest.get("dataset") == "synthetic_alarm":
+        from robust_likelihood.synthetic import evaluate_synthetic_records
+
+        metrics, disagreements = evaluate_synthetic_records(records, manifest.get("items") or [])
+    else:
+        metrics, disagreements = evaluate_records(records)
     if manifest_path.is_file():
-        manifest = read_json(manifest_path)
         metrics["exploratory"] = manifest.get("exploratory")
         metrics["planned_requests"] = manifest.get("planned_requests")
         metrics["stopped_reason"] = manifest.get("stopped_reason")

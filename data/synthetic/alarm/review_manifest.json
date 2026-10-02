@@ -1,0 +1,226 @@
+{
+  "dataset": "synthetic_alarm",
+  "instructions": "These rows are synthetic. They are not MASSIVE labels. approved is JSON true only after the wording is checked against the support map.",
+  "items": [
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-mp-first-source",
+      "family": "meaning_preserved",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "Enable my first scheduled alarm."
+    },
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-mp-first-variant",
+      "family": "meaning_preserved",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "Please turn on my first scheduled alarm."
+    },
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-mp-weekday-source",
+      "family": "meaning_preserved",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "Switch on the weekday alarm."
+    },
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-mp-weekday-variant",
+      "family": "meaning_preserved",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "Please enable the weekday alarm."
+    },
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-mp-seven-source",
+      "family": "meaning_preserved",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "Turn my seven o'clock alarm on."
+    },
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-mp-seven-variant",
+      "family": "meaning_preserved",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "Could you enable my seven o'clock alarm?"
+    },
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-mr-first-source",
+      "family": "meaning_reversed",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "Turn on my first scheduled alarm."
+    },
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-mr-first-variant",
+      "family": "meaning_reversed",
+      "label_changed": true,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "Turn off my first scheduled alarm."
+    },
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-mr-seven-source",
+      "family": "meaning_reversed",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "Enable the seven o'clock alarm."
+    },
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-mr-seven-variant",
+      "family": "meaning_reversed",
+      "label_changed": true,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "Disable the seven o'clock alarm."
+    },
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-neg-cancel",
+      "family": "negation_correction",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "Don't cancel the seven o'clock alarm; tell me whether it is enabled."
+    },
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-neg-delete",
+      "family": "negation_correction",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "Do not delete my seven o'clock alarm; just tell me if it is on."
+    },
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-neg-off",
+      "family": "negation_correction",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "Don't turn off the seven o'clock alarm; I only want to know whether it is enabled."
+    },
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-quote-cancel",
+      "family": "quoted_command",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "Did I say 'cancel my alarm' earlier?"
+    },
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-quote-delete",
+      "family": "quoted_command",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "Did I tell you to 'delete my morning alarm' before?"
+    },
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-quote-off",
+      "family": "quoted_command",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "Was it me who said 'turn off my alarm'?"
+    },
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-multi-seven-eight",
+      "family": "multiple_commands",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "Cancel my seven o'clock alarm, then set one for eight."
+    },
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-multi-morning-nine",
+      "family": "multiple_commands",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "Delete the morning alarm, and after that create one for nine."
+    },
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-multi-noon-one",
+      "family": "multiple_commands",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "First remove my noon alarm, then set an alarm for one."
+    },
+    {
+      "approved": true,
+      "context": "",
+      "example_id": "syn-under-seven-bare",
+      "family": "underspecified",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "What about my seven o'clock alarm?"
+    },
+    {
+      "approved": true,
+      "context": "Is my seven o'clock alarm enabled?",
+      "example_id": "syn-under-seven-query",
+      "family": "underspecified",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "What about my seven o'clock alarm?"
+    },
+    {
+      "approved": true,
+      "context": "Cancel my seven o'clock alarm.",
+      "example_id": "syn-under-seven-cancel",
+      "family": "underspecified",
+      "label_changed": false,
+      "reviewed_at": "2026-10-01",
+      "reviewer": "assistant wording check",
+      "utt": "What about my seven o'clock alarm?"
+    }
+  ]
+}

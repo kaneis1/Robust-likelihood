@@ -1,4 +1,5 @@
-from dataclasses import dataclass
+import json
+from dataclasses import dataclass, field
 from pathlib import Path
 
 from robust_likelihood.constants import INTENTS
@@ -17,6 +18,7 @@ class PromptPack:
 class HypothesisSet:
     version: str
     descriptions: dict[str, str]
+    state_questions: dict[str, str] = field(default_factory=dict)
 
 
 def _read_prompt(path: Path) -> str:
@@ -44,10 +46,29 @@ def load_hypotheses(root: Path, version: str) -> HypothesisSet:
     descriptions = payload.get("descriptions")
     if payload.get("version") != version or not isinstance(descriptions, dict):
         raise ValueError(f"Hypothesis file for {version} is invalid")
+    if payload.get("kind") == "synthetic_alarm":
+        state = payload.get("state_questions")
+        order = payload.get("intention_order")
+        if not isinstance(state, dict) or not state or not isinstance(order, list):
+            raise ValueError(f"Hypothesis file for {version} is invalid")
+        if set(order) != set(descriptions) or set(order) & set(state):
+            raise ValueError(f"Hypothesis file for {version} mixes intention and state questions")
+        cleaned = {key: str(descriptions[key]) for key in order}
+        state_cleaned = {key: str(state[key]) for key in state}
+        return HypothesisSet(version=version, descriptions=cleaned, state_questions=state_cleaned)
     if set(descriptions) != set(INTENTS):
         raise ValueError(f"Hypothesis file for {version} must contain exactly the three alarm intents")
     cleaned = {intent: str(descriptions[intent]) for intent in INTENTS}
     return HypothesisSet(version=version, descriptions=cleaned)
+
+
+def classification_descriptions(spec, hypotheses: HypothesisSet) -> dict[str, str]:
+    wording = getattr(spec, "hypothesis_wording", "") or ""
+    if isinstance(wording, str) and wording.startswith("{"):
+        parsed = json.loads(wording)
+        if isinstance(parsed, dict) and set(parsed) == set(INTENTS):
+            return {intent: str(parsed[intent]) for intent in INTENTS}
+    return {intent: hypotheses.descriptions[intent] for intent in INTENTS}
 
 
 def render(template: str, mapping: dict[str, str]) -> str:
@@ -70,17 +91,18 @@ def render_prompt(spec, prompts: PromptPack, hypotheses: HypothesisSet) -> str:
             {
                 "UTTERANCE": spec.input_text,
                 "INTENTION": spec.hypothesis or "",
-                "INTENTION_DESCRIPTION": hypotheses.descriptions[spec.hypothesis],
+                "INTENTION_DESCRIPTION": spec.hypothesis_wording,
                 "QUESTION": prompts.pairwise_question,
             },
         )
+    descriptions = classification_descriptions(spec, hypotheses)
     return render(
         prompts.chat_classification,
         {
             "UTTERANCE": spec.input_text,
             "QUESTION": prompts.classification_question,
-            "ALARM_SET": hypotheses.descriptions["alarm_set"],
-            "ALARM_QUERY": hypotheses.descriptions["alarm_query"],
-            "ALARM_REMOVE": hypotheses.descriptions["alarm_remove"],
+            "ALARM_SET": descriptions["alarm_set"],
+            "ALARM_QUERY": descriptions["alarm_query"],
+            "ALARM_REMOVE": descriptions["alarm_remove"],
         },
     )

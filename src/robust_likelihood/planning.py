@@ -70,6 +70,11 @@ class CallSpec:
     intent: str
     original_intent: str
     label_changed: bool
+    dataset: str = "massive"
+    family: str = ""
+    pair_id: str = ""
+    role: str = ""
+    massive_lump_label: str = ""
 
 
 def workload(n_items: int, n_models: int, n_hypotheses: int = 3, repeats: int = 0) -> dict[str, int]:
@@ -182,6 +187,11 @@ def _spec(
         intent=item["intent"],
         original_intent=item["original_intent"],
         label_changed=bool(item["label_changed"]),
+        dataset=str(item.get("dataset") or "massive"),
+        family=str(item.get("family") or ""),
+        pair_id=str(item.get("pair_id") or ""),
+        role=str(item.get("role") or ""),
+        massive_lump_label=str(item.get("massive_lump_label") or ""),
     )
 
 

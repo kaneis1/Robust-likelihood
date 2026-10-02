@@ -8,7 +8,7 @@ import urllib.request
 from dataclasses import dataclass
 
 from robust_likelihood.constants import CONNECTIVITY_QUESTION, INTENTS, RETRYABLE_STATUS
-from robust_likelihood.prompting import HypothesisSet, PromptPack, render_prompt
+from robust_likelihood.prompting import HypothesisSet, PromptPack, classification_descriptions, render_prompt
 from robust_likelihood.scoring import is_probability, validate_distribution
 
 
@@ -69,7 +69,7 @@ def build_jev_request(spec, prompts: PromptPack, hypotheses: HypothesisSet) -> d
             "state": {
                 "utterance": spec.input_text,
                 "stated_intention": spec.hypothesis,
-                "intention_description": hypotheses.descriptions[spec.hypothesis],
+                "intention_description": spec.hypothesis_wording,
             },
             "questions": {
                 "plausibility": {
@@ -85,7 +85,7 @@ def build_jev_request(spec, prompts: PromptPack, hypotheses: HypothesisSet) -> d
             "intention": {
                 "type": "choice",
                 "instructions": prompts.classification_question,
-                "criteria": {intent: hypotheses.descriptions[intent] for intent in INTENTS},
+                "criteria": classification_descriptions(spec, hypotheses),
             }
         },
     }

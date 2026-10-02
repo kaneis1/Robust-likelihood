@@ -1,0 +1,22 @@
+{
+  "version": "synthetic_v1",
+  "kind": "synthetic_alarm",
+  "intention_order": [
+    "intend_create",
+    "intend_enable",
+    "intend_disable",
+    "intend_delete",
+    "intend_query"
+  ],
+  "descriptions": {
+    "intend_create": "The user wants the assistant to create a new alarm.",
+    "intend_enable": "The user wants the assistant to turn an existing alarm on.",
+    "intend_disable": "The user wants the assistant to turn an existing alarm off without deleting it.",
+    "intend_delete": "The user wants the assistant to cancel or delete an existing alarm.",
+    "intend_query": "The user wants the assistant to answer a question about an alarm or about something the user said."
+  },
+  "state_questions": {
+    "alarm_is_enabled": "The named alarm is currently enabled.",
+    "alarm_exists": "The named alarm currently exists."
+  }
+}

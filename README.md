@@ -72,7 +72,10 @@ python -m robust_likelihood run --allow-unreviewed --max-requests 4
 python -m robust_likelihood run --models jev,gpt,claude
 python -m robust_likelihood run --hypothesis-version v2
 python -m robust_likelihood evaluate results\<run-folder>
+python -m robust_likelihood run --dataset synthetic --dry-run
 ```
+
+`data/synthetic/alarm/` is a separate authored set. It is not sampled from MASSIVE, and its metrics are not pooled with the pilot. `--dataset synthetic` scores five intended-action hypotheses. State questions are stored beside those hypotheses and are not given truth labels. The default run remains the MASSIVE pilot.
 
 `--dry-run` prints the planned workload and makes no API calls. `--max-requests` stops before exceeding that many new HTTP calls. Timeouts, a bounded retry count, and backoff are in `configs/models.json`. Successful responses are resumed from `results/cache.jsonl` and from `--resume`. Retry attempts share a cache key. `--repeats N` adds deliberate repeats with their own ids so the cache cannot collapse them.
 

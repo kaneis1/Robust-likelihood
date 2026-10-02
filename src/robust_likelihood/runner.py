@@ -18,6 +18,7 @@ from robust_likelihood.planning import (
     inference_settings_for,
     summarize_plan,
 )
+from robust_likelihood.synthetic import build_synthetic_plan, load_synthetic
 from robust_likelihood.prompting import load_hypotheses, load_prompts
 from robust_likelihood.storage import append_jsonl, read_json, read_jsonl, write_json
 
@@ -90,6 +91,11 @@ def _record(spec: CallSpec, result, attempt_id: int, key: str, *, cache_hit: boo
         "intent": spec.intent,
         "original_intent": spec.original_intent,
         "label_changed": spec.label_changed,
+        "dataset": spec.dataset,
+        "family": spec.family,
+        "pair_id": spec.pair_id,
+        "role": spec.role,
+        "massive_lump_label": spec.massive_lump_label,
         "request": result.request_body,
         "response": result.response_body,
         "parsed": result.parsed,
@@ -194,29 +200,54 @@ def run_comparison(
     sleeper=None,
     now: datetime | None = None,
     model_id_overrides: dict[str, str] | None = None,
+    dataset: str = "massive",
 ) -> dict:
     if max_requests is not None and max_requests < 0:
         raise ValueError("max_requests must be >= 0")
+    if dataset not in {"massive", "synthetic"}:
+        raise ValueError("dataset must be massive or synthetic")
     config = _load_config(root)
     overrides = model_id_overrides or {}
     model_ids = {provider: overrides.get(provider, config["models"][provider]) for provider in providers}
     assert_comparison_pins(model_ids)
-    drafts, controls, review, sampling = load_pilot(root)
-    items = _items(drafts, controls, include_controls)
-    version = hypothesis_version or config["hypothesis_description_version"]
     prompts = load_prompts(root, config["prompt_version"])
-    hypotheses = load_hypotheses(root, version)
     settings = {provider: inference_settings_for(provider, config) for provider in providers}
-    specs = build_plan(
-        items,
-        providers,
-        model_ids,
-        hypotheses.descriptions,
-        prompts.version,
-        hypotheses.version,
-        settings,
-        repeats=repeats,
-    )
+    synthetic_items = None
+    if dataset == "synthetic":
+        if include_controls:
+            raise ValueError("the synthetic dataset has no MASSIVE meaning-change controls")
+        if hypothesis_version not in {None, "synthetic_v1"}:
+            raise ValueError("the synthetic dataset uses hypothesis version synthetic_v1")
+        items, review, hypotheses, massive_hypotheses = load_synthetic(root)
+        synthetic_items = items
+        specs = build_synthetic_plan(
+            items,
+            providers,
+            model_ids,
+            hypotheses,
+            massive_hypotheses,
+            prompts.version,
+            settings,
+            repeats=repeats,
+        )
+        sampling = {}
+        dataset_name = "synthetic_alarm"
+    else:
+        drafts, controls, review, sampling = load_pilot(root)
+        items = _items(drafts, controls, include_controls)
+        version = hypothesis_version or config["hypothesis_description_version"]
+        hypotheses = load_hypotheses(root, version)
+        specs = build_plan(
+            items,
+            providers,
+            model_ids,
+            hypotheses.descriptions,
+            prompts.version,
+            hypotheses.version,
+            settings,
+            repeats=repeats,
+        )
+        dataset_name = "massive"
     planned = summarize_plan(specs)
     bad = unapproved_ids(items, review)
     if dry_run:
@@ -232,6 +263,7 @@ def run_comparison(
             "unapproved_items": len(bad),
             "live_run_allowed": allow_unreviewed or not bad,
             "exploratory_if_run": allow_unreviewed,
+            "dataset": dataset_name,
             "quantity": QUANTITY,
             "before_retries": True,
         }
@@ -252,10 +284,13 @@ def run_comparison(
         manifest = read_json(run_dir / "run_manifest.json")
     else:
         stamp = (now or datetime.now(timezone.utc)).strftime("%Y%m%dT%H%M%SZ")
-        folder = f"exploratory-{stamp}" if allow_unreviewed else stamp
+        folder = f"synthetic-{stamp}" if dataset_name == "synthetic_alarm" else stamp
+        if allow_unreviewed:
+            folder = f"exploratory-{folder}"
         run_dir = results_parent / folder
         existing = []
         manifest = {
+            "dataset": dataset_name,
             "exploratory": allow_unreviewed,
             "quantity": QUANTITY,
             "prompt_version": prompts.version,
@@ -267,6 +302,8 @@ def run_comparison(
             },
             "hypothesis_description_version": hypotheses.version,
             "hypotheses": hypotheses.descriptions,
+            "state_questions": hypotheses.state_questions,
+            "items": synthetic_items,
             "dataset_checksum_sha256": sampling.get("dataset_checksum_sha256"),
             "dataset_revision": sampling.get("dataset_revision"),
             "seed": sampling.get("seed"),
