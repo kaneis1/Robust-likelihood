@@ -26,7 +26,7 @@ from robust_likelihood.synthetic_families import (
 )
 from robust_likelihood.synthetic_v2 import build_synthetic_v2_plan, load_synthetic_v2
 from robust_likelihood.toy_likelihood import build_toy_plan, load_toy_likelihood
-from robust_likelihood.prompting import load_hypotheses, load_prompts
+from robust_likelihood.prompting import WORDING_NOTES, load_hypotheses, load_prompts
 from robust_likelihood.storage import append_jsonl, read_json, read_jsonl, write_json
 
 
@@ -226,6 +226,7 @@ def run_comparison(
     model_id_overrides: dict[str, str] | None = None,
     dataset: str = "massive",
     split: str | None = None,
+    prompt_version: str | None = None,
 ) -> dict:
     if max_requests is not None and max_requests < 0:
         raise ValueError("max_requests must be >= 0")
@@ -238,7 +239,12 @@ def run_comparison(
     overrides = model_id_overrides or {}
     model_ids = {provider: overrides.get(provider, config["models"][provider]) for provider in providers}
     assert_comparison_pins(model_ids)
-    prompts = load_prompts(root, config["prompt_version"])
+    chosen_prompt = prompt_version or config["prompt_version"]
+    if dataset == "toy_likelihood" and chosen_prompt not in {config["prompt_version"], "toy_v1"}:
+        raise ValueError(
+            "toy_likelihood keeps its emission-probability question; likely and typical are alarm wording versions"
+        )
+    prompts = load_prompts(root, chosen_prompt)
     settings = {provider: inference_settings_for(provider, config) for provider in providers}
     synthetic_items = None
     if dataset == "synthetic":
@@ -265,8 +271,8 @@ def run_comparison(
             raise ValueError("synthetic_alarm_v2 has no MASSIVE meaning-change controls")
         if hypothesis_version not in {None, "synthetic_v2"}:
             raise ValueError("synthetic_alarm_v2 uses hypothesis version synthetic_v2")
-        if prompts.version != "v2":
-            raise ValueError("synthetic_alarm_v2 uses prompt template v2")
+        if prompts.version not in {"v2", "likely", "typical"}:
+            raise ValueError("synthetic_alarm_v2 uses prompt template v2, or the likely or typical wording")
         items, review, atomic_descriptions = load_synthetic_v2(root)
         synthetic_items = items
         specs = build_synthetic_v2_plan(
@@ -286,8 +292,8 @@ def run_comparison(
             raise ValueError("synthetic_alarm_families has no MASSIVE meaning-change controls")
         if hypothesis_version not in {None, "synthetic_v2"}:
             raise ValueError("synthetic_alarm_families uses the frozen hypothesis version synthetic_v2")
-        if prompts.version != "v2":
-            raise ValueError("synthetic_alarm_families uses frozen prompt template v2")
+        if prompts.version not in {"v2", "likely", "typical"}:
+            raise ValueError("synthetic_alarm_families uses frozen prompt template v2, or the likely or typical wording")
         items, review, atomic_descriptions = load_synthetic_families(root)
         items, review = select_split(items, review, split)
         synthetic_items = items
@@ -339,6 +345,7 @@ def run_comparison(
             "models": model_ids,
             "hypothesis_description_version": hypotheses.version,
             "prompt_version": prompts.version,
+            "wording_note": WORDING_NOTES.get(prompts.version),
             "repeats": repeats,
             "include_controls": include_controls,
             "unapproved_items": len(bad),
@@ -377,6 +384,8 @@ def run_comparison(
             folder = f"toy-{stamp}"
         else:
             folder = stamp
+        if prompts.version in {"likely", "typical"}:
+            folder = f"{prompts.version}-{folder}"
         if allow_unreviewed:
             folder = f"exploratory-{folder}"
         run_dir = results_parent / folder
@@ -387,6 +396,7 @@ def run_comparison(
             "exploratory": allow_unreviewed,
             "quantity": QUANTITY,
             "prompt_version": prompts.version,
+            "wording_note": WORDING_NOTES.get(prompts.version),
             "prompts": {
                 "pairwise_question": prompts.pairwise_question,
                 "classification_question": prompts.classification_question,

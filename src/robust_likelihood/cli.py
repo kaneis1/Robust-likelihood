@@ -44,6 +44,7 @@ def main(argv: list[str] | None = None) -> int:
     run_parser.add_argument("--repeats", type=int, default=0)
     run_parser.add_argument("--models", default=None)
     run_parser.add_argument("--hypothesis-version", default=None)
+    run_parser.add_argument("--prompt-version", choices=["v1", "v2", "likely", "typical"], default=None)
     run_parser.add_argument("--include-controls", action="store_true")
     run_parser.add_argument("--resume", default=None)
     run_parser.add_argument(
@@ -108,6 +109,7 @@ def _dispatch(args) -> int:
             resume=None if args.resume is None else Path(args.resume),
             dataset=args.dataset,
             split=args.split,
+            prompt_version=args.prompt_version,
         )
         return 0
     if args.command == "connect":

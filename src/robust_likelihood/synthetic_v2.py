@@ -69,8 +69,8 @@ def build_synthetic_v2_plan(
     repeats: int = 0,
     dataset_name: str = DATASET_VERSION,
 ) -> list[CallSpec]:
-    if prompt_version != PROMPT_VERSION:
-        raise ValueError("synthetic_alarm_v2 uses prompt template v2")
+    if prompt_version not in {PROMPT_VERSION, "likely", "typical"}:
+        raise ValueError("synthetic_alarm_v2 uses prompt template v2, or the likely or typical wording")
     if repeats < 0:
         raise ValueError("repeats must be >= 0")
     repeat_ids: list[int | None] = [None, *range(1, repeats + 1)]
@@ -87,6 +87,7 @@ def build_synthetic_v2_plan(
                         atomic_descriptions,
                         inference_by_provider[provider],
                         repeat_id,
+                        prompt_version,
                     )
                 )
                 if item["evaluation"] == "scored_plan":
@@ -98,12 +99,13 @@ def build_synthetic_v2_plan(
                             model_ids[provider],
                             inference_by_provider[provider],
                             repeat_id,
+                            prompt_version,
                         )
                     )
     return specs
 
 
-def _atomic_specs(item, provider, model_id, descriptions, settings, repeat_id) -> list[CallSpec]:
+def _atomic_specs(item, provider, model_id, descriptions, settings, repeat_id, prompt_version) -> list[CallSpec]:
     return [
         _spec(
             item,
@@ -112,7 +114,7 @@ def _atomic_specs(item, provider, model_id, descriptions, settings, repeat_id) -
             "pairwise",
             hypothesis,
             descriptions,
-            PROMPT_VERSION,
+            prompt_version,
             HYPOTHESIS_VERSION,
             settings,
             repeat_id,
@@ -121,7 +123,7 @@ def _atomic_specs(item, provider, model_id, descriptions, settings, repeat_id) -
     ]
 
 
-def _plan_specs(item, hypotheses, provider, model_id, settings, repeat_id) -> list[CallSpec]:
+def _plan_specs(item, hypotheses, provider, model_id, settings, repeat_id, prompt_version) -> list[CallSpec]:
     descriptions = {row["id"]: row["text"] for row in hypotheses}
     return [
         _spec(
@@ -131,7 +133,7 @@ def _plan_specs(item, hypotheses, provider, model_id, settings, repeat_id) -> li
             "pairwise",
             row["id"],
             descriptions,
-            PROMPT_VERSION,
+            prompt_version,
             HYPOTHESIS_VERSION,
             settings,
             repeat_id,

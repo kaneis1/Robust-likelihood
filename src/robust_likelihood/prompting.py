@@ -5,6 +5,19 @@ from pathlib import Path
 from robust_likelihood.constants import INTENTS
 
 
+WORDING_NOTES = {
+    "likely": (
+        "Likelihood wording asks whether the user would probably produce the utterance. "
+        "The score is an elicited judgment, not verified P(e|h)."
+    ),
+    "typical": (
+        "Typicality wording asks whether the utterance is representative of what a user with this intention would say. "
+        "This is an ordinary-language typicality judgment, not a measure based on surprisal and entropy. "
+        "A formal typical-set question is a separate specification and is not this prompt."
+    ),
+}
+
+
 @dataclass(frozen=True)
 class PromptPack:
     version: str
@@ -80,10 +93,17 @@ def render(template: str, mapping: dict[str, str]) -> str:
     return text
 
 
+def pairwise_instructions(spec, prompts: PromptPack) -> str:
+    question = prompts.pairwise_question
+    if "<<UTTERANCE>>" not in question:
+        return question
+    return render(question, {"UTTERANCE": spec.input_text})
+
+
 def render_prompt(spec, prompts: PromptPack, hypotheses: HypothesisSet) -> str:
     if spec.provider == "jev":
         if spec.task == "pairwise":
-            return prompts.pairwise_question
+            return pairwise_instructions(spec, prompts)
         return prompts.classification_question
     if spec.task == "pairwise":
         return render(
@@ -92,7 +112,7 @@ def render_prompt(spec, prompts: PromptPack, hypotheses: HypothesisSet) -> str:
                 "UTTERANCE": spec.input_text,
                 "INTENTION": spec.hypothesis or "",
                 "INTENTION_DESCRIPTION": spec.hypothesis_wording,
-                "QUESTION": prompts.pairwise_question,
+                "QUESTION": pairwise_instructions(spec, prompts),
             },
         )
     descriptions = classification_descriptions(spec, hypotheses)

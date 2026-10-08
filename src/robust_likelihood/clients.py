@@ -8,7 +8,13 @@ import urllib.request
 from dataclasses import dataclass
 
 from robust_likelihood.constants import CONNECTIVITY_QUESTION, INTENTS, RETRYABLE_STATUS
-from robust_likelihood.prompting import HypothesisSet, PromptPack, classification_descriptions, render_prompt
+from robust_likelihood.prompting import (
+    HypothesisSet,
+    PromptPack,
+    classification_descriptions,
+    pairwise_instructions,
+    render_prompt,
+)
 from robust_likelihood.scoring import is_probability, validate_distribution
 
 
@@ -74,7 +80,7 @@ def build_jev_request(spec, prompts: PromptPack, hypotheses: HypothesisSet) -> d
             "questions": {
                 "plausibility": {
                     "type": "noul",
-                    "instructions": prompts.pairwise_question,
+                    "instructions": pairwise_instructions(spec, prompts),
                 }
             },
         }

@@ -1,0 +1,1 @@
+Assume the user has the stated intention described in the state. Is the user likely to produce the following utterance when expressing that intention? Utterance: "<<UTTERANCE>>"

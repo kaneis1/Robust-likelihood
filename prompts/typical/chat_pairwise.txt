@@ -1,0 +1,8 @@
+Utterance:
+<<UTTERANCE>>
+
+Stated intention: <<INTENTION>>
+Intention description: <<INTENTION_DESCRIPTION>>
+
+<<QUESTION>>
+Answer in ordinary sentences, not JSON. Include one sentence that states the probability that the answer is yes, as a number between 0 and 1.

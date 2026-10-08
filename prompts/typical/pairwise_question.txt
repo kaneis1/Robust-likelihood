@@ -1,0 +1,1 @@
+Assume the user has the stated intention described in the state. Is the following utterance typical of what a user would say when expressing that intention? Utterance: "<<UTTERANCE>>"

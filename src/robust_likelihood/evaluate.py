@@ -580,6 +580,10 @@ def write_evaluation(run_dir) -> dict:
     else:
         metrics, disagreements = evaluate_records(records)
     if manifest_path.is_file():
+        if manifest.get("prompt_version"):
+            metrics["prompt_version"] = manifest.get("prompt_version")
+        if manifest.get("wording_note"):
+            metrics["wording_note"] = manifest.get("wording_note")
         metrics["exploratory"] = manifest.get("exploratory")
         metrics["planned_requests"] = manifest.get("planned_requests")
         metrics["stopped_reason"] = manifest.get("stopped_reason")

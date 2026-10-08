@@ -1,0 +1,10 @@
+Utterance:
+<<UTTERANCE>>
+
+Intentions:
+alarm_set: <<ALARM_SET>>
+alarm_query: <<ALARM_QUERY>>
+alarm_remove: <<ALARM_REMOVE>>
+
+<<QUESTION>>
+Answer in ordinary sentences, not JSON. For each intention, state its probability as a number between 0 and 1. The three probabilities must sum to 1.

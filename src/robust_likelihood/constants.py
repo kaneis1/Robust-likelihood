@@ -18,4 +18,4 @@ CONNECTIVITY_UTTERANCES = (
 )
 CONNECTIVITY_QUESTION = "Does this text mention an alarm?"
 
-RETRYABLE_STATUS = frozenset({408, 429, 500, 502, 503, 504})
+RETRYABLE_STATUS = frozenset({408, 429, 500, 502, 503, 504, 520, 529})

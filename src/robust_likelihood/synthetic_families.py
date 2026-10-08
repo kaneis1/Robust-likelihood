@@ -60,8 +60,8 @@ def select_split(items: list[dict], review: dict, split: str | None) -> tuple[li
 
 
 def build_family_plan(items, providers, model_ids, descriptions, prompt_version, settings, repeats=0):
-    if prompt_version != PROMPT_VERSION:
-        raise ValueError("the family set uses frozen prompt template v2")
+    if prompt_version not in {PROMPT_VERSION, "likely", "typical"}:
+        raise ValueError("the family set uses frozen prompt template v2, or the likely or typical wording")
     return build_synthetic_v2_plan(
         items,
         providers,
