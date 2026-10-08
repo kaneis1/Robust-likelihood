@@ -101,7 +101,7 @@ def pairwise_instructions(spec, prompts: PromptPack) -> str:
 
 
 def render_prompt(spec, prompts: PromptPack, hypotheses: HypothesisSet) -> str:
-    if spec.provider == "jev":
+    if spec.provider in {"jev", "gpt_decision"}:
         if spec.task == "pairwise":
             return pairwise_instructions(spec, prompts)
         return prompts.classification_question

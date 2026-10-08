@@ -1,5 +1,6 @@
 import json
 import os
+import time
 from pathlib import Path
 
 
@@ -43,7 +44,17 @@ def write_jsonl(path: Path, rows: list[dict]) -> None:
 
 def append_jsonl(path: Path, rows: list[dict]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("a", encoding="utf-8", newline="\n") as handle:
-        for row in rows:
-            handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
-            handle.write("\n")
+    payload = "".join(
+        json.dumps(row, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n" for row in rows
+    )
+    delay = 0.25
+    for attempt in range(12):
+        try:
+            with path.open("a", encoding="utf-8", newline="\n") as handle:
+                handle.write(payload)
+            return
+        except PermissionError:
+            if attempt == 11:
+                raise
+            time.sleep(delay)
+            delay = min(delay * 2, 2.0)

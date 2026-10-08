@@ -26,7 +26,7 @@ def assert_comparison_pins(model_ids: dict[str, str]) -> None:
 
 
 def inference_settings_for(provider: str, config: dict) -> dict:
-    if provider == "jev":
+    if provider in {"jev", "gpt_decision"}:
         return {}
     temperature = config.get("temperature", {}).get(provider)
     if provider == "gpt":

@@ -188,6 +188,77 @@ def test_natural_language_answers_are_scored():
     assert parsed == {"distribution": {"alarm_set": 0.7, "alarm_query": 0.2, "alarm_remove": 0.1}}
 
 
+def test_gpt_decision_sends_one_predicate_and_reads_its_probability():
+    hypotheses = load_hypotheses(repo_root(), "v1")
+    plan = build_plan(
+        [
+            {
+                "example_id": "722__original",
+                "original_example_id": "722",
+                "transformation": "original",
+                "utt": "make an alarm to wake me up after five hours",
+                "intent": "alarm_set",
+                "original_intent": "alarm_set",
+                "label_changed": False,
+            }
+        ],
+        ("gpt_decision",),
+        {"gpt_decision": "gpt-6-luna"},
+        hypotheses.descriptions,
+        "likely",
+        "v1",
+        {"gpt_decision": {}},
+    )
+    spec = next(item for item in plan if item.task == "pairwise")
+    prompts = load_prompts(repo_root(), "likely")
+    body = build_request(spec, prompts, hypotheses)
+    assert body["model"] == spec.requested_model_id
+    assert "temperature" not in body
+    assert body["questions"] == [
+        {
+            "type": "predicate",
+            "name": "plausibility",
+            "instructions": prompts.pairwise_question.replace("<<UTTERANCE>>", spec.input_text),
+        }
+    ]
+    assert "Stated intention: alarm_set" in body["input"]
+    assert spec.input_text in body["input"]
+    parsed, error = parse_experiment_payload(
+        "gpt_decision",
+        "pairwise",
+        {"model": "gpt-6-luna", "answers": [{"type": "predicate", "name": "plausibility", "probability": 0.25}]},
+    )
+    assert error is None
+    assert parsed == {"plausibility_yes_probability": 0.25}
+    refused, error = parse_experiment_payload(
+        "gpt_decision",
+        "pairwise",
+        {"answers": [{"type": "refusal", "name": "plausibility"}]},
+    )
+    assert refused is None
+    assert error == "decision refused"
+    choice, error = parse_experiment_payload(
+        "gpt_decision",
+        "classification",
+        {
+            "answers": [
+                {
+                    "type": "choice",
+                    "name": "intention",
+                    "choice": "alarm_set",
+                    "probabilities": [
+                        {"value": "alarm_set", "probability": 0.7},
+                        {"value": "alarm_query", "probability": 0.2},
+                        {"value": "alarm_remove", "probability": 0.1},
+                    ],
+                }
+            ]
+        },
+    )
+    assert error is None
+    assert choice == {"distribution": {"alarm_set": 0.7, "alarm_query": 0.2, "alarm_remove": 0.1}}
+
+
 def test_http_401_is_not_retried_by_the_client_flag():
     spec = _spec("jev", "pairwise")
     transport = Capture({"error": "unauthorized"}, status=401)

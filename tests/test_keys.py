@@ -49,6 +49,14 @@ def test_typesafe_env_name_fills_jev():
     assert keys.require("jev") == "typesafe-value"
 
 
+def test_decision_api_uses_the_openai_key(tmp_path):
+    path = tmp_path / "API_key.txt"
+    path.write_text("Open api key:\ngpt-from-file\n", encoding="utf-8")
+    keys = load_keys(("gpt", "gpt_decision"), environ={}, key_file=path)
+    assert keys.require("gpt_decision") == "gpt-from-file"
+    assert "gpt-from-file" not in repr(keys)
+
+
 def test_missing_key_names_the_provider():
     with pytest.raises(MissingAPIKey, match="gpt"):
         load_keys(("gpt",), environ={}, key_file=Path("does-not-exist.txt"))

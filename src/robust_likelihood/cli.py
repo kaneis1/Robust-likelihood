@@ -15,10 +15,10 @@ from robust_likelihood.storage import read_json, repo_root
 
 def parse_models(text: str) -> tuple[str, ...]:
     models = tuple(part.strip() for part in text.split(",") if part.strip())
-    allowed = {"jev", "gpt", "claude"}
+    allowed = {"jev", "gpt", "claude", "gpt_decision"}
     unknown = [model for model in models if model not in allowed]
     if not models or unknown or len(set(models)) != len(models):
-        raise ValueError(f"Models must be a unique subset of jev,gpt,claude; got {text!r}")
+        raise ValueError(f"Models must be a unique subset of jev,gpt,claude,gpt_decision; got {text!r}")
     return models
 
 

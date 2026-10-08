@@ -117,9 +117,50 @@ def build_chat_request(spec, prompts: PromptPack, hypotheses: HypothesisSet) -> 
     return body
 
 
+def decision_input(spec) -> str:
+    """Evidence for one Decisions call. The intention sits in this text because the endpoint has no state object."""
+    if spec.task == "classification":
+        return spec.input_text
+    return (
+        "State:\n"
+        f"Utterance: {spec.input_text}\n"
+        f"Stated intention: {spec.hypothesis or ''}\n"
+        f"Intention description: {spec.hypothesis_wording}"
+    )
+
+
+def build_decision_request(spec, prompts: PromptPack, hypotheses: HypothesisSet) -> dict:
+    if "temperature" in spec.inference_settings:
+        raise ValueError("the Decisions API is not sent a temperature")
+    if spec.task == "pairwise":
+        question = {
+            "type": "predicate",
+            "name": "plausibility",
+            "instructions": pairwise_instructions(spec, prompts),
+        }
+    else:
+        descriptions = classification_descriptions(spec, hypotheses)
+        question = {
+            "type": "choice",
+            "name": "intention",
+            "instructions": prompts.classification_question,
+            "choices": [
+                {"value": intent, "description": descriptions[intent]}
+                for intent in INTENTS
+            ],
+        }
+    return {
+        "model": spec.requested_model_id,
+        "input": decision_input(spec),
+        "questions": [question],
+    }
+
+
 def build_request(spec, prompts: PromptPack, hypotheses: HypothesisSet) -> dict:
     if spec.provider == "jev":
         return build_jev_request(spec, prompts, hypotheses)
+    if spec.provider == "gpt_decision":
+        return build_decision_request(spec, prompts, hypotheses)
     if spec.provider in {"gpt", "claude"}:
         return build_chat_request(spec, prompts, hypotheses)
     raise KeyError(spec.provider)
@@ -237,7 +278,44 @@ def parse_intent_distribution(text: str) -> dict[str, float] | None:
     return validate_distribution(scores)
 
 
+def _decision_answer(payload: dict, name: str) -> tuple[dict | None, str | None]:
+    answers = payload.get("answers")
+    if not isinstance(answers, list):
+        return None, "missing answers"
+    named = [answer for answer in answers if isinstance(answer, dict) and answer.get("name") == name]
+    if len(named) != 1:
+        return None, "missing named answer"
+    answer = named[0]
+    if answer.get("type") == "refusal":
+        return None, "decision refused"
+    return answer, None
+
+
 def parse_experiment_payload(provider: str, task: str, payload: dict) -> tuple[dict | None, str | None]:
+    if provider == "gpt_decision":
+        if task == "pairwise":
+            answer, error = _decision_answer(payload, "plausibility")
+            if error:
+                return None, error
+            value = answer.get("probability")
+            if not is_probability(value):
+                return None, "predicate probability outside [0, 1]"
+            return {"plausibility_yes_probability": float(value)}, None
+        answer, error = _decision_answer(payload, "intention")
+        if error:
+            return None, error
+        rows = answer.get("probabilities")
+        if not isinstance(rows, list):
+            return None, "missing choice probabilities"
+        scores: dict[str, float] = {}
+        for row in rows:
+            if not isinstance(row, dict) or not isinstance(row.get("value"), str):
+                return None, "malformed choice distribution"
+            scores[row["value"]] = row.get("probability")
+        parsed = validate_distribution(scores)
+        if parsed is None:
+            return None, "malformed choice distribution"
+        return {"distribution": parsed}, None
     if provider == "jev":
         answers = payload.get("answers")
         if not isinstance(answers, dict):
@@ -377,7 +455,22 @@ class ModelClient:
         return self._send(body, prompt_text, interpret)
 
     def probe(self, model_id: str, utterances: tuple[str, ...], inference_settings: dict) -> CallResult:
-        if self.provider == "jev":
+        if self.provider == "gpt_decision":
+            if "temperature" in inference_settings:
+                raise ValueError("the Decisions API is not sent a temperature")
+            body = {
+                "model": model_id,
+                "input": "\n".join(utterances),
+                "questions": [
+                    {
+                        "type": "predicate",
+                        "name": "mentions_alarm",
+                        "instructions": CONNECTIVITY_QUESTION,
+                    }
+                ],
+            }
+            prompt_text = CONNECTIVITY_QUESTION
+        elif self.provider == "jev":
             if "temperature" in inference_settings:
                 raise ValueError("Jev is not sent a temperature")
             body = {

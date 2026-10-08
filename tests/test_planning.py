@@ -89,6 +89,8 @@ def test_inference_settings_omit_jev_temperature():
     assert config["models"]["jev"] == "jev-1.13.0"
     assert config["models"]["gpt"] == "gpt-6-astra"
     assert config["models"]["claude"] == "claude-fable-5-1"
+    assert config["models"]["gpt_decision"] == "gpt-6-luna"
+    assert inference_settings_for("gpt_decision", config) == {}
     assert config["default_comparison"] == ["jev", "gpt", "claude"]
     assert config["prompt_version"] == "v2"
     assert "response_format" not in inference_settings_for("gpt", config)

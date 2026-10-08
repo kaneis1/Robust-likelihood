@@ -58,7 +58,7 @@ class APIKeys:
         return f"APIKeys({flags})"
 
     def require(self, provider: str) -> str:
-        value = getattr(self, provider)
+        value = getattr(self, _key_slot(provider))
         if not value:
             raise MissingAPIKey(provider)
         return value
@@ -112,6 +112,12 @@ def default_key_file(root: Path) -> Path | None:
     return None
 
 
+def _key_slot(provider: str) -> str:
+    if provider == "gpt_decision":
+        return "gpt"
+    return provider
+
+
 def load_keys(
     providers: tuple[str, ...] | list[str],
     *,
@@ -127,10 +133,13 @@ def load_keys(
     keys = APIKeys()
     missing: list[str] = []
     for provider in providers:
-        for name in _ENV[provider]:
+        slot = _key_slot(provider)
+        if getattr(keys, slot):
+            continue
+        for name in _ENV[slot]:
             value = env.get(name, "").strip()
             if value:
-                setattr(keys, provider, value)
+                setattr(keys, slot, value)
                 break
         else:
             missing.append(provider)
@@ -143,8 +152,11 @@ def load_keys(
         raise MissingAPIKey(missing[0])
     parsed = parse_key_file(path.read_text(encoding="utf-8"))
     for provider in missing:
-        value = parsed.get(provider, "").strip()
+        slot = _key_slot(provider)
+        if getattr(keys, slot):
+            continue
+        value = parsed.get(slot, "").strip()
         if not value:
             raise MissingAPIKey(provider)
-        setattr(keys, provider, value)
+        setattr(keys, slot, value)
     return keys

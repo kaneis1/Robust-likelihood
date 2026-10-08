@@ -3,11 +3,13 @@
   "endpoints": {
     "claude": "https://api.anthropic.com/v1/messages",
     "gpt": "https://api.openai.com/v1/chat/completions",
+    "gpt_decision": "https://api.openai.com/v1/decisions",
     "jev": "https://api.typesafe.ai/v1/systemone"
   },
   "models": {
     "claude": "claude-fable-5-1",
     "gpt": "gpt-6-astra",
+    "gpt_decision": "gpt-6-luna",
     "jev": "jev-1.13.0"
   },
   "temperature": {},

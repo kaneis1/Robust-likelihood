@@ -5,7 +5,9 @@ import pytest
 from robust_likelihood.clients import CallResult
 from robust_likelihood.planning import UnpinnedModelError, build_plan
 from robust_likelihood.runner import connect_models, execute, run_comparison
-from robust_likelihood.storage import read_jsonl, repo_root
+from pathlib import Path
+
+from robust_likelihood.storage import append_jsonl, read_jsonl, repo_root
 
 
 DESCRIPTIONS = {
@@ -290,3 +292,20 @@ def test_unreviewed_live_run_is_exploratory(tmp_path, monkeypatch):
     )
     assert stored["exploratory"] is True
     assert stored["prompts"]["pairwise_question"].startswith("Assume the user has the stated intention.")
+
+
+def test_append_retries_when_the_cache_file_is_locked(tmp_path, monkeypatch):
+    target = tmp_path / "cache.jsonl"
+    real_open = Path.open
+    attempts = {"count": 0}
+
+    def flaky(self, *args, **kwargs):
+        if self == target and attempts["count"] == 0:
+            attempts["count"] += 1
+            raise PermissionError("locked")
+        return real_open(self, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "open", flaky)
+    monkeypatch.setattr("robust_likelihood.storage.time.sleep", lambda _seconds: None)
+    append_jsonl(target, [{"ok": 1}])
+    assert read_jsonl(target) == [{"ok": 1}]
