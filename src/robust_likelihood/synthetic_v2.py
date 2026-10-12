@@ -69,7 +69,7 @@ def build_synthetic_v2_plan(
     repeats: int = 0,
     dataset_name: str = DATASET_VERSION,
 ) -> list[CallSpec]:
-    if prompt_version not in {PROMPT_VERSION, "likely", "typical"}:
+    if prompt_version not in {PROMPT_VERSION, "likely", "typical"} and not prompt_version.startswith("formal_typical_v1-"):
         raise ValueError("synthetic_alarm_v2 uses prompt template v2, or the likely or typical wording")
     if repeats < 0:
         raise ValueError("repeats must be >= 0")
@@ -322,3 +322,4 @@ def _plan_only(item: dict, records: list[dict]) -> dict[str, float] | None:
     if set(found) != expected:
         return None
     return found
+
