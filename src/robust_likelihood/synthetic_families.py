@@ -60,7 +60,7 @@ def select_split(items: list[dict], review: dict, split: str | None) -> tuple[li
 
 
 def build_family_plan(items, providers, model_ids, descriptions, prompt_version, settings, repeats=0):
-    if prompt_version not in {PROMPT_VERSION, "likely", "typical"}:
+    if prompt_version not in {PROMPT_VERSION, "likely", "typical"} and not prompt_version.startswith("formal_typical_v1-"):
         raise ValueError("the family set uses frozen prompt template v2, or the likely or typical wording")
     return build_synthetic_v2_plan(
         items,
@@ -327,3 +327,4 @@ def _summary(families: list[dict]) -> dict:
         }
     ambiguous = [row for row in families if row["side"] == "ambiguous"]
     return {"categories": categories, "ambiguous_families_not_scored": len(ambiguous)}
+
