@@ -120,9 +120,12 @@ def fmt(value: float | None, digits: int = 3) -> str:
 
 
 def table(header: list[str], rows: Iterable[list[str]]) -> list[str]:
-    lines = ["| " + " | ".join(header) + " |", "| " + " | ".join("---" for _ in header) + " |"]
-    lines.extend("| " + " | ".join(row) + " |" for row in rows)
-    return lines
+    """A markdown table. A pipe inside a cell, as in the cell key s=1|d=100, is escaped so it stays in its cell."""
+
+    def line(cells: list[str]) -> str:
+        return "| " + " | ".join(cell.replace("|", "\\|") for cell in cells) + " |"
+
+    return [line(header), "| " + " | ".join("---" for _ in header) + " |", *(line(row) for row in rows)]
 
 
 def r_key(d: int, r: float) -> str:
