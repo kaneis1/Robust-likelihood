@@ -560,22 +560,28 @@ def _p4(data: RunData) -> Verdict:
     exact = [row for row in limits if row["scorer"] == "exact"]
     low = [row for row in typ if row["mode_match"] is None or row["mode_match"] < 0.9]
     worst = min(typ, key=lambda row: -1.0 if row["mode_match"] is None else row["mode_match"])
+    exact_limit = sum(1 for row in exact if row["predicted_sigma2"] == row["truth_sigma2"])
     exact_bad = [row for row in exact if row["predicted_sigma2"] != row["truth_sigma2"] or row["truth_match"] < 0.9]
     worst_exact = min(exact, key=lambda row: row["truth_match"])
+
+    def sigma2(value: float | None) -> str:
+        return "a tie" if value is None else f"{value:g}"
+
     numbers = (
         f"typ_normal: posterior mode at n = {n_max} equals the predicted limit in at least 90% of trials in "
         f"{len(typ) - len(low)} of {len(typ)} (d, truth) cells; lowest {100 * (worst['mode_match'] or 0.0):.0f}% "
-        f"(d={worst['cell']['d']}, truth {worst['truth_sigma2']:g}, predicted {worst['predicted_sigma2']})."
+        f"(d={worst['cell']['d']}, truth {worst['truth_sigma2']:g}, predicted {sigma2(worst['predicted_sigma2'])})."
     )
     if low:
         numbers += " Below 90%: " + ", ".join(
-            f"d={row['cell']['d']} truth {row['truth_sigma2']:g} -> {row['predicted_sigma2']} "
+            f"d={row['cell']['d']} truth {row['truth_sigma2']:g} -> {sigma2(row['predicted_sigma2'])} "
             f"({100 * (row['mode_match'] or 0.0):.0f}%)"
             for row in low
         ) + "."
     numbers += (
-        f" exact: the predicted limit is the truth in every cell, and the mode is the truth in at least 90% of "
-        f"trials in {len(exact) - len(exact_bad)} of {len(exact)} cells; lowest {100 * worst_exact['truth_match']:.0f}%."
+        f" exact: the predicted limit is the truth in {exact_limit} of {len(exact)} cells, and the mode is the "
+        f"truth in at least 90% of trials in {len(exact) - len(exact_bad)} of {len(exact)} cells; lowest "
+        f"{100 * worst_exact['truth_match']:.0f}%."
     )
     if n_max != 1000:
         return Verdict("P4", claim, INCONCLUSIVE, f"The criterion is at n = 1000; this run stops at n = {n_max}. " + numbers)
