@@ -76,7 +76,7 @@ def metrics(
     above = np.where(p > p_true[..., None] + TIE_TOLERANCE, p, 0.0).sum(axis=-1)
     tied_others = (np.abs(p - p_true[..., None]) <= TIE_TOLERANCE).sum(axis=-1) - 1
     room = COVERAGE_MASS - TIE_TOLERANCE - above
-    with np.errstate(divide="ignore", invalid="ignore"):
+    with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
         positions = np.where(room > 0.0, np.ceil(room / p_true), 0.0)
     coverage = np.minimum(positions, tied_others + 1) / (tied_others + 1)
 

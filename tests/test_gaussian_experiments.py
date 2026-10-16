@@ -1,4 +1,6 @@
+import json
 import math
+from dataclasses import replace
 
 import pytest
 
@@ -6,6 +8,24 @@ np = pytest.importorskip("numpy")
 pytest.importorskip("scipy")
 from scipy import stats
 
+from robust_likelihood.gaussian.experiments import (
+    E5_HELDOUT_SCORERS,
+    QUICK,
+    E0Config,
+    E1Config,
+    E2Config,
+    E3Config,
+    E4Config,
+    E5Config,
+    Preset,
+    run,
+    run_e0,
+    run_e1,
+    run_e2,
+    run_e3,
+    run_e4,
+    run_e5,
+)
 from robust_likelihood.gaussian.families import (
     GRID_MARGIN,
     GRID_SIDE,
@@ -156,3 +176,125 @@ def test_scale_scores_from_sampled_r_match_full_simulation():
             for z in range(5):
                 assert stats.ks_2samp(direct[:, z], full[:, z]).pvalue > 0.001, (trial, name, z)
     assert [scale_trial(SEED, "e2", d, trial, 1)[0] for trial in range(10)] == [0, 1, 2, 3, 4] * 2
+
+
+def _quiet(message: str) -> None:
+    pass
+
+
+TINY = Preset(
+    name="tiny",
+    base_seed=SEED,
+    e0=E0Config(d_grid=(2,), sigma2_grid=(1.0,), sample_sizes=(10,), moment_draws=2_000),
+    e1=E1Config(d_grid=(10,), r_grid=(1.5,), n_max=8, trials=5),
+    e2=E2Config(d_grid=(5,), n_max=20, trials=5, limit_draws=2_000),
+    e3=E3Config(spacing_grid=(1.0,), d_grid=(2, 10), n_max=5, trials=5, heatmap_d=(2,), heatmap_n=(1, 5)),
+    e4=E4Config(
+        d_grid=(10,),
+        r=1.5,
+        n_max=8,
+        trials=5,
+        contaminations=(CLEAN, Contamination("C3", 0.2, 50.0), Contamination("C5")),
+    ),
+    e5=E5Config(
+        calibration_d=10,
+        calibration_r=1.5,
+        calibration_trials=5,
+        calibration_n_max=40,
+        calibration_contamination=Contamination("C3", 0.2, 50.0),
+        heldout_e1=E1Config(d_grid=(10,), r_grid=(1.5,), n_max=10, trials=5, scorers=E5_HELDOUT_SCORERS),
+        heldout_e4=E4Config(
+            d_grid=(10,),
+            r=1.5,
+            n_max=40,
+            trials=5,
+            contaminations=(Contamination("C3", 0.1, 50.0),),
+            scorers=E5_HELDOUT_SCORERS,
+        ),
+        edge_grid=(0.5, 1.0, 2.0),
+        k_grid=(2, 3, 4),
+    ),
+)
+
+RUNNERS = {"e0": run_e0, "e1": run_e1, "e2": run_e2, "e3": run_e3, "e4": run_e4, "e5": run_e5}
+METRIC_KEYS = {"experiment", "cell_key", "cell", "contamination", "subset", "scorer", "n", "trials", "p_true", "acc",
+               "bits", "coverage80"}
+
+
+def _assert_finite_or_none(value):
+    if isinstance(value, dict):
+        for item in value.values():
+            _assert_finite_or_none(item)
+    elif isinstance(value, list):
+        for item in value:
+            _assert_finite_or_none(item)
+    elif isinstance(value, float):
+        assert math.isfinite(value)
+
+
+def test_one_cell_five_trial_run_of_each_experiment_writes_well_formed_rows():
+    for name, runner in RUNNERS.items():
+        output = runner(getattr(TINY, name), TINY.base_seed, _quiet)
+        assert output.cells, name
+        for row in output.cells:
+            assert row["experiment"] in (name, "e5_heldout") and "kind" in row
+            json.dumps(row, allow_nan=False)
+            _assert_finite_or_none(row)
+        if name == "e0":
+            assert not output.metrics
+            continue
+        assert output.metrics, name
+        for row in output.metrics:
+            assert METRIC_KEYS <= row.keys(), (name, sorted(row))
+            assert row["trials"] == 5 or (name == "e2" and row["subset"] != "all")
+            assert 0.0 <= row["p_true"]["mean"] <= 1.0 and 0.0 <= row["acc"]["mean"] <= 1.0
+            json.dumps(row, allow_nan=False)
+        if name == "e3":
+            assert {row["n"] for row in output.heatmaps} == {1, 5}
+            assert {"loc_error", "post_entropy", "kl_to_exact"} <= output.metrics[0].keys()
+            checks = [row for row in output.cells if row["kind"] == "check"]
+            assert checks and all(row["passed"] for row in checks)
+        if name == "e5":
+            kinds = {row["kind"] for row in output.cells}
+            assert {"candidate", "named_scheme", "choice", "n90", "check"} <= kinds
+            assert len([row for row in output.cells if row["kind"] == "candidate"]) == 3 + 3 + 1
+            assert {row["scorer"] for row in output.metrics} == set(E5_HELDOUT_SCORERS)
+
+
+def test_same_seed_gives_identical_metrics_and_another_seed_does_not():
+    first = run_e1(TINY.e1, SEED, _quiet)
+    second = run_e1(TINY.e1, SEED, _quiet)
+    assert first.metrics == second.metrics and first.cells == second.cells
+    other = run_e1(TINY.e1, SEED + 1, _quiet)
+    assert first.metrics != other.metrics
+
+
+def test_equal_mass_and_c3_zero_rows_match_their_references():
+    output = run_e4(replace(TINY.e4, contaminations=(CLEAN, Contamination("C3", 0.0, 50.0))), SEED, _quiet)
+    by_key = {(row["contamination"], row["scorer"], row["n"]): row for row in output.metrics}
+    for (contamination, scorer, n), row in by_key.items():
+        if contamination == "C0":
+            assert by_key[("C3:rho=0:R=50", scorer, n)]["p_true"] == row["p_true"]
+
+
+def test_run_writes_the_run_folder(tmp_path):
+    run_dir = run(TINY, ("e0", "e1", "e3"), results_root=tmp_path, progress=_quiet)
+    assert run_dir.parent == tmp_path and run_dir.name.endswith("-tiny")
+    for name in ("config.json", "manifest.json", "metrics.jsonl", "cells.jsonl", "e3_heatmaps.json", "summary.md"):
+        assert (run_dir / name).is_file(), name
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    assert manifest["base_seed"] == SEED and set(manifest["wall_clock_seconds"]) == {"e0", "e1", "e3", "total"}
+    assert manifest["git"]["commit"] and manifest["finished_at"]
+    summary = (run_dir / "summary.md").read_text(encoding="utf-8")
+    assert "## E1." in summary and "## E3." in summary and "## E2." not in summary
+
+
+def test_presets_follow_the_plan():
+    assert QUICK.e1.d_grid == (10, 100) and QUICK.e1.trials == 50 and QUICK.e1.n_max == 20
+    assert QUICK.e2.n_grid == (1, 2, 3, 5, 10, 20, 50, 100, 200)
+    assert len(QUICK.e4.contaminations) == 3
+
+
+def test_e5_config_rejects_an_optimized_scheme_without_its_k():
+    with pytest.raises(ValueError, match="bins_opt4"):
+        replace(TINY.e5, k_grid=(2, 3))
