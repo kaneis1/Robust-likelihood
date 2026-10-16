@@ -277,16 +277,52 @@ def test_equal_mass_and_c3_zero_rows_match_their_references():
             assert by_key[("C3:rho=0:R=50", scorer, n)]["p_true"] == row["p_true"]
 
 
-def test_run_writes_the_run_folder(tmp_path):
-    run_dir = run(TINY, ("e0", "e1", "e3"), results_root=tmp_path, progress=_quiet)
+def test_run_writes_the_run_folder_figures_and_checklist(tmp_path):
+    pytest.importorskip("matplotlib")
+    names = ("e0", "e1", "e2", "e3", "e4", "e5")
+    run_dir = run(TINY, names, results_root=tmp_path, progress=_quiet)
     assert run_dir.parent == tmp_path and run_dir.name.endswith("-tiny")
     for name in ("config.json", "manifest.json", "metrics.jsonl", "cells.jsonl", "e3_heatmaps.json", "summary.md"):
         assert (run_dir / name).is_file(), name
     manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
-    assert manifest["base_seed"] == SEED and set(manifest["wall_clock_seconds"]) == {"e0", "e1", "e3", "total"}
+    assert manifest["base_seed"] == SEED and set(manifest["wall_clock_seconds"]) == {*names, "total"}
     assert manifest["git"]["commit"] and manifest["finished_at"]
+    figures = sorted(path.name for path in (run_dir / "figures").glob("*.png"))
+    assert figures == sorted(
+        [
+            "e1_convergence.png",
+            "e1_collapse.png",
+            "e1_single_observation_bits.png",
+            "e2_consistency.png",
+            "e3_heatmap_d2.png",
+            "e3_nuisance_dimensions.png",
+            "e4_robustness.png",
+            "e5_tradeoff.png",
+        ]
+    )
     summary = (run_dir / "summary.md").read_text(encoding="utf-8")
-    assert "## E1." in summary and "## E3." in summary and "## E2." not in summary
+    assert "## Prediction checklist" in summary and "## E5." in summary
+    from robust_likelihood.gaussian.report import RunData, predictions
+
+    verdicts = predictions(RunData.load(run_dir))
+    assert [v.prediction for v in verdicts] == ["P1", "P2", "P3", "P4", "P5", "P6", "P6b", "P6c", "P7"]
+    assert {v.status for v in verdicts} <= {"PASS", "FAIL", "INCONCLUSIVE"}
+    assert all(v.numbers for v in verdicts)
+
+
+def test_figure_colors_take_slots_in_order_without_skipping():
+    pytest.importorskip("matplotlib")
+    from robust_likelihood.gaussian.report import CATEGORICAL, INK_MUTED, series_styles
+
+    e2 = series_styles(("exact", "typ_normal", "typ_density", "bins_abs3", "bins_signed5"))
+    assert [e2[name].color for name in ("exact", "typ_normal", "bins_abs3", "typ_density", "bins_signed5")] == list(
+        CATEGORICAL[:5]
+    )
+    e3 = series_styles(("exact", "typ_normal", "bins_abs3", "typ_content_oracle", "bins_abs3_content_oracle"))
+    assert e3["typ_content_oracle"].color == e3["typ_normal"].color and e3["typ_content_oracle"].linestyle == "--"
+    e1 = series_styles(TINY.e1.scorers)
+    assert e1["bins_equalmass3"].color == INK_MUTED and e1["tempered_0.5"].color == INK_MUTED
+    assert sorted(style.color for name, style in e1.items() if style.color != INK_MUTED) == sorted(CATEGORICAL)
 
 
 def test_presets_follow_the_plan():
