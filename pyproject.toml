@@ -11,6 +11,7 @@ readme = "README.md"
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
+gaussian = ["numpy>=1.26", "scipy>=1.11", "matplotlib>=3.8"]
 
 [project.scripts]
 robust-likelihood = "robust_likelihood.cli:main"
