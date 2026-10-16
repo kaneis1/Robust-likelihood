@@ -1,0 +1,5 @@
+{
+  "unit": "complete_utterance",
+  "reference_distribution": "Consider English-speaking users addressing a household alarm assistant in a fresh interaction, with no previous conversation unless context is explicitly supplied. Condition on the exact stated intention H, including whether the user is requesting information, mentioning a previous instruction, or issuing one or more ordered actions. Sample one complete user message intended to express H, allowing natural variation in wording, politeness, length, and repetition. The message includes its stopping point. Use your inferred distribution of such messages; no empirical utterance probabilities are supplied.",
+  "epsilon_nats": 0.6931471805599453
+}

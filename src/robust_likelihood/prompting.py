@@ -95,9 +95,15 @@ def render(template: str, mapping: dict[str, str]) -> str:
 
 def pairwise_instructions(spec, prompts: PromptPack) -> str:
     question = prompts.pairwise_question
-    if "<<UTTERANCE>>" not in question:
+    tokens = {
+        "UTTERANCE": spec.input_text,
+        "INTENTION": spec.hypothesis or "",
+        "INTENTION_DESCRIPTION": spec.hypothesis_wording,
+    }
+    present = {key: value for key, value in tokens.items() if f"<<{key}>>" in question}
+    if not present:
         return question
-    return render(question, {"UTTERANCE": spec.input_text})
+    return render(question, present)
 
 
 def render_prompt(spec, prompts: PromptPack, hypotheses: HypothesisSet) -> str:

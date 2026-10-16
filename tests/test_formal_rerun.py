@@ -2,7 +2,9 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 from robust_likelihood.formal_rerun import make_prompt_pack
+from robust_likelihood.prompting import pairwise_instructions
 from robust_likelihood.runner import run_comparison
 from robust_likelihood.storage import repo_root
 
@@ -17,6 +19,19 @@ class FormalRerunTests(unittest.TestCase):
         self.assertIn("E[V~p(.|H)]", pack.pairwise_question)
         self.assertIn("not the emission probability", pack.pairwise_question)
         self.assertIn("<<UTTERANCE>>", pack.pairwise_question)
+        self.assertIn("<<INTENTION>>", pack.pairwise_question)
+        self.assertIn("<<INTENTION_DESCRIPTION>>", pack.pairwise_question)
+        filled = pairwise_instructions(
+            SimpleNamespace(
+                input_text="Create a new alarm.",
+                hypothesis="intend_create",
+                hypothesis_wording="The user is currently requesting that a new alarm be created.",
+            ),
+            pack,
+        )
+        self.assertIn("Stated intention: intend_create.", filled)
+        self.assertIn("Intention description: The user is currently requesting that a new alarm be created.", filled)
+        self.assertNotIn("<<", filled)
 
     def test_cache_identity_includes_reference_and_threshold(self):
         s = specification()

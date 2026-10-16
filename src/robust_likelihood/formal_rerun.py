@@ -23,7 +23,9 @@ def make_prompt_pack(root: Path, specification: dict) -> PromptPack:
     if specification.get("unit") != "complete_utterance":
         raise ValueError("This protocol requires unit=complete_utterance (not per-token probability).")
     question = (
-        "Assume the stated intention H, including its full description. "
+        "Stated intention: <<INTENTION>>. "
+        "Intention description: <<INTENTION_DESCRIPTION>>. "
+        "Assume this stated intention H, including that full description. "
         f"Reference distribution p(U|H): {reference.strip()}\n"
         "Use the following mathematical definition of typicality, not familiarity, grammaticality, "
         "semantic compatibility, or simply high probability. U is one complete utterance, including "
