@@ -106,3 +106,29 @@ Token log-probability is `log P(e|h)` over observation tokens only. Calling it r
 ```powershell
 python -c "from robust_likelihood.logprob import log_probability_evidence_given_hypothesis; log_probability_evidence_given_hypothesis(['set','an','alarm'], 'alarm_set')"
 ```
+
+## Gaussian typicality test
+
+Test 1 of the typicality proposal replaces each observation by its standardized typicality under every hypothesis, `T = (q - d) / sqrt(2d)` with `q = ||x - mu||^2 / sigma2`, optionally bins it, and computes the posterior from that. Every hypothesis is an isotropic Gaussian, so the likelihood, the entropy, and every bin mass are exact, and a failure belongs to the method rather than to estimation. The plan and its pre-registered predictions are in `docs/gaussian_test_plan.md`. The code is the subpackage `src/robust_likelihood/gaussian/`. It is not part of `cli.py` and makes no API calls.
+
+```powershell
+python -m pip install -e ".[dev,gaussian]"
+python -m pytest
+python -m robust_likelihood.gaussian run --preset quick
+python -m robust_likelihood.gaussian run --preset full --experiments e0,e1,e2,e3,e4,e5
+python -m robust_likelihood.gaussian run --preset full --dry-run
+python -m robust_likelihood.gaussian report results\gaussian\<run-folder>
+```
+
+`--dry-run` prints the grids, trial counts, and scorers and draws nothing. `--seed` replaces the base seed `20261019`. `--experiments` runs a subset. `quick` is a smoke run of about 15 seconds and is not reportable. `full` took about 100 seconds on one core with BLAS limited to one thread.
+
+- E0 checks the closed forms against Monte Carlo: entropy and surprisal variance from S draws, the moments of T, every bin mass, and how far an estimated entropy moves the center of T.
+- E1 measures convergence and information loss in a mean-shift family of 20 hypotheses: p_true, accuracy, n90, single-observation bits, KL to the exact posterior, and coverage.
+- E2 asks whether inference stays consistent when hypotheses differ only in spread, and compares each scorer's predicted limit with its posterior mode after 1000 observations.
+- E3 localizes a point on a 21 x 21 grid as nuisance dimensions are added, against content oracles that see only the two in-plane coordinates.
+- E4 measures robustness under the contaminations C0 to C5. The clipped likelihood is reported beside every bin scheme.
+- E5 chooses absolute bin edges on its own calibration seed and evaluates them on held-out E1 and E4 cells.
+
+Every scorer of a trial sees the same observations. Each (experiment, cell, trial) has its own generator, so results do not depend on the order in which trials run. A tie at the top of a posterior counts as incorrect.
+
+A run writes `results/gaussian/<UTC timestamp>-<preset>/`, which is gitignored: `config.json`, `manifest.json` (commit, dirty flag, package versions, seed, and wall-clock time per experiment), `metrics.jsonl`, `cells.jsonl`, `e3_heatmaps.json`, `figures/`, and `summary.md`. `summary.md` opens with the predictions marked PASS, FAIL, or INCONCLUSIVE, with the numbers behind each. `report` rebuilds the figures and `summary.md` from the stored rows. `templates/gaussian_test_report.md` is the skeleton for the written report.
