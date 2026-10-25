@@ -1,0 +1,1 @@
+Assume the user has the stated intention described in the state. The utterance is the user's first message to a restaurant booking assistant. Is the following utterance typical of what a user would say when expressing that intention? Utterance: "<<UTTERANCE>>"

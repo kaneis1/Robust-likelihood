@@ -14,7 +14,7 @@ from robust_likelihood.multiwoz.hypotheses import (
     join_names,
     value_pools,
 )
-from robust_likelihood.multiwoz.probe import APPENDIX_A4, build_probe, probe_summary
+from robust_likelihood.multiwoz.probe import APPENDIX_A4, probe_summary
 from robust_likelihood.storage import read_jsonl, repo_root
 
 FIXTURE = Path(__file__).parent / "fixtures" / "multiwoz_mini"

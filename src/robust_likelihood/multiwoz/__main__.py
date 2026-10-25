@@ -1,4 +1,7 @@
-"""python -m robust_likelihood.multiwoz download | prepare"""
+"""python -m robust_likelihood.multiwoz download | prepare | run
+
+`run --label pilot` also writes pilot_report.md into the run folder.
+"""
 
 from __future__ import annotations
 
@@ -19,11 +22,15 @@ from robust_likelihood.multiwoz.corpus import (
     pooled_population,
     select_items,
 )
+from robust_likelihood.keys import MissingAPIKey, UnrecognizedKeyLabels
 from robust_likelihood.multiwoz.download import EXPECTED_DIALOGUES, ChecksumMismatch, download
 from robust_likelihood.multiwoz.hypotheses import food_pool, value_pools
+from robust_likelihood.multiwoz.jev_run import ModelIdChanged, run_jev
 from robust_likelihood.multiwoz.probe import APPENDIX_A4, build_probe, probe_summary
 from robust_likelihood.multiwoz.reference import appendix_checks, build_reference, reference_markdown
-from robust_likelihood.storage import repo_root, write_json, write_jsonl
+from robust_likelihood.multiwoz.report import pilot_report
+from robust_likelihood.planning import UnpinnedModelError
+from robust_likelihood.storage import read_json, repo_root, write_json, write_jsonl
 
 
 def _write_compact(path: Path, payload: dict) -> str:
@@ -85,10 +92,28 @@ def main(argv: list[str] | None = None) -> int:
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("download")
     sub.add_parser("prepare")
+    run_parser = sub.add_parser("run")
+    run_parser.add_argument("--wording", choices=["likely", "typical", "both"], default="both")
+    run_parser.add_argument("--set", dest="set_name", choices=["clean", "fail_info", "all"], default="clean")
+    run_parser.add_argument("--items", type=int, default=None)
+    run_parser.add_argument("--seed", type=int, default=None)
+    run_parser.add_argument("--repeats", type=int, default=0)
+    run_parser.add_argument("--max-requests", type=int, default=None)
+    run_parser.add_argument("--dry-run", action="store_true")
+    run_parser.add_argument("--resume", default=None)
+    run_parser.add_argument("--label", default="run")
     args = parser.parse_args(argv)
     try:
         return _dispatch(args)
-    except (ChecksumMismatch, FileNotFoundError, ValueError) as exc:
+    except (
+        ChecksumMismatch,
+        ModelIdChanged,
+        MissingAPIKey,
+        UnrecognizedKeyLabels,
+        UnpinnedModelError,
+        FileNotFoundError,
+        ValueError,
+    ) as exc:
         print(str(exc), file=sys.stderr)
         return 2
 
@@ -116,6 +141,29 @@ def _dispatch(args) -> int:
             else:
                 print(f"Appendix {table} matches.")
         return 1 if failed else 0
+    if args.command == "run":
+        summary = run_jev(
+            root,
+            config,
+            wording=args.wording,
+            set_name=args.set_name,
+            items=args.items,
+            seed=args.seed,
+            repeats=args.repeats,
+            max_requests=args.max_requests,
+            dry_run=args.dry_run,
+            resume=None if args.resume is None else Path(args.resume),
+            label=args.label,
+        )
+        if summary["dry_run"]:
+            return 0
+        run_dir = Path(summary["run_dir"])
+        if read_json(run_dir / "manifest.json")["label"] == "pilot":
+            report = run_dir / "pilot_report.md"
+            report.write_text(pilot_report(run_dir, root / DERIVED_DIR), encoding="utf-8", newline="\n")
+            summary["pilot_report"] = str(report)
+        print(json.dumps(summary, indent=2, sort_keys=True))
+        return 0
     raise ValueError(f"Unknown command {args.command}")
 
 
