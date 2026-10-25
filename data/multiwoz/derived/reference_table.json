@@ -2,7 +2,8 @@
   "appendix_checks": {
     "A1": [],
     "A2": [],
-    "A3": []
+    "A3": [],
+    "A4": []
   },
   "b_smoothing": 0.5,
   "bootstrap": {

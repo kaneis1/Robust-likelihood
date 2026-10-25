@@ -20,6 +20,8 @@ from robust_likelihood.multiwoz.corpus import (
     select_items,
 )
 from robust_likelihood.multiwoz.download import EXPECTED_DIALOGUES, ChecksumMismatch, download
+from robust_likelihood.multiwoz.hypotheses import food_pool, value_pools
+from robust_likelihood.multiwoz.probe import APPENDIX_A4, build_probe, probe_summary
 from robust_likelihood.multiwoz.reference import appendix_checks, build_reference, reference_markdown
 from robust_likelihood.storage import repo_root, write_json, write_jsonl
 
@@ -32,7 +34,7 @@ def _write_compact(path: Path, payload: dict) -> str:
 
 
 def prepare(root: Path, config: dict, raw: Path | None = None, derived: Path | None = None) -> dict:
-    """Phases 2 and 3: select the analysis items, then estimate the reference rates."""
+    """Phases 2 to 4: select the analysis items, estimate the reference rates, and write the probe set."""
     if list(config["slots"]) != list(SLOTS):
         raise ValueError(f"configs/multiwoz_size_principle.json slots must be {list(SLOTS)}")
     raw = raw or root / RAW_DIR
@@ -53,7 +55,16 @@ def prepare(root: Path, config: dict, raw: Path | None = None, derived: Path | N
     table["replicates_sha256"] = _write_compact(derived / "reference_replicates.json", replicates)
     table["selection"] = selection
     table["pooled_counts"] = pooled_counts
-    checks = {"A1": differences(APPENDIX_A1, selection), **appendix_checks(table)}
+    pools = value_pools(food_pool(goals))
+    probe = build_probe(items, pools)
+    write_jsonl(derived / "probe.jsonl", probe)
+    probe_counts = probe_summary(probe)
+    probe_counts["food_pool_size"] = len(pools["food"])
+    checks = {
+        "A1": differences(APPENDIX_A1, selection),
+        **appendix_checks(table),
+        "A4": differences(APPENDIX_A4, probe_counts),
+    }
     table["appendix_checks"] = checks
     write_json(derived / "reference_table.json", table)
     (derived / "reference_table.md").write_text(
@@ -64,6 +75,7 @@ def prepare(root: Path, config: dict, raw: Path | None = None, derived: Path | N
         "selection": selection,
         "pooled_counts": pooled_counts,
         "primary_reference": table["variants"]["primary"],
+        "probe": probe_counts,
         "appendix_differences": checks,
     }
 

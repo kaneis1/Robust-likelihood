@@ -43,3 +43,18 @@ Each population's resample is drawn from
 `random.Random(int(sha256(f"{seed}:{population}").hexdigest()[:16], 16))` over rows in
 dialogue-id order, so Phase 6 can redraw the clean-item resample of replicate b and pair
 Jev's scores with the a-rates of the same resampled items.
+
+## Phase 4: points the plan leaves open
+
+- Keys use the slot names: `minus:pricerange|impl`, not the plan example's `minus:price`.
+  Figures and tables label that slot "price".
+- `hyp_type` is the key without its regime (`G`, `minus:food`, `broad`, `ctrl:contra`, ...).
+  Controls are rendered with `base()`, so their regime is `impl`.
+- Probe rows carry two fields beyond the plan's list: `values`, the slot values the text
+  states, and, on controls, `changed` (slot, old value, new value). Both make the
+  one-slot-difference check auditable without the raw data.
+- For the 11 items with no named constrained slot, `ctrl:tie2` uses its own seed
+  (`{item_id}:tie2`) but skips the slot and value that `ctrl:tie` already chose, so the
+  second tie control is never a copy of the first. All 11 `tie2` texts differ from `tie`.
+- No goal in the corpus has food `dontcare`, so the food pool is 91 values.
+- The probe has 3,727 rows (clean 2,355; fail_info 1,372) and 707 distinct non-control texts.
