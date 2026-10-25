@@ -11,6 +11,8 @@ readme = "README.md"
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
+figures = ["matplotlib>=3.8"]
+lm = ["torch>=2.3", "transformers>=4.44", "accelerate>=0.33"]
 
 [project.scripts]
 robust-likelihood = "robust_likelihood.cli:main"

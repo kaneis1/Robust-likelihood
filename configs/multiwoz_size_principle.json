@@ -1,0 +1,21 @@
+{
+  "multiwoz": {
+    "repo": "budzianowski/multiwoz",
+    "commit": "fe0c8e65cfcd8462bd33c86e35f21addc84ca82b",
+    "zip_sha256": "8db3f6afe591383b8523b271f07727693e73012ecce47f3ac7987191e09b7523",
+    "v22_dialogues_combined_sha256": "7eb537299a94838c245e7620ebd865d0237b86a69bc822685c210be1fb80bc87"
+  },
+  "slots": ["food", "area", "pricerange"],
+  "other_domains": ["hotel", "train", "taxi", "attraction", "police", "hospital"],
+  "stated_intention": "find_restaurant",
+  "prompt_versions": ["multiwoz_likely", "multiwoz_typical"],
+  "primary_set": "clean",
+  "score_mapping": {"primary": "logit", "secondary": "log", "clip_epsilon": 0.001},
+  "reference": {"a_population": "match_clean_turn0", "b_population": "pooled_first_restaurant_turn", "b_smoothing": 0.5},
+  "bootstrap": {"replicates": 2000, "seed": 20261026},
+  "pilot": {"items": 20, "set": "clean", "seed": 20261026},
+  "repeat_check": {"items": 30, "repeats": 3, "prompt_version": "multiwoz_likely", "seed": 20261026},
+  "lm": {"model": "Qwen/Qwen2.5-7B-Instruct", "samples_per_hypothesis": 64, "temperature": 1.0,
+         "top_p": 1.0, "top_k": 0, "repetition_penalty": 1.0, "max_new_tokens": 96,
+         "seed": 20261026, "bin_edges": [1.0, 2.0]}
+}

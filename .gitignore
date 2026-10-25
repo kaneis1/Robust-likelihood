@@ -9,3 +9,4 @@ results/
 data/massive/**/*.jsonl
 data/massive/**/*.tar.gz
 data/massive/**/*.jsonl.gz
+data/multiwoz/raw/
