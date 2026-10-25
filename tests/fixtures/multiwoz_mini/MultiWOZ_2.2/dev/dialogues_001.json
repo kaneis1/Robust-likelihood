@@ -1,0 +1,23 @@
+[
+  {"dialogue_id": "WOZ0008.json", "services": ["restaurant"], "turns": [
+    {"speaker": "USER", "turn_id": "0", "utterance": "thai food please, price does not matter", "frames": [
+      {"actions": [], "service": "restaurant", "slots": [], "state": {"active_intent": "find_restaurant", "requested_slots": [],
+        "slot_values": {"restaurant-food": ["thai"], "restaurant-pricerange": ["dontcare"]}}}]}]},
+  {"dialogue_id": "SNG0009.json", "services": ["taxi"], "turns": [
+    {"speaker": "USER", "turn_id": "0", "utterance": "I need a taxi at nine.", "frames": [
+      {"actions": [], "service": "restaurant", "slots": [], "state": {"active_intent": "NONE", "requested_slots": [], "slot_values": {}}}]}]},
+  {"dialogue_id": "PMUL0010.json", "services": ["hotel"], "turns": [
+    {"speaker": "USER", "turn_id": "0", "utterance": "Find me a guesthouse.", "frames": [
+      {"actions": [], "service": "restaurant", "slots": [], "state": {"active_intent": "NONE", "requested_slots": [], "slot_values": {}}}]}]},
+  {"dialogue_id": "SNG0011.json", "services": ["restaurant"], "turns": [
+    {"speaker": "USER", "turn_id": "0", "utterance": "Is there a French restaurant in the north?", "frames": [
+      {"actions": [], "service": "restaurant", "slots": [], "state": {"active_intent": "find_restaurant", "requested_slots": [],
+        "slot_values": {"restaurant-area": ["north"], "restaurant-food": ["french"]}}}]}]},
+  {"dialogue_id": "SNG0013.json", "services": ["restaurant"], "turns": [
+    {"speaker": "USER", "turn_id": "0", "utterance": "i want spanish food in the centre", "frames": [
+      {"actions": [], "service": "restaurant", "slots": [], "state": {"active_intent": "find_restaurant", "requested_slots": [],
+        "slot_values": {"restaurant-food": ["spanish"], "restaurant-area": ["centre", "center"]}}}]}]},
+  {"dialogue_id": "SNG0014.json", "services": ["restaurant"], "turns": [
+    {"speaker": "USER", "turn_id": "0", "utterance": "I need a restaurant.", "frames": [
+      {"actions": [], "service": "restaurant", "slots": [], "state": {"active_intent": "find_restaurant", "requested_slots": [], "slot_values": {}}}]}]}
+]

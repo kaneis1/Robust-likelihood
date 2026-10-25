@@ -1,0 +1,41 @@
+[
+  {"dialogue_id": "SNG0001.json", "services": ["restaurant"], "turns": [
+    {"speaker": "USER", "turn_id": "0", "utterance": "I am looking for an expensive Italian restaurant.", "frames": [
+      {"actions": [], "service": "restaurant", "slots": [], "state": {"active_intent": "find_restaurant", "requested_slots": [],
+        "slot_values": {"restaurant-food": ["italian"], "restaurant-pricerange": ["expensive"]}}}]},
+    {"speaker": "SYSTEM", "turn_id": "1", "utterance": "Caffe Uno is expensive and Italian.", "frames": []}]},
+  {"dialogue_id": "SNG0002.json", "services": ["restaurant"], "turns": [
+    {"speaker": "USER", "turn_id": "0", "utterance": "Can you find me a Chinese place?", "frames": [
+      {"actions": [], "service": "restaurant", "slots": [], "state": {"active_intent": "find_restaurant", "requested_slots": [],
+        "slot_values": {"restaurant-food": ["chinese"]}}}]}]},
+  {"dialogue_id": "SNG0003.json", "services": ["restaurant"], "turns": [
+    {"speaker": "USER", "turn_id": "0", "utterance": "I want Korean food in the north.", "frames": [
+      {"actions": [], "service": "restaurant", "slots": [], "state": {"active_intent": "find_restaurant", "requested_slots": [],
+        "slot_values": {"restaurant-food": ["korean"], "restaurant-area": ["north"]}}}]}]},
+  {"dialogue_id": "SNG0004.json", "services": ["restaurant"], "turns": [
+    {"speaker": "USER", "turn_id": "0", "utterance": "Tell me about Pizza Hut City Centre.", "frames": [
+      {"actions": [], "service": "restaurant", "slots": [], "state": {"active_intent": "find_restaurant", "requested_slots": [],
+        "slot_values": {"restaurant-name": ["pizza hut city centre"]}}}]}]},
+  {"dialogue_id": "SNG0005.json", "services": ["restaurant"], "turns": [
+    {"speaker": "USER", "turn_id": "0", "utterance": "Any kind of food is fine, somewhere in the west.", "frames": [
+      {"actions": [], "service": "restaurant", "slots": [], "state": {"active_intent": "find_restaurant", "requested_slots": [],
+        "slot_values": {"restaurant-food": ["dontcare"], "restaurant-area": ["west"]}}}]}]},
+  {"dialogue_id": "SNG0006.json", "services": ["restaurant", "hotel"], "turns": [
+    {"speaker": "USER", "turn_id": "0", "utterance": "I need a cheap place to eat in the south.", "frames": [
+      {"actions": [], "service": "hotel", "slots": [], "state": {"active_intent": "NONE", "requested_slots": [], "slot_values": {}}},
+      {"actions": [], "service": "restaurant", "slots": [], "state": {"active_intent": "find_restaurant", "requested_slots": [],
+        "slot_values": {"restaurant-area": ["south"], "restaurant-pricerange": ["cheap"]}}}]}]},
+  {"dialogue_id": "MUL0007.json", "services": ["hotel", "restaurant"], "turns": [
+    {"speaker": "USER", "turn_id": "0", "utterance": "I need a hotel in the east.", "frames": [
+      {"actions": [], "service": "hotel", "slots": [], "state": {"active_intent": "find_hotel", "requested_slots": [],
+        "slot_values": {"hotel-area": ["east"]}}},
+      {"actions": [], "service": "restaurant", "slots": [], "state": {"active_intent": "NONE", "requested_slots": [], "slot_values": {}}}]},
+    {"speaker": "SYSTEM", "turn_id": "1", "utterance": "The Allenbell is in the east.", "frames": []},
+    {"speaker": "USER", "turn_id": "2", "utterance": "Thanks. I also want Indian food.", "frames": [
+      {"actions": [], "service": "restaurant", "slots": [], "state": {"active_intent": "find_restaurant", "requested_slots": [],
+        "slot_values": {"restaurant-food": ["indian"]}}}]},
+    {"speaker": "SYSTEM", "turn_id": "3", "utterance": "Which area?", "frames": []},
+    {"speaker": "USER", "turn_id": "4", "utterance": "The east, same as the hotel.", "frames": [
+      {"actions": [], "service": "restaurant", "slots": [], "state": {"active_intent": "find_restaurant", "requested_slots": [],
+        "slot_values": {"restaurant-food": ["indian"], "restaurant-area": ["east"]}}}]}]}
+]
