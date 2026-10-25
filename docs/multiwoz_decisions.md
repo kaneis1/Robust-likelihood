@@ -13,7 +13,7 @@ points the plan leaves open are recorded too, so the analysis can be audited.
   are LF, as in the formal typicality commit. The copied prompt packs keep the CRLF
   bytes of their sources.
 
-## Phase 2: one Appendix A1 cell differs (awaiting the user)
+## Phase 2: one Appendix A1 cell differs
 
 `prepare` reproduces every A1 count except one. Clean set, food, "No-pref named":
 Appendix A1 says 2; the frozen status rule gives 1.
@@ -29,5 +29,17 @@ Appendix A1 says 2; the frozen status rule gives 1.
   `b` from the pooled population. Only the V2 sensitivity variant (both rates from
   `match_all_turn0`) uses it: food `b` is 1.5/63 under the frozen rule, 2.5/63 otherwise.
 
-Recommendation: keep the frozen rule and read the A1 cell as 1 named plus 1 `dontcare`.
-Not acted on until the user agrees.
+Decision, 26 October 2026: the user chose to keep the frozen rule. The A1 check in
+`corpus.APPENDIX_A1` now expects food `no_pref_named: 1` and `no_pref_dontcare: 1`. The
+plan document keeps its original table.
+
+## Phase 3: where the bootstrap replicates live
+
+The 2,000 replicates of every population are stored as integer counts
+(`named, constrained, no_pref_named, no_pref` per slot) in
+`data/multiwoz/derived/reference_replicates.json`, written compactly (about 400 KB) so
+`reference_table.json` stays readable. `reference_table.json` records that file's sha256.
+Each population's resample is drawn from
+`random.Random(int(sha256(f"{seed}:{population}").hexdigest()[:16], 16))` over rows in
+dialogue-id order, so Phase 6 can redraw the clean-item resample of replicate b and pair
+Jev's scores with the a-rates of the same resampled items.

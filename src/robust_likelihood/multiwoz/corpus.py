@@ -22,8 +22,13 @@ APPENDIX_A1 = {
     "slot_based": {"clean": 235, "fail_info": 135},
     "clean_by_n_constrained": {"2": 124, "3": 111},
     "no_named_constrained": 11,
+    # The plan's table lists food no_pref_named as 2. The user agreed on 2026-10-26 to keep
+    # the frozen rule, under which SNG0512's turn-0 "dontcare" is dontcare, not named.
     "clean_turn0": {
-        "food": {"constrained": 195, "named": 142, "named_mismatch": 0, "omitted": 53, "no_pref": 40, "no_pref_named": 2},
+        "food": {
+            "constrained": 195, "named": 142, "named_mismatch": 0, "omitted": 53, "no_pref": 40, "no_pref_named": 1,
+            "no_pref_dontcare": 1,
+        },
         "area": {"constrained": 186, "named": 138, "named_mismatch": 3, "omitted": 48, "no_pref": 49, "no_pref_named": 0},
         "pricerange": {
             "constrained": 200, "named": 150, "named_mismatch": 1, "omitted": 50, "no_pref": 35, "no_pref_named": 1,

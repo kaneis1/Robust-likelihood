@@ -1,0 +1,569 @@
+{
+  "appendix_checks": {
+    "A1": [],
+    "A2": [],
+    "A3": []
+  },
+  "b_smoothing": 0.5,
+  "bootstrap": {
+    "replicates": 2000,
+    "rng": "random.Random(int(sha256(f'{seed}:{population}').hexdigest()[:16], 16)); rng.choices(range(n), k=n) per replicate over rows sorted by dialogue id",
+    "seed": 20261026,
+    "unit": "dialogue, resampled within each population"
+  },
+  "conservative": "The slot-level ratio ignores which value was named. Under a no-preference goal a specific value is less likely still, so the true likelihood ratio is at least a/b.",
+  "pooled_counts": {
+    "no_restaurant_turn": 5,
+    "population": 3927,
+    "slot_based_goal": 3932
+  },
+  "populations": {
+    "match_all_turn0": {
+      "counts": {
+        "area": {
+          "constrained": 301,
+          "named": 219,
+          "named_mismatch": 19,
+          "no_pref": 69,
+          "no_pref_named": 0
+        },
+        "food": {
+          "constrained": 308,
+          "named": 226,
+          "named_mismatch": 1,
+          "no_pref": 62,
+          "no_pref_named": 1
+        },
+        "pricerange": {
+          "constrained": 314,
+          "named": 227,
+          "named_mismatch": 18,
+          "no_pref": 56,
+          "no_pref_named": 1
+        }
+      },
+      "mismatch_rate": {
+        "area": 0.0867579908675799,
+        "food": 0.004424778761061947,
+        "pricerange": 0.07929515418502203
+      },
+      "size": 370
+    },
+    "match_clean_turn0": {
+      "counts": {
+        "area": {
+          "constrained": 186,
+          "named": 138,
+          "named_mismatch": 3,
+          "no_pref": 49,
+          "no_pref_named": 0
+        },
+        "food": {
+          "constrained": 195,
+          "named": 142,
+          "named_mismatch": 0,
+          "no_pref": 40,
+          "no_pref_named": 1
+        },
+        "pricerange": {
+          "constrained": 200,
+          "named": 150,
+          "named_mismatch": 1,
+          "no_pref": 35,
+          "no_pref_named": 1
+        }
+      },
+      "mismatch_rate": {
+        "area": 0.021739130434782608,
+        "food": 0.0,
+        "pricerange": 0.006666666666666667
+      },
+      "size": 235
+    },
+    "pooled_first_restaurant_turn": {
+      "counts": {
+        "area": {
+          "constrained": 3104,
+          "named": 1730,
+          "named_mismatch": 133,
+          "no_pref": 823,
+          "no_pref_named": 12
+        },
+        "food": {
+          "constrained": 3108,
+          "named": 1809,
+          "named_mismatch": 260,
+          "no_pref": 819,
+          "no_pref_named": 5
+        },
+        "pricerange": {
+          "constrained": 3167,
+          "named": 1758,
+          "named_mismatch": 115,
+          "no_pref": 760,
+          "no_pref_named": 10
+        }
+      },
+      "mismatch_rate": {
+        "area": 0.07687861271676301,
+        "food": 0.14372581536760642,
+        "pricerange": 0.06541524459613197
+      },
+      "size": 3927
+    },
+    "pooled_no_woz": {
+      "counts": {
+        "area": {
+          "constrained": 2692,
+          "named": 1353,
+          "named_mismatch": 127,
+          "no_pref": 559,
+          "no_pref_named": 8
+        },
+        "food": {
+          "constrained": 2684,
+          "named": 1418,
+          "named_mismatch": 32,
+          "no_pref": 567,
+          "no_pref_named": 3
+        },
+        "pricerange": {
+          "constrained": 2753,
+          "named": 1379,
+          "named_mismatch": 112,
+          "no_pref": 498,
+          "no_pref_named": 8
+        }
+      },
+      "mismatch_rate": {
+        "area": 0.09386548410938655,
+        "food": 0.022566995768688293,
+        "pricerange": 0.08121827411167512
+      },
+      "size": 3251
+    }
+  },
+  "quantity": "Corpus naming rates of real MultiWOZ users. a: the turn names the slot when the goal constrains it. b: the turn names it when the goal has no preference about it (absent or dontcare).",
+  "replicates_file": "reference_replicates.json",
+  "replicates_sha256": "f489a11a88e633fac4a3c7b643b0f2241fb6fe9babe384d209c3fdc726693d53",
+  "selection": {
+    "clean_by_n_constrained": {
+      "2": 124,
+      "3": 111
+    },
+    "clean_turn0": {
+      "area": {
+        "constrained": 186,
+        "dontcare": 0,
+        "named": 138,
+        "named_mismatch": 3,
+        "no_pref": 49,
+        "no_pref_dontcare": 0,
+        "no_pref_named": 0,
+        "omitted": 48
+      },
+      "food": {
+        "constrained": 195,
+        "dontcare": 0,
+        "named": 142,
+        "named_mismatch": 0,
+        "no_pref": 40,
+        "no_pref_dontcare": 1,
+        "no_pref_named": 1,
+        "omitted": 53
+      },
+      "pricerange": {
+        "constrained": 200,
+        "dontcare": 0,
+        "named": 150,
+        "named_mismatch": 1,
+        "no_pref": 35,
+        "no_pref_dontcare": 0,
+        "no_pref_named": 1,
+        "omitted": 50
+      }
+    },
+    "dialogues": {
+      "v21": 10438,
+      "v22": 10437
+    },
+    "missing_in_v22": [
+      "SNG01862"
+    ],
+    "name_based": {
+      "clean": 44,
+      "fail_info": 28
+    },
+    "no_named_constrained": 11,
+    "restaurant_goal": 4692,
+    "restaurant_only": 1311,
+    "slot_based": {
+      "clean": 235,
+      "fail_info": 135
+    },
+    "sng_restaurant_only": 442,
+    "utterance_mismatches": []
+  },
+  "variants": {
+    "V2": {
+      "a_from": "match_all_turn0",
+      "all_named": 11.364851913558544,
+      "all_named_boot95": [
+        9.970028528200016,
+        13.682535968149526
+      ],
+      "b_from": "match_all_turn0",
+      "name": "V2",
+      "slots": {
+        "area": {
+          "a": 0.7275747508305648,
+          "a_boot95": [
+            0.6752371002261962,
+            0.7796712097384821
+          ],
+          "a_wilson95": [
+            0.6746473678452478,
+            0.77476656859895
+          ],
+          "b": 0.007142857142857143,
+          "b_boot95": [
+            0.005880642954856361,
+            0.008928571428571428
+          ],
+          "named": 4.623603887676929,
+          "named_boot95": [
+            4.391231694581658,
+            4.836416567092602
+          ],
+          "omitted": -1.29322252800601,
+          "omitted_boot95": [
+            -1.5060419816224657,
+            -1.1162972040467876
+          ]
+        },
+        "food": {
+          "a": 0.7337662337662337,
+          "a_boot95": [
+            0.6833108108108108,
+            0.7808664021164021
+          ],
+          "a_wilson95": [
+            0.681746166823503,
+            0.7800269423216752
+          ],
+          "b": 0.023809523809523808,
+          "b_boot95": [
+            0.00684931506849315,
+            0.06166523972602728
+          ],
+          "named": 3.4281048345820797,
+          "named_boot95": [
+            2.4528074373059283,
+            4.6880055807336225
+          ],
+          "omitted": -1.2992829841302607,
+          "omitted_boot95": [
+            -1.5005932205319559,
+            -1.1248614417909573
+          ]
+        },
+        "pricerange": {
+          "a": 0.7229299363057324,
+          "a_boot95": [
+            0.6721311475409836,
+            0.7720393597783849
+          ],
+          "a_wilson95": [
+            0.6709595329746662,
+            0.7695116394125051
+          ],
+          "b": 0.02631578947368421,
+          "b_boot95": [
+            0.007462686567164179,
+            0.06862745098039216
+          ],
+          "named": 3.313143191299535,
+          "named_boot95": [
+            2.3623537757783515,
+            4.5805417573335285
+          ],
+          "omitted": -1.2568166201715083,
+          "omitted_boot95": [
+            -1.4578669189391347,
+            -1.0866975523013247
+          ]
+        }
+      }
+    },
+    "V3": {
+      "a_from": "pooled_first_restaurant_turn",
+      "all_named": 11.761872846122252,
+      "all_named_boot95": [
+        10.833968989977302,
+        13.44753580376402
+      ],
+      "b_from": "pooled_first_restaurant_turn",
+      "name": "V3",
+      "slots": {
+        "area": {
+          "a": 0.5573453608247423,
+          "a_boot95": [
+            0.54045587189542,
+            0.5747758851100967
+          ],
+          "a_wilson95": [
+            0.5398115556008172,
+            0.5747374021620053
+          ],
+          "b": 0.01516990291262136,
+          "b_boot95": [
+            0.007859733978234583,
+            0.023467829487783174
+          ],
+          "named": 3.6038716917899314,
+          "named_boot95": [
+            3.165650635716584,
+            4.275007095495057
+          ],
+          "omitted": -0.799679265565989,
+          "omitted_boot95": [
+            -0.8397247262432791,
+            -0.7605594719390912
+          ]
+        },
+        "food": {
+          "a": 0.582046332046332,
+          "a_boot95": [
+            0.56388088376561,
+            0.5983902145667442
+          ],
+          "a_wilson95": [
+            0.56461540533731,
+            0.5992746921335543
+          ],
+          "b": 0.006707317073170732,
+          "b_boot95": [
+            0.0018159257329066524,
+            0.012622099833736387
+          ],
+          "named": 4.463351021927631,
+          "named_boot95": [
+            3.824699724577831,
+            5.775914752411049
+          ],
+          "omitted": -0.8656547826007395,
+          "omitted_boot95": [
+            -0.9068082548370434,
+            -0.8229119618596094
+          ]
+        },
+        "pricerange": {
+          "a": 0.5550994632143985,
+          "a_boot95": [
+            0.5377999811054557,
+            0.5719287060233613
+          ],
+          "a_wilson95": [
+            0.537735306462882,
+            0.5723301145089381
+          ],
+          "b": 0.013797634691195795,
+          "b_boot95": [
+            0.006155740508174295,
+            0.022786458333333332
+          ],
+          "named": 3.6946501324046905,
+          "named_boot95": [
+            3.1900407103976858,
+            4.491231905247392
+          ],
+          "omitted": -0.7960108278517904,
+          "omitted_boot95": [
+            -0.8363192634770958,
+            -0.7564539524490762
+          ]
+        }
+      }
+    },
+    "V4": {
+      "a_from": "pooled_no_woz",
+      "all_named": 11.33241552177132,
+      "all_named_boot95": [
+        10.330203403060723,
+        13.395117972502522
+      ],
+      "b_from": "pooled_no_woz",
+      "name": "V4",
+      "slots": {
+        "area": {
+          "a": 0.5026002971768202,
+          "a_boot95": [
+            0.48259013720252397,
+            0.5211311962176914
+          ],
+          "a_wilson95": [
+            0.48372254380096835,
+            0.5214706399280645
+          ],
+          "b": 0.015178571428571428,
+          "b_boot95": [
+            0.006161162465158728,
+            0.025395159308077543
+          ],
+          "named": 3.499910557639094,
+          "named_boot95": [
+            2.982876113364438,
+            4.4035203350986825
+          ],
+          "omitted": -0.6830664000378083,
+          "omitted_boot95": [
+            -0.7221330693780139,
+            -0.641978714470728
+          ]
+        },
+        "food": {
+          "a": 0.5283159463487332,
+          "a_boot95": [
+            0.5094594998367069,
+            0.547816265060241
+          ],
+          "a_wilson95": [
+            0.5094033992757941,
+            0.5471475552089585
+          ],
+          "b": 0.006161971830985915,
+          "b_boot95": [
+            0.0008960573476702509,
+            0.012799730585815133
+          ],
+          "named": 4.451297659226284,
+          "named_boot95": [
+            3.7213390612356556,
+            6.372987559622027
+          ],
+          "omitted": -0.7452648602560163,
+          "omitted_boot95": [
+            -0.7872044038469393,
+            -0.7058203861041596
+          ]
+        },
+        "pricerange": {
+          "a": 0.500908100254268,
+          "a_boot95": [
+            0.48248393872003953,
+            0.5196548699831655
+          ],
+          "a_wilson95": [
+            0.48224254442456976,
+            0.519571125340154
+          ],
+          "b": 0.017034068136272545,
+          "b_boot95": [
+            0.006930350643760028,
+            0.02903582787044848
+          ],
+          "named": 3.381207304905942,
+          "named_boot95": [
+            2.841420594811663,
+            4.285143879023177
+          ],
+          "omitted": -0.6777842156142116,
+          "omitted_boot95": [
+            -0.7177132011363606,
+            -0.6385566528142088
+          ]
+        }
+      }
+    },
+    "primary": {
+      "a_from": "match_clean_turn0",
+      "all_named": 12.572908672349033,
+      "all_named_boot95": [
+        11.63548668488245,
+        14.250321571632066
+      ],
+      "b_from": "pooled_first_restaurant_turn",
+      "name": "primary",
+      "slots": {
+        "area": {
+          "a": 0.7419354838709677,
+          "a_boot95": [
+            0.6756756756756757,
+            0.8034873229959933
+          ],
+          "a_wilson95": [
+            0.6746033457086196,
+            0.799476449922351
+          ],
+          "b": 0.01516990291262136,
+          "b_boot95": [
+            0.007859733978234583,
+            0.023467829487783174
+          ],
+          "named": 3.88994889704522,
+          "named_boot95": [
+            3.440484222706219,
+            4.547480415886491
+          ],
+          "omitted": -1.3392595198504846,
+          "omitted_boot95": [
+            -1.612940360562788,
+            -1.1095330543227466
+          ]
+        },
+        "food": {
+          "a": 0.7282051282051282,
+          "a_boot95": [
+            0.6666666666666666,
+            0.7886736911259348
+          ],
+          "a_wilson95": [
+            0.6618033167664912,
+            0.7857894565306309
+          ],
+          "b": 0.006707317073170732,
+          "b_boot95": [
+            0.0018159257329066524,
+            0.012622099833736387
+          ],
+          "named": 4.687383747057387,
+          "named_boot95": [
+            4.047973970758662,
+            6.002052307187137
+          ],
+          "omitted": -1.2959777327954258,
+          "omitted_boot95": [
+            -1.5478057326208619,
+            -1.0928957038655045
+          ]
+        },
+        "pricerange": {
+          "a": 0.75,
+          "a_boot95": [
+            0.69,
+            0.804148823684906
+          ],
+          "a_wilson95": [
+            0.6856590168795417,
+            0.8049183199318249
+          ],
+          "b": 0.013797634691195795,
+          "b_boot95": [
+            0.006155740508174295,
+            0.022786458333333332
+          ],
+          "named": 3.995576028246427,
+          "named_boot95": [
+            3.4813071318063646,
+            4.789838903381895
+          ],
+          "omitted": -1.3724006543317215,
+          "omitted_boot95": [
+            -1.6142943854122216,
+            -1.1563578859447599
+          ]
+        }
+      }
+    }
+  }
+}
