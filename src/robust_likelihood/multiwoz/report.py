@@ -344,6 +344,9 @@ KIND_LABELS = {
     "full": "Every constrained slot removed",
 }
 LABEL_OFFSETS = {"food": (7, -3, "left"), "area": (-7, -3, "right"), "price": (0, 7, "center")}
+# Full-removal bins sit close together on x when few slots are named, so two-slot and
+# three-slot labels go on opposite sides of their points.
+BIN_OFFSETS = {"2": (6, -11, "left"), "3": (6, 5, "left")}
 HYP_TYPES = ("G", "minus:food", "minus:area", "minus:pricerange", "broad", "ctrl:contra", "ctrl:tie", "ctrl:tie2")
 DASHED = (0, (4, 3))
 
@@ -463,7 +466,10 @@ def _draw_occam(ax, rows: list[dict], title: str, limits: tuple[float, float], y
             ax.plot(x, y, marker="o", markersize=7.5, markerfacecolor=color, markeredgecolor=INK["surface"],
                     markeredgewidth=1.5, linestyle="none", zorder=4)
             if row["kind"] != "single_omitted":
-                dx, dy, align = LABEL_OFFSETS.get(row["group"], (6, 3, "left"))
+                if row["kind"] == "full":
+                    dx, dy, align = BIN_OFFSETS.get(row["group"][0], (6, 3, "left"))
+                else:
+                    dx, dy, align = LABEL_OFFSETS.get(row["group"], (6, 3, "left"))
                 ax.annotate(row["group"], (x, y), xytext=(dx, dy), textcoords="offset points", ha=align,
                             fontsize=7.5, color=INK["secondary"], zorder=5)
         else:
@@ -739,9 +745,10 @@ def summary_markdown(
         f"- Hypotheses: the goal, the goal minus each constrained slot, and the broad goal, each in an implicit "
         "wording and an explicit wording that adds \"The user has no preference about ...\", plus contradiction "
         f"and tie controls. One hypothesis per call. Run `{metrics['run']}`: {sum(metrics['scores'].values()):,} "
-        f"scores from `{metrics['requested_model_id']}` (returned ids {metrics['returned_model_ids']}), "
+        f"scores from `{metrics['requested_model_id']}` ({_returned(metrics['returned_model_ids'])}), "
         f"{manifest.get('http_requests', 0):,} HTTP requests, {len(manifest.get('failures', []))} failures, "
         f"{sum(metrics['clipped'].values())} scores clipped at {metrics['clip_epsilon']}.",
+        *_repeat_lines(metrics),
         f"- Prompt versions: {', '.join(f'`{version}`' for version in metrics['prompt_versions'])}; "
         "`stated_intention` is the constant `find_restaurant` and the hypothesis text is the intention description.",
         f"- Intervals: {metrics['bootstrap']['replicates']:,} paired bootstrap replicates. Replicate b resamples "
@@ -780,6 +787,13 @@ def summary_markdown(
         f"{_fmt(None if full_impl is None else full_impl['mean_L_J'])} (implicit) against "
         f"{_fmt(None if full_impl is None else full_impl['L_E'])} nats.",
         "",
+        f"Jev's penalty is {_share(named_expl['mean_L_J'], named_expl['L_E'])} of the corpus ratio for one named "
+        f"slot under the explicit wording and {_share(named_impl['mean_L_J'], named_impl['L_E'])} under the implicit "
+        f"wording; for the full removal it is {_share(None if full_expl is None else full_expl['mean_L_J'], None if full_expl is None else full_expl['L_E'])} "
+        f"and {_share(None if full_impl is None else full_impl['mean_L_J'], None if full_impl is None else full_impl['L_E'])}.",
+        "",
+        *_robustness_lines(metrics),
+        "",
         "Per-slot and per-bin values with intervals: `metrics.md`. Figure data: `fig_occam_likely.csv`, "
         "`fig_occam_typical.csv`.",
         "",
@@ -804,8 +818,7 @@ def summary_markdown(
         "",
         *controls_markdown(logit),
         "",
-        "Mean within-item centred scores by hypothesis type, which show any fixed preference for a kind of "
-        "text, are in `metrics.md`.",
+        _bias_sentence(likely),
         "",
         "## 7. Reverse direction",
         "",
@@ -823,6 +836,7 @@ def summary_markdown(
                     f"| {VERSION_LABELS.get(version, version)} | {REGIME_LABELS[regime]} | {group['n']} | "
                     f"{_fmt(group['L_E'])} | {_fmt(group['mean_L_J'])} | {_fmt(group['OG'])}{_ci(group.get('OG_ci95'))} |"
                 )
+    lines += ["", *_reverse_lines(logit)]
     lines += [
         "",
         "## 8. Typicality and the language model",
@@ -878,12 +892,13 @@ def notes_for_xuan(metrics: dict, lm_manifest: dict | None) -> list[str]:
     notes = [
         f"- Removing one slot the turn names costs the broader goal {_fmt(named_expl['mean_L_J'])} logits under "
         f"the explicit wording and {_fmt(named_impl['mean_L_J'])} under the implicit wording; real users' first "
-        f"turns give {_fmt(named_expl['L_E'])} nats. Jev's penalty {_versus(named_expl)} the corpus ratio with "
-        f"the explicit wording and {_versus(named_impl)} it with the implicit wording (95% intervals). The logit "
-        "reading is the generous one for Jev, so a shortfall is not an artefact of the score mapping.",
+        f"turns give {_fmt(named_expl['L_E'])} nats. {_verdict(named_expl, named_impl)} The logit reading is the "
+        "generous one for Jev, so a shortfall is not an artefact of the score mapping.",
         f"- Stating the absence of a preference moves the score by {_fmt(gap.get('mean'))} logits on average at "
-        f"the same breadth ({_fmt(gap.get('share_abs_above_1'))} of pairs move by more than 1), while removing a "
-        f"named slot under the implicit wording moves it by {_fmt(named_impl['mean_L_J'])}.",
+        f"the same breadth ({_share(gap.get('share_abs_above_1'), 1.0)} of pairs move by more than 1), while removing "
+        f"a named slot under the implicit wording moves it by {_fmt(named_impl['mean_L_J'])}. Jev's breadth penalty "
+        "follows how breadth is worded more than the breadth itself.",
+        *_scorecard_notes(metrics),
     ]
     if "lm" not in clean:
         notes.append(
@@ -907,14 +922,129 @@ def notes_for_xuan(metrics: dict, lm_manifest: dict | None) -> list[str]:
     return notes
 
 
-def _versus(group: dict) -> str:
+def _returned(found: dict) -> str:
+    if len(found) == 1:
+        return f"every response reported `{next(iter(found))}`"
+    return "responses reported " + ", ".join(f"`{model}` ({count})" for model, count in found.items())
+
+
+def _share(part: float | None, whole: float | None) -> str:
+    if part is None or not whole:
+        return "n/a"
+    return f"{part / whole:.0%}"
+
+
+def _repeat_lines(metrics: dict) -> list[str]:
+    noise = metrics.get("repeat_noise")
+    if not noise:
+        return []
+    lines = []
+    for version, found in noise.items():
+        if found["deterministic"]:
+            verdict = "Jev returned identical scores in every group: it is deterministic here."
+        else:
+            verdict = (
+                f"Jev is not deterministic: {found['identical_groups']} of {found['groups']} groups were identical. "
+                f"The mean within-group SD is {_fmt(found['mean_sd'], 3)} logits and the largest range "
+                f"{_fmt(found['max_range'], 2)}."
+            )
+        lines.append(
+            f"- Repeat check, run `{metrics['repeat_run']}`, `{version}`: each (item, hypothesis) scored "
+            f"{'/'.join(str(size) for size in found['observations_per_group'])} times. {verdict}"
+        )
+    return lines
+
+
+def _robustness_lines(metrics: dict) -> list[str]:
+    key = "slots_mean|named"
+    clean = metrics["sets"]["clean"]
+    parts = []
+    log = clean["mappings"]["log"].get("multiwoz_likely")
+    if log:
+        parts.append(
+            f"the log mapping ({_og_sentence(log, f'expl|{key}')} explicit, {_og_sentence(log, f'impl|{key}')} implicit)"
+        )
+    fail = metrics["sets"].get("fail_info", {}).get("mappings", {}).get("logit", {}).get("multiwoz_likely")
+    if fail:
+        parts.append(
+            f"the fail_info set ({_og_sentence(fail, f'expl|{key}')} explicit, {_og_sentence(fail, f'impl|{key}')} implicit)"
+        )
+    variants = []
+    for name, variant in metrics.get("variants", {}).items():
+        found = variant["occam"].get("multiwoz_likely", {})
+        if f"expl|{key}" in found and f"impl|{key}" in found:
+            variants.append(f"{name} {_fmt(found[f'expl|{key}']['OG'])} / {_fmt(found[f'impl|{key}']['OG'])}")
+    if variants:
+        parts.append("the reference variants (explicit / implicit: " + ", ".join(variants) + ")")
+    if not parts:
+        return []
+    return ["Named single-slot OG under `likely` in the secondary analyses: " + "; ".join(parts) + "."]
+
+
+def _bias_sentence(block: dict) -> str:
+    found = {key: row["mean_centred"] for key, row in block["bias"].items() if not key.startswith("ctrl:contra")}
+    if not found:
+        return ""
+    high = max(found, key=found.get)
+    low = min(found, key=found.get)
+
+    def name(key: str) -> str:
+        hyp_type, regime = key.split("|")
+        return f"`{hyp_type}` ({REGIME_LABELS[regime]})"
+
+    return (
+        f"Within each item, `likely` favours {name(high)} most (mean centred score {_fmt(found[high])}) and "
+        f"{name(low)} least ({_fmt(found[low])}), leaving the contradiction controls aside. The full table is in "
+        "`metrics.md`."
+    )
+
+
+def _reverse_lines(logit: dict) -> list[str]:
+    parts = []
+    for version, block in logit.items():
+        expl = block["occam"].get("expl|slots_mean|omitted")
+        impl = block["occam"].get("impl|slots_mean|omitted")
+        if expl and impl:
+            parts.append(
+                f"with `{VERSION_LABELS.get(version, version)}`, the broader goal wins by {_fmt(-expl['mean_L_J'])} "
+                f"(explicit) and {_fmt(-impl['mean_L_J'])} (implicit) logits against {_fmt(-expl['L_E'])} nats: "
+                + _verdict(expl, impl, reverse=True, subject="the win")[:-1].replace(" (95% intervals)", "")
+            )
+    if not parts:
+        return []
+    sentence = "; ".join(parts)
+    return [sentence[0].upper() + sentence[1:] + " (95% intervals)."]
+
+
+def _verdict(explicit: dict, implicit: dict, reverse: bool = False, subject: str = "Jev's penalty") -> str:
+    first, second = _versus(explicit, reverse), _versus(implicit, reverse)
+    if first == second:
+        return f"{subject} {first} the corpus ratio under both wordings (95% intervals)."
+    return (
+        f"{subject} {first} the corpus ratio under the explicit wording and {second} it under the "
+        "implicit wording (95% intervals)."
+    )
+
+
+def _scorecard_notes(metrics: dict) -> list[str]:
+    failed = [row for row in metrics["predictions"] if row["pass"] is False]
+    if not failed:
+        return []
+    names = ", ".join(f"{row['id']} ({_fmt(row['value'])})" for row in failed)
+    return [f"- Pre-registered predictions that failed: {names}. A failed prediction is a result; see section 9."]
+
+
+def _versus(group: dict, reverse: bool = False) -> str:
+    """How Jev's gap compares with the corpus ratio. When the turn omits the removed slots (reverse), L_E
+    is negative, so a positive OG means the broader goal wins by less than the corpus says."""
     bounds = group.get("OG_ci95")
     if not bounds:
         return "is compared with"
+    short, over = ("falls short of", "exceeds") if not reverse else ("exceeds", "falls short of")
     if bounds[1] < 0:
-        return "falls short of"
+        return short
     if bounds[0] > 0:
-        return "exceeds"
+        return over
     return "is consistent with"
 
 

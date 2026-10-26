@@ -123,6 +123,9 @@ Jev's scores with the a-rates of the same resampled items.
 - A local smoke test (Qwen2.5-0.5B-Instruct on CPU and MPS, 3 texts, 8 samples each)
   passed both self-checks, dropped no samples, and recorded the revision hash. It is not
   the Phase 8 result.
+- Decision, 26 October 2026: the user will submit `scripts/multiwoz_lm_job.sh` on their own
+  cluster. The user asked for the branch to be pushed so they can open the pull request
+  themselves; P6 stays pending until the language-model run is analysed.
 
 ## Phase 9: figures
 
@@ -132,3 +135,19 @@ Jev's scores with the a-rates of the same resampled items.
   CSV beside each figure is its table view.
 - The y = x diagonal is dashed as the plan asks. The zero lines are solid hairlines, like the
   axes. Figures are drawn for print on a light background.
+
+## Runs and where their results live
+
+| Run | Calls | Result |
+| --- | --- | --- |
+| `20261025T185518Z-pilot` | 398 planned, 398 HTTP | 398 scored, every response `jev-1.13.0` |
+| `20261026T034616Z-full` | 7,454 planned, 7,032 HTTP, 422 from cache | 7,454 scored, 0 failures |
+| `20261026T041814Z-repeats` | 1,208 planned, 906 HTTP, 302 from cache | 1,208 scored, 0 failures |
+
+- The pilot manifest records commit `2a7b8f2` with a clean tree. The full and repeat runs
+  record `2a7b8f2` with `dirty: true`: `metrics.py` held uncommitted analysis code when they
+  started. The scoring path (`jev_run.py`, the prompt packs, `probe.jsonl`) was as committed,
+  and both manifests store the prompt texts and the probe's sha256.
+- `results/` stays out of git, as for the earlier experiments. The write-up is copied to
+  `docs/multiwoz_results/`: `summary.md`, `metrics.md`, the pilot report, and the figures
+  with their CSV data. The raw calls and scores remain in the run folders.
