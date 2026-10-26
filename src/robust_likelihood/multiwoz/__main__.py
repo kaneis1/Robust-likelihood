@@ -1,4 +1,4 @@
-"""python -m robust_likelihood.multiwoz download | prepare | run
+"""python -m robust_likelihood.multiwoz download | prepare | run | analyze | lm-score | report
 
 `run --label pilot` also writes pilot_report.md into the run folder.
 """
@@ -26,9 +26,10 @@ from robust_likelihood.keys import MissingAPIKey, UnrecognizedKeyLabels
 from robust_likelihood.multiwoz.download import EXPECTED_DIALOGUES, ChecksumMismatch, download
 from robust_likelihood.multiwoz.hypotheses import food_pool, value_pools
 from robust_likelihood.multiwoz.jev_run import ModelIdChanged, run_jev
+from robust_likelihood.multiwoz.metrics import analyze
 from robust_likelihood.multiwoz.probe import APPENDIX_A4, build_probe, probe_summary
 from robust_likelihood.multiwoz.reference import appendix_checks, build_reference, reference_markdown
-from robust_likelihood.multiwoz.report import pilot_report
+from robust_likelihood.multiwoz.report import metrics_markdown, pilot_report, summary_markdown, write_figures
 from robust_likelihood.planning import UnpinnedModelError
 from robust_likelihood.storage import read_json, repo_root, write_json, write_jsonl
 
@@ -102,6 +103,23 @@ def main(argv: list[str] | None = None) -> int:
     run_parser.add_argument("--dry-run", action="store_true")
     run_parser.add_argument("--resume", default=None)
     run_parser.add_argument("--label", default="run")
+    analyze_parser = sub.add_parser("analyze")
+    analyze_parser.add_argument("run_dir")
+    analyze_parser.add_argument("--repeats", default=None, help="folder of the repeat-check run")
+    analyze_parser.add_argument("--lm", default=None, help="folder of the lm-score run")
+    lm_parser = sub.add_parser("lm-score", help="Phase 8; needs the lm extra and a GPU")
+    lm_parser.add_argument("--probe", default=str(DERIVED_DIR / "probe.jsonl"))
+    lm_parser.add_argument("--model", default=None, help="defaults to the configured model")
+    lm_parser.add_argument("--revision", default=None, help="Hugging Face revision; the hash used is recorded")
+    lm_parser.add_argument("--samples", type=int, default=None, help="samples per hypothesis text")
+    lm_parser.add_argument("--batch-size", type=int, default=16)
+    lm_parser.add_argument("--limit-texts", type=int, default=None, help="smoke test on the first N texts")
+    lm_parser.add_argument("--dtype", default="bfloat16")
+    lm_parser.add_argument("--device", default=None, help="cuda, mps, or cpu; detected when omitted")
+    lm_parser.add_argument("--label", default="lm")
+    report_parser = sub.add_parser("report")
+    report_parser.add_argument("run_dir")
+    report_parser.add_argument("--lm", default=None, help="folder of the lm-score run")
     args = parser.parse_args(argv)
     try:
         return _dispatch(args)
@@ -163,6 +181,55 @@ def _dispatch(args) -> int:
             report.write_text(pilot_report(run_dir, root / DERIVED_DIR), encoding="utf-8", newline="\n")
             summary["pilot_report"] = str(report)
         print(json.dumps(summary, indent=2, sort_keys=True))
+        return 0
+    if args.command == "analyze":
+        run_dir = Path(args.run_dir)
+        metrics = analyze(
+            run_dir,
+            root / DERIVED_DIR,
+            config,
+            repeats_dir=None if args.repeats is None else Path(args.repeats),
+            lm_dir=None if args.lm is None else Path(args.lm),
+        )
+        write_json(run_dir / "metrics.json", metrics)
+        (run_dir / "metrics.md").write_text(metrics_markdown(metrics), encoding="utf-8", newline="\n")
+        for row in metrics["predictions"]:
+            result = row.get("status", "pending") if row["pass"] is None else ("pass" if row["pass"] else "fail")
+            print(f"{row['id']}: {result}  value={row.get('value')}")
+        print(f"Wrote {run_dir / 'metrics.json'} and {run_dir / 'metrics.md'}")
+        return 0
+    if args.command == "lm-score":
+        from robust_likelihood.multiwoz.lm import lm_score
+
+        summary = lm_score(
+            root,
+            config,
+            Path(args.probe),
+            model_name=args.model,
+            revision=args.revision,
+            samples=args.samples,
+            batch_size=args.batch_size,
+            limit_texts=args.limit_texts,
+            label=args.label,
+            dtype=args.dtype,
+            device=args.device,
+        )
+        print(json.dumps(summary, indent=2, sort_keys=True))
+        return 0
+    if args.command == "report":
+        run_dir = Path(args.run_dir)
+        lm_dir = None if args.lm is None else Path(args.lm)
+        metrics = read_json(run_dir / "metrics.json")
+        figures = write_figures(run_dir, root / DERIVED_DIR, metrics, lm_dir)
+        summary = summary_markdown(
+            metrics,
+            read_json(root / DERIVED_DIR / "reference_table.json"),
+            read_json(run_dir / "manifest.json"),
+            config["multiwoz"]["commit"],
+            None if lm_dir is None else read_json(lm_dir / "manifest.json"),
+        )
+        (run_dir / "summary.md").write_text(summary, encoding="utf-8", newline="\n")
+        print(f"Wrote {run_dir / 'summary.md'} and {len(figures)} figure files")
         return 0
     raise ValueError(f"Unknown command {args.command}")
 

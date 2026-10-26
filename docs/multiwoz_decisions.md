@@ -58,3 +58,77 @@ Jev's scores with the a-rates of the same resampled items.
   second tie control is never a copy of the first. All 11 `tie2` texts differ from `tie`.
 - No goal in the corpus has food `dontcare`, so the food pool is 91 values.
 - The probe has 3,727 rows (clean 2,355; fail_info 1,372) and 707 distinct non-control texts.
+
+## Phase 5: running Jev
+
+- The 25 October pilot left no files in the repository, so `pilot_report.md` reconstructs its
+  layout from the plan: per removal and wording, Jev's logit gap beside the corpus log-ratio.
+  `run --label pilot` writes the report into the run folder.
+- Calls are planned item by item, both wordings together, so a stopped run leaves whole items.
+  `ModelClient` and `runner.execute` are used unchanged; a small router hands each call the
+  prompt pack its `prompt_version` names.
+- Three items share the utterance "I am looking for an expensive restaurant in the centre",
+  so 24 of the 7,454 planned calls repeat an earlier (utterance, text) pair. Each success is
+  added to the in-memory cache as it arrives, so those 24 are served from it.
+- The cache key names the prompt version but not its text. A cached record is reused only if
+  its stored prompt text equals what the pack renders now.
+- `--repeats R` keeps the repo's meaning: the baseline (repeat id none) plus repeats 1 to R.
+  The repeat check's baselines come from the full run's cache, so it makes about 900 new calls.
+- `--seed` defaults to the configured pilot seed when `--items` is given. Resuming re-reads
+  the selection from the run's manifest and skips (item, hypothesis, wording, repeat) tuples
+  that already succeeded. The model-id check counts successful records only.
+
+## Phase 6: metric details the plan leaves open
+
+- For a full removal, L_E differs between items (which slots, named or omitted), so a group's
+  OG is mean(L_J) − mean(L_E) over its items. Single-slot groups have one L_E.
+- "Mean over slots" (P1, P2) is the average of the three slot-level OGs, recomputed in every
+  bootstrap replicate.
+- The plan names the wording only for P1. P2 to P5 are scored on `multiwoz_likely` as well;
+  `typical` is reported beside them.
+- P3, "full removal with all slots named": every constrained slot named. The clean set has no
+  three-slot item with all three named, so this is the 106 two-slot items naming both.
+- P4 pools every same-breadth pair (`G` for two-slot goals, each `minus:X`, `broad`).
+- P5 uses `ctrl:tie`. The 11 `ctrl:tie2` controls are reported separately and pooled.
+- P6 averages the named single-slot mean L over slots and both wordings. "|L| ≤ 0.5 or
+  negative" is read as L ≤ 0.5.
+- Monotonicity compares scores on the logit scale; clipping can only add ties, and the tie
+  count is reported.
+- Per-hypothesis bias centres each item's scores on the mean of all its scored rows,
+  controls included.
+- Bootstrap: when every clean item is analysed, replicate b redraws exactly the clean-item
+  resample the reference used for a (`pairing_verified` checks the first 25 replicates
+  against the stored counts), and b comes from pooled replicate b. Other item sets are
+  resampled with their own generator.
+- Figure bins: within each |C|, groups are taken in increasing k_named and pooled until a
+  bin has 15 items; a short last bin joins the previous one. Clean bins: 2 slots, 0–1
+  named (18 items); 2 slots, 2 named (106); 3 slots, 0–1 named (15); 3 slots, 2 named (96).
+
+## Phase 8: the language model
+
+- One explicit device (`cuda`, then `mps`, then `cpu`, or `--device`) instead of
+  `device_map="auto"`: the 7B model fits on one GPU, and accelerate's dispatch crashed with
+  a segmentation fault on the macOS test machine.
+- The revision is resolved to a commit hash before loading (the snapshot folder name), the
+  model and tokenizer are loaded at that hash, and the hash goes in the manifest.
+  transformers 5 no longer sets `config._commit_hash`.
+- Sampling settings go to `generate` only through one `GenerationConfig` copy, and
+  `model.generation_config` is replaced too, so Qwen's defaults cannot be merged back in.
+  Two self-checks run before any scoring: the processed scores of a short generation must
+  equal the raw logits, and tokenizing prefix and reply apart must give the same ids as
+  tokenizing the whole conversation.
+- σ_h is the sample standard deviation (n − 1). The bin smoothing uses the kept samples:
+  (count + 1) / (K_kept + 3). Every sample's text and surprisal is saved in
+  `lm_samples.jsonl`.
+- A local smoke test (Qwen2.5-0.5B-Instruct on CPU and MPS, 3 texts, 8 samples each)
+  passed both self-checks, dropped no samples, and recorded the revision hash. It is not
+  the Phase 8 result.
+
+## Phase 9: figures
+
+- Colours are slots 1 to 3 of the reference categorical palette, the set documented to pass
+  every pairwise colour-vision check. Node was not available to rerun the validator script.
+  Wording is carried by marker shape (filled circle explicit, open square implicit), and the
+  CSV beside each figure is its table view.
+- The y = x diagonal is dashed as the plan asks. The zero lines are solid hairlines, like the
+  axes. Figures are drawn for print on a light background.
