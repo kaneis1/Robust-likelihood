@@ -108,3 +108,11 @@ open are recorded too, so the analysis can be audited.
     (fixed neutral opener and closer, message untouched) and is checked by regex only.
     Every other kind keeps both checks.
 - Full-run estimate from the pilot: about 5,200 calls, about $13; approved.
+- **Full rewrite run (2026-10-29, `results/multiwoz/rewrites/20261029T103256Z-full`).** 3,262
+  units, 3,142 accepted (96%), 3,933 calls, 314,493 input and 127,399 output tokens (about
+  $9.50). verbose and zh are the lowest at 86%. Five items (SNG01720, SNG0465, SNG0552,
+  SNG0561, SNG0748) lose most utterance rewrites because the regex reading of the original
+  disagrees with its 2.2 annotation, the reference the frozen check uses. One accepted
+  para2 (SNG02148) repeats the original word for word; it is kept, as the frozen checks do
+  not reject it. Accepted rewrites: `data/multiwoz/derived/rewrites.jsonl`; the seeded
+  60-item robustness subset: `data/multiwoz/derived/robustness_subset.json`.

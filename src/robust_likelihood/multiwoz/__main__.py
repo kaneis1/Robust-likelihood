@@ -295,10 +295,14 @@ def _dispatch(args) -> int:
         return 0
     if args.command == "rewrite-audit":
         from robust_likelihood.multiwoz.report import write_csv
-        from robust_likelihood.multiwoz.rewrites import audit_rows
+        from robust_likelihood.multiwoz.rewrites import acceptance_markdown, audit_rows
 
-        rows = audit_rows(read_jsonl(Path(args.run_dir) / "accepted.jsonl"))
+        accepted = read_jsonl(Path(args.run_dir) / "accepted.jsonl")
+        rows = audit_rows(accepted)
         write_csv(root / args.out, rows)
+        (root / args.out).with_name("rewrite_acceptance.md").write_text(
+            acceptance_markdown(read_json(Path(args.run_dir) / "manifest.json"), accepted), encoding="utf-8",
+            newline="\n")
         print(f"Wrote {len(rows)} rows to {root / args.out}; mark meaning_preserved y or n, then stop for review.")
         return 0
     raise ValueError(f"Unknown command {args.command}")

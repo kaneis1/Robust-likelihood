@@ -366,6 +366,26 @@ def audit_rows(accepted: list[dict], seed: int = SEED, per_side: int = 50) -> li
     return rows
 
 
+def acceptance_markdown(manifest: dict, accepted: list[dict]) -> str:
+    same = [row for row in accepted if row["kind"] not in CHINESE_KINDS
+            and normalize_text(row["rewrite"]) == normalize_text(row["original"])]
+    lines = ["# Rewrite acceptance", "",
+             f"Run started {manifest['started_at']}: {manifest['items']} clean items, {manifest['units']} rewrite units, "
+             f"{manifest['api_calls']} calls to `{', '.join(manifest['returned_model_ids'])}` "
+             f"(temperature sent: {manifest['temperature_sent']}), {manifest['input_tokens']:,} input and "
+             f"{manifest['output_tokens']:,} output tokens.", "",
+             "A rewrite is kept if its regex slot tuple is unchanged and NLI entailment is at least "
+             f"{manifest['nli']['threshold']} both ways (`{manifest['nli']['model']}`); "
+             f"{', '.join(manifest['nli']['regex_only_kinds'])} is checked by regex only. Up to "
+             f"{manifest['attempts']} attempts per unit.", "",
+             "| Kind | Accepted | Units | Rate |", "|---|---|---|---|"]
+    lines += [f"| {kind} | {found['accepted']} | {found['units']} | {100 * found['rate']:.1f}% |"
+              for kind, found in manifest["acceptance"].items()]
+    lines += ["", f"Accepted rewrites identical to their original (not counting Chinese, whose back-translation may "
+              f"match): {len(same)}" + (f" ({', '.join(row['unit_id'] for row in same)})." if same else "."), ""]
+    return "\n".join(lines)
+
+
 def robustness_subset(items: list[dict], size: int = 60) -> list[str]:
     return choose_items(items, "clean", size, unit_seed("rewrites:robustness"))
 
