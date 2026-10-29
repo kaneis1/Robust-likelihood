@@ -1,0 +1,188 @@
+{
+  "config": {
+    "api_prices_usd_per_mtok": {
+      "claude": {
+        "as_of": "2026-10-06",
+        "input": 10.0,
+        "model": "claude-fable-5-1",
+        "output": 50.0
+      }
+    },
+    "api_providers": [
+      "claude",
+      "gpt"
+    ],
+    "api_sequences_per_cell": 10,
+    "api_temperature": 0.0,
+    "bootstrap": {
+      "replicates": 2000,
+      "seed": 20261027
+    },
+    "hypotheses": {
+      "even": {
+        "faces": {
+          "1": "0",
+          "2": "1/3",
+          "3": "0",
+          "4": "1/3",
+          "5": "0",
+          "6": "1/3"
+        },
+        "wording": "a six-sided die that only ever lands on 2, 4, or 6, each equally often"
+      },
+      "fair": {
+        "faces": {
+          "1": "1/6",
+          "2": "1/6",
+          "3": "1/6",
+          "4": "1/6",
+          "5": "1/6",
+          "6": "1/6"
+        },
+        "wording": "a fair six-sided die"
+      },
+      "loaded": {
+        "faces": {
+          "1": "1/10",
+          "2": "1/10",
+          "3": "1/10",
+          "4": "1/10",
+          "5": "1/10",
+          "6": "1/2"
+        },
+        "wording": "a six-sided die loaded so that it lands on 6 half of the time, with the other faces equally likely"
+      }
+    },
+    "local_models": {
+      "olmo": {
+        "id": "allenai/OLMo-2-1124-7B-Instruct",
+        "revision": "470b1fba1ae01581f270116362ee4aa1b97f4c84",
+        "scorers": [
+          "S1"
+        ]
+      },
+      "qwen": {
+        "id": "Qwen/Qwen2.5-7B-Instruct",
+        "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+        "scorers": [
+          "S1",
+          "S2",
+          "S3"
+        ]
+      }
+    },
+    "pilot": {
+      "pairs": 30,
+      "seed": 20261027
+    },
+    "rolls": [
+      1,
+      2,
+      3,
+      4,
+      6,
+      8,
+      10
+    ],
+    "seed": 20261027,
+    "sequences_per_cell": 20,
+    "verbal_max_new_tokens": 48
+  },
+  "counts": {
+    "normalization_queries": 54,
+    "pairs": 1260,
+    "sequences": 420
+  },
+  "data_sha256": {
+    "normalization": "ccfec40e6afb80d23187c621dfa6b8cc520646019d457fd4f2221ed71aefa0d0",
+    "pairs": "12dc5399a22317af42939d6fc024a400e75b5cdd0278850f01f6b6b8c7703276",
+    "sequences": "225f34e8eb09e231f19db2b07e0d8da5e30d2321d764583d3c7e0f8f0bd917c2"
+  },
+  "git": {
+    "commit": "2ac269c9791e847342a7e73e31bf30d9d9bfe5a6",
+    "dirty": true
+  },
+  "runs": [
+    {
+      "checks": null,
+      "elapsed_seconds": null,
+      "finished_at": "2026-10-29T08:28:09Z",
+      "git": {
+        "commit": "fba63758d5694a08ddf5447721860d9239996c89",
+        "dirty": false
+      },
+      "kind": "api",
+      "models": {
+        "claude": {
+          "id": "claude-fable-5-1",
+          "returned": [
+            "claude-fable-5-1"
+          ]
+        },
+        "gpt": {
+          "id": "gpt-6-astra",
+          "returned": [
+            "gpt-6-astra"
+          ]
+        }
+      },
+      "run_dir": "results/dice/20261029T080858Z-api",
+      "started_at": "2026-10-29T08:08:58Z",
+      "summary": "claude claude-fable-5-1 (no temperature (rejected), 1368 calls); gpt gpt-6-astra (no temperature (rejected), 1368 calls)",
+      "versions": null
+    },
+    {
+      "checks": {
+        "boundary_holds": true
+      },
+      "elapsed_seconds": 35.2,
+      "finished_at": "2026-10-29T09:06:43Z",
+      "git": {
+        "commit": "2ac269c9791e847342a7e73e31bf30d9d9bfe5a6",
+        "dirty": false
+      },
+      "kind": "local",
+      "models": {
+        "olmo": {
+          "id": "allenai/OLMo-2-1124-7B-Instruct",
+          "revision": "470b1fba1ae01581f270116362ee4aa1b97f4c84"
+        }
+      },
+      "run_dir": "results/dice/20261029T090607Z-local-olmo",
+      "started_at": "2026-10-29T09:06:07Z",
+      "summary": "allenai/OLMo-2-1124-7B-Instruct at revision 470b1fba1ae0, bfloat16 on cuda:0, 1314 queries, scorers S1, 35.2 s",
+      "versions": {
+        "python": "3.12.3",
+        "torch": "2.14.1+cu126",
+        "transformers": "4.57.6"
+      }
+    },
+    {
+      "checks": {
+        "boundary_holds": true,
+        "greedy_is_exact": true
+      },
+      "elapsed_seconds": 504.5,
+      "finished_at": "2026-10-29T09:06:04Z",
+      "git": {
+        "commit": "2ac269c9791e847342a7e73e31bf30d9d9bfe5a6",
+        "dirty": false
+      },
+      "kind": "local",
+      "models": {
+        "qwen": {
+          "id": "Qwen/Qwen2.5-7B-Instruct",
+          "revision": "a09a35458c702b33eeacc393d103063234e8bc28"
+        }
+      },
+      "run_dir": "results/dice/20261029T085739Z-local-qwen",
+      "started_at": "2026-10-29T08:57:39Z",
+      "summary": "Qwen/Qwen2.5-7B-Instruct at revision a09a35458c70, bfloat16 on cuda:0, 1314 queries, scorers S1, S2, S3, 504.5 s",
+      "versions": {
+        "python": "3.12.3",
+        "torch": "2.14.1+cu126",
+        "transformers": "4.57.6"
+      }
+    }
+  ]
+}

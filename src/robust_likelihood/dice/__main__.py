@@ -139,6 +139,9 @@ def _dispatch(args) -> int:
         from robust_likelihood.dice.analyze import analyze
 
         runs = [Path(path) for path in args.runs] if args.runs else latest_runs(root / RESULTS_DIR)
+        # Committed results name run folders relative to the repository, not by a machine's absolute path.
+        runs = [run.resolve().relative_to(root.resolve()) if run.resolve().is_relative_to(root.resolve()) else run
+                for run in runs]
         if not runs:
             raise FileNotFoundError(f"no finished runs in {root / RESULTS_DIR}")
         metrics = analyze(root, config, runs, root / DATA_DIR)
