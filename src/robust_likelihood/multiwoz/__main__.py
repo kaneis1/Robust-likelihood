@@ -122,6 +122,14 @@ def main(argv: list[str] | None = None) -> int:
     report_parser.add_argument("--lm", default=None, help="folder of the lm-score run")
     semantic_parser = sub.add_parser("semantic-check", help="claims plan 2a: regex slots against 2.2 turn 0")
     semantic_parser.add_argument("--out", default=str(Path("docs") / "claim1_results"))
+    rewrites_parser = sub.add_parser("rewrites", help="claims plan 2b: rewrites through claude, checked by regex and NLI")
+    rewrites_parser.add_argument("--pilot", type=int, default=None, help="seeded clean items; prints a cost estimate")
+    rewrites_parser.add_argument("--workers", type=int, default=4)
+    rewrites_parser.add_argument("--nli-device", default=None, help="cuda, mps, or cpu; detected when omitted")
+    rewrites_parser.add_argument("--label", default=None)
+    audit_parser = sub.add_parser("rewrite-audit", help="export 100 accepted rewrites for human review")
+    audit_parser.add_argument("run_dir")
+    audit_parser.add_argument("--out", default=str(Path("docs") / "claim1_results" / "rewrite_audit.csv"))
     args = parser.parse_args(argv)
     try:
         return _dispatch(args)
@@ -256,6 +264,27 @@ def _dispatch(args) -> int:
         if not result["passes_95"]:
             print("Agreement is below 95% on some slot; stop and ask.", file=sys.stderr)
             return 1
+        return 0
+    if args.command == "rewrites":
+        from robust_likelihood.multiwoz.rewrites import cost_estimate, full_llm_units, run_rewrites, write_derived
+
+        summary = run_rewrites(root, pilot=args.pilot, workers=args.workers, nli_device=args.nli_device,
+                               label=args.label)
+        if args.pilot:
+            price = read_json(root / "configs" / "dice.json")["api_prices_usd_per_mtok"]["claude"]
+            summary["full_run_estimate"] = cost_estimate(summary, full_llm_units(root / DERIVED_DIR), price)
+        else:
+            items = [item for item in read_jsonl(root / DERIVED_DIR / "items.jsonl") if item["set"] == "clean"]
+            summary["derived"] = write_derived(Path(summary["run_dir"]), root / DERIVED_DIR, items)
+        print(json.dumps(summary, indent=2, sort_keys=True, ensure_ascii=False))
+        return 0
+    if args.command == "rewrite-audit":
+        from robust_likelihood.multiwoz.report import write_csv
+        from robust_likelihood.multiwoz.rewrites import audit_rows
+
+        rows = audit_rows(read_jsonl(Path(args.run_dir) / "accepted.jsonl"))
+        write_csv(root / args.out, rows)
+        print(f"Wrote {len(rows)} rows to {root / args.out}; mark meaning_preserved y or n, then stop for review.")
         return 0
     raise ValueError(f"Unknown command {args.command}")
 
