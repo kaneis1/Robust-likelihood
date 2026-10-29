@@ -10,8 +10,11 @@
 #
 # Replace every <PLACEHOLDER> before submitting, or override it on the command line.
 #   Slurm: sbatch scripts/dice_job.sh
-#   NUS SoC: sbatch -p gpu --gres=gpu:1 --constraint="a100|h100|h200" --time=02:30:00 \
+#   NUS SoC: sbatch --ignore-pbs -p gpu --gres=gpu:h100-47:1 --time=02:30:00 \
 #            --export=ALL,VENV_DIR=/var/tmp/cuizq-rl,VENV_TAR=$HOME/envs/cuizq-rl.tar scripts/dice_job.sh
+#   (--ignore-pbs: sbatch would otherwise read the #PBS and #BSUB lines too; the GPU type
+#   must be named, a100-40, a100-80, h100-47, or h100-96, since a feature constraint with
+#   an untyped GPU request is refused)
 #   (home is NFS, so the environment is built once on local disk and packed; VENV_TAR is
 #   unpacked onto the compute node's local disk when VENV_DIR is not there yet. Login-node
 #   /tmp has a 50 MB quota, hence /var/tmp.)
