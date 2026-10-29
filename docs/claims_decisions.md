@@ -44,6 +44,13 @@ open are recorded too, so the analysis can be audited.
   manifest records what was sent. Claude's server-side refusal fallback is **not**
   enabled: it would answer some queries with a different model. A refusal is recorded as
   a failed call.
+- **Pilot (2026-10-29, `results/dice/20261029T075735Z-api-pilot`).** 30 seeded pairs × S2, S3 ×
+  {claude, gpt} = 120 calls, all successful. `gpt-6-astra` also rejected `temperature`, so
+  neither provider was sent one. Claude shows its working before the number on most
+  answers, so `parse_probability` now also reads a last line that is a bare number, or a
+  final "= x" / "≈ x"; that is the model's own stated answer. With it, 0 of 120 pilot
+  answers fail to parse (40 of Claude's 60 did before). `analyze` re-parses every raw
+  answer, so all runs are read by the same parser.
 - **API normalization queries.** The API runs also ask the 54 normalization queries (18 at
   k = 1, 36 at k = 2) under both framings, so D3 and D4 can be read for the API models.
   That is 216 calls beyond the 630-pair subset.

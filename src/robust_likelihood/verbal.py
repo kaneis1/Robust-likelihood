@@ -204,6 +204,7 @@ _NUMBER = re.compile(
 )
 _POWER = re.compile(r"\^|\*\*|×|⁻|·\s*10|\bx\s*10\b|\btimes\s+10\b", re.IGNORECASE)
 _LABEL = re.compile(r"^(?:answer|probability|p)\s*[:=]\s*", re.IGNORECASE)
+_FINAL = re.compile(r"[=≈~]\s*(" + _NUMBER.pattern + r")\s*\.?\s*$")
 
 
 def _value(match: re.Match[str]) -> float | None:
@@ -223,16 +224,25 @@ def parse_probability(text: str | None) -> float | None:
     """0.3, 30%, 3e-5, and 1/6 are read; anything else gives None.
 
     The whole answer should be one number, after stripping quotes, a trailing period,
-    and an "Answer:"-style label. Otherwise the answer is read only if it has no power
-    notation and its numbers in [0, 1] all agree within 5%, so "1/216 ≈ 0.00463" reads
-    as 1/216 while "(1/6)^3" and "between 0.1 and 0.2" give None.
+    and an "Answer:"-style label. A model that shows its working first is read from its
+    last line when that line alone is such a number, or from a final "= x" or "≈ x".
+    Otherwise the answer is read only if
+    it has no power notation and its numbers in [0, 1] all agree within 5%, so
+    "1/216, about 0.00463" reads as 1/216 while "(1/6)^3" and "between 0.1 and 0.2" give None.
     """
     if not text:
         return None
-    cleaned = _LABEL.sub("", text.strip().strip("`*\"' ").rstrip(".").strip())
-    whole = _NUMBER.fullmatch(cleaned)
-    if whole:
-        value = _value(whole)
+    lines = [line for line in text.strip().splitlines() if line.strip()]
+    for candidate in (text, lines[-1] if len(lines) > 1 else None):
+        if candidate is None:
+            continue
+        whole = _NUMBER.fullmatch(_LABEL.sub("", candidate.strip().strip("`*\"' ").rstrip(".").strip()))
+        if whole:
+            value = _value(whole)
+            return value if _in_range(value) else None
+    final = _FINAL.search(text)
+    if final:
+        value = _value(_NUMBER.fullmatch(final.group(1)))
         return value if _in_range(value) else None
     if _POWER.search(text):
         return None

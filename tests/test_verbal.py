@@ -20,9 +20,14 @@ ENV = {"ANTHROPIC_API_KEY": "test-claude", "OPENAI_API_KEY": "test-gpt"}
         ("Answer: 0.5", 0.5),
         ("`0.25`", 0.25),
         ("**0.02**", 0.02),
-        ("1/216 ≈ 0.00463", 1 / 216),
+        ("1/216 ≈ 0.00463", 0.00463),
+        ("1/216, about 0.00463", 1 / 216),
         ("0", 0.0),
         ("I rolled 3, 5, 2 so 0.0046", 0.0046),
+        ("P(6)=1/2, others 1/10. Probability = (1/10)^2 × 1/2 = 0.005\n\n0.005", 0.005),
+        ("(1/6)^8 = 1/1679616 ≈ 5.954e-7\n\n0.000000595374", 5.95374e-7),
+        ("The die only lands on 2, 4, or 6, so 3 is impossible.\n\n0", 0.0),
+        ("(1/6)^8 ≈ 0.000000595", 5.95e-7),
     ],
 )
 def test_parse_probability_reads_the_four_forms(text, expected):

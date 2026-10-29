@@ -17,6 +17,7 @@ from pathlib import Path
 from robust_likelihood.dice.score import load_queries
 from robust_likelihood.multiwoz.reference import bootstrap_rng, interval
 from robust_likelihood.storage import read_json, read_jsonl
+from robust_likelihood.verbal import parse_probability
 
 LN10 = math.log(10)
 BF_PAIRS = (("even", "fair"), ("loaded", "fair"), ("even", "loaded"))
@@ -65,6 +66,9 @@ def load_scores(run_dirs: list[Path]) -> tuple[dict[tuple[str, str], dict[str, d
         manifest = read_json(run_dir / "manifest.json")
         rows = read_jsonl(run_dir / ("calls.jsonl" if manifest["kind"] == "api" else "scores.jsonl"))
         for row in rows:
+            if row["scorer"] != "S1":
+                # The raw answer is the record; parsing is redone so every run is read by the same parser.
+                row = dict(row, p=parse_probability(row.get("raw")) if row.get("status", "success") == "success" else None)
             sources[(row["model"], row["scorer"])][row["query_id"]] = row
         runs.append({"run_dir": run_dir.as_posix(), "kind": manifest["kind"], "rows": len(rows),
                      "pilot": manifest.get("pilot")})
