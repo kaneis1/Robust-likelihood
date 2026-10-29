@@ -56,10 +56,13 @@ def score_local(
     device: str | None = None,
     limit: int | None = None,
     label: str | None = None,
+    nospace: bool = False,
     data_dir: Path | None = None,
     results_root: Path | None = None,
     now: datetime | None = None,
 ) -> dict:
+    """With nospace, S1 alone scores each list as "3,5,2" (scorer S1-nospace), a sensitivity
+    variant of the frozen "3, 5, 2" observation text."""
     import torch
     import transformers
     from transformers import AutoTokenizer
@@ -84,6 +87,11 @@ def score_local(
     queries = pairs + norm
     if limit is not None:
         queries = queries[:limit]
+    s1_name = "S1"
+    if nospace:
+        scorers, s1_name = ["S1"], "S1-nospace"
+        queries = [dict(row, text=",".join(str(face) for face in row["faces"])) for row in queries]
+        label = label or f"local-{model_key}-nospace"
     started = now or datetime.now(timezone.utc)
     clock = time.monotonic()
     commit = resolve_revision(spec["id"], spec.get("revision"))
@@ -109,6 +117,7 @@ def score_local(
     example = queries[0]
     manifest = {
         "kind": "local",
+        "variant": "nospace" if nospace else None,
         "model_key": model_key,
         "model": spec["id"],
         "revision_requested": spec.get("revision"),
@@ -148,13 +157,13 @@ def score_local(
         values = dict(zip(keys, surprisals(model, sequences, batch_size, pad)))
         lengths = {key: len(tokens) - start for key, (tokens, start) in zip(keys, sequences)}
         append_jsonl(scores, [
-            {"query_id": row["query_id"], "scorer": "S1", "model": model_key,
+            {"query_id": row["query_id"], "scorer": s1_name, "model": model_key,
              "S": values[(row["hypothesis"], row["k"], row["text"])],
              "logp": -values[(row["hypothesis"], row["k"], row["text"])],
              "tokens_scored": lengths[(row["hypothesis"], row["k"], row["text"])]}
             for row in queries
         ])
-        manifest["stage_seconds"]["S1"] = round(time.monotonic() - stage, 1)
+        manifest["stage_seconds"][s1_name] = round(time.monotonic() - stage, 1)
         manifest["S1_distinct_sequences"] = len(keys)
     for scorer in verbal:
         stage = time.monotonic()

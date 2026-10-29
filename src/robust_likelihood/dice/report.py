@@ -11,9 +11,10 @@ from pathlib import Path
 from robust_likelihood.dice.analyze import D2_LIMIT, D3_LIMIT, D4_LIMIT, TRUE_SLOPES
 from robust_likelihood.multiwoz.report import DASHED, INK, _pyplot, write_csv
 
-SCORER_COLORS = {"S1": "#2a78d6", "S2": "#eb6834", "S3": "#1baf7a"}
-SCORER_MARKERS = {"S1": "o", "S2": "s", "S3": "^"}
-SCORER_LABELS = {"S1": "S1 token log-prob", "S2": "S2 verbalized, judgment", "S3": "S3 verbalized, computation"}
+SCORER_COLORS = {"S1": "#2a78d6", "S2": "#eb6834", "S3": "#1baf7a", "S1-nospace": "#eda100"}
+SCORER_MARKERS = {"S1": "o", "S2": "s", "S3": "^", "S1-nospace": "D"}
+SCORER_LABELS = {"S1": "S1 token log-prob", "S2": "S2 verbalized, judgment", "S3": "S3 verbalized, computation",
+                 "S1-nospace": "S1 token log-prob, lists as 3,5,2 (sensitivity)"}
 MODEL_ORDER = ("qwen", "olmo", "claude", "gpt")
 MODEL_LABELS = {"qwen": "Qwen2.5-7B-Instruct", "olmo": "OLMo-2-7B-Instruct", "claude": "Claude (API)", "gpt": "GPT (API)"}
 HYPOTHESES = ("fair", "even", "loaded")

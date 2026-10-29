@@ -66,7 +66,7 @@ def load_scores(run_dirs: list[Path]) -> tuple[dict[tuple[str, str], dict[str, d
         manifest = read_json(run_dir / "manifest.json")
         rows = read_jsonl(run_dir / ("calls.jsonl" if manifest["kind"] == "api" else "scores.jsonl"))
         for row in rows:
-            if row["scorer"] != "S1":
+            if not row["scorer"].startswith("S1"):
                 # The raw answer is the record; parsing is redone so every run is read by the same parser.
                 row = dict(row, p=parse_probability(row.get("raw")) if row.get("status", "success") == "success" else None)
             sources[(row["model"], row["scorer"])][row["query_id"]] = row
@@ -78,7 +78,7 @@ def load_scores(run_dirs: list[Path]) -> tuple[dict[tuple[str, str], dict[str, d
 def log_score(row: dict | None) -> float | None:
     if row is None:
         return None
-    if row["scorer"] == "S1":
+    if row["scorer"].startswith("S1"):
         return row["logp"]
     p = row.get("p")
     return math.log(p) if p is not None and p > 0 else None
@@ -87,7 +87,7 @@ def log_score(row: dict | None) -> float | None:
 def score_probability(row: dict | None) -> float | None:
     if row is None:
         return None
-    if row["scorer"] == "S1":
+    if row["scorer"].startswith("S1"):
         return math.exp(row["logp"])
     return row.get("p")
 
@@ -206,7 +206,7 @@ def source_block(model: str, scorer: str, rows: dict[str, dict], pairs: list[dic
                  bootstrap: dict) -> dict:
     scored_pairs = [row for row in pairs if row["query_id"] in rows]
     values = {query_id: log_score(row) for query_id, row in rows.items()}
-    verbal = scorer != "S1"
+    verbal = not scorer.startswith("S1")
     failed = [row for row in rows.values() if verbal and (row.get("status", "success") != "success" or row.get("p") is None)]
     block = {
         "model": model,
@@ -274,7 +274,7 @@ def predictions(blocks: dict[str, dict]) -> list[dict]:
 
 def acceptance(blocks: dict[str, dict], local_models: set[str]) -> dict:
     local = {key: block["parse_failure_rate"] for key, block in blocks.items()
-             if block["model"] in local_models and block["scorer"] != "S1"}
+             if block["model"] in local_models and not block["scorer"].startswith("S1")}
     return {"local_parse_failure_rates": local,
             "local_parse_failures_under_2pct": all(rate < LOCAL_PARSE_LIMIT for rate in local.values()) if local else None}
 

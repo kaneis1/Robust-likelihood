@@ -47,7 +47,7 @@ def latest_runs(results: Path) -> list[Path]:
         if "finished_at" not in manifest:
             continue
         if manifest["kind"] == "local":
-            found[f"local:{manifest['model_key']}"] = run_dir
+            found[f"local:{manifest['model_key']}:{manifest.get('variant')}"] = run_dir
         elif not manifest.get("pilot") and not manifest.get("stopped"):
             found["api"] = run_dir
     return [found[key] for key in sorted(found)]
@@ -57,7 +57,8 @@ def run_summary(run_dir: Path) -> dict:
     manifest = read_json(run_dir / "manifest.json")
     if manifest["kind"] == "local":
         text = (f"{manifest['model']} at revision {manifest['revision'][:12]}, {manifest['dtype']} on "
-                f"{manifest['device']}, {manifest['queries']} queries, scorers {', '.join(manifest['scorers'])}, "
+                f"{manifest['device']}, {manifest['queries']} queries, scorers {', '.join(manifest['scorers'])}"
+                f"{' (no-space lists)' if manifest.get('variant') == 'nospace' else ''}, "
                 f"{manifest.get('elapsed_seconds')} s")
         models = {manifest["model_key"]: {"id": manifest["model"], "revision": manifest["revision"]}}
     else:
@@ -89,6 +90,7 @@ def main(argv: list[str] | None = None) -> int:
     score.add_argument("--dtype", default="bfloat16")
     score.add_argument("--device", default=None)
     score.add_argument("--limit", type=int, default=None, help="local smoke test on the first N queries")
+    score.add_argument("--nospace", action="store_true", help="S1 only, lists written as 3,5,2 (sensitivity)")
     score.add_argument("--providers", default=None, help="comma-separated; defaults to configs/dice.json")
     score.add_argument("--pilot", type=int, default=None, help="score N seeded pairs of the API subset and stop")
     score.add_argument("--workers", type=int, default=4)
@@ -123,6 +125,7 @@ def _dispatch(args) -> int:
                 root, config, key,
                 scorers=None if args.scorers is None else args.scorers.split(","),
                 batch_size=args.batch_size, dtype=args.dtype, device=args.device, limit=args.limit,
+                nospace=args.nospace,
                 label=None if args.label is None else f"{args.label}-{key}",
             )
             print(json.dumps(summary, indent=2, sort_keys=True), flush=True)

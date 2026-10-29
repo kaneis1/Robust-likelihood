@@ -129,6 +129,21 @@ def test_an_exact_scorer_passes_d1_and_a_flat_verbal_scorer_passes_d2(tmp_path, 
     assert metrics["acceptance"]["local_parse_failures_under_2pct"] is True
 
 
+def test_the_nospace_sensitivity_scorer_is_analyzed_but_not_scored_as_d1(tmp_path, config):
+    data = tmp_path / "data"
+    build(repo_root(), config, data)
+    queries = read_jsonl(data / "pairs.jsonl") + read_jsonl(data / "normalization.jsonl")
+    rows = [{"query_id": row["query_id"], "scorer": "S1-nospace", "model": "oracle",
+             "logp": row["true_logp"] if row["true_logp"] is not None else -60.0} for row in queries]
+    _local_run(tmp_path / "run1", "oracle", rows)
+    small = {**config, "bootstrap": {"replicates": 20, "seed": 1}, "local_models": {"oracle": {}}}
+    metrics = analyze(repo_root(), small, [tmp_path / "run1"], data)
+    block = metrics["sources"]["oracle:S1-nospace"]
+    assert block["slopes"]["fair"]["ratio_to_truth"] == pytest.approx(1.0)
+    assert block["impossible"] == {"n": 229, "median_logp": -60.0}
+    assert metrics["predictions"] == []
+
+
 class FakeChat:
     def __init__(self):
         self.bodies = []
