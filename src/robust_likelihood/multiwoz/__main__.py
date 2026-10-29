@@ -127,6 +127,14 @@ def main(argv: list[str] | None = None) -> int:
     rewrites_parser.add_argument("--workers", type=int, default=4)
     rewrites_parser.add_argument("--nli-device", default=None, help="cuda, mps, or cpu; detected when omitted")
     rewrites_parser.add_argument("--label", default=None)
+    claim_parser = sub.add_parser("claim1-lm", help="claims plan 2c job A parts; needs the lm extra and a GPU")
+    claim_parser.add_argument("--model", default="qwen", help="model key in configs/claims.json")
+    claim_parser.add_argument("--parts", default="center,urewrite,hrewrite,hsample")
+    claim_parser.add_argument("--phase8", required=True, help="folder of the Phase 8 lm-score run")
+    claim_parser.add_argument("--batch-size", type=int, default=32)
+    claim_parser.add_argument("--dtype", default="bfloat16")
+    claim_parser.add_argument("--device", default=None)
+    claim_parser.add_argument("--label", default=None)
     audit_parser = sub.add_parser("rewrite-audit", help="export 100 accepted rewrites for human review")
     audit_parser.add_argument("run_dir")
     audit_parser.add_argument("--out", default=str(Path("docs") / "claim1_results" / "rewrite_audit.csv"))
@@ -277,6 +285,13 @@ def _dispatch(args) -> int:
             items = [item for item in read_jsonl(root / DERIVED_DIR / "items.jsonl") if item["set"] == "clean"]
             summary["derived"] = write_derived(Path(summary["run_dir"]), root / DERIVED_DIR, items)
         print(json.dumps(summary, indent=2, sort_keys=True, ensure_ascii=False))
+        return 0
+    if args.command == "claim1-lm":
+        from robust_likelihood.multiwoz.claim1_lm import claim1_lm
+
+        summary = claim1_lm(root, args.model, args.parts.split(","), Path(args.phase8), batch_size=args.batch_size,
+                            dtype=args.dtype, device=args.device, label=args.label)
+        print(json.dumps(summary, indent=2, sort_keys=True))
         return 0
     if args.command == "rewrite-audit":
         from robust_likelihood.multiwoz.report import write_csv

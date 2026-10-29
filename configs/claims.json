@@ -1,0 +1,14 @@
+{
+  "models": {
+    "qwen": {"id": "Qwen/Qwen2.5-7B-Instruct", "revision": "a09a35458c702b33eeacc393d103063234e8bc28"},
+    "olmo": {"id": "allenai/OLMo-2-1124-7B-Instruct", "revision": "470b1fba1ae01581f270116362ee4aa1b97f4c84"},
+    "nli": {"id": "MoritzLaurer/DeBERTa-v3-large-mnli-fever-anli-ling-wanli",
+            "revision": "b3546ea6b0346eb6f8d5d68b13c7dc6d0376b3d7"}
+  },
+  "centering_text": "The user wants to find a restaurant.",
+  "robustness_subset_size": 60,
+  "samples_per_rewritten_hypothesis": 64,
+  "seed": 20261027,
+  "bootstrap": {"replicates": 2000, "seed": 20261027},
+  "clip_nats": 3.0
+}
