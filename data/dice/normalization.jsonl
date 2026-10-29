@@ -1,0 +1,54 @@
+{"api_subset":true,"faces":[1],"hypothesis":"fair","k":1,"kind":"norm","norm_set":"k1_fair","query_id":"norm|k1|fair|1","text":"1","true_logp":-1.791759469228055,"true_p":0.16666666666666666}
+{"api_subset":true,"faces":[2],"hypothesis":"fair","k":1,"kind":"norm","norm_set":"k1_fair","query_id":"norm|k1|fair|2","text":"2","true_logp":-1.791759469228055,"true_p":0.16666666666666666}
+{"api_subset":true,"faces":[3],"hypothesis":"fair","k":1,"kind":"norm","norm_set":"k1_fair","query_id":"norm|k1|fair|3","text":"3","true_logp":-1.791759469228055,"true_p":0.16666666666666666}
+{"api_subset":true,"faces":[4],"hypothesis":"fair","k":1,"kind":"norm","norm_set":"k1_fair","query_id":"norm|k1|fair|4","text":"4","true_logp":-1.791759469228055,"true_p":0.16666666666666666}
+{"api_subset":true,"faces":[5],"hypothesis":"fair","k":1,"kind":"norm","norm_set":"k1_fair","query_id":"norm|k1|fair|5","text":"5","true_logp":-1.791759469228055,"true_p":0.16666666666666666}
+{"api_subset":true,"faces":[6],"hypothesis":"fair","k":1,"kind":"norm","norm_set":"k1_fair","query_id":"norm|k1|fair|6","text":"6","true_logp":-1.791759469228055,"true_p":0.16666666666666666}
+{"api_subset":true,"faces":[1],"hypothesis":"even","k":1,"kind":"norm","norm_set":"k1_even","query_id":"norm|k1|even|1","text":"1","true_logp":null,"true_p":0.0}
+{"api_subset":true,"faces":[2],"hypothesis":"even","k":1,"kind":"norm","norm_set":"k1_even","query_id":"norm|k1|even|2","text":"2","true_logp":-1.0986122886681098,"true_p":0.3333333333333333}
+{"api_subset":true,"faces":[3],"hypothesis":"even","k":1,"kind":"norm","norm_set":"k1_even","query_id":"norm|k1|even|3","text":"3","true_logp":null,"true_p":0.0}
+{"api_subset":true,"faces":[4],"hypothesis":"even","k":1,"kind":"norm","norm_set":"k1_even","query_id":"norm|k1|even|4","text":"4","true_logp":-1.0986122886681098,"true_p":0.3333333333333333}
+{"api_subset":true,"faces":[5],"hypothesis":"even","k":1,"kind":"norm","norm_set":"k1_even","query_id":"norm|k1|even|5","text":"5","true_logp":null,"true_p":0.0}
+{"api_subset":true,"faces":[6],"hypothesis":"even","k":1,"kind":"norm","norm_set":"k1_even","query_id":"norm|k1|even|6","text":"6","true_logp":-1.0986122886681098,"true_p":0.3333333333333333}
+{"api_subset":true,"faces":[1],"hypothesis":"loaded","k":1,"kind":"norm","norm_set":"k1_loaded","query_id":"norm|k1|loaded|1","text":"1","true_logp":-2.3025850929940455,"true_p":0.1}
+{"api_subset":true,"faces":[2],"hypothesis":"loaded","k":1,"kind":"norm","norm_set":"k1_loaded","query_id":"norm|k1|loaded|2","text":"2","true_logp":-2.3025850929940455,"true_p":0.1}
+{"api_subset":true,"faces":[3],"hypothesis":"loaded","k":1,"kind":"norm","norm_set":"k1_loaded","query_id":"norm|k1|loaded|3","text":"3","true_logp":-2.3025850929940455,"true_p":0.1}
+{"api_subset":true,"faces":[4],"hypothesis":"loaded","k":1,"kind":"norm","norm_set":"k1_loaded","query_id":"norm|k1|loaded|4","text":"4","true_logp":-2.3025850929940455,"true_p":0.1}
+{"api_subset":true,"faces":[5],"hypothesis":"loaded","k":1,"kind":"norm","norm_set":"k1_loaded","query_id":"norm|k1|loaded|5","text":"5","true_logp":-2.3025850929940455,"true_p":0.1}
+{"api_subset":true,"faces":[6],"hypothesis":"loaded","k":1,"kind":"norm","norm_set":"k1_loaded","query_id":"norm|k1|loaded|6","text":"6","true_logp":-0.6931471805599453,"true_p":0.5}
+{"api_subset":true,"faces":[1,1],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|11","text":"1, 1","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[1,2],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|12","text":"1, 2","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[1,3],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|13","text":"1, 3","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[1,4],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|14","text":"1, 4","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[1,5],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|15","text":"1, 5","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[1,6],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|16","text":"1, 6","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[2,1],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|21","text":"2, 1","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[2,2],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|22","text":"2, 2","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[2,3],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|23","text":"2, 3","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[2,4],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|24","text":"2, 4","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[2,5],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|25","text":"2, 5","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[2,6],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|26","text":"2, 6","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[3,1],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|31","text":"3, 1","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[3,2],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|32","text":"3, 2","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[3,3],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|33","text":"3, 3","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[3,4],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|34","text":"3, 4","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[3,5],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|35","text":"3, 5","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[3,6],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|36","text":"3, 6","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[4,1],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|41","text":"4, 1","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[4,2],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|42","text":"4, 2","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[4,3],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|43","text":"4, 3","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[4,4],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|44","text":"4, 4","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[4,5],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|45","text":"4, 5","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[4,6],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|46","text":"4, 6","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[5,1],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|51","text":"5, 1","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[5,2],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|52","text":"5, 2","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[5,3],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|53","text":"5, 3","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[5,4],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|54","text":"5, 4","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[5,5],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|55","text":"5, 5","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[5,6],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|56","text":"5, 6","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[6,1],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|61","text":"6, 1","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[6,2],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|62","text":"6, 2","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[6,3],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|63","text":"6, 3","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[6,4],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|64","text":"6, 4","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[6,5],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|65","text":"6, 5","true_logp":-3.58351893845611,"true_p":0.027777777777777776}
+{"api_subset":true,"faces":[6,6],"hypothesis":"fair","k":2,"kind":"norm","norm_set":"k2_fair","query_id":"norm|k2|fair|66","text":"6, 6","true_logp":-3.58351893845611,"true_p":0.027777777777777776}

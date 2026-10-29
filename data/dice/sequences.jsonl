@@ -1,0 +1,420 @@
+{"api_subset":true,"faces":[2],"generator":"fair","index":0,"k":1,"seq_id":"k01-fair-00","text":"2"}
+{"api_subset":true,"faces":[3],"generator":"fair","index":1,"k":1,"seq_id":"k01-fair-01","text":"3"}
+{"api_subset":true,"faces":[1],"generator":"fair","index":2,"k":1,"seq_id":"k01-fair-02","text":"1"}
+{"api_subset":true,"faces":[1],"generator":"fair","index":3,"k":1,"seq_id":"k01-fair-03","text":"1"}
+{"api_subset":true,"faces":[1],"generator":"fair","index":4,"k":1,"seq_id":"k01-fair-04","text":"1"}
+{"api_subset":true,"faces":[5],"generator":"fair","index":5,"k":1,"seq_id":"k01-fair-05","text":"5"}
+{"api_subset":true,"faces":[2],"generator":"fair","index":6,"k":1,"seq_id":"k01-fair-06","text":"2"}
+{"api_subset":true,"faces":[4],"generator":"fair","index":7,"k":1,"seq_id":"k01-fair-07","text":"4"}
+{"api_subset":true,"faces":[1],"generator":"fair","index":8,"k":1,"seq_id":"k01-fair-08","text":"1"}
+{"api_subset":true,"faces":[2],"generator":"fair","index":9,"k":1,"seq_id":"k01-fair-09","text":"2"}
+{"api_subset":false,"faces":[6],"generator":"fair","index":10,"k":1,"seq_id":"k01-fair-10","text":"6"}
+{"api_subset":false,"faces":[4],"generator":"fair","index":11,"k":1,"seq_id":"k01-fair-11","text":"4"}
+{"api_subset":false,"faces":[6],"generator":"fair","index":12,"k":1,"seq_id":"k01-fair-12","text":"6"}
+{"api_subset":false,"faces":[3],"generator":"fair","index":13,"k":1,"seq_id":"k01-fair-13","text":"3"}
+{"api_subset":false,"faces":[5],"generator":"fair","index":14,"k":1,"seq_id":"k01-fair-14","text":"5"}
+{"api_subset":false,"faces":[1],"generator":"fair","index":15,"k":1,"seq_id":"k01-fair-15","text":"1"}
+{"api_subset":false,"faces":[6],"generator":"fair","index":16,"k":1,"seq_id":"k01-fair-16","text":"6"}
+{"api_subset":false,"faces":[1],"generator":"fair","index":17,"k":1,"seq_id":"k01-fair-17","text":"1"}
+{"api_subset":false,"faces":[3],"generator":"fair","index":18,"k":1,"seq_id":"k01-fair-18","text":"3"}
+{"api_subset":false,"faces":[5],"generator":"fair","index":19,"k":1,"seq_id":"k01-fair-19","text":"5"}
+{"api_subset":true,"faces":[6],"generator":"even","index":0,"k":1,"seq_id":"k01-even-00","text":"6"}
+{"api_subset":true,"faces":[6],"generator":"even","index":1,"k":1,"seq_id":"k01-even-01","text":"6"}
+{"api_subset":true,"faces":[6],"generator":"even","index":2,"k":1,"seq_id":"k01-even-02","text":"6"}
+{"api_subset":true,"faces":[4],"generator":"even","index":3,"k":1,"seq_id":"k01-even-03","text":"4"}
+{"api_subset":true,"faces":[4],"generator":"even","index":4,"k":1,"seq_id":"k01-even-04","text":"4"}
+{"api_subset":true,"faces":[2],"generator":"even","index":5,"k":1,"seq_id":"k01-even-05","text":"2"}
+{"api_subset":true,"faces":[6],"generator":"even","index":6,"k":1,"seq_id":"k01-even-06","text":"6"}
+{"api_subset":true,"faces":[2],"generator":"even","index":7,"k":1,"seq_id":"k01-even-07","text":"2"}
+{"api_subset":true,"faces":[6],"generator":"even","index":8,"k":1,"seq_id":"k01-even-08","text":"6"}
+{"api_subset":true,"faces":[4],"generator":"even","index":9,"k":1,"seq_id":"k01-even-09","text":"4"}
+{"api_subset":false,"faces":[2],"generator":"even","index":10,"k":1,"seq_id":"k01-even-10","text":"2"}
+{"api_subset":false,"faces":[4],"generator":"even","index":11,"k":1,"seq_id":"k01-even-11","text":"4"}
+{"api_subset":false,"faces":[4],"generator":"even","index":12,"k":1,"seq_id":"k01-even-12","text":"4"}
+{"api_subset":false,"faces":[4],"generator":"even","index":13,"k":1,"seq_id":"k01-even-13","text":"4"}
+{"api_subset":false,"faces":[2],"generator":"even","index":14,"k":1,"seq_id":"k01-even-14","text":"2"}
+{"api_subset":false,"faces":[2],"generator":"even","index":15,"k":1,"seq_id":"k01-even-15","text":"2"}
+{"api_subset":false,"faces":[2],"generator":"even","index":16,"k":1,"seq_id":"k01-even-16","text":"2"}
+{"api_subset":false,"faces":[2],"generator":"even","index":17,"k":1,"seq_id":"k01-even-17","text":"2"}
+{"api_subset":false,"faces":[4],"generator":"even","index":18,"k":1,"seq_id":"k01-even-18","text":"4"}
+{"api_subset":false,"faces":[4],"generator":"even","index":19,"k":1,"seq_id":"k01-even-19","text":"4"}
+{"api_subset":true,"faces":[4],"generator":"loaded","index":0,"k":1,"seq_id":"k01-loaded-00","text":"4"}
+{"api_subset":true,"faces":[2],"generator":"loaded","index":1,"k":1,"seq_id":"k01-loaded-01","text":"2"}
+{"api_subset":true,"faces":[5],"generator":"loaded","index":2,"k":1,"seq_id":"k01-loaded-02","text":"5"}
+{"api_subset":true,"faces":[6],"generator":"loaded","index":3,"k":1,"seq_id":"k01-loaded-03","text":"6"}
+{"api_subset":true,"faces":[1],"generator":"loaded","index":4,"k":1,"seq_id":"k01-loaded-04","text":"1"}
+{"api_subset":true,"faces":[6],"generator":"loaded","index":5,"k":1,"seq_id":"k01-loaded-05","text":"6"}
+{"api_subset":true,"faces":[1],"generator":"loaded","index":6,"k":1,"seq_id":"k01-loaded-06","text":"1"}
+{"api_subset":true,"faces":[6],"generator":"loaded","index":7,"k":1,"seq_id":"k01-loaded-07","text":"6"}
+{"api_subset":true,"faces":[6],"generator":"loaded","index":8,"k":1,"seq_id":"k01-loaded-08","text":"6"}
+{"api_subset":true,"faces":[6],"generator":"loaded","index":9,"k":1,"seq_id":"k01-loaded-09","text":"6"}
+{"api_subset":false,"faces":[1],"generator":"loaded","index":10,"k":1,"seq_id":"k01-loaded-10","text":"1"}
+{"api_subset":false,"faces":[4],"generator":"loaded","index":11,"k":1,"seq_id":"k01-loaded-11","text":"4"}
+{"api_subset":false,"faces":[6],"generator":"loaded","index":12,"k":1,"seq_id":"k01-loaded-12","text":"6"}
+{"api_subset":false,"faces":[5],"generator":"loaded","index":13,"k":1,"seq_id":"k01-loaded-13","text":"5"}
+{"api_subset":false,"faces":[3],"generator":"loaded","index":14,"k":1,"seq_id":"k01-loaded-14","text":"3"}
+{"api_subset":false,"faces":[6],"generator":"loaded","index":15,"k":1,"seq_id":"k01-loaded-15","text":"6"}
+{"api_subset":false,"faces":[6],"generator":"loaded","index":16,"k":1,"seq_id":"k01-loaded-16","text":"6"}
+{"api_subset":false,"faces":[6],"generator":"loaded","index":17,"k":1,"seq_id":"k01-loaded-17","text":"6"}
+{"api_subset":false,"faces":[6],"generator":"loaded","index":18,"k":1,"seq_id":"k01-loaded-18","text":"6"}
+{"api_subset":false,"faces":[4],"generator":"loaded","index":19,"k":1,"seq_id":"k01-loaded-19","text":"4"}
+{"api_subset":true,"faces":[1,6],"generator":"fair","index":0,"k":2,"seq_id":"k02-fair-00","text":"1, 6"}
+{"api_subset":true,"faces":[6,4],"generator":"fair","index":1,"k":2,"seq_id":"k02-fair-01","text":"6, 4"}
+{"api_subset":true,"faces":[5,5],"generator":"fair","index":2,"k":2,"seq_id":"k02-fair-02","text":"5, 5"}
+{"api_subset":true,"faces":[5,5],"generator":"fair","index":3,"k":2,"seq_id":"k02-fair-03","text":"5, 5"}
+{"api_subset":true,"faces":[3,3],"generator":"fair","index":4,"k":2,"seq_id":"k02-fair-04","text":"3, 3"}
+{"api_subset":true,"faces":[2,5],"generator":"fair","index":5,"k":2,"seq_id":"k02-fair-05","text":"2, 5"}
+{"api_subset":true,"faces":[2,6],"generator":"fair","index":6,"k":2,"seq_id":"k02-fair-06","text":"2, 6"}
+{"api_subset":true,"faces":[3,4],"generator":"fair","index":7,"k":2,"seq_id":"k02-fair-07","text":"3, 4"}
+{"api_subset":true,"faces":[6,1],"generator":"fair","index":8,"k":2,"seq_id":"k02-fair-08","text":"6, 1"}
+{"api_subset":true,"faces":[4,1],"generator":"fair","index":9,"k":2,"seq_id":"k02-fair-09","text":"4, 1"}
+{"api_subset":false,"faces":[3,5],"generator":"fair","index":10,"k":2,"seq_id":"k02-fair-10","text":"3, 5"}
+{"api_subset":false,"faces":[6,2],"generator":"fair","index":11,"k":2,"seq_id":"k02-fair-11","text":"6, 2"}
+{"api_subset":false,"faces":[3,1],"generator":"fair","index":12,"k":2,"seq_id":"k02-fair-12","text":"3, 1"}
+{"api_subset":false,"faces":[1,6],"generator":"fair","index":13,"k":2,"seq_id":"k02-fair-13","text":"1, 6"}
+{"api_subset":false,"faces":[6,2],"generator":"fair","index":14,"k":2,"seq_id":"k02-fair-14","text":"6, 2"}
+{"api_subset":false,"faces":[1,3],"generator":"fair","index":15,"k":2,"seq_id":"k02-fair-15","text":"1, 3"}
+{"api_subset":false,"faces":[2,3],"generator":"fair","index":16,"k":2,"seq_id":"k02-fair-16","text":"2, 3"}
+{"api_subset":false,"faces":[5,5],"generator":"fair","index":17,"k":2,"seq_id":"k02-fair-17","text":"5, 5"}
+{"api_subset":false,"faces":[5,6],"generator":"fair","index":18,"k":2,"seq_id":"k02-fair-18","text":"5, 6"}
+{"api_subset":false,"faces":[5,6],"generator":"fair","index":19,"k":2,"seq_id":"k02-fair-19","text":"5, 6"}
+{"api_subset":true,"faces":[2,4],"generator":"even","index":0,"k":2,"seq_id":"k02-even-00","text":"2, 4"}
+{"api_subset":true,"faces":[4,4],"generator":"even","index":1,"k":2,"seq_id":"k02-even-01","text":"4, 4"}
+{"api_subset":true,"faces":[4,2],"generator":"even","index":2,"k":2,"seq_id":"k02-even-02","text":"4, 2"}
+{"api_subset":true,"faces":[4,6],"generator":"even","index":3,"k":2,"seq_id":"k02-even-03","text":"4, 6"}
+{"api_subset":true,"faces":[4,6],"generator":"even","index":4,"k":2,"seq_id":"k02-even-04","text":"4, 6"}
+{"api_subset":true,"faces":[2,6],"generator":"even","index":5,"k":2,"seq_id":"k02-even-05","text":"2, 6"}
+{"api_subset":true,"faces":[2,2],"generator":"even","index":6,"k":2,"seq_id":"k02-even-06","text":"2, 2"}
+{"api_subset":true,"faces":[2,2],"generator":"even","index":7,"k":2,"seq_id":"k02-even-07","text":"2, 2"}
+{"api_subset":true,"faces":[2,4],"generator":"even","index":8,"k":2,"seq_id":"k02-even-08","text":"2, 4"}
+{"api_subset":true,"faces":[4,4],"generator":"even","index":9,"k":2,"seq_id":"k02-even-09","text":"4, 4"}
+{"api_subset":false,"faces":[6,2],"generator":"even","index":10,"k":2,"seq_id":"k02-even-10","text":"6, 2"}
+{"api_subset":false,"faces":[6,4],"generator":"even","index":11,"k":2,"seq_id":"k02-even-11","text":"6, 4"}
+{"api_subset":false,"faces":[4,4],"generator":"even","index":12,"k":2,"seq_id":"k02-even-12","text":"4, 4"}
+{"api_subset":false,"faces":[4,4],"generator":"even","index":13,"k":2,"seq_id":"k02-even-13","text":"4, 4"}
+{"api_subset":false,"faces":[4,2],"generator":"even","index":14,"k":2,"seq_id":"k02-even-14","text":"4, 2"}
+{"api_subset":false,"faces":[2,6],"generator":"even","index":15,"k":2,"seq_id":"k02-even-15","text":"2, 6"}
+{"api_subset":false,"faces":[2,4],"generator":"even","index":16,"k":2,"seq_id":"k02-even-16","text":"2, 4"}
+{"api_subset":false,"faces":[2,4],"generator":"even","index":17,"k":2,"seq_id":"k02-even-17","text":"2, 4"}
+{"api_subset":false,"faces":[2,4],"generator":"even","index":18,"k":2,"seq_id":"k02-even-18","text":"2, 4"}
+{"api_subset":false,"faces":[2,4],"generator":"even","index":19,"k":2,"seq_id":"k02-even-19","text":"2, 4"}
+{"api_subset":true,"faces":[5,2],"generator":"loaded","index":0,"k":2,"seq_id":"k02-loaded-00","text":"5, 2"}
+{"api_subset":true,"faces":[4,1],"generator":"loaded","index":1,"k":2,"seq_id":"k02-loaded-01","text":"4, 1"}
+{"api_subset":true,"faces":[6,6],"generator":"loaded","index":2,"k":2,"seq_id":"k02-loaded-02","text":"6, 6"}
+{"api_subset":true,"faces":[4,6],"generator":"loaded","index":3,"k":2,"seq_id":"k02-loaded-03","text":"4, 6"}
+{"api_subset":true,"faces":[1,6],"generator":"loaded","index":4,"k":2,"seq_id":"k02-loaded-04","text":"1, 6"}
+{"api_subset":true,"faces":[4,3],"generator":"loaded","index":5,"k":2,"seq_id":"k02-loaded-05","text":"4, 3"}
+{"api_subset":true,"faces":[6,6],"generator":"loaded","index":6,"k":2,"seq_id":"k02-loaded-06","text":"6, 6"}
+{"api_subset":true,"faces":[6,1],"generator":"loaded","index":7,"k":2,"seq_id":"k02-loaded-07","text":"6, 1"}
+{"api_subset":true,"faces":[3,6],"generator":"loaded","index":8,"k":2,"seq_id":"k02-loaded-08","text":"3, 6"}
+{"api_subset":true,"faces":[5,1],"generator":"loaded","index":9,"k":2,"seq_id":"k02-loaded-09","text":"5, 1"}
+{"api_subset":false,"faces":[5,4],"generator":"loaded","index":10,"k":2,"seq_id":"k02-loaded-10","text":"5, 4"}
+{"api_subset":false,"faces":[6,5],"generator":"loaded","index":11,"k":2,"seq_id":"k02-loaded-11","text":"6, 5"}
+{"api_subset":false,"faces":[6,6],"generator":"loaded","index":12,"k":2,"seq_id":"k02-loaded-12","text":"6, 6"}
+{"api_subset":false,"faces":[6,2],"generator":"loaded","index":13,"k":2,"seq_id":"k02-loaded-13","text":"6, 2"}
+{"api_subset":false,"faces":[5,2],"generator":"loaded","index":14,"k":2,"seq_id":"k02-loaded-14","text":"5, 2"}
+{"api_subset":false,"faces":[6,6],"generator":"loaded","index":15,"k":2,"seq_id":"k02-loaded-15","text":"6, 6"}
+{"api_subset":false,"faces":[6,5],"generator":"loaded","index":16,"k":2,"seq_id":"k02-loaded-16","text":"6, 5"}
+{"api_subset":false,"faces":[6,2],"generator":"loaded","index":17,"k":2,"seq_id":"k02-loaded-17","text":"6, 2"}
+{"api_subset":false,"faces":[6,6],"generator":"loaded","index":18,"k":2,"seq_id":"k02-loaded-18","text":"6, 6"}
+{"api_subset":false,"faces":[2,1],"generator":"loaded","index":19,"k":2,"seq_id":"k02-loaded-19","text":"2, 1"}
+{"api_subset":true,"faces":[4,3,1],"generator":"fair","index":0,"k":3,"seq_id":"k03-fair-00","text":"4, 3, 1"}
+{"api_subset":true,"faces":[6,3,4],"generator":"fair","index":1,"k":3,"seq_id":"k03-fair-01","text":"6, 3, 4"}
+{"api_subset":true,"faces":[3,2,2],"generator":"fair","index":2,"k":3,"seq_id":"k03-fair-02","text":"3, 2, 2"}
+{"api_subset":true,"faces":[5,2,5],"generator":"fair","index":3,"k":3,"seq_id":"k03-fair-03","text":"5, 2, 5"}
+{"api_subset":true,"faces":[3,5,2],"generator":"fair","index":4,"k":3,"seq_id":"k03-fair-04","text":"3, 5, 2"}
+{"api_subset":true,"faces":[4,3,4],"generator":"fair","index":5,"k":3,"seq_id":"k03-fair-05","text":"4, 3, 4"}
+{"api_subset":true,"faces":[3,1,1],"generator":"fair","index":6,"k":3,"seq_id":"k03-fair-06","text":"3, 1, 1"}
+{"api_subset":true,"faces":[1,1,4],"generator":"fair","index":7,"k":3,"seq_id":"k03-fair-07","text":"1, 1, 4"}
+{"api_subset":true,"faces":[3,2,2],"generator":"fair","index":8,"k":3,"seq_id":"k03-fair-08","text":"3, 2, 2"}
+{"api_subset":true,"faces":[6,3,4],"generator":"fair","index":9,"k":3,"seq_id":"k03-fair-09","text":"6, 3, 4"}
+{"api_subset":false,"faces":[6,4,5],"generator":"fair","index":10,"k":3,"seq_id":"k03-fair-10","text":"6, 4, 5"}
+{"api_subset":false,"faces":[4,1,3],"generator":"fair","index":11,"k":3,"seq_id":"k03-fair-11","text":"4, 1, 3"}
+{"api_subset":false,"faces":[4,3,6],"generator":"fair","index":12,"k":3,"seq_id":"k03-fair-12","text":"4, 3, 6"}
+{"api_subset":false,"faces":[4,4,3],"generator":"fair","index":13,"k":3,"seq_id":"k03-fair-13","text":"4, 4, 3"}
+{"api_subset":false,"faces":[5,6,1],"generator":"fair","index":14,"k":3,"seq_id":"k03-fair-14","text":"5, 6, 1"}
+{"api_subset":false,"faces":[5,5,4],"generator":"fair","index":15,"k":3,"seq_id":"k03-fair-15","text":"5, 5, 4"}
+{"api_subset":false,"faces":[2,1,1],"generator":"fair","index":16,"k":3,"seq_id":"k03-fair-16","text":"2, 1, 1"}
+{"api_subset":false,"faces":[6,5,1],"generator":"fair","index":17,"k":3,"seq_id":"k03-fair-17","text":"6, 5, 1"}
+{"api_subset":false,"faces":[4,6,6],"generator":"fair","index":18,"k":3,"seq_id":"k03-fair-18","text":"4, 6, 6"}
+{"api_subset":false,"faces":[6,6,1],"generator":"fair","index":19,"k":3,"seq_id":"k03-fair-19","text":"6, 6, 1"}
+{"api_subset":true,"faces":[2,4,4],"generator":"even","index":0,"k":3,"seq_id":"k03-even-00","text":"2, 4, 4"}
+{"api_subset":true,"faces":[4,2,6],"generator":"even","index":1,"k":3,"seq_id":"k03-even-01","text":"4, 2, 6"}
+{"api_subset":true,"faces":[4,2,6],"generator":"even","index":2,"k":3,"seq_id":"k03-even-02","text":"4, 2, 6"}
+{"api_subset":true,"faces":[2,2,6],"generator":"even","index":3,"k":3,"seq_id":"k03-even-03","text":"2, 2, 6"}
+{"api_subset":true,"faces":[6,2,6],"generator":"even","index":4,"k":3,"seq_id":"k03-even-04","text":"6, 2, 6"}
+{"api_subset":true,"faces":[4,2,2],"generator":"even","index":5,"k":3,"seq_id":"k03-even-05","text":"4, 2, 2"}
+{"api_subset":true,"faces":[4,2,6],"generator":"even","index":6,"k":3,"seq_id":"k03-even-06","text":"4, 2, 6"}
+{"api_subset":true,"faces":[2,2,6],"generator":"even","index":7,"k":3,"seq_id":"k03-even-07","text":"2, 2, 6"}
+{"api_subset":true,"faces":[4,4,6],"generator":"even","index":8,"k":3,"seq_id":"k03-even-08","text":"4, 4, 6"}
+{"api_subset":true,"faces":[2,2,2],"generator":"even","index":9,"k":3,"seq_id":"k03-even-09","text":"2, 2, 2"}
+{"api_subset":false,"faces":[2,4,4],"generator":"even","index":10,"k":3,"seq_id":"k03-even-10","text":"2, 4, 4"}
+{"api_subset":false,"faces":[2,2,4],"generator":"even","index":11,"k":3,"seq_id":"k03-even-11","text":"2, 2, 4"}
+{"api_subset":false,"faces":[2,2,6],"generator":"even","index":12,"k":3,"seq_id":"k03-even-12","text":"2, 2, 6"}
+{"api_subset":false,"faces":[6,2,2],"generator":"even","index":13,"k":3,"seq_id":"k03-even-13","text":"6, 2, 2"}
+{"api_subset":false,"faces":[2,6,6],"generator":"even","index":14,"k":3,"seq_id":"k03-even-14","text":"2, 6, 6"}
+{"api_subset":false,"faces":[4,6,4],"generator":"even","index":15,"k":3,"seq_id":"k03-even-15","text":"4, 6, 4"}
+{"api_subset":false,"faces":[4,2,4],"generator":"even","index":16,"k":3,"seq_id":"k03-even-16","text":"4, 2, 4"}
+{"api_subset":false,"faces":[6,4,4],"generator":"even","index":17,"k":3,"seq_id":"k03-even-17","text":"6, 4, 4"}
+{"api_subset":false,"faces":[4,2,4],"generator":"even","index":18,"k":3,"seq_id":"k03-even-18","text":"4, 2, 4"}
+{"api_subset":false,"faces":[4,6,6],"generator":"even","index":19,"k":3,"seq_id":"k03-even-19","text":"4, 6, 6"}
+{"api_subset":true,"faces":[1,5,6],"generator":"loaded","index":0,"k":3,"seq_id":"k03-loaded-00","text":"1, 5, 6"}
+{"api_subset":true,"faces":[6,6,2],"generator":"loaded","index":1,"k":3,"seq_id":"k03-loaded-01","text":"6, 6, 2"}
+{"api_subset":true,"faces":[5,6,4],"generator":"loaded","index":2,"k":3,"seq_id":"k03-loaded-02","text":"5, 6, 4"}
+{"api_subset":true,"faces":[4,6,6],"generator":"loaded","index":3,"k":3,"seq_id":"k03-loaded-03","text":"4, 6, 6"}
+{"api_subset":true,"faces":[6,3,6],"generator":"loaded","index":4,"k":3,"seq_id":"k03-loaded-04","text":"6, 3, 6"}
+{"api_subset":true,"faces":[1,6,5],"generator":"loaded","index":5,"k":3,"seq_id":"k03-loaded-05","text":"1, 6, 5"}
+{"api_subset":true,"faces":[3,6,6],"generator":"loaded","index":6,"k":3,"seq_id":"k03-loaded-06","text":"3, 6, 6"}
+{"api_subset":true,"faces":[3,5,6],"generator":"loaded","index":7,"k":3,"seq_id":"k03-loaded-07","text":"3, 5, 6"}
+{"api_subset":true,"faces":[6,1,3],"generator":"loaded","index":8,"k":3,"seq_id":"k03-loaded-08","text":"6, 1, 3"}
+{"api_subset":true,"faces":[6,5,5],"generator":"loaded","index":9,"k":3,"seq_id":"k03-loaded-09","text":"6, 5, 5"}
+{"api_subset":false,"faces":[1,6,6],"generator":"loaded","index":10,"k":3,"seq_id":"k03-loaded-10","text":"1, 6, 6"}
+{"api_subset":false,"faces":[5,6,6],"generator":"loaded","index":11,"k":3,"seq_id":"k03-loaded-11","text":"5, 6, 6"}
+{"api_subset":false,"faces":[6,3,6],"generator":"loaded","index":12,"k":3,"seq_id":"k03-loaded-12","text":"6, 3, 6"}
+{"api_subset":false,"faces":[6,6,6],"generator":"loaded","index":13,"k":3,"seq_id":"k03-loaded-13","text":"6, 6, 6"}
+{"api_subset":false,"faces":[6,5,6],"generator":"loaded","index":14,"k":3,"seq_id":"k03-loaded-14","text":"6, 5, 6"}
+{"api_subset":false,"faces":[2,1,2],"generator":"loaded","index":15,"k":3,"seq_id":"k03-loaded-15","text":"2, 1, 2"}
+{"api_subset":false,"faces":[6,6,6],"generator":"loaded","index":16,"k":3,"seq_id":"k03-loaded-16","text":"6, 6, 6"}
+{"api_subset":false,"faces":[4,6,5],"generator":"loaded","index":17,"k":3,"seq_id":"k03-loaded-17","text":"4, 6, 5"}
+{"api_subset":false,"faces":[2,6,6],"generator":"loaded","index":18,"k":3,"seq_id":"k03-loaded-18","text":"2, 6, 6"}
+{"api_subset":false,"faces":[4,1,6],"generator":"loaded","index":19,"k":3,"seq_id":"k03-loaded-19","text":"4, 1, 6"}
+{"api_subset":true,"faces":[5,6,6,1],"generator":"fair","index":0,"k":4,"seq_id":"k04-fair-00","text":"5, 6, 6, 1"}
+{"api_subset":true,"faces":[6,2,2,5],"generator":"fair","index":1,"k":4,"seq_id":"k04-fair-01","text":"6, 2, 2, 5"}
+{"api_subset":true,"faces":[4,1,5,4],"generator":"fair","index":2,"k":4,"seq_id":"k04-fair-02","text":"4, 1, 5, 4"}
+{"api_subset":true,"faces":[6,6,2,6],"generator":"fair","index":3,"k":4,"seq_id":"k04-fair-03","text":"6, 6, 2, 6"}
+{"api_subset":true,"faces":[2,5,4,1],"generator":"fair","index":4,"k":4,"seq_id":"k04-fair-04","text":"2, 5, 4, 1"}
+{"api_subset":true,"faces":[2,3,6,2],"generator":"fair","index":5,"k":4,"seq_id":"k04-fair-05","text":"2, 3, 6, 2"}
+{"api_subset":true,"faces":[4,4,2,2],"generator":"fair","index":6,"k":4,"seq_id":"k04-fair-06","text":"4, 4, 2, 2"}
+{"api_subset":true,"faces":[3,3,6,6],"generator":"fair","index":7,"k":4,"seq_id":"k04-fair-07","text":"3, 3, 6, 6"}
+{"api_subset":true,"faces":[2,6,2,6],"generator":"fair","index":8,"k":4,"seq_id":"k04-fair-08","text":"2, 6, 2, 6"}
+{"api_subset":true,"faces":[5,4,4,6],"generator":"fair","index":9,"k":4,"seq_id":"k04-fair-09","text":"5, 4, 4, 6"}
+{"api_subset":false,"faces":[2,3,5,1],"generator":"fair","index":10,"k":4,"seq_id":"k04-fair-10","text":"2, 3, 5, 1"}
+{"api_subset":false,"faces":[2,1,1,4],"generator":"fair","index":11,"k":4,"seq_id":"k04-fair-11","text":"2, 1, 1, 4"}
+{"api_subset":false,"faces":[4,6,6,3],"generator":"fair","index":12,"k":4,"seq_id":"k04-fair-12","text":"4, 6, 6, 3"}
+{"api_subset":false,"faces":[6,1,3,3],"generator":"fair","index":13,"k":4,"seq_id":"k04-fair-13","text":"6, 1, 3, 3"}
+{"api_subset":false,"faces":[4,1,2,1],"generator":"fair","index":14,"k":4,"seq_id":"k04-fair-14","text":"4, 1, 2, 1"}
+{"api_subset":false,"faces":[2,1,3,4],"generator":"fair","index":15,"k":4,"seq_id":"k04-fair-15","text":"2, 1, 3, 4"}
+{"api_subset":false,"faces":[6,4,5,1],"generator":"fair","index":16,"k":4,"seq_id":"k04-fair-16","text":"6, 4, 5, 1"}
+{"api_subset":false,"faces":[4,1,3,6],"generator":"fair","index":17,"k":4,"seq_id":"k04-fair-17","text":"4, 1, 3, 6"}
+{"api_subset":false,"faces":[3,3,3,5],"generator":"fair","index":18,"k":4,"seq_id":"k04-fair-18","text":"3, 3, 3, 5"}
+{"api_subset":false,"faces":[4,5,3,4],"generator":"fair","index":19,"k":4,"seq_id":"k04-fair-19","text":"4, 5, 3, 4"}
+{"api_subset":true,"faces":[4,2,2,6],"generator":"even","index":0,"k":4,"seq_id":"k04-even-00","text":"4, 2, 2, 6"}
+{"api_subset":true,"faces":[6,4,2,2],"generator":"even","index":1,"k":4,"seq_id":"k04-even-01","text":"6, 4, 2, 2"}
+{"api_subset":true,"faces":[2,6,4,2],"generator":"even","index":2,"k":4,"seq_id":"k04-even-02","text":"2, 6, 4, 2"}
+{"api_subset":true,"faces":[4,6,4,2],"generator":"even","index":3,"k":4,"seq_id":"k04-even-03","text":"4, 6, 4, 2"}
+{"api_subset":true,"faces":[2,6,6,6],"generator":"even","index":4,"k":4,"seq_id":"k04-even-04","text":"2, 6, 6, 6"}
+{"api_subset":true,"faces":[4,2,4,2],"generator":"even","index":5,"k":4,"seq_id":"k04-even-05","text":"4, 2, 4, 2"}
+{"api_subset":true,"faces":[6,2,4,4],"generator":"even","index":6,"k":4,"seq_id":"k04-even-06","text":"6, 2, 4, 4"}
+{"api_subset":true,"faces":[4,2,6,6],"generator":"even","index":7,"k":4,"seq_id":"k04-even-07","text":"4, 2, 6, 6"}
+{"api_subset":true,"faces":[2,2,2,4],"generator":"even","index":8,"k":4,"seq_id":"k04-even-08","text":"2, 2, 2, 4"}
+{"api_subset":true,"faces":[6,6,6,6],"generator":"even","index":9,"k":4,"seq_id":"k04-even-09","text":"6, 6, 6, 6"}
+{"api_subset":false,"faces":[4,2,4,4],"generator":"even","index":10,"k":4,"seq_id":"k04-even-10","text":"4, 2, 4, 4"}
+{"api_subset":false,"faces":[6,6,4,6],"generator":"even","index":11,"k":4,"seq_id":"k04-even-11","text":"6, 6, 4, 6"}
+{"api_subset":false,"faces":[6,4,2,4],"generator":"even","index":12,"k":4,"seq_id":"k04-even-12","text":"6, 4, 2, 4"}
+{"api_subset":false,"faces":[4,2,6,2],"generator":"even","index":13,"k":4,"seq_id":"k04-even-13","text":"4, 2, 6, 2"}
+{"api_subset":false,"faces":[4,6,2,6],"generator":"even","index":14,"k":4,"seq_id":"k04-even-14","text":"4, 6, 2, 6"}
+{"api_subset":false,"faces":[2,6,4,2],"generator":"even","index":15,"k":4,"seq_id":"k04-even-15","text":"2, 6, 4, 2"}
+{"api_subset":false,"faces":[2,2,2,6],"generator":"even","index":16,"k":4,"seq_id":"k04-even-16","text":"2, 2, 2, 6"}
+{"api_subset":false,"faces":[4,4,2,6],"generator":"even","index":17,"k":4,"seq_id":"k04-even-17","text":"4, 4, 2, 6"}
+{"api_subset":false,"faces":[2,6,4,2],"generator":"even","index":18,"k":4,"seq_id":"k04-even-18","text":"2, 6, 4, 2"}
+{"api_subset":false,"faces":[6,6,2,6],"generator":"even","index":19,"k":4,"seq_id":"k04-even-19","text":"6, 6, 2, 6"}
+{"api_subset":true,"faces":[3,5,3,4],"generator":"loaded","index":0,"k":4,"seq_id":"k04-loaded-00","text":"3, 5, 3, 4"}
+{"api_subset":true,"faces":[6,6,2,6],"generator":"loaded","index":1,"k":4,"seq_id":"k04-loaded-01","text":"6, 6, 2, 6"}
+{"api_subset":true,"faces":[1,3,6,3],"generator":"loaded","index":2,"k":4,"seq_id":"k04-loaded-02","text":"1, 3, 6, 3"}
+{"api_subset":true,"faces":[2,1,4,1],"generator":"loaded","index":3,"k":4,"seq_id":"k04-loaded-03","text":"2, 1, 4, 1"}
+{"api_subset":true,"faces":[6,4,6,6],"generator":"loaded","index":4,"k":4,"seq_id":"k04-loaded-04","text":"6, 4, 6, 6"}
+{"api_subset":true,"faces":[1,6,3,6],"generator":"loaded","index":5,"k":4,"seq_id":"k04-loaded-05","text":"1, 6, 3, 6"}
+{"api_subset":true,"faces":[3,3,6,2],"generator":"loaded","index":6,"k":4,"seq_id":"k04-loaded-06","text":"3, 3, 6, 2"}
+{"api_subset":true,"faces":[3,4,1,6],"generator":"loaded","index":7,"k":4,"seq_id":"k04-loaded-07","text":"3, 4, 1, 6"}
+{"api_subset":true,"faces":[3,6,5,5],"generator":"loaded","index":8,"k":4,"seq_id":"k04-loaded-08","text":"3, 6, 5, 5"}
+{"api_subset":true,"faces":[6,6,6,3],"generator":"loaded","index":9,"k":4,"seq_id":"k04-loaded-09","text":"6, 6, 6, 3"}
+{"api_subset":false,"faces":[6,2,3,4],"generator":"loaded","index":10,"k":4,"seq_id":"k04-loaded-10","text":"6, 2, 3, 4"}
+{"api_subset":false,"faces":[6,5,5,2],"generator":"loaded","index":11,"k":4,"seq_id":"k04-loaded-11","text":"6, 5, 5, 2"}
+{"api_subset":false,"faces":[6,2,6,6],"generator":"loaded","index":12,"k":4,"seq_id":"k04-loaded-12","text":"6, 2, 6, 6"}
+{"api_subset":false,"faces":[6,6,6,6],"generator":"loaded","index":13,"k":4,"seq_id":"k04-loaded-13","text":"6, 6, 6, 6"}
+{"api_subset":false,"faces":[1,6,4,6],"generator":"loaded","index":14,"k":4,"seq_id":"k04-loaded-14","text":"1, 6, 4, 6"}
+{"api_subset":false,"faces":[6,4,5,6],"generator":"loaded","index":15,"k":4,"seq_id":"k04-loaded-15","text":"6, 4, 5, 6"}
+{"api_subset":false,"faces":[6,1,2,5],"generator":"loaded","index":16,"k":4,"seq_id":"k04-loaded-16","text":"6, 1, 2, 5"}
+{"api_subset":false,"faces":[2,5,6,6],"generator":"loaded","index":17,"k":4,"seq_id":"k04-loaded-17","text":"2, 5, 6, 6"}
+{"api_subset":false,"faces":[3,3,6,3],"generator":"loaded","index":18,"k":4,"seq_id":"k04-loaded-18","text":"3, 3, 6, 3"}
+{"api_subset":false,"faces":[1,5,5,2],"generator":"loaded","index":19,"k":4,"seq_id":"k04-loaded-19","text":"1, 5, 5, 2"}
+{"api_subset":true,"faces":[6,5,2,4,5,4],"generator":"fair","index":0,"k":6,"seq_id":"k06-fair-00","text":"6, 5, 2, 4, 5, 4"}
+{"api_subset":true,"faces":[5,1,1,2,6,1],"generator":"fair","index":1,"k":6,"seq_id":"k06-fair-01","text":"5, 1, 1, 2, 6, 1"}
+{"api_subset":true,"faces":[1,6,6,1,5,1],"generator":"fair","index":2,"k":6,"seq_id":"k06-fair-02","text":"1, 6, 6, 1, 5, 1"}
+{"api_subset":true,"faces":[5,4,4,4,1,2],"generator":"fair","index":3,"k":6,"seq_id":"k06-fair-03","text":"5, 4, 4, 4, 1, 2"}
+{"api_subset":true,"faces":[2,1,1,4,5,3],"generator":"fair","index":4,"k":6,"seq_id":"k06-fair-04","text":"2, 1, 1, 4, 5, 3"}
+{"api_subset":true,"faces":[2,1,4,1,6,6],"generator":"fair","index":5,"k":6,"seq_id":"k06-fair-05","text":"2, 1, 4, 1, 6, 6"}
+{"api_subset":true,"faces":[2,2,1,6,2,2],"generator":"fair","index":6,"k":6,"seq_id":"k06-fair-06","text":"2, 2, 1, 6, 2, 2"}
+{"api_subset":true,"faces":[4,2,1,3,3,6],"generator":"fair","index":7,"k":6,"seq_id":"k06-fair-07","text":"4, 2, 1, 3, 3, 6"}
+{"api_subset":true,"faces":[5,1,1,2,6,3],"generator":"fair","index":8,"k":6,"seq_id":"k06-fair-08","text":"5, 1, 1, 2, 6, 3"}
+{"api_subset":true,"faces":[4,6,3,3,3,5],"generator":"fair","index":9,"k":6,"seq_id":"k06-fair-09","text":"4, 6, 3, 3, 3, 5"}
+{"api_subset":false,"faces":[6,3,6,2,6,3],"generator":"fair","index":10,"k":6,"seq_id":"k06-fair-10","text":"6, 3, 6, 2, 6, 3"}
+{"api_subset":false,"faces":[2,3,3,5,6,6],"generator":"fair","index":11,"k":6,"seq_id":"k06-fair-11","text":"2, 3, 3, 5, 6, 6"}
+{"api_subset":false,"faces":[5,2,3,2,4,3],"generator":"fair","index":12,"k":6,"seq_id":"k06-fair-12","text":"5, 2, 3, 2, 4, 3"}
+{"api_subset":false,"faces":[5,2,5,3,1,4],"generator":"fair","index":13,"k":6,"seq_id":"k06-fair-13","text":"5, 2, 5, 3, 1, 4"}
+{"api_subset":false,"faces":[5,3,2,5,5,4],"generator":"fair","index":14,"k":6,"seq_id":"k06-fair-14","text":"5, 3, 2, 5, 5, 4"}
+{"api_subset":false,"faces":[6,4,2,2,1,1],"generator":"fair","index":15,"k":6,"seq_id":"k06-fair-15","text":"6, 4, 2, 2, 1, 1"}
+{"api_subset":false,"faces":[6,4,1,2,6,5],"generator":"fair","index":16,"k":6,"seq_id":"k06-fair-16","text":"6, 4, 1, 2, 6, 5"}
+{"api_subset":false,"faces":[2,5,5,4,3,6],"generator":"fair","index":17,"k":6,"seq_id":"k06-fair-17","text":"2, 5, 5, 4, 3, 6"}
+{"api_subset":false,"faces":[6,1,3,6,4,1],"generator":"fair","index":18,"k":6,"seq_id":"k06-fair-18","text":"6, 1, 3, 6, 4, 1"}
+{"api_subset":false,"faces":[3,3,5,4,4,5],"generator":"fair","index":19,"k":6,"seq_id":"k06-fair-19","text":"3, 3, 5, 4, 4, 5"}
+{"api_subset":true,"faces":[2,6,6,6,6,2],"generator":"even","index":0,"k":6,"seq_id":"k06-even-00","text":"2, 6, 6, 6, 6, 2"}
+{"api_subset":true,"faces":[6,6,2,2,6,4],"generator":"even","index":1,"k":6,"seq_id":"k06-even-01","text":"6, 6, 2, 2, 6, 4"}
+{"api_subset":true,"faces":[6,2,2,4,6,2],"generator":"even","index":2,"k":6,"seq_id":"k06-even-02","text":"6, 2, 2, 4, 6, 2"}
+{"api_subset":true,"faces":[2,6,4,4,4,6],"generator":"even","index":3,"k":6,"seq_id":"k06-even-03","text":"2, 6, 4, 4, 4, 6"}
+{"api_subset":true,"faces":[4,6,4,4,2,6],"generator":"even","index":4,"k":6,"seq_id":"k06-even-04","text":"4, 6, 4, 4, 2, 6"}
+{"api_subset":true,"faces":[4,4,6,4,6,6],"generator":"even","index":5,"k":6,"seq_id":"k06-even-05","text":"4, 4, 6, 4, 6, 6"}
+{"api_subset":true,"faces":[6,2,2,4,6,6],"generator":"even","index":6,"k":6,"seq_id":"k06-even-06","text":"6, 2, 2, 4, 6, 6"}
+{"api_subset":true,"faces":[2,4,6,2,6,4],"generator":"even","index":7,"k":6,"seq_id":"k06-even-07","text":"2, 4, 6, 2, 6, 4"}
+{"api_subset":true,"faces":[6,6,2,4,2,2],"generator":"even","index":8,"k":6,"seq_id":"k06-even-08","text":"6, 6, 2, 4, 2, 2"}
+{"api_subset":true,"faces":[4,2,6,6,4,2],"generator":"even","index":9,"k":6,"seq_id":"k06-even-09","text":"4, 2, 6, 6, 4, 2"}
+{"api_subset":false,"faces":[6,4,4,2,6,2],"generator":"even","index":10,"k":6,"seq_id":"k06-even-10","text":"6, 4, 4, 2, 6, 2"}
+{"api_subset":false,"faces":[4,2,2,2,2,6],"generator":"even","index":11,"k":6,"seq_id":"k06-even-11","text":"4, 2, 2, 2, 2, 6"}
+{"api_subset":false,"faces":[6,4,4,6,6,6],"generator":"even","index":12,"k":6,"seq_id":"k06-even-12","text":"6, 4, 4, 6, 6, 6"}
+{"api_subset":false,"faces":[2,2,2,6,6,6],"generator":"even","index":13,"k":6,"seq_id":"k06-even-13","text":"2, 2, 2, 6, 6, 6"}
+{"api_subset":false,"faces":[6,2,6,2,4,4],"generator":"even","index":14,"k":6,"seq_id":"k06-even-14","text":"6, 2, 6, 2, 4, 4"}
+{"api_subset":false,"faces":[2,6,6,2,4,2],"generator":"even","index":15,"k":6,"seq_id":"k06-even-15","text":"2, 6, 6, 2, 4, 2"}
+{"api_subset":false,"faces":[6,2,2,4,2,4],"generator":"even","index":16,"k":6,"seq_id":"k06-even-16","text":"6, 2, 2, 4, 2, 4"}
+{"api_subset":false,"faces":[6,4,4,6,4,6],"generator":"even","index":17,"k":6,"seq_id":"k06-even-17","text":"6, 4, 4, 6, 4, 6"}
+{"api_subset":false,"faces":[4,4,4,6,2,6],"generator":"even","index":18,"k":6,"seq_id":"k06-even-18","text":"4, 4, 4, 6, 2, 6"}
+{"api_subset":false,"faces":[2,4,2,4,2,4],"generator":"even","index":19,"k":6,"seq_id":"k06-even-19","text":"2, 4, 2, 4, 2, 4"}
+{"api_subset":true,"faces":[2,2,1,4,1,5],"generator":"loaded","index":0,"k":6,"seq_id":"k06-loaded-00","text":"2, 2, 1, 4, 1, 5"}
+{"api_subset":true,"faces":[4,1,6,3,3,3],"generator":"loaded","index":1,"k":6,"seq_id":"k06-loaded-01","text":"4, 1, 6, 3, 3, 3"}
+{"api_subset":true,"faces":[6,2,3,6,4,6],"generator":"loaded","index":2,"k":6,"seq_id":"k06-loaded-02","text":"6, 2, 3, 6, 4, 6"}
+{"api_subset":true,"faces":[4,3,6,1,5,2],"generator":"loaded","index":3,"k":6,"seq_id":"k06-loaded-03","text":"4, 3, 6, 1, 5, 2"}
+{"api_subset":true,"faces":[6,2,6,3,4,1],"generator":"loaded","index":4,"k":6,"seq_id":"k06-loaded-04","text":"6, 2, 6, 3, 4, 1"}
+{"api_subset":true,"faces":[6,4,3,6,4,5],"generator":"loaded","index":5,"k":6,"seq_id":"k06-loaded-05","text":"6, 4, 3, 6, 4, 5"}
+{"api_subset":true,"faces":[6,6,1,6,6,6],"generator":"loaded","index":6,"k":6,"seq_id":"k06-loaded-06","text":"6, 6, 1, 6, 6, 6"}
+{"api_subset":true,"faces":[2,3,6,5,6,2],"generator":"loaded","index":7,"k":6,"seq_id":"k06-loaded-07","text":"2, 3, 6, 5, 6, 2"}
+{"api_subset":true,"faces":[6,6,6,6,2,6],"generator":"loaded","index":8,"k":6,"seq_id":"k06-loaded-08","text":"6, 6, 6, 6, 2, 6"}
+{"api_subset":true,"faces":[2,4,6,3,3,1],"generator":"loaded","index":9,"k":6,"seq_id":"k06-loaded-09","text":"2, 4, 6, 3, 3, 1"}
+{"api_subset":false,"faces":[6,5,3,6,2,5],"generator":"loaded","index":10,"k":6,"seq_id":"k06-loaded-10","text":"6, 5, 3, 6, 2, 5"}
+{"api_subset":false,"faces":[6,2,6,1,6,6],"generator":"loaded","index":11,"k":6,"seq_id":"k06-loaded-11","text":"6, 2, 6, 1, 6, 6"}
+{"api_subset":false,"faces":[5,5,5,6,6,3],"generator":"loaded","index":12,"k":6,"seq_id":"k06-loaded-12","text":"5, 5, 5, 6, 6, 3"}
+{"api_subset":false,"faces":[6,6,6,6,4,5],"generator":"loaded","index":13,"k":6,"seq_id":"k06-loaded-13","text":"6, 6, 6, 6, 4, 5"}
+{"api_subset":false,"faces":[6,5,4,5,2,5],"generator":"loaded","index":14,"k":6,"seq_id":"k06-loaded-14","text":"6, 5, 4, 5, 2, 5"}
+{"api_subset":false,"faces":[6,3,2,6,6,6],"generator":"loaded","index":15,"k":6,"seq_id":"k06-loaded-15","text":"6, 3, 2, 6, 6, 6"}
+{"api_subset":false,"faces":[1,4,6,6,5,6],"generator":"loaded","index":16,"k":6,"seq_id":"k06-loaded-16","text":"1, 4, 6, 6, 5, 6"}
+{"api_subset":false,"faces":[3,1,4,1,5,3],"generator":"loaded","index":17,"k":6,"seq_id":"k06-loaded-17","text":"3, 1, 4, 1, 5, 3"}
+{"api_subset":false,"faces":[1,6,6,6,6,6],"generator":"loaded","index":18,"k":6,"seq_id":"k06-loaded-18","text":"1, 6, 6, 6, 6, 6"}
+{"api_subset":false,"faces":[4,6,3,6,5,3],"generator":"loaded","index":19,"k":6,"seq_id":"k06-loaded-19","text":"4, 6, 3, 6, 5, 3"}
+{"api_subset":true,"faces":[6,6,1,5,5,3,2,6],"generator":"fair","index":0,"k":8,"seq_id":"k08-fair-00","text":"6, 6, 1, 5, 5, 3, 2, 6"}
+{"api_subset":true,"faces":[4,6,3,3,6,3,2,3],"generator":"fair","index":1,"k":8,"seq_id":"k08-fair-01","text":"4, 6, 3, 3, 6, 3, 2, 3"}
+{"api_subset":true,"faces":[1,3,6,2,2,6,3,6],"generator":"fair","index":2,"k":8,"seq_id":"k08-fair-02","text":"1, 3, 6, 2, 2, 6, 3, 6"}
+{"api_subset":true,"faces":[3,2,2,5,5,3,2,4],"generator":"fair","index":3,"k":8,"seq_id":"k08-fair-03","text":"3, 2, 2, 5, 5, 3, 2, 4"}
+{"api_subset":true,"faces":[5,3,6,3,1,4,5,6],"generator":"fair","index":4,"k":8,"seq_id":"k08-fair-04","text":"5, 3, 6, 3, 1, 4, 5, 6"}
+{"api_subset":true,"faces":[4,5,2,1,2,3,6,3],"generator":"fair","index":5,"k":8,"seq_id":"k08-fair-05","text":"4, 5, 2, 1, 2, 3, 6, 3"}
+{"api_subset":true,"faces":[4,2,3,3,2,3,2,2],"generator":"fair","index":6,"k":8,"seq_id":"k08-fair-06","text":"4, 2, 3, 3, 2, 3, 2, 2"}
+{"api_subset":true,"faces":[1,2,3,4,1,6,1,5],"generator":"fair","index":7,"k":8,"seq_id":"k08-fair-07","text":"1, 2, 3, 4, 1, 6, 1, 5"}
+{"api_subset":true,"faces":[3,3,6,5,6,6,1,3],"generator":"fair","index":8,"k":8,"seq_id":"k08-fair-08","text":"3, 3, 6, 5, 6, 6, 1, 3"}
+{"api_subset":true,"faces":[6,4,6,2,4,1,4,5],"generator":"fair","index":9,"k":8,"seq_id":"k08-fair-09","text":"6, 4, 6, 2, 4, 1, 4, 5"}
+{"api_subset":false,"faces":[2,3,5,6,5,4,4,1],"generator":"fair","index":10,"k":8,"seq_id":"k08-fair-10","text":"2, 3, 5, 6, 5, 4, 4, 1"}
+{"api_subset":false,"faces":[5,3,1,5,4,3,4,4],"generator":"fair","index":11,"k":8,"seq_id":"k08-fair-11","text":"5, 3, 1, 5, 4, 3, 4, 4"}
+{"api_subset":false,"faces":[1,5,3,1,2,3,5,4],"generator":"fair","index":12,"k":8,"seq_id":"k08-fair-12","text":"1, 5, 3, 1, 2, 3, 5, 4"}
+{"api_subset":false,"faces":[2,5,3,6,3,2,1,5],"generator":"fair","index":13,"k":8,"seq_id":"k08-fair-13","text":"2, 5, 3, 6, 3, 2, 1, 5"}
+{"api_subset":false,"faces":[5,2,3,4,4,3,4,6],"generator":"fair","index":14,"k":8,"seq_id":"k08-fair-14","text":"5, 2, 3, 4, 4, 3, 4, 6"}
+{"api_subset":false,"faces":[6,4,5,3,3,5,4,2],"generator":"fair","index":15,"k":8,"seq_id":"k08-fair-15","text":"6, 4, 5, 3, 3, 5, 4, 2"}
+{"api_subset":false,"faces":[1,6,3,2,5,6,4,2],"generator":"fair","index":16,"k":8,"seq_id":"k08-fair-16","text":"1, 6, 3, 2, 5, 6, 4, 2"}
+{"api_subset":false,"faces":[3,4,6,5,1,4,3,6],"generator":"fair","index":17,"k":8,"seq_id":"k08-fair-17","text":"3, 4, 6, 5, 1, 4, 3, 6"}
+{"api_subset":false,"faces":[6,6,2,5,2,4,6,5],"generator":"fair","index":18,"k":8,"seq_id":"k08-fair-18","text":"6, 6, 2, 5, 2, 4, 6, 5"}
+{"api_subset":false,"faces":[2,3,4,6,5,2,3,2],"generator":"fair","index":19,"k":8,"seq_id":"k08-fair-19","text":"2, 3, 4, 6, 5, 2, 3, 2"}
+{"api_subset":true,"faces":[2,6,2,2,4,2,2,6],"generator":"even","index":0,"k":8,"seq_id":"k08-even-00","text":"2, 6, 2, 2, 4, 2, 2, 6"}
+{"api_subset":true,"faces":[4,6,6,6,6,4,2,2],"generator":"even","index":1,"k":8,"seq_id":"k08-even-01","text":"4, 6, 6, 6, 6, 4, 2, 2"}
+{"api_subset":true,"faces":[4,4,2,4,2,6,2,4],"generator":"even","index":2,"k":8,"seq_id":"k08-even-02","text":"4, 4, 2, 4, 2, 6, 2, 4"}
+{"api_subset":true,"faces":[6,6,6,6,2,4,2,2],"generator":"even","index":3,"k":8,"seq_id":"k08-even-03","text":"6, 6, 6, 6, 2, 4, 2, 2"}
+{"api_subset":true,"faces":[6,6,4,2,2,2,4,4],"generator":"even","index":4,"k":8,"seq_id":"k08-even-04","text":"6, 6, 4, 2, 2, 2, 4, 4"}
+{"api_subset":true,"faces":[2,6,2,6,6,6,2,2],"generator":"even","index":5,"k":8,"seq_id":"k08-even-05","text":"2, 6, 2, 6, 6, 6, 2, 2"}
+{"api_subset":true,"faces":[6,6,2,4,2,6,4,4],"generator":"even","index":6,"k":8,"seq_id":"k08-even-06","text":"6, 6, 2, 4, 2, 6, 4, 4"}
+{"api_subset":true,"faces":[6,6,2,6,6,2,4,2],"generator":"even","index":7,"k":8,"seq_id":"k08-even-07","text":"6, 6, 2, 6, 6, 2, 4, 2"}
+{"api_subset":true,"faces":[6,2,2,2,6,4,2,4],"generator":"even","index":8,"k":8,"seq_id":"k08-even-08","text":"6, 2, 2, 2, 6, 4, 2, 4"}
+{"api_subset":true,"faces":[4,4,2,6,2,2,4,6],"generator":"even","index":9,"k":8,"seq_id":"k08-even-09","text":"4, 4, 2, 6, 2, 2, 4, 6"}
+{"api_subset":false,"faces":[4,4,4,2,6,2,2,2],"generator":"even","index":10,"k":8,"seq_id":"k08-even-10","text":"4, 4, 4, 2, 6, 2, 2, 2"}
+{"api_subset":false,"faces":[4,6,4,2,4,6,4,2],"generator":"even","index":11,"k":8,"seq_id":"k08-even-11","text":"4, 6, 4, 2, 4, 6, 4, 2"}
+{"api_subset":false,"faces":[2,4,6,4,4,4,6,6],"generator":"even","index":12,"k":8,"seq_id":"k08-even-12","text":"2, 4, 6, 4, 4, 4, 6, 6"}
+{"api_subset":false,"faces":[2,2,6,6,6,6,6,4],"generator":"even","index":13,"k":8,"seq_id":"k08-even-13","text":"2, 2, 6, 6, 6, 6, 6, 4"}
+{"api_subset":false,"faces":[4,4,2,2,6,4,4,4],"generator":"even","index":14,"k":8,"seq_id":"k08-even-14","text":"4, 4, 2, 2, 6, 4, 4, 4"}
+{"api_subset":false,"faces":[2,6,2,2,6,2,4,6],"generator":"even","index":15,"k":8,"seq_id":"k08-even-15","text":"2, 6, 2, 2, 6, 2, 4, 6"}
+{"api_subset":false,"faces":[2,4,6,4,4,6,2,6],"generator":"even","index":16,"k":8,"seq_id":"k08-even-16","text":"2, 4, 6, 4, 4, 6, 2, 6"}
+{"api_subset":false,"faces":[6,2,4,6,4,2,2,6],"generator":"even","index":17,"k":8,"seq_id":"k08-even-17","text":"6, 2, 4, 6, 4, 2, 2, 6"}
+{"api_subset":false,"faces":[6,6,6,6,4,4,2,2],"generator":"even","index":18,"k":8,"seq_id":"k08-even-18","text":"6, 6, 6, 6, 4, 4, 2, 2"}
+{"api_subset":false,"faces":[6,4,4,6,4,4,6,4],"generator":"even","index":19,"k":8,"seq_id":"k08-even-19","text":"6, 4, 4, 6, 4, 4, 6, 4"}
+{"api_subset":true,"faces":[1,2,6,6,6,3,1,6],"generator":"loaded","index":0,"k":8,"seq_id":"k08-loaded-00","text":"1, 2, 6, 6, 6, 3, 1, 6"}
+{"api_subset":true,"faces":[2,6,2,6,6,2,2,4],"generator":"loaded","index":1,"k":8,"seq_id":"k08-loaded-01","text":"2, 6, 2, 6, 6, 2, 2, 4"}
+{"api_subset":true,"faces":[1,3,6,4,6,6,5,6],"generator":"loaded","index":2,"k":8,"seq_id":"k08-loaded-02","text":"1, 3, 6, 4, 6, 6, 5, 6"}
+{"api_subset":true,"faces":[3,5,6,6,4,3,5,3],"generator":"loaded","index":3,"k":8,"seq_id":"k08-loaded-03","text":"3, 5, 6, 6, 4, 3, 5, 3"}
+{"api_subset":true,"faces":[3,6,6,1,4,3,3,6],"generator":"loaded","index":4,"k":8,"seq_id":"k08-loaded-04","text":"3, 6, 6, 1, 4, 3, 3, 6"}
+{"api_subset":true,"faces":[3,6,6,6,2,2,4,5],"generator":"loaded","index":5,"k":8,"seq_id":"k08-loaded-05","text":"3, 6, 6, 6, 2, 2, 4, 5"}
+{"api_subset":true,"faces":[6,2,6,3,6,5,6,3],"generator":"loaded","index":6,"k":8,"seq_id":"k08-loaded-06","text":"6, 2, 6, 3, 6, 5, 6, 3"}
+{"api_subset":true,"faces":[2,6,5,5,6,6,4,6],"generator":"loaded","index":7,"k":8,"seq_id":"k08-loaded-07","text":"2, 6, 5, 5, 6, 6, 4, 6"}
+{"api_subset":true,"faces":[6,1,3,6,6,6,6,1],"generator":"loaded","index":8,"k":8,"seq_id":"k08-loaded-08","text":"6, 1, 3, 6, 6, 6, 6, 1"}
+{"api_subset":true,"faces":[6,2,2,6,6,2,1,6],"generator":"loaded","index":9,"k":8,"seq_id":"k08-loaded-09","text":"6, 2, 2, 6, 6, 2, 1, 6"}
+{"api_subset":false,"faces":[6,4,4,3,6,6,6,3],"generator":"loaded","index":10,"k":8,"seq_id":"k08-loaded-10","text":"6, 4, 4, 3, 6, 6, 6, 3"}
+{"api_subset":false,"faces":[2,6,2,5,2,6,2,5],"generator":"loaded","index":11,"k":8,"seq_id":"k08-loaded-11","text":"2, 6, 2, 5, 2, 6, 2, 5"}
+{"api_subset":false,"faces":[2,6,3,5,6,6,4,1],"generator":"loaded","index":12,"k":8,"seq_id":"k08-loaded-12","text":"2, 6, 3, 5, 6, 6, 4, 1"}
+{"api_subset":false,"faces":[4,4,1,4,1,1,2,6],"generator":"loaded","index":13,"k":8,"seq_id":"k08-loaded-13","text":"4, 4, 1, 4, 1, 1, 2, 6"}
+{"api_subset":false,"faces":[6,6,6,6,6,1,6,6],"generator":"loaded","index":14,"k":8,"seq_id":"k08-loaded-14","text":"6, 6, 6, 6, 6, 1, 6, 6"}
+{"api_subset":false,"faces":[5,6,6,6,4,4,3,6],"generator":"loaded","index":15,"k":8,"seq_id":"k08-loaded-15","text":"5, 6, 6, 6, 4, 4, 3, 6"}
+{"api_subset":false,"faces":[3,6,6,6,6,6,2,3],"generator":"loaded","index":16,"k":8,"seq_id":"k08-loaded-16","text":"3, 6, 6, 6, 6, 6, 2, 3"}
+{"api_subset":false,"faces":[6,6,6,1,3,3,2,6],"generator":"loaded","index":17,"k":8,"seq_id":"k08-loaded-17","text":"6, 6, 6, 1, 3, 3, 2, 6"}
+{"api_subset":false,"faces":[5,6,4,3,6,6,5,6],"generator":"loaded","index":18,"k":8,"seq_id":"k08-loaded-18","text":"5, 6, 4, 3, 6, 6, 5, 6"}
+{"api_subset":false,"faces":[3,6,5,2,6,2,4,5],"generator":"loaded","index":19,"k":8,"seq_id":"k08-loaded-19","text":"3, 6, 5, 2, 6, 2, 4, 5"}
+{"api_subset":true,"faces":[1,5,5,3,5,6,3,6,3,3],"generator":"fair","index":0,"k":10,"seq_id":"k10-fair-00","text":"1, 5, 5, 3, 5, 6, 3, 6, 3, 3"}
+{"api_subset":true,"faces":[4,3,5,2,4,3,3,4,3,6],"generator":"fair","index":1,"k":10,"seq_id":"k10-fair-01","text":"4, 3, 5, 2, 4, 3, 3, 4, 3, 6"}
+{"api_subset":true,"faces":[1,4,3,6,1,5,2,6,3,6],"generator":"fair","index":2,"k":10,"seq_id":"k10-fair-02","text":"1, 4, 3, 6, 1, 5, 2, 6, 3, 6"}
+{"api_subset":true,"faces":[6,4,4,3,1,6,6,3,1,3],"generator":"fair","index":3,"k":10,"seq_id":"k10-fair-03","text":"6, 4, 4, 3, 1, 6, 6, 3, 1, 3"}
+{"api_subset":true,"faces":[3,1,2,4,3,5,5,1,1,3],"generator":"fair","index":4,"k":10,"seq_id":"k10-fair-04","text":"3, 1, 2, 4, 3, 5, 5, 1, 1, 3"}
+{"api_subset":true,"faces":[4,2,5,5,3,6,1,3,2,6],"generator":"fair","index":5,"k":10,"seq_id":"k10-fair-05","text":"4, 2, 5, 5, 3, 6, 1, 3, 2, 6"}
+{"api_subset":true,"faces":[1,2,5,1,1,4,5,6,1,3],"generator":"fair","index":6,"k":10,"seq_id":"k10-fair-06","text":"1, 2, 5, 1, 1, 4, 5, 6, 1, 3"}
+{"api_subset":true,"faces":[4,4,2,4,3,5,1,4,6,4],"generator":"fair","index":7,"k":10,"seq_id":"k10-fair-07","text":"4, 4, 2, 4, 3, 5, 1, 4, 6, 4"}
+{"api_subset":true,"faces":[2,2,6,6,2,2,5,1,3,2],"generator":"fair","index":8,"k":10,"seq_id":"k10-fair-08","text":"2, 2, 6, 6, 2, 2, 5, 1, 3, 2"}
+{"api_subset":true,"faces":[2,3,2,6,4,2,4,2,5,6],"generator":"fair","index":9,"k":10,"seq_id":"k10-fair-09","text":"2, 3, 2, 6, 4, 2, 4, 2, 5, 6"}
+{"api_subset":false,"faces":[2,3,1,2,5,6,4,5,6,5],"generator":"fair","index":10,"k":10,"seq_id":"k10-fair-10","text":"2, 3, 1, 2, 5, 6, 4, 5, 6, 5"}
+{"api_subset":false,"faces":[3,1,3,5,5,6,3,1,2,5],"generator":"fair","index":11,"k":10,"seq_id":"k10-fair-11","text":"3, 1, 3, 5, 5, 6, 3, 1, 2, 5"}
+{"api_subset":false,"faces":[2,5,1,4,3,4,5,3,1,4],"generator":"fair","index":12,"k":10,"seq_id":"k10-fair-12","text":"2, 5, 1, 4, 3, 4, 5, 3, 1, 4"}
+{"api_subset":false,"faces":[6,4,5,6,6,3,1,1,2,3],"generator":"fair","index":13,"k":10,"seq_id":"k10-fair-13","text":"6, 4, 5, 6, 6, 3, 1, 1, 2, 3"}
+{"api_subset":false,"faces":[4,2,6,3,2,2,1,1,1,3],"generator":"fair","index":14,"k":10,"seq_id":"k10-fair-14","text":"4, 2, 6, 3, 2, 2, 1, 1, 1, 3"}
+{"api_subset":false,"faces":[6,6,5,4,2,3,6,2,6,3],"generator":"fair","index":15,"k":10,"seq_id":"k10-fair-15","text":"6, 6, 5, 4, 2, 3, 6, 2, 6, 3"}
+{"api_subset":false,"faces":[5,6,3,3,2,3,1,6,6,1],"generator":"fair","index":16,"k":10,"seq_id":"k10-fair-16","text":"5, 6, 3, 3, 2, 3, 1, 6, 6, 1"}
+{"api_subset":false,"faces":[5,6,1,6,3,3,1,5,1,2],"generator":"fair","index":17,"k":10,"seq_id":"k10-fair-17","text":"5, 6, 1, 6, 3, 3, 1, 5, 1, 2"}
+{"api_subset":false,"faces":[6,3,3,1,1,4,6,1,5,2],"generator":"fair","index":18,"k":10,"seq_id":"k10-fair-18","text":"6, 3, 3, 1, 1, 4, 6, 1, 5, 2"}
+{"api_subset":false,"faces":[2,2,3,5,1,6,1,2,2,4],"generator":"fair","index":19,"k":10,"seq_id":"k10-fair-19","text":"2, 2, 3, 5, 1, 6, 1, 2, 2, 4"}
+{"api_subset":true,"faces":[2,4,4,6,4,4,2,4,2,6],"generator":"even","index":0,"k":10,"seq_id":"k10-even-00","text":"2, 4, 4, 6, 4, 4, 2, 4, 2, 6"}
+{"api_subset":true,"faces":[6,4,4,4,4,2,4,2,6,2],"generator":"even","index":1,"k":10,"seq_id":"k10-even-01","text":"6, 4, 4, 4, 4, 2, 4, 2, 6, 2"}
+{"api_subset":true,"faces":[6,4,6,6,4,6,6,6,4,4],"generator":"even","index":2,"k":10,"seq_id":"k10-even-02","text":"6, 4, 6, 6, 4, 6, 6, 6, 4, 4"}
+{"api_subset":true,"faces":[2,6,2,2,6,2,2,2,4,4],"generator":"even","index":3,"k":10,"seq_id":"k10-even-03","text":"2, 6, 2, 2, 6, 2, 2, 2, 4, 4"}
+{"api_subset":true,"faces":[6,4,6,4,2,2,6,2,4,6],"generator":"even","index":4,"k":10,"seq_id":"k10-even-04","text":"6, 4, 6, 4, 2, 2, 6, 2, 4, 6"}
+{"api_subset":true,"faces":[6,6,2,4,6,2,2,6,2,4],"generator":"even","index":5,"k":10,"seq_id":"k10-even-05","text":"6, 6, 2, 4, 6, 2, 2, 6, 2, 4"}
+{"api_subset":true,"faces":[4,2,2,2,4,2,6,6,6,2],"generator":"even","index":6,"k":10,"seq_id":"k10-even-06","text":"4, 2, 2, 2, 4, 2, 6, 6, 6, 2"}
+{"api_subset":true,"faces":[2,2,4,4,6,2,6,6,6,4],"generator":"even","index":7,"k":10,"seq_id":"k10-even-07","text":"2, 2, 4, 4, 6, 2, 6, 6, 6, 4"}
+{"api_subset":true,"faces":[6,4,2,6,6,4,6,6,2,4],"generator":"even","index":8,"k":10,"seq_id":"k10-even-08","text":"6, 4, 2, 6, 6, 4, 6, 6, 2, 4"}
+{"api_subset":true,"faces":[2,2,6,2,6,4,4,6,2,2],"generator":"even","index":9,"k":10,"seq_id":"k10-even-09","text":"2, 2, 6, 2, 6, 4, 4, 6, 2, 2"}
+{"api_subset":false,"faces":[6,4,4,2,4,2,6,2,2,6],"generator":"even","index":10,"k":10,"seq_id":"k10-even-10","text":"6, 4, 4, 2, 4, 2, 6, 2, 2, 6"}
+{"api_subset":false,"faces":[6,6,4,2,2,6,4,6,6,4],"generator":"even","index":11,"k":10,"seq_id":"k10-even-11","text":"6, 6, 4, 2, 2, 6, 4, 6, 6, 4"}
+{"api_subset":false,"faces":[2,6,6,2,6,2,2,2,2,2],"generator":"even","index":12,"k":10,"seq_id":"k10-even-12","text":"2, 6, 6, 2, 6, 2, 2, 2, 2, 2"}
+{"api_subset":false,"faces":[4,2,2,6,6,2,4,2,4,6],"generator":"even","index":13,"k":10,"seq_id":"k10-even-13","text":"4, 2, 2, 6, 6, 2, 4, 2, 4, 6"}
+{"api_subset":false,"faces":[6,2,2,4,4,4,4,2,6,2],"generator":"even","index":14,"k":10,"seq_id":"k10-even-14","text":"6, 2, 2, 4, 4, 4, 4, 2, 6, 2"}
+{"api_subset":false,"faces":[6,6,4,2,4,2,4,4,2,4],"generator":"even","index":15,"k":10,"seq_id":"k10-even-15","text":"6, 6, 4, 2, 4, 2, 4, 4, 2, 4"}
+{"api_subset":false,"faces":[2,6,4,4,6,2,6,4,6,2],"generator":"even","index":16,"k":10,"seq_id":"k10-even-16","text":"2, 6, 4, 4, 6, 2, 6, 4, 6, 2"}
+{"api_subset":false,"faces":[2,2,6,6,6,2,6,4,2,4],"generator":"even","index":17,"k":10,"seq_id":"k10-even-17","text":"2, 2, 6, 6, 6, 2, 6, 4, 2, 4"}
+{"api_subset":false,"faces":[2,2,6,6,4,6,6,6,6,6],"generator":"even","index":18,"k":10,"seq_id":"k10-even-18","text":"2, 2, 6, 6, 4, 6, 6, 6, 6, 6"}
+{"api_subset":false,"faces":[4,6,4,6,6,2,6,4,4,4],"generator":"even","index":19,"k":10,"seq_id":"k10-even-19","text":"4, 6, 4, 6, 6, 2, 6, 4, 4, 4"}
+{"api_subset":true,"faces":[2,6,6,1,3,6,6,5,6,5],"generator":"loaded","index":0,"k":10,"seq_id":"k10-loaded-00","text":"2, 6, 6, 1, 3, 6, 6, 5, 6, 5"}
+{"api_subset":true,"faces":[4,3,5,6,3,6,5,5,6,6],"generator":"loaded","index":1,"k":10,"seq_id":"k10-loaded-01","text":"4, 3, 5, 6, 3, 6, 5, 5, 6, 6"}
+{"api_subset":true,"faces":[5,6,4,3,6,6,6,6,2,3],"generator":"loaded","index":2,"k":10,"seq_id":"k10-loaded-02","text":"5, 6, 4, 3, 6, 6, 6, 6, 2, 3"}
+{"api_subset":true,"faces":[6,4,6,2,2,4,6,2,6,2],"generator":"loaded","index":3,"k":10,"seq_id":"k10-loaded-03","text":"6, 4, 6, 2, 2, 4, 6, 2, 6, 2"}
+{"api_subset":true,"faces":[6,1,1,2,6,5,6,6,6,2],"generator":"loaded","index":4,"k":10,"seq_id":"k10-loaded-04","text":"6, 1, 1, 2, 6, 5, 6, 6, 6, 2"}
+{"api_subset":true,"faces":[5,6,6,1,6,6,6,4,6,4],"generator":"loaded","index":5,"k":10,"seq_id":"k10-loaded-05","text":"5, 6, 6, 1, 6, 6, 6, 4, 6, 4"}
+{"api_subset":true,"faces":[4,6,2,6,6,6,6,2,6,6],"generator":"loaded","index":6,"k":10,"seq_id":"k10-loaded-06","text":"4, 6, 2, 6, 6, 6, 6, 2, 6, 6"}
+{"api_subset":true,"faces":[6,5,2,6,6,6,6,3,4,4],"generator":"loaded","index":7,"k":10,"seq_id":"k10-loaded-07","text":"6, 5, 2, 6, 6, 6, 6, 3, 4, 4"}
+{"api_subset":true,"faces":[6,3,1,6,6,2,1,6,6,6],"generator":"loaded","index":8,"k":10,"seq_id":"k10-loaded-08","text":"6, 3, 1, 6, 6, 2, 1, 6, 6, 6"}
+{"api_subset":true,"faces":[6,3,1,4,2,2,1,6,6,2],"generator":"loaded","index":9,"k":10,"seq_id":"k10-loaded-09","text":"6, 3, 1, 4, 2, 2, 1, 6, 6, 2"}
+{"api_subset":false,"faces":[6,6,6,6,6,2,6,4,3,6],"generator":"loaded","index":10,"k":10,"seq_id":"k10-loaded-10","text":"6, 6, 6, 6, 6, 2, 6, 4, 3, 6"}
+{"api_subset":false,"faces":[6,1,6,6,2,1,6,3,6,6],"generator":"loaded","index":11,"k":10,"seq_id":"k10-loaded-11","text":"6, 1, 6, 6, 2, 1, 6, 3, 6, 6"}
+{"api_subset":false,"faces":[6,6,6,6,6,4,2,1,5,3],"generator":"loaded","index":12,"k":10,"seq_id":"k10-loaded-12","text":"6, 6, 6, 6, 6, 4, 2, 1, 5, 3"}
+{"api_subset":false,"faces":[1,5,6,5,6,6,6,3,6,2],"generator":"loaded","index":13,"k":10,"seq_id":"k10-loaded-13","text":"1, 5, 6, 5, 6, 6, 6, 3, 6, 2"}
+{"api_subset":false,"faces":[3,6,6,6,6,1,6,2,6,4],"generator":"loaded","index":14,"k":10,"seq_id":"k10-loaded-14","text":"3, 6, 6, 6, 6, 1, 6, 2, 6, 4"}
+{"api_subset":false,"faces":[1,6,5,3,6,4,2,3,6,2],"generator":"loaded","index":15,"k":10,"seq_id":"k10-loaded-15","text":"1, 6, 5, 3, 6, 4, 2, 3, 6, 2"}
+{"api_subset":false,"faces":[1,6,6,1,2,6,1,2,5,6],"generator":"loaded","index":16,"k":10,"seq_id":"k10-loaded-16","text":"1, 6, 6, 1, 2, 6, 1, 2, 5, 6"}
+{"api_subset":false,"faces":[6,2,6,6,1,6,3,6,6,6],"generator":"loaded","index":17,"k":10,"seq_id":"k10-loaded-17","text":"6, 2, 6, 6, 1, 6, 3, 6, 6, 6"}
+{"api_subset":false,"faces":[6,1,4,6,2,1,1,6,6,4],"generator":"loaded","index":18,"k":10,"seq_id":"k10-loaded-18","text":"6, 1, 4, 6, 2, 1, 1, 6, 6, 4"}
+{"api_subset":false,"faces":[4,6,6,3,3,6,4,5,6,1],"generator":"loaded","index":19,"k":10,"seq_id":"k10-loaded-19","text":"4, 6, 6, 3, 3, 6, 4, 5, 6, 1"}

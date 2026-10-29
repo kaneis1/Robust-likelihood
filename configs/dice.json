@@ -1,0 +1,34 @@
+{
+  "seed": 20261027,
+  "rolls": [1, 2, 3, 4, 6, 8, 10],
+  "sequences_per_cell": 20,
+  "api_sequences_per_cell": 10,
+  "hypotheses": {
+    "fair": {
+      "wording": "a fair six-sided die",
+      "faces": {"1": "1/6", "2": "1/6", "3": "1/6", "4": "1/6", "5": "1/6", "6": "1/6"}
+    },
+    "even": {
+      "wording": "a six-sided die that only ever lands on 2, 4, or 6, each equally often",
+      "faces": {"1": "0", "2": "1/3", "3": "0", "4": "1/3", "5": "0", "6": "1/3"}
+    },
+    "loaded": {
+      "wording": "a six-sided die loaded so that it lands on 6 half of the time, with the other faces equally likely",
+      "faces": {"1": "1/10", "2": "1/10", "3": "1/10", "4": "1/10", "5": "1/10", "6": "1/2"}
+    }
+  },
+  "local_models": {
+    "qwen": {"id": "Qwen/Qwen2.5-7B-Instruct", "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+             "scorers": ["S1", "S2", "S3"]},
+    "olmo": {"id": "allenai/OLMo-2-1124-7B-Instruct", "revision": "470b1fba1ae01581f270116362ee4aa1b97f4c84",
+             "scorers": ["S1"]}
+  },
+  "api_providers": ["claude", "gpt"],
+  "api_temperature": 0.0,
+  "api_prices_usd_per_mtok": {
+    "claude": {"input": 10.0, "output": 50.0, "model": "claude-fable-5-1", "as_of": "2026-10-06"}
+  },
+  "pilot": {"pairs": 30, "seed": 20261027},
+  "verbal_max_new_tokens": 48,
+  "bootstrap": {"replicates": 2000, "seed": 20261027}
+}
