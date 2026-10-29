@@ -31,7 +31,7 @@ from robust_likelihood.multiwoz.probe import APPENDIX_A4, build_probe, probe_sum
 from robust_likelihood.multiwoz.reference import appendix_checks, build_reference, reference_markdown
 from robust_likelihood.multiwoz.report import metrics_markdown, pilot_report, summary_markdown, write_figures
 from robust_likelihood.planning import UnpinnedModelError
-from robust_likelihood.storage import read_json, repo_root, write_json, write_jsonl
+from robust_likelihood.storage import read_json, read_jsonl, repo_root, write_json, write_jsonl
 
 
 def _write_compact(path: Path, payload: dict) -> str:
@@ -120,6 +120,8 @@ def main(argv: list[str] | None = None) -> int:
     report_parser = sub.add_parser("report")
     report_parser.add_argument("run_dir")
     report_parser.add_argument("--lm", default=None, help="folder of the lm-score run")
+    semantic_parser = sub.add_parser("semantic-check", help="claims plan 2a: regex slots against 2.2 turn 0")
+    semantic_parser.add_argument("--out", default=str(Path("docs") / "claim1_results"))
     args = parser.parse_args(argv)
     try:
         return _dispatch(args)
@@ -230,6 +232,22 @@ def _dispatch(args) -> int:
         )
         (run_dir / "summary.md").write_text(summary, encoding="utf-8", newline="\n")
         print(f"Wrote {run_dir / 'summary.md'} and {len(figures)} figure files")
+        return 0
+    if args.command == "semantic-check":
+        from robust_likelihood.multiwoz.semantic import VOCAB_FILE, build_vocab, check_markdown, semantic_check
+
+        vocab = build_vocab(root / RAW_DIR)
+        write_json(root / DERIVED_DIR / VOCAB_FILE, vocab)
+        result = semantic_check(read_jsonl(root / DERIVED_DIR / "items.jsonl"), vocab)
+        out = root / args.out
+        write_json(out / "semantic_check.json", result)
+        (out / "semantic_check.md").write_text(check_markdown(result), encoding="utf-8", newline="\n")
+        for slot, rate in result["agreement"].items():
+            print(f"{slot}: {100 * rate:.1f}% agreement")
+        print(f"Wrote {out / 'semantic_check.md'}")
+        if not result["passes_95"]:
+            print("Agreement is below 95% on some slot; stop and ask.", file=sys.stderr)
+            return 1
         return 0
     raise ValueError(f"Unknown command {args.command}")
 

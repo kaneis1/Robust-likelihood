@@ -1,0 +1,217 @@
+{
+  "agreement": {
+    "area": 0.9864864864864865,
+    "food": 0.9891891891891892,
+    "pricerange": 0.9702702702702702
+  },
+  "confusion": {
+    "area": {
+      "none->dontcare": 1,
+      "none->none": 147,
+      "none->value": 3,
+      "value->none": 1,
+      "value->same": 218
+    },
+    "food": {
+      "dontcare->dontcare": 1,
+      "none->none": 141,
+      "none->value": 1,
+      "value->none": 1,
+      "value->other": 2,
+      "value->same": 224
+    },
+    "pricerange": {
+      "none->none": 141,
+      "none->value": 1,
+      "value->none": 7,
+      "value->other": 3,
+      "value->same": 218
+    }
+  },
+  "disagreements": [
+    {
+      "annotated": [
+        "none"
+      ],
+      "extracted": "centre",
+      "item_id": "SNG01425",
+      "slot": "area",
+      "utterance": "Is it possible to get any Greek food in the centre part of town?"
+    },
+    {
+      "annotated": [
+        "expensive"
+      ],
+      "extracted": "none",
+      "item_id": "SNG01720",
+      "slot": "pricerange",
+      "utterance": "I'm looking for somewhere to eat in the centre part of town, somewhere nice, price is no object."
+    },
+    {
+      "annotated": [
+        "moderate"
+      ],
+      "extracted": "expensive",
+      "item_id": "SNG02321",
+      "slot": "pricerange",
+      "utterance": "I'm looking for a restaurant, somewhere not too expensive, but not bottom of the barrel either, something in the mid range."
+    },
+    {
+      "annotated": [
+        "moderate"
+      ],
+      "extracted": "none",
+      "item_id": "SNG0459",
+      "slot": "pricerange",
+      "utterance": "I'm looking for a restaurant in the centre of town with a modest price range. Can you recommend one?"
+    },
+    {
+      "annotated": [
+        "european"
+      ],
+      "extracted": "traditional",
+      "item_id": "SNG0465",
+      "slot": "food",
+      "utterance": "I'm looking for a restaurant that serves traditional european food, that's not too expensive or too cheap."
+    },
+    {
+      "annotated": [
+        "moderate"
+      ],
+      "extracted": "expensive",
+      "item_id": "SNG0465",
+      "slot": "pricerange",
+      "utterance": "I'm looking for a restaurant that serves traditional european food, that's not too expensive or too cheap."
+    },
+    {
+      "annotated": [
+        "expensive"
+      ],
+      "extracted": "none",
+      "item_id": "SNG0530",
+      "slot": "pricerange",
+      "utterance": "Do you have any recommendations for a restaurant in the south area in a high price range?"
+    },
+    {
+      "annotated": [
+        "none"
+      ],
+      "extracted": "british",
+      "item_id": "SNG0552",
+      "slot": "food",
+      "utterance": "Are there any expensive British restaurants in town?"
+    },
+    {
+      "annotated": [
+        "none"
+      ],
+      "extracted": "cheap",
+      "item_id": "SNG0556",
+      "slot": "pricerange",
+      "utterance": "Hi, I'm looking for a cheap austrian restaurant."
+    },
+    {
+      "annotated": [
+        "none"
+      ],
+      "extracted": "centre",
+      "item_id": "SNG0561",
+      "slot": "area",
+      "utterance": "I am looking for a restaurant in the centre that serves african food."
+    },
+    {
+      "annotated": [
+        "american",
+        "north american"
+      ],
+      "extracted": "traditional american",
+      "item_id": "SNG0565",
+      "slot": "food",
+      "utterance": "I'm in the mood for a traditional American food restaurant tonight and looking to treat myself to some expensive fine dining. Can you help me find a perfect place?"
+    },
+    {
+      "annotated": [
+        "none"
+      ],
+      "extracted": "dontcare",
+      "item_id": "SNG0574",
+      "slot": "area",
+      "utterance": "Know anywhere that has european food?"
+    },
+    {
+      "annotated": [
+        "none"
+      ],
+      "extracted": "centre",
+      "item_id": "SNG0610",
+      "slot": "area",
+      "utterance": "Hi there. I'm hoping you can help me. I am looking to try molecular gastronomy food. Might there be a restaurant like this in the centre of town?"
+    },
+    {
+      "annotated": [
+        "expensive"
+      ],
+      "extracted": "moderate",
+      "item_id": "SNG0653",
+      "slot": "pricerange",
+      "utterance": "I'm looking for a greek restaurant that is moderately expensive."
+    },
+    {
+      "annotated": [
+        "expensive"
+      ],
+      "extracted": "none",
+      "item_id": "SNG0687",
+      "slot": "pricerange",
+      "utterance": "I want to eat someplace with unusual food. Price is no object. What can you suggest?"
+    },
+    {
+      "annotated": [
+        "expensive"
+      ],
+      "extracted": "none",
+      "item_id": "SNG0696",
+      "slot": "pricerange",
+      "utterance": "What fancy restaurants are there on the east side of town?"
+    },
+    {
+      "annotated": [
+        "east"
+      ],
+      "extracted": "none",
+      "item_id": "SNG0748",
+      "slot": "area",
+      "utterance": "I am looking for an Eastern restaurant, medium price"
+    },
+    {
+      "annotated": [
+        "moderate"
+      ],
+      "extracted": "none",
+      "item_id": "SNG0748",
+      "slot": "pricerange",
+      "utterance": "I am looking for an Eastern restaurant, medium price"
+    },
+    {
+      "annotated": [
+        "gastropod",
+        "gastropub"
+      ],
+      "extracted": "none",
+      "item_id": "SNG1268",
+      "slot": "food",
+      "utterance": "AM looking for a place to dine. The restaurant should be in the south and should serve gastropod food."
+    },
+    {
+      "annotated": [
+        "moderate"
+      ],
+      "extracted": "none",
+      "item_id": "SNG1329",
+      "slot": "pricerange",
+      "utterance": "Hi, I need a place to eat in the centre for a medium price range. What do you have that you can suggest?"
+    }
+  ],
+  "items": 370,
+  "passes_95": true
+}
