@@ -120,3 +120,18 @@ def test_rewrites_regenerate_failures_and_record_acceptance(tmp_path):
     accepted = read_jsonl(tmp_path / "results" / "20261029T090000Z-full" / "accepted.jsonl")
     rows = audit_rows(accepted, per_side=2)
     assert [row["side"] for row in rows] == ["utterance", "utterance", "hypothesis", "hypothesis"]
+
+
+class RejectingNLI:
+    def entailment_probs(self, pairs):
+        return [0.1 for _ in pairs]
+
+
+def test_pad_is_checked_by_regex_only(tmp_path):
+    derived = tmp_path / "derived"
+    write_jsonl(derived / "items.jsonl", ITEMS)
+    write_jsonl(derived / "probe.jsonl", PROBE)
+    write_json(derived / "semantic_vocab.json", VOCAB)
+    summary = run_rewrites(repo_root(), derived=derived, results_root=tmp_path / "results", transport=FakeClaude(),
+                           environ=ENV, sleeper=lambda seconds: None, nli=RejectingNLI(), now=FIXED, workers=1)
+    assert {kind for kind, found in summary["acceptance"].items() if found["accepted"]} == {"pad"}

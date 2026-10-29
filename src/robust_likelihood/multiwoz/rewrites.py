@@ -43,6 +43,9 @@ UTTERANCE_KINDS = ("typo", "pad", "para1", "para2", "verbose", "zh")
 HYPOTHESIS_KINDS = ("hpara1", "hpara2", "hpara3", "hzh")
 LLM_KINDS = {"para1", "para2", "verbose", "zh", "hpara1", "hpara2", "hpara3", "hzh"}
 CHINESE_KINDS = {"zh", "hzh"}
+# `pad` keeps the message untouched between a fixed opener and closer, and the message never entails a
+# greeting, so NLI rejects pads by design; pads are checked by regex only (docs/claims_decisions.md).
+REGEX_ONLY_KINDS = {"pad"}
 
 # [Frozen] prompts.
 PARAPHRASE = (
@@ -226,7 +229,8 @@ def run_rewrites(
                     "keep_no_preference": KEEP_NO_PREFERENCE, "zh": TO_CHINESE, "back": TO_ENGLISH,
                     "reply_only": REPLY_ONLY, "translation_only": TRANSLATION_ONLY},
         "openers": list(OPENERS), "closers": list(CLOSERS),
-        "nli": {"model": NLI_MODEL, "revision": NLI_REVISION, "threshold": NLI_THRESHOLD},
+        "nli": {"model": NLI_MODEL, "revision": NLI_REVISION, "threshold": NLI_THRESHOLD,
+                "regex_only_kinds": sorted(REGEX_ONLY_KINDS)},
         "attempts": ATTEMPTS, "started_at": started.strftime("%Y-%m-%dT%H:%M:%SZ"),
     }
     write_json(run_dir / "manifest.json", manifest)
@@ -279,7 +283,7 @@ def run_rewrites(
             record["english"] = english
             record["slots_kept"] = slots_kept(extractor, english, unit["expected"])
             record["changed"] = bool(english) and normalize_text(english) != normalize_text(unit["original"])
-            if record["slots_kept"] and english:
+            if record["slots_kept"] and english and unit["kind"] not in REGEX_ONLY_KINDS:
                 checked.append(record)
         scores = nli.entailment_probs(
             [(by_id[record["unit_id"]]["original"], record["english"]) for record in checked]
@@ -288,9 +292,12 @@ def run_rewrites(
         for index, record in enumerate(checked):
             record["nli_forward"], record["nli_backward"] = scores[index], scores[len(checked) + index]
         for record in records:
-            record["accepted"] = bool(record["slots_kept"] and record.get("nli_forward") is not None
-                                      and record["nli_forward"] >= NLI_THRESHOLD
-                                      and record["nli_backward"] >= NLI_THRESHOLD)
+            if by_id[record["unit_id"]]["kind"] in REGEX_ONLY_KINDS:
+                record.update(nli_forward=None, nli_backward=None, accepted=bool(record["slots_kept"]))
+            else:
+                record["accepted"] = bool(record["slots_kept"] and record.get("nli_forward") is not None
+                                          and record["nli_forward"] >= NLI_THRESHOLD
+                                          and record["nli_backward"] >= NLI_THRESHOLD)
             if record["accepted"]:
                 accepted[record["unit_id"]] = record
         append_jsonl(run_dir / "candidates.jsonl", records)
@@ -319,7 +326,7 @@ def run_rewrites(
         {**{key: by_id[unit_id][key] for key in ("unit_id", "side", "kind", "original")},
          **{key: by_id[unit_id].get(key) for key in ("item_id", "text_id")},
          "rewrite": record["rewrite"], "back": record["back"], "attempt": record["attempt"],
-         "nli_forward": record["nli_forward"], "nli_backward": record["nli_backward"]}
+         "nli_forward": record.get("nli_forward"), "nli_backward": record.get("nli_backward")}
         for unit_id, record in sorted(accepted.items())
     ])
     return {"run_dir": str(run_dir), "items": len(items), "units": len(units),

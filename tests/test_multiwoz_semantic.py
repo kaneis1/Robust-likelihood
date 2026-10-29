@@ -26,6 +26,10 @@ VOCAB = {
          "price range.", ("dontcare", "dontcare", "dontcare")),
         ("The user wants to find a cheap restaurant. The user has no preference about the type of food or the area.",
          ("dontcare", "dontcare", "cheap")),
+        ("The user is looking for an inexpensive restaurant in the northern part of town. The user does not have a "
+         "preference regarding the type of cuisine.", ("dontcare", "north", "cheap")),
+        ("A high-priced Indian place downtown.", ("indian", "centre", "expensive")),
+        ("Know anywhere that has european food?", ("european", "none", "none")),
     ],
 )
 def test_extractor_reads_values_synonyms_and_no_preference(text, expected):

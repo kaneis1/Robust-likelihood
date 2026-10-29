@@ -22,14 +22,19 @@ VOCAB_FILE = "semantic_vocab.json"
 NONE = "none"
 DONTCARE = "dontcare"
 
-# [Frozen] synonyms.
+# [Frozen] synonyms, extended after the rewrite pilot with the user's agreement (docs/claims_decisions.md):
+# adjectival areas, downtown, and -priced/-cost price phrasings.
 AREA_SYNONYMS = {"city centre": "centre", "city center": "centre", "centre": "centre", "center": "centre",
-                 "central": "centre", "north": "north", "south": "south", "east": "east", "west": "west"}
-PRICE_SYNONYMS = {"inexpensive": "cheap", "cheap": "cheap", "budget": "cheap",
+                 "central": "centre", "downtown": "centre", "north": "north", "south": "south", "east": "east",
+                 "west": "west", "northern": "north", "southern": "south", "eastern": "east", "western": "west"}
+PRICE_SYNONYMS = {"inexpensive": "cheap", "cheap": "cheap", "budget": "cheap", "low-priced": "cheap",
+                  "low priced": "cheap", "low-cost": "cheap", "low cost": "cheap",
                   "moderately priced": "moderate", "mid-range": "moderate", "mid range": "moderate",
                   "reasonably priced": "moderate", "moderate": "moderate", "moderately": "moderate",
+                  "moderately-priced": "moderate", "mid-priced": "moderate", "mid priced": "moderate",
                   "expensive": "expensive", "upscale": "expensive", "high-end": "expensive",
-                  "high end": "expensive", "pricey": "expensive"}
+                  "high end": "expensive", "pricey": "expensive", "pricy": "expensive", "high-priced": "expensive",
+                  "high priced": "expensive", "costly": "expensive"}
 SLOT_WORDS = {
     "food": r"food|cuisine|type of (?:food|cuisine|restaurant)|kind of (?:food|cuisine)",
     "area": r"area|location|part of (?:the )?(?:town|city)|where(?: it is)?|side of town|neighbou?rhood",
@@ -37,10 +42,14 @@ SLOT_WORDS = {
 }
 DONTCARE_PHRASES = {
     "food": [r"any (?:type|kind|sort) of (?:food|cuisine)", r"any (?:food|cuisine)", r"any type(?! of (?:area|price))"],
-    "area": [r"any (?:area|location|part of (?:the )?(?:town|city)|side of town|neighbou?rhood)", r"anywhere"],
+    "area": [r"any (?:area|location|part of (?:the )?(?:town|city)|side of town|neighbou?rhood)"],
     "pricerange": [r"any price(?: range)?", r"any (?:budget|cost)", r"price (?:range )?(?:is not|isn't) important"],
 }
-CARE = r"(?:do(?:es)?n'?t|do(?:es)? not) (?:really )?(?:care|matter|mind)|no preference|not (?:important|picky|fussy)"
+CARE = (
+    r"(?:do(?:es)?n'?t|do(?:es)? not) (?:really )?(?:care|matter|mind)|no preference|not (?:important|picky|fussy)"
+    r"|(?:do(?:es)?n'?t|do(?:es)? not) have (?:a|any) (?:particular |specific )?preference"
+    r"|has no (?:particular |specific )?preference|(?:is|are|am) (?:not particular|flexible|open)"
+)
 
 
 def build_vocab(raw: Path) -> dict:

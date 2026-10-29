@@ -74,5 +74,37 @@ open are recorded too, so the analysis can be audited.
   - D3: mean |verbalized − true| over the 18 k = 1 normalization queries ≤ 0.10. The max
     error and the share within ±0.10 are reported next to it.
   - D4: sum of S2 over the 36 k = 2 `fair` sequences > 2.
+- **S1 format sensitivity (agreed with the user, 2026-10-29).** Qwen writes dice lists as
+  `3,4`; the frozen observation `3, 5, 2` costs it 13–16 nats once at every k ≥ 2. A
+  secondary scorer `S1-nospace` scores the same sequences as `3,5,2`. It is reported next
+  to S1 and is not part of the D1 scorecard; the frozen S1 results are unchanged.
 - **Bootstrap.** Slope CIs resample sequences within each k (2,000 replicates, seed
   20261027), so every replicate keeps the design in k.
+
+## Step 2: MultiWOZ rewrites
+
+- **2a check.** The extractor reads "no preference" lists ("no preference about the type of
+  food, the area, or the price range") by consuming only the nearest slot phrase, and is
+  checked on every distinct probe hypothesis text as well as on the 370 utterances.
+- **Rewrite pilot (2026-10-29, `results/multiwoz/rewrites/20261029T085727Z-pilot`).** 20 seeded
+  clean items and their 128 hypothesis texts, 1,093 Claude calls. Claude accepted
+  temperature 1.0 here (it rejected 0 in the dice runs), so the plan's temperature 1 was
+  sent. Two systematic failures, both changed with the user's agreement:
+  - **[Frozen] synonym list extended.** The regex check rejected most genuine hypothesis
+    paraphrases (accepted 66–73% after three attempts, biased toward template wording)
+    because Claude writes "northern part of town", "downtown", "high-priced", and "does not
+    have a preference regarding…". Added: northern/southern/eastern/western, downtown;
+    low-priced/low-cost → cheap; mid-priced/moderately-priced → moderate; high-priced,
+    pricy, costly → expensive; "does not have a (particular) preference", "has no
+    particular preference", "is flexible/open/not particular" as no-preference phrasings.
+    Removed "anywhere" as an any-area phrase (not in the frozen list; it read "Know anywhere
+    that has european food?" as area dontcare). On the pilot candidates the regex pass rate
+    goes from about 40% to about 97% for hypothesis paraphrases and to 100% for utterance
+    rewrites; 2.2 agreement is food 98.9%, area 99.2% (from 98.6%), price 97.0%, and every
+    probe hypothesis text still extracts exactly.
+  - **[Frozen] NLI check not applied to `pad`.** The original never entails the added
+    greeting, so original → padded entailment was 0.02–0.3 and only 60% of pads survived,
+    biased toward the openers NLI tolerates. `pad` is meaning-preserving by construction
+    (fixed neutral opener and closer, message untouched) and is checked by regex only.
+    Every other kind keeps both checks.
+- Full-run estimate from the pilot: about 5,200 calls, about $13; approved.

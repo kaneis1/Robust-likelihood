@@ -6,7 +6,7 @@ Acceptance: at least 95% agreement on every slot.
 | Slot | Agreement |
 |---|---|
 | food | 98.9% |
-| area | 98.6% |
+| area | 99.2% |
 | pricerange | 97.0% |
 
 Passes: yes.
@@ -18,12 +18,11 @@ Passes: yes.
 | Cell | food | area | pricerange |
 |---|---|---|---|
 | dontcare->dontcare | 1 | 0 | 0 |
-| none->dontcare | 0 | 1 | 0 |
-| none->none | 141 | 147 | 141 |
+| none->none | 141 | 148 | 141 |
 | none->value | 1 | 3 | 1 |
-| value->none | 1 | 1 | 7 |
+| value->none | 1 | 0 | 7 |
 | value->other | 2 | 0 | 3 |
-| value->same | 224 | 218 | 218 |
+| value->same | 224 | 219 | 218 |
 
 ## Disagreements
 
@@ -40,12 +39,10 @@ Passes: yes.
 | SNG0556 | pricerange | none | cheap | Hi, I'm looking for a cheap austrian restaurant. |
 | SNG0561 | area | none | centre | I am looking for a restaurant in the centre that serves african food. |
 | SNG0565 | food | american, north american | traditional american | I'm in the mood for a traditional American food restaurant tonight and looking to treat myself to some expensive fine dining. Can you help me find a perfect place? |
-| SNG0574 | area | none | dontcare | Know anywhere that has european food? |
 | SNG0610 | area | none | centre | Hi there. I'm hoping you can help me. I am looking to try molecular gastronomy food. Might there be a restaurant like this in the centre of town? |
 | SNG0653 | pricerange | expensive | moderate | I'm looking for a greek restaurant that is moderately expensive. |
 | SNG0687 | pricerange | expensive | none | I want to eat someplace with unusual food. Price is no object. What can you suggest? |
 | SNG0696 | pricerange | expensive | none | What fancy restaurants are there on the east side of town? |
-| SNG0748 | area | east | none | I am looking for an Eastern restaurant, medium price |
 | SNG0748 | pricerange | moderate | none | I am looking for an Eastern restaurant, medium price |
 | SNG1268 | food | gastropod, gastropub | none | AM looking for a place to dine. The restaurant should be in the south and should serve gastropod food. |
 | SNG1329 | pricerange | moderate | none | Hi, I need a place to eat in the centre for a medium price range. What do you have that you can suggest? |

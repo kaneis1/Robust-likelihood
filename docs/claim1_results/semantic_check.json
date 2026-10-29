@@ -1,16 +1,14 @@
 {
   "agreement": {
-    "area": 0.9864864864864865,
+    "area": 0.9918918918918919,
     "food": 0.9891891891891892,
     "pricerange": 0.9702702702702702
   },
   "confusion": {
     "area": {
-      "none->dontcare": 1,
-      "none->none": 147,
+      "none->none": 148,
       "none->value": 3,
-      "value->none": 1,
-      "value->same": 218
+      "value->same": 219
     },
     "food": {
       "dontcare->dontcare": 1,
@@ -133,15 +131,6 @@
       "annotated": [
         "none"
       ],
-      "extracted": "dontcare",
-      "item_id": "SNG0574",
-      "slot": "area",
-      "utterance": "Know anywhere that has european food?"
-    },
-    {
-      "annotated": [
-        "none"
-      ],
       "extracted": "centre",
       "item_id": "SNG0610",
       "slot": "area",
@@ -173,15 +162,6 @@
       "item_id": "SNG0696",
       "slot": "pricerange",
       "utterance": "What fancy restaurants are there on the east side of town?"
-    },
-    {
-      "annotated": [
-        "east"
-      ],
-      "extracted": "none",
-      "item_id": "SNG0748",
-      "slot": "area",
-      "utterance": "I am looking for an Eastern restaurant, medium price"
     },
     {
       "annotated": [
