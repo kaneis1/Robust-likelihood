@@ -11,6 +11,16 @@ open are recorded too, so the analysis can be audited.
 - Local machine: Windows, Python 3.14, no torch. GPU work runs on the NUS SoC compute
   cluster, which schedules with Slurm, so the job scripts carry `#SBATCH` directives next
   to the LSF and PBS placeholders the plan asks for.
+- **SoC cluster environment.** The home directory is NFS: large files write fast, but the
+  many small files of a torch install take hours. Login-node `/tmp` has a 50 MB per-user
+  quota and login processes are capped at 1 GB of virtual memory (torch cannot be
+  imported there). So the environment is built in `/var/tmp/cuizq-rl` on the login node
+  (torch 2.14.1+cu126, transformers 4.57.6, accelerate 1.15.0, huggingface_hub 0.36.2;
+  `~/envs/cuizq-rl.freeze.txt`), packed into `~/envs/cuizq-rl.tar`, and unpacked onto the
+  compute node's local disk by each job. No job runs `pip install`. transformers is held
+  below 5. The code reaches the cluster as a git bundle of `claims-123`, so run manifests
+  record real commit hashes. Models are downloaded on the login node into
+  `~/.cache/huggingface`, and jobs run with `HF_HUB_OFFLINE=1`.
 - The `lm` extra now needs `transformers>=4.47`: `Olmo2ForCausalLM` first ships in 4.47.0.
 - Model ids were checked on the Hugging Face Hub on 2026-10-29. All three are public and
   ungated. Revisions at that date, pinned in `configs/dice.json` for step 1:

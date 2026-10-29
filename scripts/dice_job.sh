@@ -11,9 +11,10 @@
 # Replace every <PLACEHOLDER> before submitting, or override it on the command line.
 #   Slurm: sbatch scripts/dice_job.sh
 #   NUS SoC: sbatch -p gpu --gres=gpu:1 --constraint="a100|h100|h200" --time=02:30:00 \
-#            --export=ALL,VENV_DIR=/tmp/cuizq-rl,VENV_TAR=$HOME/envs/cuizq-rl.tar scripts/dice_job.sh
+#            --export=ALL,VENV_DIR=/var/tmp/cuizq-rl,VENV_TAR=$HOME/envs/cuizq-rl.tar scripts/dice_job.sh
 #   (home is NFS, so the environment is built once on local disk and packed; VENV_TAR is
-#   unpacked onto the compute node's local disk when VENV_DIR is not there yet)
+#   unpacked onto the compute node's local disk when VENV_DIR is not there yet. Login-node
+#   /tmp has a 50 MB quota, hence /var/tmp.)
 #   LSF:   bsub < scripts/dice_job.sh
 #   PBS:   qsub scripts/dice_job.sh
 # Each scheduler reads only its own directives, so one file serves all three.
@@ -60,6 +61,7 @@ export HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}"
 export HF_HUB_OFFLINE=1
 
 nvidia-smi
+python -c "import torch, transformers; print('torch', torch.__version__, 'transformers', transformers.__version__, torch.cuda.get_device_name(0))"
 
 # Each model writes its own run folder under results/dice/; the manifest records the
 # exact revision loaded and the self-checks (tokenization boundary, exact greedy decoding).
