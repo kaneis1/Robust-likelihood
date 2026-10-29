@@ -12,14 +12,18 @@ question (control).
 - API scorers see the 630-pair subset (10 sequences per cell) plus the normalization queries.
 - api run `results/dice/20261029T080858Z-api`: claude claude-fable-5-1 (no temperature (rejected), 1368 calls); gpt gpt-6-astra (no temperature (rejected), 1368 calls)
 - local run `results/dice/20261029T090607Z-local-olmo`: allenai/OLMo-2-1124-7B-Instruct at revision 470b1fba1ae0, bfloat16 on cuda:0, 1314 queries, scorers S1, 35.2 s
+- local run `results/dice/20261029T103529Z-local-olmo-nospace`: allenai/OLMo-2-1124-7B-Instruct at revision 470b1fba1ae0, bfloat16 on cuda:0, 1314 queries, scorers S1 (no-space lists), 8.9 s
 - local run `results/dice/20261029T085739Z-local-qwen`: Qwen/Qwen2.5-7B-Instruct at revision a09a35458c70, bfloat16 on cuda:0, 1314 queries, scorers S1, S2, S3, 504.5 s
+- local run `results/dice/20261029T103520Z-local-qwen-nospace`: Qwen/Qwen2.5-7B-Instruct at revision a09a35458c70, bfloat16 on cuda:0, 1314 queries, scorers S1 (no-space lists), 9.1 s
 
 | Model | Scorer | Queries | Parse failures | Zero answers |
 |---|---|---|---|---|
 | Qwen2.5-7B-Instruct | S1 | 1314 | 0 (0.0%) | 0 |
+| Qwen2.5-7B-Instruct | S1-nospace | 1314 | 0 (0.0%) | 0 |
 | Qwen2.5-7B-Instruct | S2 | 1314 | 0 (0.0%) | 142 |
 | Qwen2.5-7B-Instruct | S3 | 1314 | 0 (0.0%) | 169 |
 | OLMo-2-7B-Instruct | S1 | 1314 | 0 (0.0%) | 0 |
+| OLMo-2-7B-Instruct | S1-nospace | 1314 | 0 (0.0%) | 0 |
 | Claude (API) | S2 | 684 | 3 (0.4%) | 116 |
 | Claude (API) | S3 | 684 | 0 (0.0%) | 116 |
 | GPT (API) | S2 | 684 | 0 (0.0%) | 116 |
@@ -34,6 +38,9 @@ True slopes: fair -0.778, even -0.477 per roll; `loaded` varies by sequence, so 
 | Qwen2.5-7B-Instruct | S1 | fair | -2.752 [-3.010, -2.526] | -0.778 | 3.54 [3.25, 3.87] | 0.72 | 140/140 |
 | Qwen2.5-7B-Instruct | S1 | even | -1.716 [-1.931, -1.490] | -0.477 | 3.60 [3.12, 4.05] | 0.52 | 140/140 |
 | Qwen2.5-7B-Instruct | S1 | loaded | -1.367 [-1.660, -1.080] | -0.663 | 2.06 [1.69, 2.41] | 0.30 | 140/140 |
+| Qwen2.5-7B-Instruct | S1-nospace | fair | -2.326 [-2.567, -2.095] | -0.778 | 2.99 [2.69, 3.30] | 0.73 | 140/140 |
+| Qwen2.5-7B-Instruct | S1-nospace | even | -1.474 [-1.667, -1.285] | -0.477 | 3.09 [2.69, 3.49] | 0.61 | 140/140 |
+| Qwen2.5-7B-Instruct | S1-nospace | loaded | -1.679 [-2.014, -1.362] | -0.663 | 2.53 [2.14, 2.93] | 0.38 | 140/140 |
 | Qwen2.5-7B-Instruct | S2 | fair | -0.220 [-0.232, -0.206] | -0.778 | 0.28 [0.26, 0.30] | 0.70 | 140/140 |
 | Qwen2.5-7B-Instruct | S2 | even | -0.235 [-0.243, -0.226] | -0.477 | 0.49 [0.47, 0.51] | 0.94 | 140/140 |
 | Qwen2.5-7B-Instruct | S2 | loaded | -0.306 [-0.334, -0.276] | -0.663 | 0.46 [0.41, 0.51] | 0.64 | 140/140 |
@@ -43,6 +50,9 @@ True slopes: fair -0.778, even -0.477 per roll; `loaded` varies by sequence, so 
 | OLMo-2-7B-Instruct | S1 | fair | -1.227 [-1.319, -1.134] | -0.778 | 1.58 [1.46, 1.70] | 0.82 | 140/140 |
 | OLMo-2-7B-Instruct | S1 | even | -0.985 [-1.150, -0.813] | -0.477 | 2.06 [1.70, 2.41] | 0.61 | 140/140 |
 | OLMo-2-7B-Instruct | S1 | loaded | -0.877 [-0.984, -0.781] | -0.663 | 1.32 [1.22, 1.44] | 0.70 | 140/140 |
+| OLMo-2-7B-Instruct | S1-nospace | fair | -1.394 [-1.519, -1.271] | -0.778 | 1.79 [1.63, 1.95] | 0.79 | 140/140 |
+| OLMo-2-7B-Instruct | S1-nospace | even | -0.949 [-1.105, -0.797] | -0.477 | 1.99 [1.67, 2.32] | 0.59 | 140/140 |
+| OLMo-2-7B-Instruct | S1-nospace | loaded | -1.047 [-1.182, -0.924] | -0.663 | 1.58 [1.44, 1.72] | 0.69 | 140/140 |
 | Claude (API) | S2 | fair | -0.778 [-0.778, -0.778] | -0.778 | 1.00 [1.00, 1.00] | 1.00 | 69/70 |
 | Claude (API) | S2 | even | -0.477 [-0.477, -0.477] | -0.477 | 1.00 [1.00, 1.00] | 1.00 | 70/70 |
 | Claude (API) | S2 | loaded | -0.660 [-0.705, -0.613] | -0.661 | 1.00 [0.99, 1.00] | 0.88 | 70/70 |
@@ -63,9 +73,11 @@ Each face under each die (18 queries).
 | Model | Scorer | Mean abs error | Max abs error | Share within ±0.10 |
 |---|---|---|---|---|
 | Qwen2.5-7B-Instruct | S1 | 0.178 | 0.580 | 0.50 |
+| Qwen2.5-7B-Instruct | S1-nospace | 0.178 | 0.580 | 0.50 |
 | Qwen2.5-7B-Instruct | S2 | 0.024 | 0.167 | 0.89 |
 | Qwen2.5-7B-Instruct | S3 | 0.012 | 0.067 | 1.00 |
 | OLMo-2-7B-Instruct | S1 | 0.123 | 0.332 | 0.61 |
+| OLMo-2-7B-Instruct | S1-nospace | 0.123 | 0.332 | 0.61 |
 | Claude (API) | S2 | 0.000 | 0.000 | 1.00 |
 | Claude (API) | S3 | 0.000 | 0.000 | 1.00 |
 | GPT (API) | S2 | 0.000 | 0.000 | 1.00 |
@@ -81,9 +93,11 @@ scorers are scored by the share answered exactly 0; token log-probs by the media
 | Model | Scorer | Slope, all pairs [95% CI] | R² | Slope, even vs fair [95% CI] | Impossible pairs |
 |---|---|---|---|---|---|
 | Qwen2.5-7B-Instruct | S1 | 4.69 [4.25, 5.12] | 0.38 | 4.13 [3.45, 4.80] | median log p -56.4 (n = 229) |
+| Qwen2.5-7B-Instruct | S1-nospace | 6.80 [6.42, 7.21] | 0.63 | 4.14 [3.51, 4.79] | median log p -48.1 (n = 229) |
 | Qwen2.5-7B-Instruct | S2 | 0.42 [0.37, 0.46] | 0.31 | -0.08 [-0.13, -0.03] | 0.61 answered 0 (n = 229) |
 | Qwen2.5-7B-Instruct | S3 | 0.17 [0.14, 0.21] | 0.09 | -0.19 [-0.28, -0.09] | 0.72 answered 0 (n = 229) |
 | OLMo-2-7B-Instruct | S1 | 1.33 [1.16, 1.50] | 0.30 | 1.33 [0.97, 1.72] | median log p -24.3 (n = 229) |
+| OLMo-2-7B-Instruct | S1-nospace | 1.69 [1.53, 1.88] | 0.38 | 2.30 [1.96, 2.63] | median log p -28.2 (n = 229) |
 | Claude (API) | S2 | 1.00 [1.00, 1.01] | 1.00 | 1.00 [1.00, 1.00] | 1.00 answered 0 (n = 113) |
 | Claude (API) | S3 | 1.01 [1.00, 1.02] | 0.99 | 1.00 [1.00, 1.00] | 1.00 answered 0 (n = 113) |
 | GPT (API) | S2 | 1.00 [1.00, 1.00] | 1.00 | 1.00 [1.00, 1.00] | 1.00 answered 0 (n = 113) |
@@ -96,9 +110,11 @@ True sum = 1 for every set. Token log-probs should sum to at most 1.
 | Model | Scorer | k=1 fair | k=1 even | k=1 loaded | k=2 fair (36) |
 |---|---|---|---|---|---|
 | Qwen2.5-7B-Instruct | S1 | 0.999 | 0.972 | 1 | 8.94e-07 |
+| Qwen2.5-7B-Instruct | S1-nospace | 0.999 | 0.972 | 1 | 1 |
 | Qwen2.5-7B-Instruct | S2 | 1 | 0.958 | 0.854 | 1.46 |
 | Qwen2.5-7B-Instruct | S3 | 1 | 1 | 1.21 | 1.03 |
 | OLMo-2-7B-Instruct | S1 | 0.664 | 0.0483 | 0.572 | 0.879 |
+| OLMo-2-7B-Instruct | S1-nospace | 0.664 | 0.0483 | 0.572 | 0.119 |
 | Claude (API) | S2 | 1 | 1 | 1 | 1 |
 | Claude (API) | S3 | 1 | 1 | 1 | 1 |
 | GPT (API) | S2 | 1 | 1 | 1 | 1 |

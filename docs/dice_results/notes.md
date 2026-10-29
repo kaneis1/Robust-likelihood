@@ -35,8 +35,24 @@ Hand-written notes on `summary.md` (generated) for the C2 write-up. All runs: 20
   correct only for the surface form the model would write, and a meaning-preserving change
   of separator moves it by more than the whole likelihood of a 10-roll sequence.
 
-## Open choice
+## Sensitivity: lists written without spaces (`S1-nospace`)
 
-A sensitivity run that scores S1 with the no-space format (`3,5,2`) would separate the
-format penalty from the face distribution. It is one GPU minute and changes no frozen
-item; it has not been run.
+Agreed with the user and run after the frozen analysis (cluster job 1037221); it is not in
+the D1 scorecard.
+
+| Model | Format | Fair slope ÷ truth | R² | k = 2 fair sum |
+|---|---|---|---|---|
+| Qwen | `3, 5, 2` (frozen) | 3.54 | 0.72 | 9e-7 |
+| Qwen | `3,5,2` | 2.99 | 0.73 | 1.00 |
+| OLMo | `3, 5, 2` (frozen) | 1.58 | 0.82 | 0.88 |
+| OLMo | `3,5,2` | 1.79 | 0.79 | 0.12 |
+
+- In its own format Qwen puts all its k = 2 mass on well-formed lists, so the frozen
+  format explains the normalization failure. It does not explain the slope: even at
+  `3,5,2` Qwen's fair-die slope is 3× the truth, because its mass sits on a few favourite
+  patterns (`2,4,6`, `3,4`) and a typical fair sequence gets far less than 6⁻ᵏ.
+- OLMo is the mirror image: it prefers the spaced format, and removing the spaces costs it
+  about 1.1 nats at k = 2.
+- So which separator a model happens to prefer moves its k = 2 normalization from 1 to
+  10⁻⁶ (Qwen) or from 0.88 to 0.12 (OLMo) for the same sequences. That is a meaning-preserving
+  change of surface form, and it is C1's fragility in its simplest form.

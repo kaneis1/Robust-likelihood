@@ -99,7 +99,7 @@
     "sequences": "225f34e8eb09e231f19db2b07e0d8da5e30d2321d764583d3c7e0f8f0bd917c2"
   },
   "git": {
-    "commit": "2ac269c9791e847342a7e73e31bf30d9d9bfe5a6",
+    "commit": "882e38f419350be5d3b78889fe70ec2e14a864c0",
     "dirty": true
   },
   "runs": [
@@ -159,6 +159,32 @@
     },
     {
       "checks": {
+        "boundary_holds": true
+      },
+      "elapsed_seconds": 8.9,
+      "finished_at": "2026-10-29T10:35:38Z",
+      "git": {
+        "commit": "882e38f419350be5d3b78889fe70ec2e14a864c0",
+        "dirty": false
+      },
+      "kind": "local",
+      "models": {
+        "olmo": {
+          "id": "allenai/OLMo-2-1124-7B-Instruct",
+          "revision": "470b1fba1ae01581f270116362ee4aa1b97f4c84"
+        }
+      },
+      "run_dir": "results/dice/20261029T103529Z-local-olmo-nospace",
+      "started_at": "2026-10-29T10:35:29Z",
+      "summary": "allenai/OLMo-2-1124-7B-Instruct at revision 470b1fba1ae0, bfloat16 on cuda:0, 1314 queries, scorers S1 (no-space lists), 8.9 s",
+      "versions": {
+        "python": "3.12.3",
+        "torch": "2.14.1+cu126",
+        "transformers": "4.57.6"
+      }
+    },
+    {
+      "checks": {
         "boundary_holds": true,
         "greedy_is_exact": true
       },
@@ -178,6 +204,32 @@
       "run_dir": "results/dice/20261029T085739Z-local-qwen",
       "started_at": "2026-10-29T08:57:39Z",
       "summary": "Qwen/Qwen2.5-7B-Instruct at revision a09a35458c70, bfloat16 on cuda:0, 1314 queries, scorers S1, S2, S3, 504.5 s",
+      "versions": {
+        "python": "3.12.3",
+        "torch": "2.14.1+cu126",
+        "transformers": "4.57.6"
+      }
+    },
+    {
+      "checks": {
+        "boundary_holds": true
+      },
+      "elapsed_seconds": 9.1,
+      "finished_at": "2026-10-29T10:35:29Z",
+      "git": {
+        "commit": "882e38f419350be5d3b78889fe70ec2e14a864c0",
+        "dirty": false
+      },
+      "kind": "local",
+      "models": {
+        "qwen": {
+          "id": "Qwen/Qwen2.5-7B-Instruct",
+          "revision": "a09a35458c702b33eeacc393d103063234e8bc28"
+        }
+      },
+      "run_dir": "results/dice/20261029T103520Z-local-qwen-nospace",
+      "started_at": "2026-10-29T10:35:20Z",
+      "summary": "Qwen/Qwen2.5-7B-Instruct at revision a09a35458c70, bfloat16 on cuda:0, 1314 queries, scorers S1 (no-space lists), 9.1 s",
       "versions": {
         "python": "3.12.3",
         "torch": "2.14.1+cu126",
