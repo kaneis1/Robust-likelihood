@@ -11,7 +11,9 @@
 # Replace every <PLACEHOLDER> before submitting, or override it on the command line.
 #   Slurm: sbatch scripts/dice_job.sh
 #   NUS SoC: sbatch -p gpu --gres=gpu:1 --constraint="a100|h100|h200" --time=02:30:00 \
-#            --export=ALL,VENV_DIR=$HOME/venvs/rl scripts/dice_job.sh
+#            --export=ALL,VENV_DIR=/tmp/cuizq-rl,VENV_TAR=$HOME/envs/cuizq-rl.tar scripts/dice_job.sh
+#   (home is NFS, so the environment is built once on local disk and packed; VENV_TAR is
+#   unpacked onto the compute node's local disk when VENV_DIR is not there yet)
 #   LSF:   bsub < scripts/dice_job.sh
 #   PBS:   qsub scripts/dice_job.sh
 # Each scheduler reads only its own directives, so one file serves all three.
@@ -48,7 +50,12 @@ cd "${SLURM_SUBMIT_DIR:-${PBS_O_WORKDIR:-${LS_SUBCWD:-$(pwd)}}}"
 # Cluster environment: load modules if the cluster needs them, and set VENV_DIR to the
 # environment the extras were installed into.
 # module load <CUDA_MODULE>
+if [ -n "${VENV_TAR:-}" ] && [ ! -x "${VENV_DIR:?VENV_TAR needs VENV_DIR}/bin/python" ]; then
+    df -h "$(dirname "$VENV_DIR")"
+    tar -xf "$VENV_TAR" -C /
+fi
 if [ -n "${VENV_DIR:-}" ]; then source "$VENV_DIR/bin/activate"; fi
+export PYTHONPATH="$PWD/src${PYTHONPATH:+:$PYTHONPATH}"
 export HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}"
 export HF_HUB_OFFLINE=1
 
