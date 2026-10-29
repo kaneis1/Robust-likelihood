@@ -80,10 +80,12 @@ class Extractor:
         self.food = re.compile(rf"\b(?:{_alternation(vocab['food'])})\b")
         self.area = re.compile(rf"\b(?:{_alternation(vocab['area_synonyms'])})\b")
         self.price = re.compile(rf"\b(?:{_alternation(vocab['price_synonyms'])})\b")
+        # A "no preference" match consumes only the nearest slot phrase, so one phrase can cover a
+        # list: "no preference about the type of food, the area, or the price range".
         self.dontcare = {
             slot: [re.compile(rf"\b{phrase}\b") for phrase in phrases] + [
-                re.compile(rf"\b(?:{SLOT_WORDS[slot]})\b[^.!?,;]{{0,30}}\b(?:{CARE})\b"),
-                re.compile(rf"\b(?:{CARE})\b[^.!?;]{{0,30}}\b(?:{SLOT_WORDS[slot]})\b"),
+                re.compile(rf"\b(?P<slot>{SLOT_WORDS[slot]})\b[^.!?,;]{{0,30}}?\b(?:{CARE})\b"),
+                re.compile(rf"\b(?:{CARE})\b[^.!?;]{{0,30}}?\b(?P<slot>{SLOT_WORDS[slot]})\b"),
             ]
             for slot, phrases in DONTCARE_PHRASES.items()
         }
@@ -97,7 +99,8 @@ class Extractor:
             match = pattern.search(remaining)
             if match is None:
                 return None
-            remaining = remaining[: match.start()] + " | " + remaining[match.end():]
+            group = "slot" if "slot" in pattern.groupindex else 0
+            remaining = remaining[: match.start(group)] + "|" + remaining[match.end(group):]
             return match.group(0)
 
         for slot in SLOTS:
@@ -143,6 +146,28 @@ def annotated_tuple(item: dict, vocab: dict) -> dict[str, list[str]]:
         else:
             found[slot] = sorted({canonical(slot, value, vocab) for value in item["turn0_values"][slot]})
     return found
+
+
+def hypothesis_tuple(row: dict) -> dict[str, str]:
+    """The slots a probe hypothesis states: its values, dontcare where an explicit text says no preference, else none."""
+    values = row.get("values") or {}
+    unstated = DONTCARE if row["regime"] == "expl" else NONE
+    return {slot: values[slot] if slot in row["constrained"] else unstated for slot in SLOTS}
+
+
+def hypothesis_check(rows: list[dict], vocab: dict) -> dict:
+    """Every distinct probe hypothesis text must extract to the slots it was built from."""
+    extractor = Extractor(vocab)
+    texts = {}
+    for row in rows:
+        texts.setdefault(row["text"], hypothesis_tuple(row))
+    mismatches = []
+    for text, expected in sorted(texts.items()):
+        found = extractor.extract(text)
+        if found != expected:
+            mismatches.append({"text": text, "expected": expected, "extracted": found})
+    return {"texts": len(texts), "agreement": 1 - len(mismatches) / len(texts) if texts else None,
+            "mismatches": mismatches}
 
 
 def _kind(value: str) -> str:
@@ -194,4 +219,11 @@ def check_markdown(result: dict) -> str:
     lines += ["", "## Disagreements", "", "| Item | Slot | Annotated | Extracted | Utterance |", "|---|---|---|---|---|"]
     lines += [f"| {row['item_id']} | {row['slot']} | {', '.join(row['annotated'])} | {row['extracted']} | "
               f"{row['utterance'].replace('|', '/')} |" for row in result["disagreements"]]
+    hypotheses = result.get("hypotheses")
+    if hypotheses:
+        lines += ["", "## Hypothesis texts", "",
+                  f"Every distinct probe hypothesis text ({hypotheses['texts']}) against the slots it was built from:",
+                  f"{100 * hypotheses['agreement']:.1f}% extract exactly.", ""]
+        lines += [f"- {row['text']} expected {row['expected']}, extracted {row['extracted']}"
+                  for row in hypotheses["mismatches"]]
     return "\n".join(lines) + "\n"

@@ -234,11 +234,19 @@ def _dispatch(args) -> int:
         print(f"Wrote {run_dir / 'summary.md'} and {len(figures)} figure files")
         return 0
     if args.command == "semantic-check":
-        from robust_likelihood.multiwoz.semantic import VOCAB_FILE, build_vocab, check_markdown, semantic_check
+        from robust_likelihood.multiwoz.semantic import (
+            VOCAB_FILE,
+            build_vocab,
+            check_markdown,
+            hypothesis_check,
+            semantic_check,
+        )
 
         vocab = build_vocab(root / RAW_DIR)
         write_json(root / DERIVED_DIR / VOCAB_FILE, vocab)
         result = semantic_check(read_jsonl(root / DERIVED_DIR / "items.jsonl"), vocab)
+        result["hypotheses"] = hypothesis_check(read_jsonl(root / DERIVED_DIR / "probe.jsonl"), vocab)
+        print(f"hypothesis texts: {100 * result['hypotheses']['agreement']:.1f}% extract exactly")
         out = root / args.out
         write_json(out / "semantic_check.json", result)
         (out / "semantic_check.md").write_text(check_markdown(result), encoding="utf-8", newline="\n")

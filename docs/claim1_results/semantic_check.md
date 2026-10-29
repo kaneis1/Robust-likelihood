@@ -49,3 +49,9 @@ Passes: yes.
 | SNG0748 | pricerange | moderate | none | I am looking for an Eastern restaurant, medium price |
 | SNG1268 | food | gastropod, gastropub | none | AM looking for a place to dine. The restaurant should be in the south and should serve gastropod food. |
 | SNG1329 | pricerange | moderate | none | Hi, I need a place to eat in the centre for a medium price range. What do you have that you can suggest? |
+
+## Hypothesis texts
+
+Every distinct probe hypothesis text (983) against the slots it was built from:
+100.0% extract exactly.
+

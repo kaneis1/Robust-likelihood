@@ -212,6 +212,11 @@
       "utterance": "Hi, I need a place to eat in the centre for a medium price range. What do you have that you can suggest?"
     }
   ],
+  "hypotheses": {
+    "agreement": 1.0,
+    "mismatches": [],
+    "texts": 983
+  },
   "items": 370,
   "passes_95": true
 }
