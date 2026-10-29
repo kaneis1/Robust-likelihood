@@ -63,8 +63,8 @@ def plot_slopes(stem: Path, metrics: dict) -> list[Path]:
                 truth.setdefault(row["k"], row["mean_true_log10"])
             if truth:
                 ks = sorted(truth)
-                ax.plot(ks, [truth[k] for k in ks], color=INK["primary"], linewidth=2, linestyle=DASHED,
-                        label="exact", zorder=3)
+                ax.plot(ks, [truth[k] for k in ks], color=INK["primary"], linewidth=1.2, linestyle=DASHED,
+                        label="exact", zorder=5)
             for scorer in SCORER_COLORS:
                 points = [row for row in mine if row["scorer"] == scorer]
                 if not points:
@@ -270,20 +270,24 @@ def summary_markdown(metrics: dict, manifest: dict) -> str:
     lines += ["", "## 4. Bayes factors", "",
               "Predicted against exact log Bayes factor over every sequence and die pair with both likelihoods",
               "finite. The even-vs-fair column uses all-even sequences only, where the truth is k ln 2.",
-              "Impossible: sequences with an odd face, where the even die is ruled out.", "",
-              "| Model | Scorer | Slope, all pairs [95% CI] | R² | Slope, even vs fair [95% CI] | Impossible: median predicted, share favouring fair |",
+              "Impossible pairs: an odd face under the even die, whose exact probability is 0. Verbalized",
+              "scorers are scored by the share answered exactly 0; token log-probs by the median log p.", "",
+              "| Model | Scorer | Slope, all pairs [95% CI] | R² | Slope, even vs fair [95% CI] | Impossible pairs |",
               "|---|---|---|---|---|---|"]
     for model in models:
         for block in sorted(_blocks(metrics, model), key=lambda block: block["scorer"]):
             found = block["bayes"]
             fit = found["fit"] or {}
             even = found["even_vs_fair_all_even"] or {}
-            impossible = found["even_vs_fair_impossible"]
+            impossible = block["impossible"]
+            if "share_answered_zero" in impossible:
+                cell = f"{_f(impossible['share_answered_zero'], 2)} answered 0 (n = {impossible['n']})"
+            else:
+                cell = f"median log p {_f(impossible['median_logp'], 1)} (n = {impossible['n']})"
             lines.append(
                 f"| {MODEL_LABELS.get(model, model)} | {block['scorer']} | {_f(fit.get('slope'), 2)} "
                 f"{_ci(found.get('slope_ci95'), 2)} | {_f(fit.get('r2'), 2)} | {_f(even.get('slope'), 2)} "
-                f"{_ci(found.get('even_vs_fair_slope_ci95'), 2)} | {_f(impossible['median_predicted'], 2)}, "
-                f"{_f(impossible['share_favouring_fair'], 2)} |")
+                f"{_ci(found.get('even_vs_fair_slope_ci95'), 2)} | {cell} |")
     lines += ["", "## 5. Normalization sums", "",
               "True sum = 1 for every set. Token log-probs should sum to at most 1.", "",
               "| Model | Scorer | " + " | ".join(NORM_LABELS[name] for name in NORM_SETS) + " |",

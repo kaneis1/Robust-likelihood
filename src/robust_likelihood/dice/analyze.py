@@ -223,6 +223,14 @@ def source_block(model: str, scorer: str, rows: dict[str, dict], pairs: list[dic
         own = [row for row in scored_pairs if row["own"] and row["hypothesis"] == hypothesis]
         if own:
             block["slopes"][hypothesis] = slope_block(own, values, bootstrap, f"dice:{model}:{scorer}:{hypothesis}")
+    impossible = [rows[row["query_id"]] for row in scored_pairs if row["true_logp"] is None]
+    if verbal:
+        block["impossible"] = {"n": len(impossible),
+                               "share_answered_zero": sum(1 for row in impossible if row.get("p") == 0) / len(impossible)
+                               if impossible else None}
+    else:
+        found = sorted(row["logp"] for row in impossible)
+        block["impossible"] = {"n": len(found), "median_logp": found[len(found) // 2] if found else None}
     block["k1_accuracy"] = k1_accuracy(norm, rows)
     block["bayes"] = bayes_block(scored_pairs, values, bootstrap, f"dice:{model}:{scorer}:bayes")
     block["normalization"] = normalization(norm, rows)

@@ -119,7 +119,9 @@ def test_an_exact_scorer_passes_d1_and_a_flat_verbal_scorer_passes_d2(tmp_path, 
     assert s1["bayes"]["fit"]["slope"] == pytest.approx(1.0)
     assert s1["normalization"]["k2_fair"]["sum"] == pytest.approx(1.0)
     assert s1["k1_accuracy"]["max_abs_error"] == pytest.approx(0.0, abs=1e-12)
+    assert s1["impossible"] == {"n": 229, "median_logp": -60.0}
     s2 = metrics["sources"]["oracle:S2"]
+    assert s2["impossible"] == {"n": 229, "share_answered_zero": 0.0}
     assert s2["slopes"]["fair"]["fit"]["slope"] == pytest.approx(0.0)
     assert s2["normalization"]["k2_fair"]["sum"] == pytest.approx(18.0)
     results = {row["id"]: row["pass"] for row in metrics["predictions"]}

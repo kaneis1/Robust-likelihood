@@ -8,8 +8,10 @@
 #   huggingface-cli download allenai/OLMo-2-1124-7B-Instruct --revision 470b1fba1ae01581f270116362ee4aa1b97f4c84
 #   python -m robust_likelihood.dice build
 #
-# Replace every <PLACEHOLDER> before submitting.
+# Replace every <PLACEHOLDER> before submitting, or override it on the command line.
 #   Slurm: sbatch scripts/dice_job.sh
+#   NUS SoC: sbatch -p gpu --gres=gpu:1 --constraint="a100|h100|h200" --time=02:30:00 \
+#            --export=ALL,VENV_DIR=$HOME/venvs/rl scripts/dice_job.sh
 #   LSF:   bsub < scripts/dice_job.sh
 #   PBS:   qsub scripts/dice_job.sh
 # Each scheduler reads only its own directives, so one file serves all three.
@@ -43,10 +45,11 @@ set -euo pipefail
 
 cd "${SLURM_SUBMIT_DIR:-${PBS_O_WORKDIR:-${LS_SUBCWD:-$(pwd)}}}"
 
-# Cluster environment: load modules and activate the environment the extras were installed into.
+# Cluster environment: load modules if the cluster needs them, and set VENV_DIR to the
+# environment the extras were installed into.
 # module load <CUDA_MODULE>
-# source <VENV_DIR>/bin/activate
-export HF_HOME="${HF_HOME:-<HF_CACHE_DIR>}"
+if [ -n "${VENV_DIR:-}" ]; then source "$VENV_DIR/bin/activate"; fi
+export HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}"
 export HF_HUB_OFFLINE=1
 
 nvidia-smi
