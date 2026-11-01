@@ -1,0 +1,51 @@
+scorer,label,rewrite,pairs,median_abs_delta,low,high
+qwen_tok,Qwen token log-prob,typo,1799,8.086814880371094,7.502571105957031,8.643165588378906
+qwen_tok,Qwen token log-prob,pad,1808,6.24327278137207,5.8456268310546875,6.7810516357421875
+qwen_tok,Qwen token log-prob,para,3625,7.942535400390625,7.259954452514648,8.60955810546875
+qwen_tok,Qwen token log-prob,verbose,1590,9.639347076416016,8.909661865234375,10.4410400390625
+qwen_tok,Qwen token log-prob,zh,1591,9.351486206054688,8.520782470703125,10.145003509521482
+qwen_tok_subset,"Qwen token log-prob, 60-item subset",typo,459,7.523590087890625,6.345008850097656,8.352706909179688
+qwen_tok_subset,"Qwen token log-prob, 60-item subset",pad,468,7.012416839599609,5.695701599121094,8.179313659667969
+qwen_tok_subset,"Qwen token log-prob, 60-item subset",para,940,7.416969299316406,6.1960296630859375,8.621112823486328
+qwen_tok_subset,"Qwen token log-prob, 60-item subset",verbose,394,9.895439147949219,8.724411010742188,12.064277648925781
+qwen_tok_subset,"Qwen token log-prob, 60-item subset",zh,384,9.963768005371094,8.424934387207031,11.782684326171875
+qwen_clip,Qwen clipped log-prob,typo,1799,0.0,0.0,0.0
+qwen_clip,Qwen clipped log-prob,pad,1808,0.0,0.0,0.0
+qwen_clip,Qwen clipped log-prob,para,3625,0.0,0.0,0.0
+qwen_clip,Qwen clipped log-prob,verbose,1590,0.0,0.0,0.0
+qwen_clip,Qwen clipped log-prob,zh,1591,0.0,0.0,0.0
+qwen_cent,Qwen centered log-prob,typo,1799,8.086814880371094,7.502571105957031,8.643165588378906
+qwen_cent,Qwen centered log-prob,pad,1808,6.24327278137207,5.8456268310546875,6.7810516357421875
+qwen_cent,Qwen centered log-prob,para,3625,7.942535400390625,7.259954452514648,8.60955810546875
+qwen_cent,Qwen centered log-prob,verbose,1590,9.639347076416016,8.909661865234375,10.4410400390625
+qwen_cent,Qwen centered log-prob,zh,1591,9.351486206054688,8.520782470703125,10.145003509521482
+qwen_verbal_exact,"Qwen verbalized, exact string",typo,326,0.0,0.0,0.6931471805599454
+qwen_verbal_exact,"Qwen verbalized, exact string",pad,322,0.0,0.0,0.6931471805599454
+qwen_verbal_exact,"Qwen verbalized, exact string",para,666,0.0,0.0,0.0
+qwen_verbal_exact,"Qwen verbalized, exact string",verbose,253,0.0,0.0,0.0
+qwen_verbal_exact,"Qwen verbalized, exact string",zh,260,0.0,0.0,0.0
+qwen_verbal_meaning,"Qwen verbalized, meaning",typo,257,0.0,0.0,0.0
+qwen_verbal_meaning,"Qwen verbalized, meaning",pad,265,0.0,0.0,0.0
+qwen_verbal_meaning,"Qwen verbalized, meaning",para,530,0.0,0.0,0.0
+qwen_verbal_meaning,"Qwen verbalized, meaning",verbose,220,0.0,0.0,0.0
+qwen_verbal_meaning,"Qwen verbalized, meaning",zh,211,0.0,0.0,0.0
+claude_verbal,"Claude verbalized, exact string",typo,0,,,
+claude_verbal,"Claude verbalized, exact string",pad,0,,,
+claude_verbal,"Claude verbalized, exact string",para,420,2.3025850929940455,1.8971199848858817,2.70805020110221
+claude_verbal,"Claude verbalized, exact string",verbose,0,,,
+claude_verbal,"Claude verbalized, exact string",zh,0,,,
+gpt_verbal,"GPT verbalized, exact string",typo,0,,,
+gpt_verbal,"GPT verbalized, exact string",pad,0,,,
+gpt_verbal,"GPT verbalized, exact string",para,314,1.7210096880912062,1.6094379124341005,2.302585092994045
+gpt_verbal,"GPT verbalized, exact string",verbose,0,,,
+gpt_verbal,"GPT verbalized, exact string",zh,0,,,
+jev_likely,"Jev, likely wording",typo,0,,,
+jev_likely,"Jev, likely wording",pad,0,,,
+jev_likely,"Jev, likely wording",para,470,0.1505864192592858,0.13005312824819737,0.17563987270009163
+jev_likely,"Jev, likely wording",verbose,0,,,
+jev_likely,"Jev, likely wording",zh,384,0.2151814500549858,0.168949744559391,0.25082578913118825
+jev_typical,"Jev, typical wording",typo,0,,,
+jev_typical,"Jev, typical wording",pad,0,,,
+jev_typical,"Jev, typical wording",para,470,0.14821986464725523,0.13052540111734395,0.1768693993189434
+jev_typical,"Jev, typical wording",verbose,0,,,
+jev_typical,"Jev, typical wording",zh,384,0.2522342236270062,0.1929036661244914,0.2980448594873275

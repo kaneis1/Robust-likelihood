@@ -1,0 +1,100 @@
+{
+  "api_models": {
+    "claude": [
+      "claude-fable-5-1"
+    ],
+    "gpt": [
+      "gpt-6-astra"
+    ]
+  },
+  "bootstrap": {
+    "replicates": 2000,
+    "seed": 20261027
+  },
+  "clip_nats": 3.0,
+  "counts": {
+    "claude_verbal": {
+      "items": 60,
+      "scores": 1741
+    },
+    "gpt_verbal": {
+      "items": 60,
+      "scores": 1406
+    },
+    "jev_likely": {
+      "items": 60,
+      "scores": 4649
+    },
+    "jev_typical": {
+      "items": 60,
+      "scores": 4649
+    },
+    "qwen_cent": {
+      "items": 235,
+      "scores": 24935
+    },
+    "qwen_clip": {
+      "items": 235,
+      "scores": 24935
+    },
+    "qwen_tok": {
+      "items": 235,
+      "scores": 24935
+    },
+    "qwen_tok_subset": {
+      "items": 60,
+      "scores": 6383
+    },
+    "qwen_verbal_exact": {
+      "items": 60,
+      "scores": 5041
+    },
+    "qwen_verbal_meaning": {
+      "items": 60,
+      "scores": 4220
+    }
+  },
+  "elapsed_seconds": 46.7,
+  "finished_at": "2026-11-01T18:10:10Z",
+  "git": {
+    "commit": "e875b10cc7ab2786067953152bc6f205126bead8",
+    "dirty": true
+  },
+  "input_sha256": {
+    "items.jsonl": "02f7deba6589de4978dd4302cc703f592210d5ded6520179aaa43de72911ee83",
+    "probe.jsonl": "ca43570432a48eab3cc06877757ef752c47e022f2aa253fe28b623fcac785581",
+    "rewrites.jsonl": "cdc62b51f18fd75096ce0e5b6797eb7ca8363151dd9f911e9df7c127021e1748",
+    "robustness_subset.json": "83118e260dd3b024fc77d38f22e9e64191b6451b249be4c00efca4f96c275ff0"
+  },
+  "inputs": {
+    "jev": "results/multiwoz/20261101T170333Z-jev-rewrites",
+    "jev_full": "results/multiwoz/20261026T034616Z-full",
+    "lm_runs": [
+      "results/multiwoz/claim1/20261101T093512Z-center-qwen",
+      "results/multiwoz/claim1/20261101T094135Z-rewrites-qwen",
+      "results/multiwoz/claim1/20261101T100831Z-rewrites-olmo",
+      "results/multiwoz/claim1/20261101T165158Z-recheck-qwen",
+      "results/multiwoz/claim1/20261101T165218Z-recheck-olmo"
+    ],
+    "phase8": "results/multiwoz/20261101T091346Z-phase8",
+    "verbal": [
+      "results/multiwoz/claim1/20261101T165240Z-verbal-qwen",
+      "results/multiwoz/claim1/20261101T171650Z-verbal-api"
+    ]
+  },
+  "kind": "claim1-analysis",
+  "models": {
+    "20261026T034616Z-full": "jev-1.13.0",
+    "20261101T093512Z-center-qwen": "Qwen/Qwen2.5-7B-Instruct",
+    "20261101T094135Z-rewrites-qwen": "Qwen/Qwen2.5-7B-Instruct",
+    "20261101T100831Z-rewrites-olmo": "allenai/OLMo-2-1124-7B-Instruct",
+    "20261101T165158Z-recheck-qwen": "Qwen/Qwen2.5-7B-Instruct",
+    "20261101T165218Z-recheck-olmo": "allenai/OLMo-2-1124-7B-Instruct",
+    "20261101T165240Z-verbal-qwen": "Qwen/Qwen2.5-7B-Instruct",
+    "20261101T171650Z-verbal-api": null
+  },
+  "pending": {
+    "olmo_tok": "OLMo scored the rewrites only; its original pairs are needed to compare with them (claim1-lm --model olmo --parts original)."
+  },
+  "posterior_draws": 50
+}

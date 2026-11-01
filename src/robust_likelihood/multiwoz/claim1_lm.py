@@ -5,6 +5,8 @@ module adds, each part writing its own jsonl into one run folder:
 
 - `center`:   S(u | broad|impl) for every probe utterance and every Phase 8 sample, for the
               centered score S(U|H) - S(U|broad|impl) and its reference distribution.
+- `original`: S(U | h) for every clean probe row, for a model without a Phase 8 run (OLMo), so
+              its rewrites can be compared with the originals.
 - `urewrite`: S(U' | h) for every accepted utterance rewrite under every hypothesis of its item.
 - `hrewrite`: S(U | h') for every clean probe row under every accepted rewrite of its text.
 - `hsample`:  K samples under each accepted rewritten hypothesis text of the robustness subset,
@@ -26,8 +28,8 @@ from robust_likelihood.multiwoz import DERIVED_DIR, RESULTS_DIR
 from robust_likelihood.multiwoz.jev_run import git_state
 from robust_likelihood.storage import read_json, read_jsonl, write_json, write_jsonl
 
-PARTS = ("center", "urewrite", "hrewrite", "hsample")
-SCORING_PARTS = ("urewrite", "hrewrite")
+PARTS = ("center", "original", "urewrite", "hrewrite", "hsample")
+SCORING_PARTS = ("original", "urewrite", "hrewrite")
 
 
 def load_claims_config(root: Path) -> dict:
@@ -68,7 +70,9 @@ def plan_pairs(probe: list[dict], rewrites: list[dict], subset: list[str], cente
             for rewrite in hyp_rewrites.get(row["text"], []):
                 texts.setdefault(rewrite["unit_id"], rewrite["rewrite"])
     hsample = [{"unit_id": unit_id, "text": text} for unit_id, text in sorted(texts.items())]
-    return {"center": center, "urewrite": urewrite, "hrewrite": hrewrite, "hsample": hsample}
+    original = [{"item_id": row["item_id"], "hyp_key": row["hyp_key"], "text": row["text"], "utterance": row["utterance"]}
+                for row in clean]
+    return {"center": center, "original": original, "urewrite": urewrite, "hrewrite": hrewrite, "hsample": hsample}
 
 
 def claim1_lm(

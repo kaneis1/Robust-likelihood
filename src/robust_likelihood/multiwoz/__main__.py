@@ -159,6 +159,14 @@ def main(argv: list[str] | None = None) -> int:
     verbal_parser.add_argument("--dry-run", action="store_true", help="api, jev: plan and print, no calls")
     verbal_parser.add_argument("--resume", default=None, help="local, jev: run folder to continue")
     verbal_parser.add_argument("--label", default=None)
+    analysis_parser = sub.add_parser("claim1", help="claims plan 2e: claim 1 and claim 2 analysis and report")
+    analysis_parser.add_argument("--phase8", required=True, help="folder of the Phase 8 lm-score run")
+    analysis_parser.add_argument("--lm", nargs="+", required=True, help="claim1-lm run folders (job A, job B recheck)")
+    analysis_parser.add_argument("--verbal", nargs="+", required=True, help="verbalcheck local and api run folders")
+    analysis_parser.add_argument("--jev-full", required=True, help="the full Jev run on the original probe")
+    analysis_parser.add_argument("--jev", default=None, help="the Jev run on the rewrites")
+    analysis_parser.add_argument("--out", default=str(Path("docs") / "claim1_results"))
+    analysis_parser.add_argument("--no-figures", action="store_true")
     args = parser.parse_args(argv)
     try:
         return _dispatch(args)
@@ -337,6 +345,18 @@ def _dispatch(args) -> int:
         items = [item for item in read_jsonl(root / DERIVED_DIR / "items.jsonl") if item["set"] == "clean"]
         summary["derived"] = write_derived(run_dir, root / DERIVED_DIR, items, extra_runs=(Path(summary["run_dir"]),))
         print(json.dumps(summary, indent=2, sort_keys=True))
+        return 0
+    if args.command == "claim1":
+        from robust_likelihood.multiwoz.claim1 import run_claim1
+
+        summary = run_claim1(root, phase8=Path(args.phase8), lm_runs=[Path(path) for path in args.lm],
+                             verbal=[Path(path) for path in args.verbal], jev_full=Path(args.jev_full),
+                             jev=None if args.jev is None else Path(args.jev), out=root / args.out,
+                             figures=not args.no_figures)
+        for row in summary["predictions"]:
+            result = row.get("status", "pending") if row["pass"] is None else ("pass" if row["pass"] else "fail")
+            print(f"{row['id']}: {result}  value={row.get('value')}")
+        print(json.dumps({key: summary[key] for key in ("out", "figures", "pending", "elapsed_seconds")}, indent=2))
         return 0
     if args.command == "verbalcheck":
         from robust_likelihood.multiwoz import verbalcheck

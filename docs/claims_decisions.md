@@ -205,3 +205,52 @@ open are recorded too, so the analysis can be audited.
 - **Jev, complete (`results/multiwoz/20261101T170333Z-jev-rewrites`).** Rerun after the recheck:
   4,588 of 4,588 scored, 120 new requests for the recovered `hpara1` rows and 4,468 cache hits,
   no failures, all `jev-1.13.0`. This run supersedes `20261101T160534Z-jev-rewrites`.
+
+- **API run (2026-11-02, `results/multiwoz/claim1/20261101T171650Z-verbal-api`, approved by the
+  user).** 2,209 queries per provider, all successful, no parse failure. `claude-fable-5-1` and
+  `gpt-6-astra` each rejected a temperature, so none was sent. Claude: 277,937 input and 87,486
+  output tokens, about $7.15; GPT: 186,916 and 186,279 tokens (no price on file). Claude
+  answered 0 to 73 queries, GPT to 408.
+
+## Step 2e: claim 1 and claim 2 analysis (`multiwoz/claim1.py`)
+
+- **Scales.** Language-model scores are l = −S in nats; clipped l is max(l_H − m, −3) with m the
+  best original hypothesis of the item under the same utterance variant; centered l is
+  l_H − l_broad|impl under the same utterance (so its log Bayes factors equal the raw ones and
+  only ICC, SD ratio, and posteriors differ). Verbalized scores are ln p; an answer of 0 has
+  no log, is counted, and is left out of log-scale metrics, but enters posteriors as 0. Jev is
+  read on the logit scale, as `metrics.py` reads it, and its yes-probability is its posterior
+  weight.
+- **Semantic hypothesis** = a probe `hyp_key` (type and regime) of an item. Its textual
+  variants are the original text, `hpara1`–`hpara3`, and `hzh`, where accepted.
+- **ICC(1)** is computed on item-centered scores (each score minus the mean of the item's
+  original hypotheses), since the frozen assumption rules out raw log p and the utterance's own
+  length would otherwise dominate; groups of unequal size use the usual k0. **SD ratio**: per
+  item, the pooled SD across each hypothesis's rewordings over the SD across the item's
+  original hypotheses (same utterance); median over items. **Rewording shift**: score(H′) −
+  score(H), the change of every log Bayes factor against H.
+- **Utterance pairs** follow `metrics.removal_pairs`: (G, minus:X|r) and (G, broad|r) with G
+  from `goal_key`, plus (G|impl, ctrl:contra). `para` pools `para1` and `para2`.
+- **Posterior instability**: classes G|impl, minus:X|impl, broad|impl, and ctrl:contra; each of
+  50 seeded draws picks one available variant per class uniformly (the original included);
+  a flip is an argmax other than the all-original one.
+- **Claim 2 truths.** exp(−S) is Qwen's probability of the same (hypothesis text, utterance)
+  the verbalizer was asked about. P_sem = (n + 0.5)/(K + 1), K the samples kept under that
+  hypothesis text (64 less any dropped at the token cap), n those whose regex slot tuple
+  matches U's 2.2 annotation (the rewrite validity check, `slots_kept`).
+- **Predictions, operationally.** R1: on named single-slot pairs (mean over slots), L_J > 0 in
+  both regimes and L_J ≥ 0.5·L_E; "Occam gap positive" is read as the size-principle direction,
+  and the formal OG = L_J − L_E is reported beside it. R2: Qwen token ICC(1) < 0.5 and median
+  |hzh shift| > 2 nats. R3: Qwen token median |Δ log BF| < 0.5 under pad and typo, > 1 under
+  para and zh. R4: Qwen exact framing, median of log10 verbal − log10 exp(−S) over nonzero
+  answers > 6, and the median over items of the 20-sample normalization sum > 1. R5: Qwen
+  meaning framing, Spearman against P_sem < 0.5 (the exact framings are reported beside it).
+- **Rescoring noise (found here).** Job A's centering part rescored S(U | broad|impl) with
+  Phase 8's prompt: 133 of 235 clean utterances match exactly, the rest differ by up to 1.40
+  nats (90th percentile 0.83). Batching is right-padded with an attention mask, so this is
+  bfloat16 arithmetic taking other kernels for other batch shapes, not an error. A shift that
+  compares an original (Phase 8) with a rewrite (job A) spans two runs, so R3's 0.5-nat
+  threshold is below the noise floor of this scoring setup; the summary reports it.
+- **OLMo** scored only the rewrites in job A, following part 6 of the plan, so it has no
+  original pairs to compare with; it is reported as pending. `claim1-lm --parts original`
+  now scores the clean probe rows, a run of about two GPU-minutes.

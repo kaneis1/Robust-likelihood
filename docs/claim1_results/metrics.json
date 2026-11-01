@@ -1,0 +1,4977 @@
+{
+  "checks": {
+    "rescoring_noise_nats": {
+      "identical": 133,
+      "max": 1.4008331298828125,
+      "median": 0.0,
+      "p90": 0.8290634155273438,
+      "pairs": 235
+    }
+  },
+  "claim2": {
+    "claude_verbal": {
+      "answered_nonzero": 1741,
+      "exact_all": {
+        "gap_orders": {
+          "ci95": [
+            38.281624360057116,
+            43.37316777329733
+          ],
+          "items": 60,
+          "median": 40.91144489797568,
+          "n": 1741
+        },
+        "n": 1741,
+        "spearman": 0.12282187158008333,
+        "spearman_ci95": [
+          0.06502639998523327,
+          0.17935352065347676
+        ]
+      },
+      "exact_original": {
+        "gap_orders": {
+          "ci95": [
+            38.239769867002245,
+            44.66139541292148
+          ],
+          "items": 60,
+          "median": 41.411782147314355,
+          "n": 585
+        },
+        "n": 585,
+        "spearman": 0.1430712230837432,
+        "spearman_ci95": [
+          0.03858475123452551,
+          0.2449619507051219
+        ]
+      },
+      "normalization": {
+        "items": 20,
+        "mean_sum": {
+          "ci95": [
+            0.3273318380125,
+            0.37378026254999996
+          ],
+          "items": 20,
+          "mean": 0.35133650050000004,
+          "n": 20
+        },
+        "samples_per_item": 20.0,
+        "share_above_1": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "items": 20,
+          "mean": 0.0,
+          "n": 20
+        },
+        "sum": {
+          "ci95": [
+            0.32300001,
+            0.36582
+          ],
+          "items": 20,
+          "median": 0.351125,
+          "n": 20
+        },
+        "true_sum_max": 0.7990252082191549,
+        "true_sum_median": 0.5560277372130353
+      },
+      "queries": 1814,
+      "semantic_all": {
+        "gap_orders": {
+          "ci95": [
+            -0.5850266520291818,
+            -0.1870866433571443
+          ],
+          "items": 60,
+          "median": -0.5850266520291818,
+          "n": 1741
+        },
+        "n": 1741,
+        "spearman": 0.24203268518681656,
+        "spearman_ci95": [
+          0.18171345197218897,
+          0.29506678004295867
+        ]
+      },
+      "semantic_original": {
+        "gap_orders": {
+          "ci95": [
+            -0.5850266520291818,
+            0.11394335230683694
+          ],
+          "items": 60,
+          "median": -0.36317790241282566,
+          "n": 585
+        },
+        "n": 585,
+        "spearman": 0.21254378825083833,
+        "spearman_ci95": [
+          0.13214304583278838,
+          0.2901692591274015
+        ]
+      },
+      "zero_answers": 73
+    },
+    "gpt_verbal": {
+      "answered_nonzero": 1406,
+      "exact_all": {
+        "gap_orders": {
+          "ci95": [
+            36.62416611607384,
+            41.939505973060555
+          ],
+          "items": 60,
+          "median": 39.39842528607565,
+          "n": 1406
+        },
+        "n": 1406,
+        "spearman": 0.1480195112425162,
+        "spearman_ci95": [
+          0.021647647060067103,
+          0.2685118157844944
+        ]
+      },
+      "exact_original": {
+        "gap_orders": {
+          "ci95": [
+            36.44106476333978,
+            43.044459478751754
+          ],
+          "items": 60,
+          "median": 39.87545721187663,
+          "n": 482
+        },
+        "n": 482,
+        "spearman": 0.2201063584819783,
+        "spearman_ci95": [
+          0.05679806810881518,
+          0.36104702881600553
+        ]
+      },
+      "normalization": {
+        "items": 20,
+        "mean_sum": {
+          "ci95": [
+            0.0014781606717505,
+            0.003812420067988487
+          ],
+          "items": 20,
+          "mean": 0.0025402558055005004,
+          "n": 20
+        },
+        "samples_per_item": 20.0,
+        "share_above_1": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "items": 20,
+          "mean": 0.0,
+          "n": 20
+        },
+        "sum": {
+          "ci95": [
+            0.00123,
+            0.0024850000000000002
+          ],
+          "items": 20,
+          "median": 0.001786615,
+          "n": 20
+        },
+        "true_sum_max": 0.7990252082191549,
+        "true_sum_median": 0.5560277372130353
+      },
+      "queries": 1814,
+      "semantic_all": {
+        "gap_orders": {
+          "ci95": [
+            -1.5850266520291818,
+            -0.8860566476931631
+          ],
+          "items": 60,
+          "median": -0.8860566476931631,
+          "n": 1406
+        },
+        "n": 1406,
+        "spearman": 0.0037198019755675573,
+        "spearman_ci95": [
+          -0.07609476778923077,
+          0.08109478442309476
+        ]
+      },
+      "semantic_original": {
+        "gap_orders": {
+          "ci95": [
+            -1.3631779024128257,
+            -0.8860566476931631
+          ],
+          "items": 60,
+          "median": -0.8860566476931631,
+          "n": 482
+        },
+        "n": 482,
+        "spearman": 0.045696462611410665,
+        "spearman_ci95": [
+          -0.05426048630514436,
+          0.14779268274454796
+        ]
+      },
+      "zero_answers": 408
+    },
+    "qwen_verbal_exact": {
+      "answered_nonzero": 5041,
+      "exact_all": {
+        "gap_orders": {
+          "ci95": [
+            44.18208584031036,
+            49.471628119055765
+          ],
+          "items": 60,
+          "median": 46.78135845999731,
+          "n": 5041
+        },
+        "n": 5041,
+        "spearman": 0.395218583093974,
+        "spearman_ci95": [
+          0.3268824637139931,
+          0.4577117650755082
+        ]
+      },
+      "exact_original": {
+        "gap_orders": {
+          "ci95": [
+            38.46942393141466,
+            44.75135514532465
+          ],
+          "items": 60,
+          "median": 41.51845468921704,
+          "n": 491
+        },
+        "n": 491,
+        "spearman": 0.11570805434211771,
+        "spearman_ci95": [
+          -0.022970315362154322,
+          0.24066474545574057
+        ]
+      },
+      "normalization": {
+        "items": 20,
+        "mean_sum": {
+          "ci95": [
+            0.9625,
+            1.0
+          ],
+          "items": 20,
+          "mean": 0.9875,
+          "n": 20
+        },
+        "samples_per_item": 20.0,
+        "share_above_1": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "items": 20,
+          "mean": 0.0,
+          "n": 20
+        },
+        "sum": {
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "items": 20,
+          "median": 1.0,
+          "n": 20
+        },
+        "true_sum_max": 0.7990252082191549,
+        "true_sum_median": 0.5560277372130353
+      },
+      "queries": 6383,
+      "semantic_all": {
+        "gap_orders": {
+          "ci95": [
+            0.8129133566428557,
+            0.8129133566428557
+          ],
+          "items": 60,
+          "median": 0.8129133566428557,
+          "n": 5041
+        },
+        "n": 5041,
+        "spearman": -0.02737064535507502,
+        "spearman_ci95": [
+          -0.06884804296532278,
+          0.014723623519490059
+        ]
+      },
+      "semantic_original": {
+        "gap_orders": {
+          "ci95": [
+            0.8129133566428557,
+            0.8129133566428557
+          ],
+          "items": 60,
+          "median": 0.8129133566428557,
+          "n": 491
+        },
+        "n": 491,
+        "spearman": -0.1681247774769823,
+        "spearman_ci95": [
+          -0.21870370704127623,
+          -0.11756439944035935
+        ]
+      },
+      "zero_answers": 1342
+    },
+    "qwen_verbal_meaning": {
+      "answered_nonzero": 4220,
+      "exact_all": {
+        "gap_orders": {
+          "ci95": [
+            44.65325999915529,
+            49.69251803546659
+          ],
+          "items": 60,
+          "median": 47.050015878680775,
+          "n": 4220
+        },
+        "n": 4220,
+        "spearman": 0.035658037235076025,
+        "spearman_ci95": [
+          -0.03125110313201731,
+          0.10416965603475888
+        ]
+      },
+      "exact_original": {
+        "gap_orders": {
+          "ci95": [
+            38.517904631115705,
+            44.74342948308777
+          ],
+          "items": 60,
+          "median": 41.53149190691644,
+          "n": 405
+        },
+        "n": 405,
+        "spearman": 0.018839965343402473,
+        "spearman_ci95": [
+          -0.10533288312104029,
+          0.14190180511642606
+        ]
+      },
+      "queries": 6383,
+      "semantic_all": {
+        "gap_orders": {
+          "ci95": [
+            0.8129133566428557,
+            0.8129133566428557
+          ],
+          "items": 60,
+          "median": 0.8129133566428557,
+          "n": 4220
+        },
+        "n": 4220,
+        "spearman": 0.11995101012605394,
+        "spearman_ci95": [
+          0.04441768035279428,
+          0.20142583627926866
+        ]
+      },
+      "semantic_original": {
+        "gap_orders": {
+          "ci95": [
+            0.8129133566428557,
+            0.8129133566428557
+          ],
+          "items": 60,
+          "median": 0.8129133566428557,
+          "n": 405
+        },
+        "n": 405,
+        "spearman": 0.029861820787305086,
+        "spearman_ci95": [
+          -0.04634255506026667,
+          0.10969996082559741
+        ]
+      },
+      "zero_answers": 2163
+    }
+  },
+  "pending": {
+    "olmo_tok": "OLMo scored the rewrites only; its original pairs are needed to compare with them (claim1-lm --model olmo --parts original)."
+  },
+  "predictions": [
+    {
+      "id": "R1",
+      "pass": true,
+      "statement": "Qwen raw log-likelihood, named single-slot pairs: L_J > 0 in both regimes and L_J \u2265 0.5\u00b7L_E (mean over slots)",
+      "value": {
+        "expl": {
+          "L_E": 4.190969557449678,
+          "L_J": 10.57917154842537,
+          "OG": 6.38820199097569
+        },
+        "impl": {
+          "L_E": 4.190969557449678,
+          "L_J": 16.22860065961927,
+          "OG": 12.037631102169593
+        }
+      }
+    },
+    {
+      "id": "R2",
+      "pass": false,
+      "statement": "Qwen token log-prob: rewording ICC(1) < 0.5, and a Chinese hypothesis moves the log Bayes factor by a median > 2 nats",
+      "value": {
+        "hzh_median_abs_shift": 14.529888153076172,
+        "icc1": 0.741119660268313
+      }
+    },
+    {
+      "id": "R3",
+      "pass": false,
+      "raw_shift": {
+        "pad": 55.67692565917969,
+        "para": 18.055023193359375,
+        "typo": 77.15304565429688,
+        "zh": 17.549095153808594
+      },
+      "statement": "Qwen token log-prob: median |\u0394 log BF| < 0.5 nats under pad and typo, > 1 nat under para and zh",
+      "value": {
+        "pad": 6.24327278137207,
+        "para": 7.942535400390625,
+        "typo": 8.086814880371094,
+        "zh": 9.351486206054688
+      }
+    },
+    {
+      "id": "R4",
+      "pass": false,
+      "statement": "Qwen verbalized (exact string) vs exp(\u2212S): median gap > 6 orders of magnitude, and the 20-sample normalization sum > 1 (median over items)",
+      "value": {
+        "median_gap_orders": 46.78135845999731,
+        "median_norm_sum": 1.0
+      }
+    },
+    {
+      "ci95": [
+        0.04441768035279428,
+        0.20142583627926866
+      ],
+      "id": "R5",
+      "pass": true,
+      "statement": "Qwen verbalized (meaning) vs P_sem: Spearman < 0.5",
+      "value": 0.11995101012605394
+    }
+  ],
+  "r1_occam": {
+    "expl": {
+      "L_E": 4.190969557449678,
+      "OG": 6.38820199097569,
+      "OG_ci95": [
+        4.750023407884693,
+        7.821749719646008
+      ],
+      "mean_L_J": 10.57917154842537,
+      "n": 430
+    },
+    "impl": {
+      "L_E": 4.190969557449678,
+      "OG": 12.037631102169593,
+      "OG_ci95": [
+        10.550011889702386,
+        13.298442838506437
+      ],
+      "mean_L_J": 16.22860065961927,
+      "n": 430
+    }
+  },
+  "r1_occam_by_slot": {
+    "expl|all|named": {
+      "L_E": 8.405803767235545,
+      "L_E_ci95": [
+        7.779359459408045,
+        9.57748621392587
+      ],
+      "OG": 12.12300455660663,
+      "OG_ci95": [
+        8.996435041205293,
+        14.843748695023946
+      ],
+      "mean_L_J": 20.528808323842174,
+      "mean_L_J_ci95": [
+        17.54872499443789,
+        23.229020584848662
+      ],
+      "n": 106
+    },
+    "expl|area|named": {
+      "L_E": 3.8899488970452203,
+      "L_E_ci95": [
+        3.4404842227062233,
+        4.547480415886497
+      ],
+      "OG": 4.381619746828795,
+      "OG_ci95": [
+        2.273851044814283,
+        6.303544308316935
+      ],
+      "mean_L_J": 8.271568643874016,
+      "mean_L_J_ci95": [
+        6.310932045432746,
+        10.118316074403854
+      ],
+      "n": 138
+    },
+    "expl|food|named": {
+      "L_E": 4.687383747057387,
+      "L_E_ci95": [
+        4.047973970758657,
+        6.00205230718713
+      ],
+      "OG": 9.739992422496558,
+      "OG_ci95": [
+        6.9617251986775255,
+        12.140685866624434
+      ],
+      "mean_L_J": 14.427376169553945,
+      "mean_L_J_ci95": [
+        11.929107545011787,
+        16.72048119544983
+      ],
+      "n": 142
+    },
+    "expl|pricerange|named": {
+      "L_E": 3.995576028246427,
+      "L_E_ci95": [
+        3.481307131806373,
+        4.789838903381907
+      ],
+      "OG": 5.042993803601718,
+      "OG_ci95": [
+        2.87188366555604,
+        7.006222817388581
+      ],
+      "mean_L_J": 9.038569831848145,
+      "mean_L_J_ci95": [
+        7.053934480441506,
+        10.95599319706593
+      ],
+      "n": 150
+    },
+    "expl|slots_mean|named": {
+      "L_E": 4.190969557449678,
+      "OG": 6.38820199097569,
+      "OG_ci95": [
+        4.750023407884693,
+        7.821749719646008
+      ],
+      "mean_L_J": 10.57917154842537,
+      "n": 430
+    },
+    "impl|all|named": {
+      "L_E": 8.405803767235545,
+      "L_E_ci95": [
+        7.779359459408045,
+        9.57748621392587
+      ],
+      "OG": 14.561884570576337,
+      "OG_ci95": [
+        11.037068731300772,
+        17.485506332768882
+      ],
+      "mean_L_J": 22.967688337811882,
+      "mean_L_J_ci95": [
+        19.687204594329803,
+        25.95354621468081
+      ],
+      "n": 106
+    },
+    "impl|area|named": {
+      "L_E": 3.8899488970452203,
+      "L_E_ci95": [
+        3.4404842227062233,
+        4.547480415886497
+      ],
+      "OG": 8.512020578977362,
+      "OG_ci95": [
+        6.421928310725637,
+        10.422183091690544
+      ],
+      "mean_L_J": 12.401969476022582,
+      "mean_L_J_ci95": [
+        10.42698210809912,
+        14.277418019932272
+      ],
+      "n": 138
+    },
+    "impl|food|named": {
+      "L_E": 4.687383747057387,
+      "L_E_ci95": [
+        4.047973970758657,
+        6.00205230718713
+      ],
+      "OG": 17.342333617723952,
+      "OG_ci95": [
+        14.939285186193025,
+        19.372291783872317
+      ],
+      "mean_L_J": 22.02971736478134,
+      "mean_L_J_ci95": [
+        19.9564089258071,
+        23.99609798118358
+      ],
+      "n": 142
+    },
+    "impl|pricerange|named": {
+      "L_E": 3.995576028246427,
+      "L_E_ci95": [
+        3.481307131806373,
+        4.789838903381907
+      ],
+      "OG": 10.258539109807467,
+      "OG_ci95": [
+        8.027677950956608,
+        12.244332901258646
+      ],
+      "mean_L_J": 14.254115138053894,
+      "mean_L_J_ci95": [
+        12.25225102430727,
+        16.141269299249775
+      ],
+      "n": 150
+    },
+    "impl|slots_mean|named": {
+      "L_E": 4.190969557449678,
+      "OG": 12.037631102169593,
+      "OG_ci95": [
+        10.550011889702386,
+        13.298442838506437
+      ],
+      "mean_L_J": 16.22860065961927,
+      "n": 430
+    }
+  },
+  "scorers": {
+    "claude_verbal": {
+      "items": 60,
+      "kind": "prob",
+      "label": "Claude verbalized, exact string",
+      "notes": {
+        "failed_calls": 0,
+        "queries": 1814,
+        "unparsed": 0,
+        "zero": 73
+      },
+      "posterior": {
+        "argmax_flip_rate": {
+          "ci95": [
+            0.32133333333333336,
+            0.4736666666666666
+          ],
+          "items": 60,
+          "mean": 0.4006666666666668,
+          "n": 60
+        },
+        "draws": 50,
+        "items": 60,
+        "sd_p_goal": {
+          "ci95": [
+            0.08974776978734739,
+            0.12327092147668021
+          ],
+          "items": 60,
+          "mean": 0.1062720939393617,
+          "n": 60
+        },
+        "skipped_draws": 0
+      },
+      "rewording": {
+        "groups": 567,
+        "icc1": 0.19521633650694892,
+        "icc1_ci95": [
+          0.11118336995871399,
+          0.27866194737372074
+        ],
+        "sd_ratio": {
+          "ci95": [
+            0.8679150382432446,
+            0.9918393217257877
+          ],
+          "items": 60,
+          "median": 0.9338144758220468,
+          "n": 60
+        },
+        "shift_abs": {
+          "hpara1": {
+            "ci95": [
+              0.6931471805599454,
+              1.6094379124340996
+            ],
+            "items": 60,
+            "median": 1.2039728043259368,
+            "n": 567
+          },
+          "hpara2": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "hpara3": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "hzh": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          }
+        },
+        "shift_signed": {
+          "hpara1": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 60,
+            "median": 0.0,
+            "n": 567
+          },
+          "hpara2": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "hpara3": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "hzh": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          }
+        }
+      },
+      "scores": 1741,
+      "utterance": {
+        "pad": {
+          "abs_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "by_family": {
+            "broad": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "contra": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "minus": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            }
+          },
+          "flip_rate": {
+            "ci95": null,
+            "items": 0,
+            "mean": null,
+            "n": 0
+          },
+          "pairs": 0,
+          "raw_shift_abs": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "relative_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          }
+        },
+        "para": {
+          "abs_delta": {
+            "ci95": [
+              1.8971199848858817,
+              2.70805020110221
+            ],
+            "items": 58,
+            "median": 2.3025850929940455,
+            "n": 420
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                2.3025850929940455,
+                2.995732273553991
+              ],
+              "items": 58,
+              "median": 2.7080502011022096,
+              "n": 88
+            },
+            "contra": {
+              "ci95": [
+                1.38629436111989,
+                2.7080502011022096
+              ],
+              "items": 49,
+              "median": 1.8325814637483098,
+              "n": 49
+            },
+            "minus": {
+              "ci95": [
+                1.6094379124341,
+                2.70805020110221
+              ],
+              "items": 58,
+              "median": 2.3025850929940432,
+              "n": 283
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.20689459247648903,
+              0.34700075301204814
+            ],
+            "items": 58,
+            "mean": 0.27380952380952384,
+            "n": 420
+          },
+          "pairs": 420,
+          "raw_shift_abs": {
+            "ci95": [
+              0.40546510810816416,
+              1.791759469228055
+            ],
+            "items": 58,
+            "median": 0.6019864021629673,
+            "n": 420
+          },
+          "relative_delta": {
+            "ci95": [
+              1.0,
+              1.3010299956639806
+            ],
+            "items": 58,
+            "median": 1.0,
+            "n": 349
+          }
+        },
+        "typo": {
+          "abs_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "by_family": {
+            "broad": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "contra": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "minus": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            }
+          },
+          "flip_rate": {
+            "ci95": null,
+            "items": 0,
+            "mean": null,
+            "n": 0
+          },
+          "pairs": 0,
+          "raw_shift_abs": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "relative_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          }
+        },
+        "verbose": {
+          "abs_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "by_family": {
+            "broad": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "contra": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "minus": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            }
+          },
+          "flip_rate": {
+            "ci95": null,
+            "items": 0,
+            "mean": null,
+            "n": 0
+          },
+          "pairs": 0,
+          "raw_shift_abs": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "relative_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          }
+        },
+        "zh": {
+          "abs_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "by_family": {
+            "broad": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "contra": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "minus": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            }
+          },
+          "flip_rate": {
+            "ci95": null,
+            "items": 0,
+            "mean": null,
+            "n": 0
+          },
+          "pairs": 0,
+          "raw_shift_abs": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "relative_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          }
+        }
+      }
+    },
+    "gpt_verbal": {
+      "items": 60,
+      "kind": "prob",
+      "label": "GPT verbalized, exact string",
+      "notes": {
+        "failed_calls": 0,
+        "queries": 1814,
+        "unparsed": 0,
+        "zero": 408
+      },
+      "posterior": {
+        "argmax_flip_rate": {
+          "ci95": [
+            0.2533333333333333,
+            0.4023749999999997
+          ],
+          "items": 60,
+          "mean": 0.3293333333333333,
+          "n": 60
+        },
+        "draws": 50,
+        "items": 60,
+        "sd_p_goal": {
+          "ci95": [
+            0.06999528740125216,
+            0.10461420636695273
+          ],
+          "items": 60,
+          "mean": 0.08697596574219933,
+          "n": 60
+        },
+        "skipped_draws": 0
+      },
+      "rewording": {
+        "groups": 447,
+        "icc1": 0.6250390624724644,
+        "icc1_ci95": [
+          0.5526696608225942,
+          0.6971964851594669
+        ],
+        "sd_ratio": {
+          "ci95": [
+            0.5555555555555557,
+            0.6073485222984679
+          ],
+          "items": 60,
+          "median": 0.5856381677329956,
+          "n": 60
+        },
+        "shift_abs": {
+          "hpara1": {
+            "ci95": [
+              0.0,
+              0.6931471805599454
+            ],
+            "items": 60,
+            "median": 0.693147180559945,
+            "n": 447
+          },
+          "hpara2": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "hpara3": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "hzh": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          }
+        },
+        "shift_signed": {
+          "hpara1": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 60,
+            "median": 0.0,
+            "n": 447
+          },
+          "hpara2": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "hpara3": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "hzh": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          }
+        }
+      },
+      "scores": 1406,
+      "utterance": {
+        "pad": {
+          "abs_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "by_family": {
+            "broad": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "contra": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "minus": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            }
+          },
+          "flip_rate": {
+            "ci95": null,
+            "items": 0,
+            "mean": null,
+            "n": 0
+          },
+          "pairs": 0,
+          "raw_shift_abs": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "relative_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          }
+        },
+        "para": {
+          "abs_delta": {
+            "ci95": [
+              1.6094379124341005,
+              2.302585092994045
+            ],
+            "items": 56,
+            "median": 1.7210096880912062,
+            "n": 314
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                1.6094379124341005,
+                2.302585092994046
+              ],
+              "items": 56,
+              "median": 2.302585092994045,
+              "n": 58
+            },
+            "contra": {
+              "ci95": [
+                0.6931471805599454,
+                2.302585092994045
+              ],
+              "items": 21,
+              "median": 2.302585092994045,
+              "n": 21
+            },
+            "minus": {
+              "ci95": [
+                1.6094379124340996,
+                2.302585092994045
+              ],
+              "items": 56,
+              "median": 1.6094379124341005,
+              "n": 235
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.0634413393756294,
+              0.13652195111610455
+            ],
+            "items": 56,
+            "mean": 0.09872611464968153,
+            "n": 314
+          },
+          "pairs": 314,
+          "raw_shift_abs": {
+            "ci95": [
+              0.6931471805599454,
+              2.302585092994045
+            ],
+            "items": 56,
+            "median": 1.6094379124341005,
+            "n": 314
+          },
+          "relative_delta": {
+            "ci95": [
+              0.8333333333333334,
+              1.0
+            ],
+            "items": 56,
+            "median": 1.0,
+            "n": 208
+          }
+        },
+        "typo": {
+          "abs_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "by_family": {
+            "broad": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "contra": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "minus": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            }
+          },
+          "flip_rate": {
+            "ci95": null,
+            "items": 0,
+            "mean": null,
+            "n": 0
+          },
+          "pairs": 0,
+          "raw_shift_abs": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "relative_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          }
+        },
+        "verbose": {
+          "abs_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "by_family": {
+            "broad": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "contra": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "minus": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            }
+          },
+          "flip_rate": {
+            "ci95": null,
+            "items": 0,
+            "mean": null,
+            "n": 0
+          },
+          "pairs": 0,
+          "raw_shift_abs": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "relative_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          }
+        },
+        "zh": {
+          "abs_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "by_family": {
+            "broad": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "contra": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "minus": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            }
+          },
+          "flip_rate": {
+            "ci95": null,
+            "items": 0,
+            "mean": null,
+            "n": 0
+          },
+          "pairs": 0,
+          "raw_shift_abs": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "relative_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          }
+        }
+      }
+    },
+    "jev_likely": {
+      "items": 60,
+      "kind": "prob",
+      "label": "Jev, likely wording",
+      "notes": {},
+      "posterior": {
+        "argmax_flip_rate": {
+          "ci95": [
+            0.07033333333333334,
+            0.18966666666666668
+          ],
+          "items": 60,
+          "mean": 0.12466666666666668,
+          "n": 60
+        },
+        "draws": 50,
+        "items": 60,
+        "sd_p_goal": {
+          "ci95": [
+            0.005516906704593001,
+            0.008827900151939235
+          ],
+          "items": 60,
+          "mean": 0.007027473090880109,
+          "n": 60
+        },
+        "skipped_draws": 0
+      },
+      "rewording": {
+        "groups": 610,
+        "icc1": 0.9540986209182873,
+        "icc1_ci95": [
+          0.9442973133924993,
+          0.9621624297133969
+        ],
+        "sd_ratio": {
+          "ci95": [
+            0.15827245235764978,
+            0.21663063613071146
+          ],
+          "items": 60,
+          "median": 0.18795811190640094,
+          "n": 60
+        },
+        "shift_abs": {
+          "hpara1": {
+            "ci95": [
+              0.11641035184441151,
+              0.1287121061885741
+            ],
+            "items": 60,
+            "median": 0.12150850206580802,
+            "n": 610
+          },
+          "hpara2": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "hpara3": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "hzh": {
+            "ci95": [
+              0.135617088234383,
+              0.16546106590267734
+            ],
+            "items": 60,
+            "median": 0.15755941241452015,
+            "n": 608
+          }
+        },
+        "shift_signed": {
+          "hpara1": {
+            "ci95": [
+              0.0,
+              0.07637297878457416
+            ],
+            "items": 60,
+            "median": 0.042452297851821696,
+            "n": 610
+          },
+          "hpara2": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "hpara3": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "hzh": {
+            "ci95": [
+              0.0,
+              0.11641035184441151
+            ],
+            "items": 60,
+            "median": 0.07260081286315057,
+            "n": 608
+          }
+        }
+      },
+      "scores": 4649,
+      "utterance": {
+        "pad": {
+          "abs_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "by_family": {
+            "broad": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "contra": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "minus": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            }
+          },
+          "flip_rate": {
+            "ci95": null,
+            "items": 0,
+            "mean": null,
+            "n": 0
+          },
+          "pairs": 0,
+          "raw_shift_abs": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "relative_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          }
+        },
+        "para": {
+          "abs_delta": {
+            "ci95": [
+              0.13005312824819737,
+              0.17563987270009163
+            ],
+            "items": 58,
+            "median": 0.1505864192592858,
+            "n": 470
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                0.10256793188464464,
+                0.2228073968100983
+              ],
+              "items": 58,
+              "median": 0.1664643201599013,
+              "n": 116
+            },
+            "contra": {
+              "ci95": [
+                0.13104837913276035,
+                0.18978233574072245
+              ],
+              "items": 56,
+              "median": 0.1606430875211271,
+              "n": 56
+            },
+            "minus": {
+              "ci95": [
+                0.1287121061885741,
+                0.16879779026625052
+              ],
+              "items": 58,
+              "median": 0.14681152578942247,
+              "n": 298
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.004015264244227907,
+              0.029475238729735724
+            ],
+            "items": 58,
+            "mean": 0.014893617021276596,
+            "n": 470
+          },
+          "pairs": 470,
+          "raw_shift_abs": {
+            "ci95": [
+              0.09526474694272846,
+              0.1443423087287381
+            ],
+            "items": 58,
+            "median": 0.1287121061885741,
+            "n": 470
+          },
+          "relative_delta": {
+            "ci95": [
+              0.10714391068922156,
+              0.1533529172558618
+            ],
+            "items": 58,
+            "median": 0.13332749309595063,
+            "n": 458
+          }
+        },
+        "typo": {
+          "abs_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "by_family": {
+            "broad": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "contra": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "minus": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            }
+          },
+          "flip_rate": {
+            "ci95": null,
+            "items": 0,
+            "mean": null,
+            "n": 0
+          },
+          "pairs": 0,
+          "raw_shift_abs": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "relative_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          }
+        },
+        "verbose": {
+          "abs_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "by_family": {
+            "broad": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "contra": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "minus": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            }
+          },
+          "flip_rate": {
+            "ci95": null,
+            "items": 0,
+            "mean": null,
+            "n": 0
+          },
+          "pairs": 0,
+          "raw_shift_abs": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "relative_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          }
+        },
+        "zh": {
+          "abs_delta": {
+            "ci95": [
+              0.168949744559391,
+              0.25082578913118825
+            ],
+            "items": 48,
+            "median": 0.2151814500549858,
+            "n": 384
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                0.17492141137073247,
+                0.2838776383215332
+              ],
+              "items": 48,
+              "median": 0.2451224580329856,
+              "n": 96
+            },
+            "contra": {
+              "ci95": [
+                0.16896764989307034,
+                0.3385733100470274
+              ],
+              "items": 46,
+              "median": 0.25688358027185254,
+              "n": 46
+            },
+            "minus": {
+              "ci95": [
+                0.15048600536179846,
+                0.23519558659102424
+              ],
+              "items": 48,
+              "median": 0.1980628189621182,
+              "n": 242
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.01657230890656305,
+              0.059705961211904524
+            ],
+            "items": 48,
+            "mean": 0.036458333333333336,
+            "n": 384
+          },
+          "pairs": 384,
+          "raw_shift_abs": {
+            "ci95": [
+              0.11641035184441151,
+              0.17840765747281828
+            ],
+            "items": 48,
+            "median": 0.1443423087287381,
+            "n": 384
+          },
+          "relative_delta": {
+            "ci95": [
+              0.18811715021714243,
+              0.2534419041348711
+            ],
+            "items": 48,
+            "median": 0.22493710221015392,
+            "n": 375
+          }
+        }
+      }
+    },
+    "jev_typical": {
+      "items": 60,
+      "kind": "prob",
+      "label": "Jev, typical wording",
+      "notes": {},
+      "posterior": {
+        "argmax_flip_rate": {
+          "ci95": [
+            0.026000000000000002,
+            0.11266666666666666
+          ],
+          "items": 60,
+          "mean": 0.06466666666666668,
+          "n": 60
+        },
+        "draws": 50,
+        "items": 60,
+        "sd_p_goal": {
+          "ci95": [
+            0.005987955528585211,
+            0.01076147390810196
+          ],
+          "items": 60,
+          "mean": 0.008066291749561626,
+          "n": 60
+        },
+        "skipped_draws": 0
+      },
+      "rewording": {
+        "groups": 610,
+        "icc1": 0.950120863479642,
+        "icc1_ci95": [
+          0.9395495382397997,
+          0.9594597995194144
+        ],
+        "sd_ratio": {
+          "ci95": [
+            0.15342739639339792,
+            0.21531708019789206
+          ],
+          "items": 60,
+          "median": 0.18535954592864717,
+          "n": 60
+        },
+        "shift_abs": {
+          "hpara1": {
+            "ci95": [
+              0.09923852808922062,
+              0.13682508270184912
+            ],
+            "items": 60,
+            "median": 0.12180559943335373,
+            "n": 610
+          },
+          "hpara2": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "hpara3": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "hzh": {
+            "ci95": [
+              0.1929036661244914,
+              0.2513144282809062
+            ],
+            "items": 60,
+            "median": 0.23361485118150538,
+            "n": 608
+          }
+        },
+        "shift_signed": {
+          "hpara1": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 60,
+            "median": 0.0,
+            "n": 610
+          },
+          "hpara2": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "hpara3": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "hzh": {
+            "ci95": [
+              0.0,
+              0.09831093224356313
+            ],
+            "items": 60,
+            "median": 0.04558674445189437,
+            "n": 608
+          }
+        }
+      },
+      "scores": 4649,
+      "utterance": {
+        "pad": {
+          "abs_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "by_family": {
+            "broad": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "contra": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "minus": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            }
+          },
+          "flip_rate": {
+            "ci95": null,
+            "items": 0,
+            "mean": null,
+            "n": 0
+          },
+          "pairs": 0,
+          "raw_shift_abs": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "relative_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          }
+        },
+        "para": {
+          "abs_delta": {
+            "ci95": [
+              0.13052540111734395,
+              0.1768693993189434
+            ],
+            "items": 58,
+            "median": 0.14821986464725523,
+            "n": 470
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                0.1418050784952719,
+                0.2336148511815055
+              ],
+              "items": 58,
+              "median": 0.19115525640443243,
+              "n": 116
+            },
+            "contra": {
+              "ci95": [
+                0.11641035184441151,
+                0.24760440863705555
+              ],
+              "items": 56,
+              "median": 0.17925096813259023,
+              "n": 56
+            },
+            "minus": {
+              "ci95": [
+                0.11356680889426984,
+                0.16484596894400472
+              ],
+              "items": 58,
+              "median": 0.13574665394959012,
+              "n": 298
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.002164268920734438,
+              0.019612152553329
+            ],
+            "items": 58,
+            "mean": 0.010638297872340425,
+            "n": 470
+          },
+          "pairs": 470,
+          "raw_shift_abs": {
+            "ci95": [
+              0.06371581438610785,
+              0.1737459920915585
+            ],
+            "items": 58,
+            "median": 0.1287121061885741,
+            "n": 470
+          },
+          "relative_delta": {
+            "ci95": [
+              0.09042319038959552,
+              0.1326834513215881
+            ],
+            "items": 58,
+            "median": 0.11842838430115449,
+            "n": 448
+          }
+        },
+        "typo": {
+          "abs_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "by_family": {
+            "broad": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "contra": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "minus": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            }
+          },
+          "flip_rate": {
+            "ci95": null,
+            "items": 0,
+            "mean": null,
+            "n": 0
+          },
+          "pairs": 0,
+          "raw_shift_abs": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "relative_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          }
+        },
+        "verbose": {
+          "abs_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "by_family": {
+            "broad": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "contra": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            },
+            "minus": {
+              "ci95": null,
+              "items": 0,
+              "median": null,
+              "n": 0
+            }
+          },
+          "flip_rate": {
+            "ci95": null,
+            "items": 0,
+            "mean": null,
+            "n": 0
+          },
+          "pairs": 0,
+          "raw_shift_abs": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          },
+          "relative_delta": {
+            "ci95": null,
+            "items": 0,
+            "median": null,
+            "n": 0
+          }
+        },
+        "zh": {
+          "abs_delta": {
+            "ci95": [
+              0.1929036661244914,
+              0.2980448594873275
+            ],
+            "items": 48,
+            "median": 0.2522342236270062,
+            "n": 384
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                0.23361485118150593,
+                0.413850308224053
+              ],
+              "items": 48,
+              "median": 0.2980448594873275,
+              "n": 96
+            },
+            "contra": {
+              "ci95": [
+                0.1825768299511954,
+                0.544686382068841
+              ],
+              "items": 46,
+              "median": 0.3875491879557875,
+              "n": 46
+            },
+            "minus": {
+              "ci95": [
+                0.1611193491433517,
+                0.2622830989303341
+              ],
+              "items": 48,
+              "median": 0.22562039959159996,
+              "n": 242
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.013157031357922365,
+              0.04597770727227185
+            ],
+            "items": 48,
+            "mean": 0.028645833333333332,
+            "n": 384
+          },
+          "pairs": 384,
+          "raw_shift_abs": {
+            "ci95": [
+              0.18434380217472257,
+              0.3212047644904248
+            ],
+            "items": 48,
+            "median": 0.2545717687915031,
+            "n": 384
+          },
+          "relative_delta": {
+            "ci95": [
+              0.1737434494861854,
+              0.23577675949827587
+            ],
+            "items": 48,
+            "median": 0.20634050334266935,
+            "n": 362
+          }
+        }
+      }
+    },
+    "qwen_cent": {
+      "items": 235,
+      "kind": "loglik",
+      "label": "Qwen centered log-prob",
+      "notes": {},
+      "posterior": {
+        "argmax_flip_rate": {
+          "ci95": [
+            0.22093404255319146,
+            0.28825957446808514
+          ],
+          "items": 235,
+          "mean": 0.25548936170212766,
+          "n": 235
+        },
+        "draws": 50,
+        "items": 235,
+        "sd_p_goal": {
+          "ci95": [
+            0.13896747730042763,
+            0.18756237380868576
+          ],
+          "items": 235,
+          "mean": 0.16320701843217217,
+          "n": 235
+        },
+        "skipped_draws": 0
+      },
+      "rewording": {
+        "groups": 2352,
+        "icc1": 0.741119660268313,
+        "icc1_ci95": [
+          0.7183433534784357,
+          0.7625051267303294
+        ],
+        "sd_ratio": {
+          "ci95": [
+            0.50618984824304,
+            0.5762561067032695
+          ],
+          "items": 235,
+          "median": 0.5416584219312197,
+          "n": 235
+        },
+        "shift_abs": {
+          "hpara1": {
+            "ci95": [
+              4.6338602066040036,
+              5.488029479980469
+            ],
+            "items": 235,
+            "median": 5.0865631103515625,
+            "n": 2351
+          },
+          "hpara2": {
+            "ci95": [
+              4.6509552001953125,
+              5.452392578125
+            ],
+            "items": 235,
+            "median": 5.028873443603516,
+            "n": 2352
+          },
+          "hpara3": {
+            "ci95": [
+              5.0745086669921875,
+              5.829597473144531
+            ],
+            "items": 235,
+            "median": 5.4053802490234375,
+            "n": 2351
+          },
+          "hzh": {
+            "ci95": [
+              13.564774513244629,
+              15.27148323059082
+            ],
+            "items": 235,
+            "median": 14.529888153076172,
+            "n": 2329
+          }
+        },
+        "shift_signed": {
+          "hpara1": {
+            "ci95": [
+              -3.5001220703125,
+              -2.1023635864257812
+            ],
+            "items": 235,
+            "median": -2.8065338134765625,
+            "n": 2351
+          },
+          "hpara2": {
+            "ci95": [
+              -2.9339141845703125,
+              -1.529970741271974
+            ],
+            "items": 235,
+            "median": -2.2136192321777344,
+            "n": 2352
+          },
+          "hpara3": {
+            "ci95": [
+              -4.205926132202149,
+              -2.873053359985352
+            ],
+            "items": 235,
+            "median": -3.5125274658203125,
+            "n": 2351
+          },
+          "hzh": {
+            "ci95": [
+              -15.074708461761475,
+              -13.113128662109375
+            ],
+            "items": 235,
+            "median": -14.162643432617188,
+            "n": 2329
+          }
+        }
+      },
+      "scores": 24935,
+      "utterance": {
+        "pad": {
+          "abs_delta": {
+            "ci95": [
+              5.8456268310546875,
+              6.7810516357421875
+            ],
+            "items": 229,
+            "median": 6.24327278137207,
+            "n": 1808
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                8.718170166015625,
+                11.202445983886719
+              ],
+              "items": 229,
+              "median": 9.891960144042969,
+              "n": 458
+            },
+            "contra": {
+              "ci95": [
+                4.3723297119140625,
+                5.793159484863281
+              ],
+              "items": 222,
+              "median": 5.100811004638672,
+              "n": 222
+            },
+            "minus": {
+              "ci95": [
+                5.220872306823731,
+                5.911102294921875
+              ],
+              "items": 229,
+              "median": 5.574304580688477,
+              "n": 1128
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.09917143583275288,
+              0.13333880678708263
+            ],
+            "items": 229,
+            "mean": 0.1161504424778761,
+            "n": 1808
+          },
+          "pairs": 1808,
+          "raw_shift_abs": {
+            "ci95": [
+              8.428192138671875,
+              11.660537719726562
+            ],
+            "items": 229,
+            "median": 9.705795288085938,
+            "n": 1808
+          },
+          "relative_delta": {
+            "ci95": [
+              0.36959408914774783,
+              0.4207875376168886
+            ],
+            "items": 229,
+            "median": 0.3917320329353205,
+            "n": 1808
+          }
+        },
+        "para": {
+          "abs_delta": {
+            "ci95": [
+              7.259954452514648,
+              8.60955810546875
+            ],
+            "items": 230,
+            "median": 7.942535400390625,
+            "n": 3625
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                10.088829040527344,
+                13.172660827636719
+              ],
+              "items": 230,
+              "median": 11.629476547241211,
+              "n": 918
+            },
+            "contra": {
+              "ci95": [
+                4.976715087890625,
+                6.927421569824219
+              ],
+              "items": 223,
+              "median": 6.227508544921875,
+              "n": 445
+            },
+            "minus": {
+              "ci95": [
+                6.6621856689453125,
+                8.025360107421875
+              ],
+              "items": 230,
+              "median": 7.397529602050781,
+              "n": 2262
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.12555518312438194,
+              0.1675249061444484
+            ],
+            "items": 230,
+            "mean": 0.14675862068965517,
+            "n": 3625
+          },
+          "pairs": 3625,
+          "raw_shift_abs": {
+            "ci95": [
+              10.501792907714844,
+              13.720260620117188
+            ],
+            "items": 230,
+            "median": 11.839591979980469,
+            "n": 3625
+          },
+          "relative_delta": {
+            "ci95": [
+              0.4587750600365425,
+              0.5484883323847467
+            ],
+            "items": 230,
+            "median": 0.501944514067019,
+            "n": 3625
+          }
+        },
+        "typo": {
+          "abs_delta": {
+            "ci95": [
+              7.502571105957031,
+              8.643165588378906
+            ],
+            "items": 228,
+            "median": 8.086814880371094,
+            "n": 1799
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                9.75909423828125,
+                12.756881713867188
+              ],
+              "items": 228,
+              "median": 11.27772331237793,
+              "n": 456
+            },
+            "contra": {
+              "ci95": [
+                6.76324462890625,
+                9.565364837646484
+              ],
+              "items": 221,
+              "median": 8.245712280273438,
+              "n": 221
+            },
+            "minus": {
+              "ci95": [
+                6.533863067626953,
+                7.693378448486328
+              ],
+              "items": 228,
+              "median": 7.157649993896484,
+              "n": 1122
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.14438759485934505,
+              0.1892217905158259
+            ],
+            "items": 228,
+            "mean": 0.16620344635908837,
+            "n": 1799
+          },
+          "pairs": 1799,
+          "raw_shift_abs": {
+            "ci95": [
+              9.286262512207031,
+              12.44378662109375
+            ],
+            "items": 228,
+            "median": 11.061820983886719,
+            "n": 1799
+          },
+          "relative_delta": {
+            "ci95": [
+              0.48044393227158794,
+              0.5508864721681556
+            ],
+            "items": 228,
+            "median": 0.5133939919042947,
+            "n": 1799
+          }
+        },
+        "verbose": {
+          "abs_delta": {
+            "ci95": [
+              8.909661865234375,
+              10.4410400390625
+            ],
+            "items": 202,
+            "median": 9.639347076416016,
+            "n": 1590
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                11.154205322265625,
+                14.570343017578125
+              ],
+              "items": 202,
+              "median": 13.08742904663086,
+              "n": 404
+            },
+            "contra": {
+              "ci95": [
+                6.766563415527344,
+                9.660873413085938
+              ],
+              "items": 196,
+              "median": 8.056159973144531,
+              "n": 196
+            },
+            "minus": {
+              "ci95": [
+                8.159889221191406,
+                9.825876617431637
+              ],
+              "items": 202,
+              "median": 8.967342376708984,
+              "n": 990
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.1641693166560667,
+              0.21318772175181516
+            ],
+            "items": 202,
+            "mean": 0.18805031446540882,
+            "n": 1590
+          },
+          "pairs": 1590,
+          "raw_shift_abs": {
+            "ci95": [
+              11.782684326171875,
+              15.77029228210445
+            ],
+            "items": 202,
+            "median": 14.243476867675781,
+            "n": 1590
+          },
+          "relative_delta": {
+            "ci95": [
+              0.5407812942549775,
+              0.6715185531777745
+            ],
+            "items": 202,
+            "median": 0.5998967577224062,
+            "n": 1590
+          }
+        },
+        "zh": {
+          "abs_delta": {
+            "ci95": [
+              8.520782470703125,
+              10.145003509521482
+            ],
+            "items": 202,
+            "median": 9.351486206054688,
+            "n": 1591
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                9.790580749511719,
+                13.71240234375
+              ],
+              "items": 202,
+              "median": 12.009654998779297,
+              "n": 404
+            },
+            "contra": {
+              "ci95": [
+                7.90934944152832,
+                10.677291870117188
+              ],
+              "items": 195,
+              "median": 8.961196899414062,
+              "n": 195
+            },
+            "minus": {
+              "ci95": [
+                7.776191711425781,
+                9.442684173583984
+              ],
+              "items": 202,
+              "median": 8.672647476196289,
+              "n": 992
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.1655588116207021,
+              0.21643040753307333
+            ],
+            "items": 202,
+            "mean": 0.19170333123821495,
+            "n": 1591
+          },
+          "pairs": 1591,
+          "raw_shift_abs": {
+            "ci95": [
+              9.202064514160156,
+              13.991636276245114
+            ],
+            "items": 202,
+            "median": 12.121864318847656,
+            "n": 1591
+          },
+          "relative_delta": {
+            "ci95": [
+              0.529868191117946,
+              0.6359423570353337
+            ],
+            "items": 202,
+            "median": 0.5654670053839882,
+            "n": 1591
+          }
+        }
+      }
+    },
+    "qwen_clip": {
+      "items": 235,
+      "kind": "loglik",
+      "label": "Qwen clipped log-prob",
+      "notes": {},
+      "posterior": {
+        "argmax_flip_rate": {
+          "ci95": [
+            0.2793148936170213,
+            0.3657042553191491
+          ],
+          "items": 235,
+          "mean": 0.3225531914893617,
+          "n": 235
+        },
+        "draws": 50,
+        "items": 235,
+        "sd_p_goal": {
+          "ci95": [
+            0.1069187814045702,
+            0.13374686791617274
+          ],
+          "items": 235,
+          "mean": 0.12013512065606512,
+          "n": 235
+        },
+        "skipped_draws": 0
+      },
+      "rewording": {
+        "groups": 2352,
+        "icc1": 0.37963213283076885,
+        "icc1_ci95": [
+          0.33264684554917473,
+          0.41785026885500237
+        ],
+        "sd_ratio": {
+          "ci95": [
+            0.4690415759823429,
+            0.5865063970916643
+          ],
+          "items": 235,
+          "median": 0.4932117683535427,
+          "n": 235
+        },
+        "shift_abs": {
+          "hpara1": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 235,
+            "median": 0.0,
+            "n": 2351
+          },
+          "hpara2": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 235,
+            "median": 0.0,
+            "n": 2352
+          },
+          "hpara3": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 235,
+            "median": 0.0,
+            "n": 2351
+          },
+          "hzh": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 235,
+            "median": 0.0,
+            "n": 2329
+          }
+        },
+        "shift_signed": {
+          "hpara1": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 235,
+            "median": 0.0,
+            "n": 2351
+          },
+          "hpara2": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 235,
+            "median": 0.0,
+            "n": 2352
+          },
+          "hpara3": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 235,
+            "median": 0.0,
+            "n": 2351
+          },
+          "hzh": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 235,
+            "median": 0.0,
+            "n": 2329
+          }
+        }
+      },
+      "scores": 24935,
+      "utterance": {
+        "pad": {
+          "abs_delta": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 229,
+            "median": 0.0,
+            "n": 1808
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 229,
+              "median": 0.0,
+              "n": 458
+            },
+            "contra": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 222,
+              "median": 0.0,
+              "n": 222
+            },
+            "minus": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 229,
+              "median": 0.0,
+              "n": 1128
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.0033259423503325942,
+              0.010556143281365995
+            ],
+            "items": 229,
+            "mean": 0.00663716814159292,
+            "n": 1808
+          },
+          "pairs": 1808,
+          "raw_shift_abs": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 229,
+            "median": 0.0,
+            "n": 1808
+          },
+          "relative_delta": {
+            "ci95": [
+              0.3260243733723958,
+              0.9273072033065217
+            ],
+            "items": 229,
+            "median": 0.5660820681604314,
+            "n": 578
+          }
+        },
+        "para": {
+          "abs_delta": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 230,
+            "median": 0.0,
+            "n": 3625
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 230,
+              "median": 0.0,
+              "n": 918
+            },
+            "contra": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 223,
+              "median": 0.0,
+              "n": 445
+            },
+            "minus": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 230,
+              "median": 0.0,
+              "n": 2262
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.008182962839600244,
+              0.020437914735024088
+            ],
+            "items": 230,
+            "mean": 0.013793103448275862,
+            "n": 3625
+          },
+          "pairs": 3625,
+          "raw_shift_abs": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 230,
+            "median": 0.0,
+            "n": 3625
+          },
+          "relative_delta": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 230,
+            "median": 0.0,
+            "n": 1159
+          }
+        },
+        "typo": {
+          "abs_delta": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 228,
+            "median": 0.0,
+            "n": 1799
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 228,
+              "median": 0.0,
+              "n": 456
+            },
+            "contra": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 221,
+              "median": 0.0,
+              "n": 221
+            },
+            "minus": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 228,
+              "median": 0.0,
+              "n": 1122
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.01159548362751013,
+              0.02447388286100635
+            ],
+            "items": 228,
+            "mean": 0.017787659811006114,
+            "n": 1799
+          },
+          "pairs": 1799,
+          "raw_shift_abs": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 228,
+            "median": 0.0,
+            "n": 1799
+          },
+          "relative_delta": {
+            "ci95": [
+              0.0,
+              0.5916011960406017
+            ],
+            "items": 228,
+            "median": 0.31964111328125,
+            "n": 577
+          }
+        },
+        "verbose": {
+          "abs_delta": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 202,
+            "median": 0.0,
+            "n": 1590
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 202,
+              "median": 0.0,
+              "n": 404
+            },
+            "contra": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 196,
+              "median": 0.0,
+              "n": 196
+            },
+            "minus": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 202,
+              "median": 0.0,
+              "n": 990
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.007357213916899812,
+              0.018746723401656236
+            ],
+            "items": 202,
+            "mean": 0.012578616352201259,
+            "n": 1590
+          },
+          "pairs": 1590,
+          "raw_shift_abs": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 202,
+            "median": 0.0,
+            "n": 1590
+          },
+          "relative_delta": {
+            "ci95": [
+              0.0,
+              0.67010498046875
+            ],
+            "items": 202,
+            "median": 0.20955284187149956,
+            "n": 529
+          }
+        },
+        "zh": {
+          "abs_delta": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 202,
+            "median": 0.0,
+            "n": 1591
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 202,
+              "median": 0.0,
+              "n": 404
+            },
+            "contra": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 195,
+              "median": 0.0,
+              "n": 195
+            },
+            "minus": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 202,
+              "median": 0.0,
+              "n": 992
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.007046755490085514,
+              0.02133229991025536
+            ],
+            "items": 202,
+            "mean": 0.013827781269641735,
+            "n": 1591
+          },
+          "pairs": 1591,
+          "raw_shift_abs": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 202,
+            "median": 0.0,
+            "n": 1591
+          },
+          "relative_delta": {
+            "ci95": [
+              0.0,
+              0.1292374338564316
+            ],
+            "items": 202,
+            "median": 0.0,
+            "n": 522
+          }
+        }
+      }
+    },
+    "qwen_tok": {
+      "items": 235,
+      "kind": "loglik",
+      "label": "Qwen token log-prob",
+      "notes": {},
+      "posterior": {
+        "argmax_flip_rate": {
+          "ci95": [
+            0.22093404255319146,
+            0.28825957446808514
+          ],
+          "items": 235,
+          "mean": 0.25548936170212766,
+          "n": 235
+        },
+        "draws": 50,
+        "items": 235,
+        "sd_p_goal": {
+          "ci95": [
+            0.13896747730042763,
+            0.18756237380868576
+          ],
+          "items": 235,
+          "mean": 0.16320701843217217,
+          "n": 235
+        },
+        "skipped_draws": 0
+      },
+      "rewording": {
+        "groups": 2352,
+        "icc1": 0.741119660268313,
+        "icc1_ci95": [
+          0.7183433534784358,
+          0.7625051267303296
+        ],
+        "sd_ratio": {
+          "ci95": [
+            0.5061898482430399,
+            0.5762561067032695
+          ],
+          "items": 235,
+          "median": 0.5416584219312197,
+          "n": 235
+        },
+        "shift_abs": {
+          "hpara1": {
+            "ci95": [
+              4.6338602066040036,
+              5.488029479980469
+            ],
+            "items": 235,
+            "median": 5.0865631103515625,
+            "n": 2351
+          },
+          "hpara2": {
+            "ci95": [
+              4.6509552001953125,
+              5.452392578125
+            ],
+            "items": 235,
+            "median": 5.028873443603516,
+            "n": 2352
+          },
+          "hpara3": {
+            "ci95": [
+              5.0745086669921875,
+              5.829597473144531
+            ],
+            "items": 235,
+            "median": 5.4053802490234375,
+            "n": 2351
+          },
+          "hzh": {
+            "ci95": [
+              13.564774513244629,
+              15.27148323059082
+            ],
+            "items": 235,
+            "median": 14.529888153076172,
+            "n": 2329
+          }
+        },
+        "shift_signed": {
+          "hpara1": {
+            "ci95": [
+              -3.5001220703125,
+              -2.1023635864257812
+            ],
+            "items": 235,
+            "median": -2.8065338134765625,
+            "n": 2351
+          },
+          "hpara2": {
+            "ci95": [
+              -2.9339141845703125,
+              -1.529970741271974
+            ],
+            "items": 235,
+            "median": -2.2136192321777344,
+            "n": 2352
+          },
+          "hpara3": {
+            "ci95": [
+              -4.205926132202149,
+              -2.873053359985352
+            ],
+            "items": 235,
+            "median": -3.5125274658203125,
+            "n": 2351
+          },
+          "hzh": {
+            "ci95": [
+              -15.074708461761475,
+              -13.113128662109375
+            ],
+            "items": 235,
+            "median": -14.162643432617188,
+            "n": 2329
+          }
+        }
+      },
+      "scores": 24935,
+      "utterance": {
+        "pad": {
+          "abs_delta": {
+            "ci95": [
+              5.8456268310546875,
+              6.7810516357421875
+            ],
+            "items": 229,
+            "median": 6.24327278137207,
+            "n": 1808
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                8.718170166015625,
+                11.202445983886719
+              ],
+              "items": 229,
+              "median": 9.891960144042969,
+              "n": 458
+            },
+            "contra": {
+              "ci95": [
+                4.3723297119140625,
+                5.793159484863281
+              ],
+              "items": 222,
+              "median": 5.100811004638672,
+              "n": 222
+            },
+            "minus": {
+              "ci95": [
+                5.220872306823731,
+                5.911102294921875
+              ],
+              "items": 229,
+              "median": 5.574304580688477,
+              "n": 1128
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.09917143583275288,
+              0.13333880678708263
+            ],
+            "items": 229,
+            "mean": 0.1161504424778761,
+            "n": 1808
+          },
+          "pairs": 1808,
+          "raw_shift_abs": {
+            "ci95": [
+              52.84794616699219,
+              59.89422607421875
+            ],
+            "items": 229,
+            "median": 55.67692565917969,
+            "n": 1808
+          },
+          "relative_delta": {
+            "ci95": [
+              0.36959408914774783,
+              0.4207875376168886
+            ],
+            "items": 229,
+            "median": 0.3917320329353205,
+            "n": 1808
+          }
+        },
+        "para": {
+          "abs_delta": {
+            "ci95": [
+              7.259954452514648,
+              8.60955810546875
+            ],
+            "items": 230,
+            "median": 7.942535400390625,
+            "n": 3625
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                10.088829040527344,
+                13.172660827636719
+              ],
+              "items": 230,
+              "median": 11.629476547241211,
+              "n": 918
+            },
+            "contra": {
+              "ci95": [
+                4.976715087890625,
+                6.927421569824219
+              ],
+              "items": 223,
+              "median": 6.227508544921875,
+              "n": 445
+            },
+            "minus": {
+              "ci95": [
+                6.6621856689453125,
+                8.025360107421875
+              ],
+              "items": 230,
+              "median": 7.397529602050781,
+              "n": 2262
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.12555518312438194,
+              0.1675249061444484
+            ],
+            "items": 230,
+            "mean": 0.14675862068965517,
+            "n": 3625
+          },
+          "pairs": 3625,
+          "raw_shift_abs": {
+            "ci95": [
+              15.57781982421875,
+              20.639053344726562
+            ],
+            "items": 230,
+            "median": 18.055023193359375,
+            "n": 3625
+          },
+          "relative_delta": {
+            "ci95": [
+              0.4587750600365425,
+              0.5484883323847467
+            ],
+            "items": 230,
+            "median": 0.501944514067019,
+            "n": 3625
+          }
+        },
+        "typo": {
+          "abs_delta": {
+            "ci95": [
+              7.502571105957031,
+              8.643165588378906
+            ],
+            "items": 228,
+            "median": 8.086814880371094,
+            "n": 1799
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                9.75909423828125,
+                12.756881713867188
+              ],
+              "items": 228,
+              "median": 11.27772331237793,
+              "n": 456
+            },
+            "contra": {
+              "ci95": [
+                6.76324462890625,
+                9.565364837646484
+              ],
+              "items": 221,
+              "median": 8.245712280273438,
+              "n": 221
+            },
+            "minus": {
+              "ci95": [
+                6.533863067626953,
+                7.693378448486328
+              ],
+              "items": 228,
+              "median": 7.157649993896484,
+              "n": 1122
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.14438759485934505,
+              0.1892217905158259
+            ],
+            "items": 228,
+            "mean": 0.16620344635908837,
+            "n": 1799
+          },
+          "pairs": 1799,
+          "raw_shift_abs": {
+            "ci95": [
+              72.41969299316406,
+              82.11492919921875
+            ],
+            "items": 228,
+            "median": 77.15304565429688,
+            "n": 1799
+          },
+          "relative_delta": {
+            "ci95": [
+              0.48044393227158794,
+              0.5508864721681556
+            ],
+            "items": 228,
+            "median": 0.5133939919042947,
+            "n": 1799
+          }
+        },
+        "verbose": {
+          "abs_delta": {
+            "ci95": [
+              8.909661865234375,
+              10.4410400390625
+            ],
+            "items": 202,
+            "median": 9.639347076416016,
+            "n": 1590
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                11.154205322265625,
+                14.570343017578125
+              ],
+              "items": 202,
+              "median": 13.08742904663086,
+              "n": 404
+            },
+            "contra": {
+              "ci95": [
+                6.766563415527344,
+                9.660873413085938
+              ],
+              "items": 196,
+              "median": 8.056159973144531,
+              "n": 196
+            },
+            "minus": {
+              "ci95": [
+                8.159889221191406,
+                9.825876617431637
+              ],
+              "items": 202,
+              "median": 8.967342376708984,
+              "n": 990
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.1641693166560667,
+              0.21318772175181516
+            ],
+            "items": 202,
+            "mean": 0.18805031446540882,
+            "n": 1590
+          },
+          "pairs": 1590,
+          "raw_shift_abs": {
+            "ci95": [
+              55.540802001953125,
+              66.49955749511719
+            ],
+            "items": 202,
+            "median": 61.35512161254883,
+            "n": 1590
+          },
+          "relative_delta": {
+            "ci95": [
+              0.5407812942549775,
+              0.6715185531777745
+            ],
+            "items": 202,
+            "median": 0.5998967577224062,
+            "n": 1590
+          }
+        },
+        "zh": {
+          "abs_delta": {
+            "ci95": [
+              8.520782470703125,
+              10.145003509521482
+            ],
+            "items": 202,
+            "median": 9.351486206054688,
+            "n": 1591
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                9.790580749511719,
+                13.71240234375
+              ],
+              "items": 202,
+              "median": 12.009654998779297,
+              "n": 404
+            },
+            "contra": {
+              "ci95": [
+                7.90934944152832,
+                10.677291870117188
+              ],
+              "items": 195,
+              "median": 8.961196899414062,
+              "n": 195
+            },
+            "minus": {
+              "ci95": [
+                7.776191711425781,
+                9.442684173583984
+              ],
+              "items": 202,
+              "median": 8.672647476196289,
+              "n": 992
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.1655588116207021,
+              0.21643040753307333
+            ],
+            "items": 202,
+            "mean": 0.19170333123821495,
+            "n": 1591
+          },
+          "pairs": 1591,
+          "raw_shift_abs": {
+            "ci95": [
+              14.082183837890625,
+              21.373794555664062
+            ],
+            "items": 202,
+            "median": 17.549095153808594,
+            "n": 1591
+          },
+          "relative_delta": {
+            "ci95": [
+              0.529868191117946,
+              0.6359423570353337
+            ],
+            "items": 202,
+            "median": 0.5654670053839882,
+            "n": 1591
+          }
+        }
+      }
+    },
+    "qwen_tok_subset": {
+      "items": 60,
+      "kind": "loglik",
+      "label": "Qwen token log-prob, 60-item subset",
+      "notes": {},
+      "posterior": {
+        "argmax_flip_rate": {
+          "ci95": [
+            0.214325,
+            0.3466749999999999
+          ],
+          "items": 60,
+          "mean": 0.2786666666666667,
+          "n": 60
+        },
+        "draws": 50,
+        "items": 60,
+        "sd_p_goal": {
+          "ci95": [
+            0.11141465629705755,
+            0.2042294458246894
+          ],
+          "items": 60,
+          "mean": 0.1572749679311454,
+          "n": 60
+        },
+        "skipped_draws": 0
+      },
+      "rewording": {
+        "groups": 610,
+        "icc1": 0.7265642796293212,
+        "icc1_ci95": [
+          0.6787316426622318,
+          0.7676157497197742
+        ],
+        "sd_ratio": {
+          "ci95": [
+            0.5061898482430399,
+            0.6018726505773961
+          ],
+          "items": 60,
+          "median": 0.5530407763183787,
+          "n": 60
+        },
+        "shift_abs": {
+          "hpara1": {
+            "ci95": [
+              4.84228515625,
+              6.142967224121094
+            ],
+            "items": 60,
+            "median": 5.444820404052734,
+            "n": 610
+          },
+          "hpara2": {
+            "ci95": [
+              4.7242431640625,
+              6.0187225341796875
+            ],
+            "items": 60,
+            "median": 5.3995819091796875,
+            "n": 610
+          },
+          "hpara3": {
+            "ci95": [
+              5.0745086669921875,
+              6.1117706298828125
+            ],
+            "items": 60,
+            "median": 5.602043151855469,
+            "n": 610
+          },
+          "hzh": {
+            "ci95": [
+              13.345741653442383,
+              17.153335571289062
+            ],
+            "items": 60,
+            "median": 15.103137969970703,
+            "n": 608
+          }
+        },
+        "shift_signed": {
+          "hpara1": {
+            "ci95": [
+              -4.867218017578125,
+              -1.6511001586914062
+            ],
+            "items": 60,
+            "median": -3.2733306884765625,
+            "n": 610
+          },
+          "hpara2": {
+            "ci95": [
+              -4.035499572753906,
+              -1.294158935546875
+            ],
+            "items": 60,
+            "median": -2.7487144470214844,
+            "n": 610
+          },
+          "hpara3": {
+            "ci95": [
+              -5.103874206542969,
+              -2.8028640747070312
+            ],
+            "items": 60,
+            "median": -4.0613555908203125,
+            "n": 610
+          },
+          "hzh": {
+            "ci95": [
+              -16.942184448242188,
+              -12.928016662597656
+            ],
+            "items": 60,
+            "median": -14.690410614013672,
+            "n": 608
+          }
+        }
+      },
+      "scores": 6383,
+      "utterance": {
+        "pad": {
+          "abs_delta": {
+            "ci95": [
+              5.695701599121094,
+              8.179313659667969
+            ],
+            "items": 58,
+            "median": 7.012416839599609,
+            "n": 468
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                9.866250991821289,
+                13.945167541503906
+              ],
+              "items": 58,
+              "median": 12.157707214355469,
+              "n": 116
+            },
+            "contra": {
+              "ci95": [
+                3.6911087036132812,
+                8.159416198730469
+              ],
+              "items": 56,
+              "median": 5.351222991943359,
+              "n": 56
+            },
+            "minus": {
+              "ci95": [
+                4.7345733642578125,
+                6.880096435546875
+              ],
+              "items": 58,
+              "median": 5.41583251953125,
+              "n": 296
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.09381164088372726,
+              0.17494600431965443
+            ],
+            "items": 58,
+            "mean": 0.1346153846153846,
+            "n": 468
+          },
+          "pairs": 468,
+          "raw_shift_abs": {
+            "ci95": [
+              45.597503662109375,
+              62.33758544921875
+            ],
+            "items": 58,
+            "median": 54.178714752197266,
+            "n": 468
+          },
+          "relative_delta": {
+            "ci95": [
+              0.3779907295722832,
+              0.49905218748476626
+            ],
+            "items": 58,
+            "median": 0.4156281638002407,
+            "n": 468
+          }
+        },
+        "para": {
+          "abs_delta": {
+            "ci95": [
+              6.1960296630859375,
+              8.621112823486328
+            ],
+            "items": 58,
+            "median": 7.416969299316406,
+            "n": 940
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                7.289588928222656,
+                13.284515380859375
+              ],
+              "items": 58,
+              "median": 9.952194213867188,
+              "n": 232
+            },
+            "contra": {
+              "ci95": [
+                4.365447998046875,
+                8.18670654296875
+              ],
+              "items": 56,
+              "median": 6.340215682983398,
+              "n": 112
+            },
+            "minus": {
+              "ci95": [
+                5.633731842041016,
+                8.531172657012931
+              ],
+              "items": 58,
+              "median": 6.896148681640625,
+              "n": 596
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.10508182825921597,
+              0.1864044380017841
+            ],
+            "items": 58,
+            "mean": 0.14468085106382977,
+            "n": 940
+          },
+          "pairs": 940,
+          "raw_shift_abs": {
+            "ci95": [
+              13.405067443847656,
+              25.812488555908203
+            ],
+            "items": 58,
+            "median": 17.72586441040039,
+            "n": 940
+          },
+          "relative_delta": {
+            "ci95": [
+              0.4149753822059765,
+              0.5835949953327342
+            ],
+            "items": 58,
+            "median": 0.4877929612827342,
+            "n": 940
+          }
+        },
+        "typo": {
+          "abs_delta": {
+            "ci95": [
+              6.345008850097656,
+              8.352706909179688
+            ],
+            "items": 57,
+            "median": 7.523590087890625,
+            "n": 459
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                8.043106079101562,
+                13.086257934570312
+              ],
+              "items": 57,
+              "median": 10.327995300292969,
+              "n": 114
+            },
+            "contra": {
+              "ci95": [
+                4.8402252197265625,
+                10.002632141113281
+              ],
+              "items": 55,
+              "median": 7.7538909912109375,
+              "n": 55
+            },
+            "minus": {
+              "ci95": [
+                5.101043701171875,
+                7.689014434814453
+              ],
+              "items": 57,
+              "median": 6.278533935546875,
+              "n": 290
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.12114185424335687,
+              0.2041783087327837
+            ],
+            "items": 57,
+            "mean": 0.16339869281045752,
+            "n": 459
+          },
+          "pairs": 459,
+          "raw_shift_abs": {
+            "ci95": [
+              67.89297485351562,
+              86.59916687011719
+            ],
+            "items": 57,
+            "median": 75.04548645019531,
+            "n": 459
+          },
+          "relative_delta": {
+            "ci95": [
+              0.43022842372916975,
+              0.5803835489246415
+            ],
+            "items": 57,
+            "median": 0.514192018408221,
+            "n": 459
+          }
+        },
+        "verbose": {
+          "abs_delta": {
+            "ci95": [
+              8.724411010742188,
+              12.064277648925781
+            ],
+            "items": 49,
+            "median": 9.895439147949219,
+            "n": 394
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                9.9356689453125,
+                16.443878173828125
+              ],
+              "items": 49,
+              "median": 14.208606719970703,
+              "n": 98
+            },
+            "contra": {
+              "ci95": [
+                5.994606018066406,
+                11.29549789428711
+              ],
+              "items": 48,
+              "median": 8.601631164550781,
+              "n": 48
+            },
+            "minus": {
+              "ci95": [
+                7.344581604003906,
+                10.924560546875
+              ],
+              "items": 49,
+              "median": 9.323915481567383,
+              "n": 248
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.17307569974554707,
+              0.2802064138438322
+            ],
+            "items": 49,
+            "mean": 0.22588832487309646,
+            "n": 394
+          },
+          "pairs": 394,
+          "raw_shift_abs": {
+            "ci95": [
+              53.69999694824219,
+              67.40495300292969
+            ],
+            "items": 49,
+            "median": 62.64369201660156,
+            "n": 394
+          },
+          "relative_delta": {
+            "ci95": [
+              0.561109563887773,
+              0.8256593306807113
+            ],
+            "items": 49,
+            "median": 0.7079017001010901,
+            "n": 394
+          }
+        },
+        "zh": {
+          "abs_delta": {
+            "ci95": [
+              8.424934387207031,
+              11.782684326171875
+            ],
+            "items": 48,
+            "median": 9.963768005371094,
+            "n": 384
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                10.094383239746094,
+                18.878746032714844
+              ],
+              "items": 48,
+              "median": 13.590595245361328,
+              "n": 96
+            },
+            "contra": {
+              "ci95": [
+                8.884719848632812,
+                13.628181457519531
+              ],
+              "items": 46,
+              "median": 11.581310272216797,
+              "n": 46
+            },
+            "minus": {
+              "ci95": [
+                6.969276428222656,
+                10.562030792236328
+              ],
+              "items": 48,
+              "median": 8.634639739990234,
+              "n": 242
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.1335148080516998,
+              0.234423181177491
+            ],
+            "items": 48,
+            "mean": 0.18229166666666666,
+            "n": 384
+          },
+          "pairs": 384,
+          "raw_shift_abs": {
+            "ci95": [
+              11.932113647460938,
+              23.112403869628906
+            ],
+            "items": 48,
+            "median": 18.117637634277344,
+            "n": 384
+          },
+          "relative_delta": {
+            "ci95": [
+              0.5115345489083233,
+              0.7553990634990434
+            ],
+            "items": 48,
+            "median": 0.6117778910983582,
+            "n": 384
+          }
+        }
+      }
+    },
+    "qwen_verbal_exact": {
+      "items": 60,
+      "kind": "prob",
+      "label": "Qwen verbalized, exact string",
+      "notes": {
+        "failed_calls": 0,
+        "queries": 6383,
+        "unparsed": 0,
+        "zero": 1342
+      },
+      "posterior": {
+        "argmax_flip_rate": {
+          "ci95": [
+            0.16264166666666668,
+            0.3103333333333333
+          ],
+          "items": 60,
+          "mean": 0.23466666666666666,
+          "n": 60
+        },
+        "draws": 50,
+        "items": 60,
+        "sd_p_goal": {
+          "ci95": [
+            0.04269969191990534,
+            0.07912885127779803
+          ],
+          "items": 60,
+          "mean": 0.06029994106170601,
+          "n": 60
+        },
+        "skipped_draws": 0
+      },
+      "rewording": {
+        "groups": 481,
+        "icc1": 0.4400317619678477,
+        "icc1_ci95": [
+          0.3661058501734555,
+          0.5196539406910137
+        ],
+        "sd_ratio": {
+          "ci95": [
+            0.592999453328881,
+            0.828078671210825
+          ],
+          "items": 32,
+          "median": 0.7299427209980192,
+          "n": 32
+        },
+        "shift_abs": {
+          "hpara1": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 60,
+            "median": 0.0,
+            "n": 467
+          },
+          "hpara2": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 60,
+            "median": 0.0,
+            "n": 470
+          },
+          "hpara3": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 60,
+            "median": 0.0,
+            "n": 468
+          },
+          "hzh": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 60,
+            "median": 0.0,
+            "n": 445
+          }
+        },
+        "shift_signed": {
+          "hpara1": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 60,
+            "median": 0.0,
+            "n": 467
+          },
+          "hpara2": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 60,
+            "median": 0.0,
+            "n": 470
+          },
+          "hpara3": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 60,
+            "median": 0.0,
+            "n": 468
+          },
+          "hzh": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 60,
+            "median": 0.0,
+            "n": 445
+          }
+        }
+      },
+      "scores": 5041,
+      "utterance": {
+        "pad": {
+          "abs_delta": {
+            "ci95": [
+              0.0,
+              0.6931471805599454
+            ],
+            "items": 57,
+            "median": 0.0,
+            "n": 322
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                0.0,
+                1.6094379124341
+              ],
+              "items": 57,
+              "median": 0.5108256237659905,
+              "n": 68
+            },
+            "contra": {
+              "ci95": [
+                0.0,
+                1.0986122886681096
+              ],
+              "items": 21,
+              "median": 0.0,
+              "n": 21
+            },
+            "minus": {
+              "ci95": [
+                0.0,
+                0.6931471805599454
+              ],
+              "items": 57,
+              "median": 0.0,
+              "n": 233
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.0,
+              0.015874279648164992
+            ],
+            "items": 57,
+            "mean": 0.006211180124223602,
+            "n": 322
+          },
+          "pairs": 322,
+          "raw_shift_abs": {
+            "ci95": [
+              0.0,
+              1.0986122886681096
+            ],
+            "items": 57,
+            "median": 1.0986122886681096,
+            "n": 322
+          },
+          "relative_delta": {
+            "ci95": [
+              1.0,
+              1.0
+            ],
+            "items": 30,
+            "median": 1.0,
+            "n": 64
+          }
+        },
+        "para": {
+          "abs_delta": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 57,
+            "median": 0.0,
+            "n": 666
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 57,
+              "median": 0.0,
+              "n": 133
+            },
+            "contra": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 25,
+              "median": 0.0,
+              "n": 47
+            },
+            "minus": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 57,
+              "median": 0.0,
+              "n": 486
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.0,
+              0.012387292450956149
+            ],
+            "items": 57,
+            "mean": 0.0045045045045045045,
+            "n": 666
+          },
+          "pairs": 666,
+          "raw_shift_abs": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 57,
+            "median": 0.0,
+            "n": 666
+          },
+          "relative_delta": {
+            "ci95": [
+              1.0,
+              1.0
+            ],
+            "items": 29,
+            "median": 1.0,
+            "n": 128
+          }
+        },
+        "typo": {
+          "abs_delta": {
+            "ci95": [
+              0.0,
+              0.6931471805599454
+            ],
+            "items": 54,
+            "median": 0.0,
+            "n": 326
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                0.0,
+                1.0986122886681096
+              ],
+              "items": 54,
+              "median": 1.0986122886681096,
+              "n": 68
+            },
+            "contra": {
+              "ci95": [
+                0.0,
+                1.0986122886681096
+              ],
+              "items": 24,
+              "median": 0.8958797346140275,
+              "n": 24
+            },
+            "minus": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 54,
+              "median": 0.0,
+              "n": 234
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.0,
+              0.01519989217627319
+            ],
+            "items": 54,
+            "mean": 0.006134969325153374,
+            "n": 326
+          },
+          "pairs": 326,
+          "raw_shift_abs": {
+            "ci95": [
+              0.0,
+              1.0986122886681096
+            ],
+            "items": 54,
+            "median": 0.0,
+            "n": 326
+          },
+          "relative_delta": {
+            "ci95": [
+              1.0,
+              1.0
+            ],
+            "items": 28,
+            "median": 1.0,
+            "n": 62
+          }
+        },
+        "verbose": {
+          "abs_delta": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 47,
+            "median": 0.0,
+            "n": 253
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                0.0,
+                1.0986122886681096
+              ],
+              "items": 46,
+              "median": 0.0,
+              "n": 54
+            },
+            "contra": {
+              "ci95": [
+                0.0,
+                0.7032838082625942
+              ],
+              "items": 9,
+              "median": 0.0,
+              "n": 9
+            },
+            "minus": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 47,
+              "median": 0.0,
+              "n": 190
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 47,
+            "mean": 0.0,
+            "n": 253
+          },
+          "pairs": 253,
+          "raw_shift_abs": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 47,
+            "median": 0.0,
+            "n": 253
+          },
+          "relative_delta": {
+            "ci95": [
+              1.0,
+              1.0
+            ],
+            "items": 25,
+            "median": 1.0,
+            "n": 52
+          }
+        },
+        "zh": {
+          "abs_delta": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 47,
+            "median": 0.0,
+            "n": 260
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                0.0,
+                1.0986122886681096
+              ],
+              "items": 47,
+              "median": 0.0,
+              "n": 55
+            },
+            "contra": {
+              "ci95": [
+                0.0,
+                0.6931471805599454
+              ],
+              "items": 18,
+              "median": 0.0,
+              "n": 18
+            },
+            "minus": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 47,
+              "median": 0.0,
+              "n": 187
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.00498967889908257,
+              0.068
+            ],
+            "items": 47,
+            "mean": 0.03076923076923077,
+            "n": 260
+          },
+          "pairs": 260,
+          "raw_shift_abs": {
+            "ci95": [
+              0.0,
+              1.0986122886681096
+            ],
+            "items": 47,
+            "median": 0.0,
+            "n": 260
+          },
+          "relative_delta": {
+            "ci95": [
+              1.0,
+              1.0
+            ],
+            "items": 23,
+            "median": 1.0,
+            "n": 44
+          }
+        }
+      }
+    },
+    "qwen_verbal_meaning": {
+      "items": 60,
+      "kind": "prob",
+      "label": "Qwen verbalized, meaning",
+      "notes": {
+        "failed_calls": 0,
+        "queries": 6383,
+        "unparsed": 0,
+        "zero": 2163
+      },
+      "posterior": {
+        "argmax_flip_rate": {
+          "ci95": [
+            0.06866666666666667,
+            0.17068333333333321
+          ],
+          "items": 60,
+          "mean": 0.11633333333333334,
+          "n": 60
+        },
+        "draws": 50,
+        "items": 60,
+        "sd_p_goal": {
+          "ci95": [
+            0.09777077243259637,
+            0.15026867608212016
+          ],
+          "items": 60,
+          "mean": 0.12262038485195283,
+          "n": 60
+        },
+        "skipped_draws": 0
+      },
+      "rewording": {
+        "groups": 398,
+        "icc1": 0.4141596099666524,
+        "icc1_ci95": [
+          0.36609875649657925,
+          0.4617003079212053
+        ],
+        "sd_ratio": {
+          "ci95": [
+            0.7572481163579534,
+            0.9912301363903264
+          ],
+          "items": 51,
+          "median": 0.8528755087025257,
+          "n": 51
+        },
+        "shift_abs": {
+          "hpara1": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 60,
+            "median": 0.0,
+            "n": 388
+          },
+          "hpara2": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 60,
+            "median": 0.0,
+            "n": 384
+          },
+          "hpara3": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 60,
+            "median": 0.0,
+            "n": 385
+          },
+          "hzh": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 60,
+            "median": 0.0,
+            "n": 373
+          }
+        },
+        "shift_signed": {
+          "hpara1": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 60,
+            "median": 0.0,
+            "n": 388
+          },
+          "hpara2": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 60,
+            "median": 0.0,
+            "n": 384
+          },
+          "hpara3": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 60,
+            "median": 0.0,
+            "n": 385
+          },
+          "hzh": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 60,
+            "median": 0.0,
+            "n": 373
+          }
+        }
+      },
+      "scores": 4220,
+      "utterance": {
+        "pad": {
+          "abs_delta": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 54,
+            "median": 0.0,
+            "n": 265
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 54,
+              "median": 0.0,
+              "n": 64
+            },
+            "contra": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 4,
+              "median": 0.0,
+              "n": 4
+            },
+            "minus": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 54,
+              "median": 0.0,
+              "n": 197
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 54,
+            "mean": 0.0,
+            "n": 265
+          },
+          "pairs": 265,
+          "raw_shift_abs": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 54,
+            "median": 0.0,
+            "n": 265
+          },
+          "relative_delta": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 39,
+            "median": 0.0,
+            "n": 105
+          }
+        },
+        "para": {
+          "abs_delta": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 54,
+            "median": 0.0,
+            "n": 530
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 54,
+              "median": 0.0,
+              "n": 126
+            },
+            "contra": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 4,
+              "median": 0.0,
+              "n": 8
+            },
+            "minus": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 54,
+              "median": 0.0,
+              "n": 396
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 54,
+            "mean": 0.0,
+            "n": 530
+          },
+          "pairs": 530,
+          "raw_shift_abs": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 54,
+            "median": 0.0,
+            "n": 530
+          },
+          "relative_delta": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 40,
+            "median": 0.0,
+            "n": 212
+          }
+        },
+        "typo": {
+          "abs_delta": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 53,
+            "median": 0.0,
+            "n": 257
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 53,
+              "median": 0.0,
+              "n": 62
+            },
+            "contra": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 3,
+              "median": 0.0,
+              "n": 3
+            },
+            "minus": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 53,
+              "median": 0.0,
+              "n": 192
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 53,
+            "mean": 0.0,
+            "n": 257
+          },
+          "pairs": 257,
+          "raw_shift_abs": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 53,
+            "median": 0.0,
+            "n": 257
+          },
+          "relative_delta": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 38,
+            "median": 0.0,
+            "n": 97
+          }
+        },
+        "verbose": {
+          "abs_delta": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 46,
+            "median": 0.0,
+            "n": 220
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 46,
+              "median": 0.0,
+              "n": 54
+            },
+            "contra": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 1,
+              "median": 0.0,
+              "n": 1
+            },
+            "minus": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 46,
+              "median": 0.0,
+              "n": 165
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 46,
+            "mean": 0.0,
+            "n": 220
+          },
+          "pairs": 220,
+          "raw_shift_abs": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 46,
+            "median": 0.0,
+            "n": 220
+          },
+          "relative_delta": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 33,
+            "median": 0.0,
+            "n": 78
+          }
+        },
+        "zh": {
+          "abs_delta": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 44,
+            "median": 0.0,
+            "n": 211
+          },
+          "by_family": {
+            "broad": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 44,
+              "median": 0.0,
+              "n": 51
+            },
+            "contra": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 3,
+              "median": 0.0,
+              "n": 3
+            },
+            "minus": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 44,
+              "median": 0.0,
+              "n": 157
+            }
+          },
+          "flip_rate": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 44,
+            "mean": 0.0,
+            "n": 211
+          },
+          "pairs": 211,
+          "raw_shift_abs": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 44,
+            "median": 0.0,
+            "n": 211
+          },
+          "relative_delta": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "items": 32,
+            "median": 0.0,
+            "n": 73
+          }
+        }
+      }
+    }
+  }
+}
