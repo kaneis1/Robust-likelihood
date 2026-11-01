@@ -135,9 +135,30 @@ def main(argv: list[str] | None = None) -> int:
     claim_parser.add_argument("--dtype", default="bfloat16")
     claim_parser.add_argument("--device", default=None)
     claim_parser.add_argument("--label", default=None)
+    claim_parser.add_argument("--units-from", default=None,
+                              help="score only the rewrites accepted by this rewrites-recheck run")
     audit_parser = sub.add_parser("rewrite-audit", help="export 100 accepted rewrites for human review")
     audit_parser.add_argument("run_dir")
     audit_parser.add_argument("--out", default=str(Path("docs") / "claim1_results" / "rewrite_audit.csv"))
+    recheck_parser = sub.add_parser("rewrites-recheck",
+                                    help="re-check a rewrite run's regex rejections with the current extractor")
+    recheck_parser.add_argument("run_dir")
+    recheck_parser.add_argument("--nli-device", default=None, help="cuda, mps, or cpu; detected when omitted")
+    verbal_parser = sub.add_parser("verbalcheck", help="claims plan 2d job B: verbalized probabilities")
+    verbal_parser.add_argument("runner", choices=["local", "api", "jev"])
+    verbal_parser.add_argument("--phase8", default=None, help="folder of the Phase 8 lm-score run (local, api)")
+    verbal_parser.add_argument("--model", default="qwen", help="local: model key in configs/claims.json")
+    verbal_parser.add_argument("--dtype", default="bfloat16")
+    verbal_parser.add_argument("--device", default=None)
+    verbal_parser.add_argument("--limit", type=int, default=None, help="local: smoke test on the first N queries")
+    verbal_parser.add_argument("--providers", default="claude,gpt", help="api: comma-separated")
+    verbal_parser.add_argument("--pilot", type=int, default=None, help="api: seeded queries per provider")
+    verbal_parser.add_argument("--workers", type=int, default=4)
+    verbal_parser.add_argument("--wording", choices=["likely", "typical", "both"], default="both", help="jev")
+    verbal_parser.add_argument("--max-requests", type=int, default=None)
+    verbal_parser.add_argument("--dry-run", action="store_true", help="api, jev: plan and print, no calls")
+    verbal_parser.add_argument("--resume", default=None, help="local, jev: run folder to continue")
+    verbal_parser.add_argument("--label", default=None)
     args = parser.parse_args(argv)
     try:
         return _dispatch(args)
@@ -289,8 +310,11 @@ def _dispatch(args) -> int:
     if args.command == "claim1-lm":
         from robust_likelihood.multiwoz.claim1_lm import claim1_lm
 
+        units = None
+        if args.units_from is not None:
+            units = {row["unit_id"] for row in read_jsonl(Path(args.units_from) / "accepted.jsonl")}
         summary = claim1_lm(root, args.model, args.parts.split(","), Path(args.phase8), batch_size=args.batch_size,
-                            dtype=args.dtype, device=args.device, label=args.label)
+                            dtype=args.dtype, device=args.device, label=args.label, units=units)
         print(json.dumps(summary, indent=2, sort_keys=True))
         return 0
     if args.command == "rewrite-audit":
@@ -304,6 +328,35 @@ def _dispatch(args) -> int:
             acceptance_markdown(read_json(Path(args.run_dir) / "manifest.json"), accepted), encoding="utf-8",
             newline="\n")
         print(f"Wrote {len(rows)} rows to {root / args.out}; mark meaning_preserved y or n, then stop for review.")
+        return 0
+    if args.command == "rewrites-recheck":
+        from robust_likelihood.multiwoz.rewrites import recheck_run, write_derived
+
+        run_dir = Path(args.run_dir)
+        summary = recheck_run(root, run_dir, nli_device=args.nli_device)
+        items = [item for item in read_jsonl(root / DERIVED_DIR / "items.jsonl") if item["set"] == "clean"]
+        summary["derived"] = write_derived(run_dir, root / DERIVED_DIR, items, extra_runs=(Path(summary["run_dir"]),))
+        print(json.dumps(summary, indent=2, sort_keys=True))
+        return 0
+    if args.command == "verbalcheck":
+        from robust_likelihood.multiwoz import verbalcheck
+
+        phase8 = None if args.phase8 is None else Path(args.phase8)
+        if args.runner in ("local", "api") and phase8 is None:
+            raise ValueError("--phase8 is needed: the normalization queries use its samples")
+        if args.runner == "local":
+            summary = verbalcheck.run_local(root, args.model, phase8, dtype=args.dtype, device=args.device,
+                                            limit=args.limit, label=args.label,
+                                            resume=None if args.resume is None else Path(args.resume))
+        elif args.runner == "api":
+            summary = verbalcheck.run_api(root, args.providers.split(","), phase8, pilot=args.pilot,
+                                          workers=args.workers, max_requests=args.max_requests,
+                                          dry_run=args.dry_run, label=args.label)
+        else:
+            summary = verbalcheck.run_jev_rewrites(root, config, wording=args.wording, max_requests=args.max_requests,
+                                                   dry_run=args.dry_run,
+                                                   resume=None if args.resume is None else Path(args.resume))
+        print(json.dumps(summary, indent=2, sort_keys=True, ensure_ascii=False))
         return 0
     raise ValueError(f"Unknown command {args.command}")
 

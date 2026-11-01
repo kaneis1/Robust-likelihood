@@ -1,6 +1,8 @@
+import hashlib
 import random
 import threading
 from datetime import datetime, timezone
+from pathlib import Path
 
 from robust_likelihood.clients import TransportResult
 from robust_likelihood.multiwoz.rewrites import (
@@ -12,6 +14,7 @@ from robust_likelihood.multiwoz.rewrites import (
     llm_messages,
     pad,
     protected_spans,
+    recheck_run,
     run_rewrites,
     typo,
     write_derived,
@@ -122,6 +125,36 @@ def test_rewrites_regenerate_failures_and_record_acceptance(tmp_path):
     accepted = read_jsonl(tmp_path / "results" / "20261029T090000Z-full" / "accepted.jsonl")
     rows = audit_rows(accepted, per_side=2)
     assert [row["side"] for row in rows] == ["utterance", "utterance", "hypothesis", "hypothesis"]
+
+
+def test_recheck_accepts_only_regex_rejections_the_current_extractor_reads(tmp_path):
+    derived = tmp_path / "derived"
+    write_jsonl(derived / "items.jsonl", ITEMS)
+    write_jsonl(derived / "probe.jsonl", PROBE)
+    # The run's extractor does not know "cheap", so every text with a price fails the regex check;
+    # the no-preference text passes it and is then rejected by NLI.
+    narrow = dict(VOCAB, price_synonyms={key: value for key, value in PRICE_SYNONYMS.items() if key != "cheap"})
+    write_json(derived / "semantic_vocab.json", narrow)
+    transport = FakeClaude()
+    summary = run_rewrites(repo_root(), derived=derived, results_root=tmp_path / "results", transport=transport,
+                           environ=ENV, sleeper=lambda seconds: None, nli=RejectingNLI(), now=FIXED, workers=1)
+    assert summary["accepted"] == 0
+    calls = len(transport.prompts)
+    run_dir = Path(summary["run_dir"])
+    write_json(derived / "semantic_vocab.json", VOCAB)
+    found = recheck_run(repo_root(), run_dir, nli=FakeNLI(), derived=derived, results_root=tmp_path / "recheck",
+                        now=FIXED)
+    assert len(transport.prompts) == calls
+    accepted = set(found["accepted_units"])
+    assert {"u:SNG1:pad", "u:SNG1:para1"} <= accepted
+    explicit = hashlib.sha256(PROBE[1]["text"].encode("utf-8")).hexdigest()[:12]
+    assert not any(unit.startswith(f"h:{explicit}:") for unit in accepted)  # NLI rejected these in the run
+    stored = {(row["unit_id"], row["attempt"]): row for row in read_jsonl(run_dir / "candidates.jsonl")}
+    rechecked = read_jsonl(Path(found["run_dir"]) / "accepted.jsonl")
+    assert all(not stored[(row["unit_id"], row["attempt"])]["slots_kept"] for row in rechecked)
+    items = [{"item_id": f"SNG{index:04d}", "set": "clean"} for index in range(60)]
+    merged = write_derived(run_dir, tmp_path / "out", items, extra_runs=(Path(found["run_dir"]),))
+    assert merged["rewrites"] == len(accepted)
 
 
 def test_write_derived_leaves_out_audit_rejected_rewrites(tmp_path):

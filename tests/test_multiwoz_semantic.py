@@ -28,6 +28,12 @@ VOCAB = {
          ("dontcare", "dontcare", "cheap")),
         ("The user is looking for an inexpensive restaurant in the northern part of town. The user does not have a "
          "preference regarding the type of cuisine.", ("dontcare", "north", "cheap")),
+        ("The user is looking for a restaurant. The user does not have any preference regarding the type of food, "
+         "the area, or the price range.", ("dontcare", "dontcare", "dontcare")),
+        ("The user does not have a preference regarding the cuisine type, the location, or the price range.",
+         ("dontcare", "dontcare", "dontcare")),
+        ("I don't care about the food, but it must be in the west and the price range should be cheap.",
+         ("dontcare", "west", "cheap")),
         ("A high-priced Indian place downtown.", ("indian", "centre", "expensive")),
         ("Know anywhere that has european food?", ("european", "none", "none")),
     ],

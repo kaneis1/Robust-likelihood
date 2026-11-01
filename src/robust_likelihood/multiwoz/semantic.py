@@ -90,11 +90,14 @@ class Extractor:
         self.area = re.compile(rf"\b(?:{_alternation(vocab['area_synonyms'])})\b")
         self.price = re.compile(rf"\b(?:{_alternation(vocab['price_synonyms'])})\b")
         # A "no preference" match consumes only the nearest slot phrase, so one phrase can cover a
-        # list: "no preference about the type of food, the area, or the price range".
+        # list: "no preference about the type of food, the area, or the price range". Each slot
+        # phrase of such a list must come within 30 characters of the phrase or of the list entry
+        # before it (a consumed slot, marked "|"), so a longer phrase such as "does not have any
+        # preference regarding" still reaches the third entry (docs/claims_decisions.md).
         self.dontcare = {
             slot: [re.compile(rf"\b{phrase}\b") for phrase in phrases] + [
                 re.compile(rf"\b(?P<slot>{SLOT_WORDS[slot]})\b[^.!?,;]{{0,30}}?\b(?:{CARE})\b"),
-                re.compile(rf"\b(?:{CARE})\b[^.!?;]{{0,30}}?\b(?P<slot>{SLOT_WORDS[slot]})\b"),
+                re.compile(rf"\b(?:{CARE})\b(?:[^.!?;|]{{0,30}}?\|)*[^.!?;|]{{0,30}}?\b(?P<slot>{SLOT_WORDS[slot]})\b"),
             ]
             for slot, phrases in DONTCARE_PHRASES.items()
         }

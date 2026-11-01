@@ -10,5 +10,6 @@
   "samples_per_rewritten_hypothesis": 64,
   "seed": 20261027,
   "bootstrap": {"replicates": 2000, "seed": 20261027},
-  "clip_nats": 3.0
+  "clip_nats": 3.0,
+  "verbalcheck": {"norm_items": 20, "norm_samples": 20, "api_temperature": 0.0, "max_new_tokens": 48}
 }

@@ -141,3 +141,46 @@ open are recorded too, so the analysis can be audited.
   Every planned row is present, with no missing or non-finite score. Both logs carry PyTorch
   allocator "allocation failed with OOM" warnings; the code catches no out-of-memory error, so
   these are allocations the allocator retried after freeing its cache, not lost work.
+- **[Frozen] extractor: no-preference lists (agreed with the user, 2026-11-01).** The
+  `broad|expl` text ("…no preference about the type of food, the area, or the price range.",
+  used by all 235 clean items) had no accepted English paraphrase: Claude writes "does not
+  have any preference regarding the type of food, the area, or the price range", and the third
+  slot fell outside the 30-character window after the no-preference phrase, so the regex
+  check read the price as unstated and rejected all nine candidates (the per-text acceptance
+  table hid this, since one text stands for 235 rows). The window now runs from the phrase
+  or from the list entry before it. Checked before the change: 2.2 agreement unchanged (food
+  98.9%, area 99.2%, price 97.0%), every probe hypothesis text still extracts exactly, and of
+  all candidates of the full rewrite run only these nine change verdict.
+- **Rewrite recheck.** `rewrites-recheck` re-checks the full run's stored candidates that
+  failed the regex check and now pass it, with no new generation: per unit, the first such
+  attempt that also passes NLI is accepted, as the run would have done. Candidates the run
+  rejected by NLI keep that verdict. Its accepted rows are merged into
+  `data/multiwoz/derived/rewrites.jsonl` by `write_derived(..., extra_runs=...)`; a rerun of
+  `write_derived` must name the recheck run to keep them. The NLI needs a GPU, so the recheck
+  runs as the first step of job B, and the recovered rewrites are scored there as job A scored
+  the rest (Qwen `hrewrite` and `hsample`, OLMo `hrewrite`; `claim1-lm --units-from`).
+
+## Step 2d: job B (verbalized probabilities)
+
+- **Queries.** All on the seeded 60-item robustness subset. `exact` and `meaning` framings on
+  every original (item, hypothesis) pair, every utterance rewrite under every hypothesis of
+  its item, and every hypothesis rewrite under the original utterance. An utterance rewrite
+  keeps U's annotation, so its meaning prompt is the original's and is answered once.
+- **Prompt text.** The plan writes "has the following goal: {H}. What is …"; hypothesis texts
+  already end a sentence ("." or "。"), so H is inserted as is and no second period is added.
+- **Slot description** (meaning framing): U's 2.2 turn-0 annotation in the hypothesis
+  templates' words, without "The user wants to find": "a cheap restaurant serving italian
+  food in the north of town", then ", with no preference about …" for annotated dontcare
+  slots; "a restaurant" when nothing is named. Of several annotated values (one item in the
+  subset), the goal's value is used when it is among them, else the first.
+- **Normalization.** 20 items drawn from the subset with the claims seed; for each, the
+  first 20 distinct Phase 8 samples under its `G|impl` text, in sample order, asked in the
+  exact framing. Some texts have fewer than 20 distinct samples, so there are 395 queries.
+- **API (agreed with the user).** claude and gpt answer the exact framing on the originals,
+  `para1`, `hpara1`, **and the normalization queries** (as in the dice runs), so R4's
+  normalization sum can be read for every verbalizing model: about 2,210 calls per provider.
+  Temperature 0 is requested and dropped after a 400 that names it.
+- **Jev (agreed with the user).** The existing `run` path on `para1`, `zh`, `hpara1`, and
+  `hzh` under **both** wordings (likely and typical), about 4,590 calls. Rows go through a
+  probe file whose `hyp_key` is tagged with the rewrite kind (`G|impl@para1`), so each
+  rewrite is its own call; the tag is internal and never sent.

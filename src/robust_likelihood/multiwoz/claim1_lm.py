@@ -81,10 +81,12 @@ def claim1_lm(
     dtype: str = "bfloat16",
     device: str | None = None,
     label: str | None = None,
+    units: set[str] | None = None,
     derived: Path | None = None,
     results_root: Path | None = None,
     now: datetime | None = None,
 ) -> dict:
+    """With units, the rewrite parts score only those rewrite unit ids (rewrites added by a recheck)."""
     import torch
     import transformers
     from transformers import AutoTokenizer
@@ -122,6 +124,10 @@ def claim1_lm(
     subset = json.loads((derived / "robustness_subset.json").read_text(encoding="utf-8"))
     samples = read_jsonl(phase8_dir / "lm_samples.jsonl") if "center" in parts else []
     plans = plan_pairs(probe, rewrites, subset, claims["centering_text"], samples)
+    if units is not None:
+        if "center" in parts:
+            raise ValueError("the center part has no rewrite units; run it without a unit filter")
+        plans = {part: [row for row in rows if row.get("unit_id") in units] for part, rows in plans.items()}
     started = now or datetime.now(timezone.utc)
     clock = time.monotonic()
     commit = resolve_revision(spec["id"], spec["revision"])
@@ -133,7 +139,7 @@ def claim1_lm(
     generation = sampling_config(settings, end, pad)
     model.generation_config = generation
     checks = {"boundary_holds": all(boundary_holds(tokenizer, row["text"], row["utterance"], end)
-                                    for row in (plans["urewrite"] + plans["hrewrite"])[:: 500] or probe[:25])}
+                                    for row in ((plans["urewrite"] + plans["hrewrite"])[:: 500] or probe[:25]))}
     if "hsample" in parts:
         checks["sampling_is_exact"] = sampling_is_exact(model, prefix_ids(tokenizer, claims["centering_text"]), generation)
     if not all(checks.values()):
@@ -149,6 +155,7 @@ def claim1_lm(
         "prompt": {"system": SYSTEM_PROMPT, "user": USER_PROMPT, "assistant": "{utterance}"},
         "centering_text": claims["centering_text"], "phase8_dir": phase8_dir.as_posix(), "parts": parts,
         "planned": {part: len(plans[part]) for part in parts}, "checks": checks,
+        "units": None if units is None else sorted(units),
         "sampling": {key: getattr(generation, key) for key in ("do_sample", "temperature", "top_p", "top_k",
                                                               "repetition_penalty", "max_new_tokens")},
         "samples_per_rewritten_hypothesis": int(claims["samples_per_rewritten_hypothesis"]),

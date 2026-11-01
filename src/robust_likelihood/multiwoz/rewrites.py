@@ -395,8 +395,86 @@ def robustness_subset(items: list[dict], size: int = 60) -> list[str]:
     return choose_items(items, "clean", size, unit_seed("rewrites:robustness"))
 
 
-def write_derived(run_dir: Path, derived: Path, items: list[dict]) -> dict:
+def recheck_run(
+    root: Path,
+    run_dir: Path,
+    *,
+    nli=None,
+    nli_device: str | None = None,
+    derived: Path | None = None,
+    results_root: Path | None = None,
+    now: datetime | None = None,
+) -> dict:
+    """Re-check, with the current extractor, the stored candidates the run rejected at the regex check.
+
+    Only candidates of units the run did not accept, whose regex verdict was a failure and now passes,
+    are considered; a candidate the run already rejected by NLI keeps that verdict. Nothing is
+    generated: per unit, the first such attempt that also passes NLI is accepted, as the run itself
+    would have done had the extractor read it then."""
+    derived = derived or root / DERIVED_DIR
+    vocab = load_vocab(derived)
+    extractor = Extractor(vocab)
+    items = [item for item in read_jsonl(derived / "items.jsonl") if item["set"] == "clean"]
+    probe = [row for row in read_jsonl(derived / "probe.jsonl") if row["set"] == "clean"]
+    by_id = {unit["unit_id"]: unit for unit in build_units(items, probe, vocab)}
+    done = {row["unit_id"] for row in read_jsonl(run_dir / "accepted.jsonl")}
+    candidates: dict[str, list[dict]] = {}
+    for record in read_jsonl(run_dir / "candidates.jsonl"):
+        if record["unit_id"] not in done and record["unit_id"] in by_id:
+            candidates.setdefault(record["unit_id"], []).append(record)
+    passing = []
+    for unit_id, records in sorted(candidates.items()):
+        for record in sorted(records, key=lambda found: found["attempt"]):
+            if not record.get("slots_kept") and slots_kept(extractor, record.get("english"), by_id[unit_id]["expected"]):
+                passing.append((unit_id, record))
+    checked = [(unit_id, record) for unit_id, record in passing if by_id[unit_id]["kind"] not in REGEX_ONLY_KINDS]
+    if checked and nli is None:
+        nli = NLI(nli_device)
+    scores = nli.entailment_probs(
+        [(by_id[unit_id]["original"], record["english"]) for unit_id, record in checked]
+        + [(record["english"], by_id[unit_id]["original"]) for unit_id, record in checked]
+    ) if checked else []
+    entail = {(unit_id, record["attempt"]): (scores[index], scores[len(checked) + index])
+              for index, (unit_id, record) in enumerate(checked)}
+    accepted: dict[str, dict] = {}
+    rechecked = []
+    for unit_id, record in passing:
+        forward, backward = entail.get((unit_id, record["attempt"]), (None, None))
+        ok = by_id[unit_id]["kind"] in REGEX_ONLY_KINDS or (forward >= NLI_THRESHOLD and backward >= NLI_THRESHOLD)
+        rechecked.append({"unit_id": unit_id, "attempt": record["attempt"], "english": record["english"],
+                          "nli_forward": forward, "nli_backward": backward, "accepted": ok})
+        if ok and unit_id not in accepted:
+            accepted[unit_id] = dict(record, nli_forward=forward, nli_backward=backward)
+    started = now or datetime.now(timezone.utc)
+    out = (results_root or root / RESULTS_DIR / "rewrites") / f"{started.strftime('%Y%m%dT%H%M%SZ')}-recheck"
+    write_jsonl(out / "rechecked.jsonl", rechecked)
+    write_jsonl(out / "accepted.jsonl", [
+        {**{key: by_id[unit_id][key] for key in ("unit_id", "side", "kind", "original")},
+         **{key: by_id[unit_id].get(key) for key in ("item_id", "text_id")},
+         "rewrite": record["rewrite"], "back": record["back"], "attempt": record["attempt"],
+         "nli_forward": record["nli_forward"], "nli_backward": record["nli_backward"]}
+        for unit_id, record in sorted(accepted.items())
+    ])
+    manifest = {"kind": "rewrites-recheck", "git": git_state(root), "source_run": run_dir.as_posix(),
+                "reason": "candidates the run rejected, re-checked with the current extractor (docs/claims_decisions.md)",
+                "nli": {"model": NLI_MODEL, "revision": NLI_REVISION, "threshold": NLI_THRESHOLD},
+                "units_rejected_by_run": len(candidates), "candidates_passing_regex": len(passing),
+                "accepted": len(accepted), "accepted_units": sorted(accepted),
+                "started_at": started.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "finished_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}
+    write_json(out / "manifest.json", manifest)
+    return {"run_dir": str(out), "units_rejected_by_run": len(candidates), "candidates_passing_regex": len(passing),
+            "accepted": len(accepted), "accepted_units": sorted(accepted)}
+
+
+def write_derived(run_dir: Path, derived: Path, items: list[dict], extra_runs: tuple[Path, ...] = ()) -> dict:
+    """The accepted rewrites of the run, plus those of any recheck runs, less the audit's rejections."""
     accepted = read_jsonl(run_dir / "accepted.jsonl")
+    seen = {row["unit_id"] for row in accepted}
+    for extra in extra_runs:
+        accepted += [row for row in read_jsonl(extra / "accepted.jsonl") if row["unit_id"] not in seen]
+        seen = {row["unit_id"] for row in accepted}
+    accepted.sort(key=lambda row: row["unit_id"])
     kept = [row for row in accepted if row["unit_id"] not in AUDIT_REJECTED]
     write_jsonl(derived / "rewrites.jsonl", kept)
     subset = robustness_subset(items)
