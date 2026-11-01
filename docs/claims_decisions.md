@@ -202,3 +202,6 @@ open are recorded too, so the analysis can be audited.
   - Qwen verbal, `…/claim1/20261101T165240Z-verbal-qwen`: 13,161 queries (6,383 exact, 6,383
     meaning, 395 norm) from 8,267 distinct prompts, greedy decoding checked exact, no answer cut
     off, no parse failure. 1,342 exact and 2,163 meaning answers are 0, which have no log score.
+- **Jev, complete (`results/multiwoz/20261101T170333Z-jev-rewrites`).** Rerun after the recheck:
+  4,588 of 4,588 scored, 120 new requests for the recovered `hpara1` rows and 4,468 cache hits,
+  no failures, all `jev-1.13.0`. This run supersedes `20261101T160534Z-jev-rewrites`.
