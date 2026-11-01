@@ -189,3 +189,16 @@ open are recorded too, so the analysis can be audited.
   4,468 scored (4,460 requests, 8 cache hits from rewrites identical to another), no failures,
   every answer from `jev-1.13.0`, 20 minutes. After job B's recheck, the same command adds the
   60 recovered `hpara1` rows under both wordings (120 calls) and reuses the cache for the rest.
+- **GPU job B (2026-11-02, SoC job 1057071, approved by the user).** `xgpi18`, H100 NVL MIG
+  3g.47gb, commit `9e9299f`, 10.5 minutes; the NLI model was first downloaded on the login node
+  at its pinned revision. Outputs, copied to `results/`:
+  - Recheck, `results/multiwoz/rewrites/20261101T165154Z-recheck`: the nine candidates of the
+    three `broad|expl` paraphrase units pass the regex check; each unit's first attempt passes
+    NLI (0.997–0.999 both ways), so all three are accepted. `rewrites.jsonl` now holds 3,144
+    rewrites; rebuilt here from the full run and the recheck, it is byte-identical to the
+    cluster's (sha256 `cdc62b51…`), which is the file job B's later steps read.
+  - Recovered rewrites scored as in job A: Qwen `…/claim1/20261101T165158Z-recheck-qwen` (705
+    hrewrite pairs; 3 texts × 64 samples), OLMo `…/claim1/20261101T165218Z-recheck-olmo` (705).
+  - Qwen verbal, `…/claim1/20261101T165240Z-verbal-qwen`: 13,161 queries (6,383 exact, 6,383
+    meaning, 395 norm) from 8,267 distinct prompts, greedy decoding checked exact, no answer cut
+    off, no parse failure. 1,342 exact and 2,163 meaning answers are 0, which have no log score.
