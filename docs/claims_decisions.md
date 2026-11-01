@@ -184,3 +184,8 @@ open are recorded too, so the analysis can be audited.
   `hzh` under **both** wordings (likely and typical), about 4,590 calls. Rows go through a
   probe file whose `hyp_key` is tagged with the rewrite kind (`G|impl@para1`), so each
   rewrite is its own call; the tag is internal and never sent.
+- **Jev rewrite run (2026-11-01, `results/multiwoz/20261101T160534Z-jev-rewrites`, approved by
+  the user).** Run before job B, so without the recovered `broad|expl` paraphrases: 4,468 of
+  4,468 scored (4,460 requests, 8 cache hits from rewrites identical to another), no failures,
+  every answer from `jev-1.13.0`, 20 minutes. After job B's recheck, the same command adds the
+  60 recovered `hpara1` rows under both wordings (120 calls) and reuses the cache for the rest.
