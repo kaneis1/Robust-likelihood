@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 
 from robust_likelihood.clients import TransportResult
 from robust_likelihood.multiwoz.rewrites import (
+    AUDIT_REJECTED,
     CLOSERS,
     OPENERS,
     audit_rows,
@@ -13,6 +14,7 @@ from robust_likelihood.multiwoz.rewrites import (
     protected_spans,
     run_rewrites,
     typo,
+    write_derived,
 )
 from robust_likelihood.multiwoz.semantic import AREA_SYNONYMS, PRICE_SYNONYMS, Extractor
 from robust_likelihood.storage import read_jsonl, repo_root, write_json, write_jsonl
@@ -120,6 +122,16 @@ def test_rewrites_regenerate_failures_and_record_acceptance(tmp_path):
     accepted = read_jsonl(tmp_path / "results" / "20261029T090000Z-full" / "accepted.jsonl")
     rows = audit_rows(accepted, per_side=2)
     assert [row["side"] for row in rows] == ["utterance", "utterance", "hypothesis", "hypothesis"]
+
+
+def test_write_derived_leaves_out_audit_rejected_rewrites(tmp_path):
+    run_dir = tmp_path / "run"
+    rejected = next(iter(AUDIT_REJECTED))
+    write_jsonl(run_dir / "accepted.jsonl", [{"unit_id": rejected}, {"unit_id": "u:SNG0001:pad"}])
+    items = [{"item_id": f"SNG{index:04d}", "set": "clean"} for index in range(60)]
+    found = write_derived(run_dir, tmp_path / "derived", items)
+    assert found["rewrites"] == 1 and found["audit_rejected"] == 1
+    assert [row["unit_id"] for row in read_jsonl(tmp_path / "derived" / "rewrites.jsonl")] == ["u:SNG0001:pad"]
 
 
 class RejectingNLI:

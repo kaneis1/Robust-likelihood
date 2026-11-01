@@ -116,3 +116,14 @@ open are recorded too, so the analysis can be audited.
   para2 (SNG02148) repeats the original word for word; it is kept, as the frozen checks do
   not reject it. Accepted rewrites: `data/multiwoz/derived/rewrites.jsonl`; the seeded
   60-item robustness subset: `data/multiwoz/derived/robustness_subset.json`.
+- **Rewrite audit (2026-11-01, `docs/claim1_results/rewrite_audit.csv`).** The user judged
+  99 of the 100 sampled rewrites meaning-preserving (50 of 50 hypothesis-side, 49 of 50
+  utterance-side), above the plan's 95%, so step 2 goes on. The one failure,
+  `u:SNG0606:typo`, misspells "price" as "rice" ("in the moderate rice rnage"). The typo
+  generator protects the slot values the extractor reads, as the plan says, but not cue
+  words such as "price", "range", "food", and "town": 104 of the 229 accepted typo rewrites
+  misspell one, almost always into a non-word, and SNG0606 is the only one found where the
+  misspelling is another word that changes the reading. With the user's agreement that one
+  rewrite is left out of `data/multiwoz/derived/rewrites.jsonl` (`AUDIT_REJECTED` in
+  `multiwoz/rewrites.py`, so a rerun of `write_derived` keeps it out): 3,141 rewrites, 228
+  of them typo. It stays in the run's `accepted.jsonl`, and the typo rule is unchanged.

@@ -46,6 +46,11 @@ CHINESE_KINDS = {"zh", "hzh"}
 # `pad` keeps the message untouched between a fixed opener and closer, and the message never entails a
 # greeting, so NLI rejects pads by design; pads are checked by regex only (docs/claims_decisions.md).
 REGEX_ONLY_KINDS = {"pad"}
+# Accepted rewrites the human audit judged not meaning-preserving (docs/claim1_results/rewrite_audit.csv).
+# They stay in the run's accepted.jsonl but are left out of derived/rewrites.jsonl.
+AUDIT_REJECTED = {
+    "u:SNG0606:typo": "price became rice, so the moderate price range is no longer stated",
+}
 
 # [Frozen] prompts.
 PARAPHRASE = (
@@ -392,8 +397,9 @@ def robustness_subset(items: list[dict], size: int = 60) -> list[str]:
 
 def write_derived(run_dir: Path, derived: Path, items: list[dict]) -> dict:
     accepted = read_jsonl(run_dir / "accepted.jsonl")
-    write_jsonl(derived / "rewrites.jsonl", accepted)
+    kept = [row for row in accepted if row["unit_id"] not in AUDIT_REJECTED]
+    write_jsonl(derived / "rewrites.jsonl", kept)
     subset = robustness_subset(items)
     (derived / "robustness_subset.json").write_text(json.dumps(subset, indent=2) + "\n", encoding="utf-8",
                                                     newline="\n")
-    return {"rewrites": len(accepted), "robustness_subset": len(subset)}
+    return {"rewrites": len(kept), "audit_rejected": len(accepted) - len(kept), "robustness_subset": len(subset)}
