@@ -127,3 +127,17 @@ open are recorded too, so the analysis can be audited.
   rewrite is left out of `data/multiwoz/derived/rewrites.jsonl` (`AUDIT_REJECTED` in
   `multiwoz/rewrites.py`, so a rerun of `write_derived` keeps it out): 3,141 rewrites, 228
   of them typo. It stays in the run's `accepted.jsonl`, and the typo rule is unchanged.
+- **GPU job A (2026-11-01, SoC jobs 1054843 `phase8` and 1054844 `rewrites`, approved by the
+  user).** Both ran on `xgpi18` (H100 NVL, MIG 3g.47gb) at commit `a7a1a52` and completed in
+  28 and 31 minutes, about 1 GPU-hour against the plan's 4–8. Outputs, copied to `results/`:
+  - Phase 8, `results/multiwoz/20261101T091346Z-phase8`: all 3,727 probe rows; 983 texts × 64
+    samples, 3 dropped at the token cap; `sampling_is_exact` and `boundary_holds` both true.
+  - Centering, `results/multiwoz/claim1/20261101T093512Z-center-qwen`: 63,279 scores (the 370
+    utterances and the 62,909 samples under `broad|impl`).
+  - Qwen, `…/claim1/20261101T094135Z-rewrites-qwen`: 13,197 utterance-rewrite and 8,678
+    hypothesis-rewrite scores; 891 rewritten texts × 64 = 57,024 samples.
+  - OLMo, `…/claim1/20261101T100831Z-rewrites-olmo`: 13,197 and 8,678 scores.
+
+  Every planned row is present, with no missing or non-finite score. Both logs carry PyTorch
+  allocator "allocation failed with OOM" warnings; the code catches no out-of-memory error, so
+  these are allocations the allocator retried after freeing its cache, not lost work.
