@@ -97,11 +97,11 @@
       "prior"
     ]
   },
-  "elapsed_seconds": 84.5,
-  "finished_at": "2026-11-02T06:50:32Z",
+  "elapsed_seconds": 82.3,
+  "finished_at": "2026-11-02T06:55:13Z",
   "git": {
-    "commit": "0220f4c6615ff4283359472558e92ac49a824460",
-    "dirty": true
+    "commit": "1f016d6043ba0152d9b49f068537f2f154c9a7b8",
+    "dirty": false
   },
   "inputs": {
     "claim1_metrics": "C:/Users/admin/OneDrive - National University of Singapore/Robust_likelihood/code/docs/claim1_results/metrics.json",
