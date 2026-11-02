@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "per2A":  {"statistic": "S",    "normalization": "per",    "sides": 2, "edges": [1.0, 2.0],        "score": "A"},
+    "glob2A": {"statistic": "S",    "normalization": "global", "sides": 2, "edges": [1.0, 2.0],        "score": "A"},
+    "glob1A": {"statistic": "S",    "normalization": "global", "sides": 1, "edges": [-1.0, 0.0, 1.0], "score": "A"},
+    "glob1B": {"statistic": "S",    "normalization": "global", "sides": 1, "edges": [-1.0, 0.0, 1.0], "score": "B"},
+    "cent1B": {"statistic": "cent", "normalization": "global", "sides": 1, "edges": [-1.0, 0.0, 1.0], "score": "B"},
+    "sem1B":  {"statistic": "sem",  "normalization": "global", "sides": 1, "edges": [-1.0, 0.0, 1.0], "score": "B"}
+  },
+  "weightings": ["uniform", "prior"],
+  "sensitivity": {
+    "edges": {"3bins": [-0.5, 0.5], "6bins": [-2.0, -1.0, 0.0, 1.0, 2.0]},
+    "factorized_sem": true
+  },
+  "pool_sensitivity": {"draws": 20, "fraction": 0.5},
+  "seed": 20261027,
+  "chosen": null
+}

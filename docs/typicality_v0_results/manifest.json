@@ -1,0 +1,121 @@
+{
+  "bootstrap": {
+    "replicates": 2000,
+    "seed": 20261027
+  },
+  "config": {
+    "chosen": null,
+    "pool_sensitivity": {
+      "draws": 20,
+      "fraction": 0.5
+    },
+    "seed": 20261027,
+    "sensitivity": {
+      "edges": {
+        "3bins": [
+          -0.5,
+          0.5
+        ],
+        "6bins": [
+          -2.0,
+          -1.0,
+          0.0,
+          1.0,
+          2.0
+        ]
+      },
+      "factorized_sem": true
+    },
+    "variants": {
+      "cent1B": {
+        "edges": [
+          -1.0,
+          0.0,
+          1.0
+        ],
+        "normalization": "global",
+        "score": "B",
+        "sides": 1,
+        "statistic": "cent"
+      },
+      "glob1A": {
+        "edges": [
+          -1.0,
+          0.0,
+          1.0
+        ],
+        "normalization": "global",
+        "score": "A",
+        "sides": 1,
+        "statistic": "S"
+      },
+      "glob1B": {
+        "edges": [
+          -1.0,
+          0.0,
+          1.0
+        ],
+        "normalization": "global",
+        "score": "B",
+        "sides": 1,
+        "statistic": "S"
+      },
+      "glob2A": {
+        "edges": [
+          1.0,
+          2.0
+        ],
+        "normalization": "global",
+        "score": "A",
+        "sides": 2,
+        "statistic": "S"
+      },
+      "per2A": {
+        "edges": [
+          1.0,
+          2.0
+        ],
+        "normalization": "per",
+        "score": "A",
+        "sides": 2,
+        "statistic": "S"
+      },
+      "sem1B": {
+        "edges": [
+          -1.0,
+          0.0,
+          1.0
+        ],
+        "normalization": "global",
+        "score": "B",
+        "sides": 1,
+        "statistic": "sem"
+      }
+    },
+    "weightings": [
+      "uniform",
+      "prior"
+    ]
+  },
+  "elapsed_seconds": 84.5,
+  "finished_at": "2026-11-02T06:50:32Z",
+  "git": {
+    "commit": "0220f4c6615ff4283359472558e92ac49a824460",
+    "dirty": true
+  },
+  "inputs": {
+    "claim1_metrics": "C:/Users/admin/OneDrive - National University of Singapore/Robust_likelihood/code/docs/claim1_results/metrics.json",
+    "jev_full": "results/multiwoz/20261026T034616Z-full",
+    "lm_runs": [
+      "results/multiwoz/claim1/20261101T093512Z-center-qwen",
+      "results/multiwoz/claim1/20261101T094135Z-rewrites-qwen",
+      "results/multiwoz/claim1/20261101T165158Z-recheck-qwen"
+    ],
+    "phase8": "results/multiwoz/20261101T091346Z-phase8",
+    "verbal": [
+      "results/multiwoz/claim1/20261101T165240Z-verbal-qwen",
+      "results/multiwoz/claim1/20261101T171650Z-verbal-api"
+    ]
+  },
+  "kind": "typicality-v0"
+}

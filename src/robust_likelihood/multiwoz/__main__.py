@@ -167,6 +167,13 @@ def main(argv: list[str] | None = None) -> int:
     analysis_parser.add_argument("--jev", default=None, help="the Jev run on the rewrites")
     analysis_parser.add_argument("--out", default=str(Path("docs") / "claim1_results"))
     analysis_parser.add_argument("--no-figures", action="store_true")
+    typ_parser = sub.add_parser("typv0", help="claims plan step 3: typicality v0 from the saved samples")
+    typ_parser.add_argument("--phase8", required=True, help="folder of the Phase 8 lm-score run")
+    typ_parser.add_argument("--lm", nargs="+", required=True, help="Qwen claim1-lm run folders (center, rewrites)")
+    typ_parser.add_argument("--verbal", nargs="+", required=True, help="verbalcheck local and api run folders")
+    typ_parser.add_argument("--jev-full", required=True, help="the full Jev run on the original probe")
+    typ_parser.add_argument("--claim1", default=str(Path("docs") / "claim1_results" / "metrics.json"))
+    typ_parser.add_argument("--out", default=str(Path("docs") / "typicality_v0_results"))
     args = parser.parse_args(argv)
     try:
         return _dispatch(args)
@@ -357,6 +364,16 @@ def _dispatch(args) -> int:
             result = row.get("status", "pending") if row["pass"] is None else ("pass" if row["pass"] else "fail")
             print(f"{row['id']}: {result}  value={row.get('value')}")
         print(json.dumps({key: summary[key] for key in ("out", "figures", "pending", "elapsed_seconds")}, indent=2))
+        return 0
+    if args.command == "typv0":
+        from robust_likelihood.multiwoz.typv0 import run_typv0
+
+        summary = run_typv0(root, phase8=Path(args.phase8), lm_runs=[Path(path) for path in args.lm],
+                            verbal=[Path(path) for path in args.verbal], jev_full=Path(args.jev_full),
+                            claim1_metrics=root / args.claim1, out=root / args.out)
+        for row in summary["predictions"]:
+            print(f"{row['id']}: {'pass' if row['pass'] else 'fail'}  value={row['value']}")
+        print(json.dumps({key: summary[key] for key in ("out", "elapsed_seconds")}, indent=2))
         return 0
     if args.command == "verbalcheck":
         from robust_likelihood.multiwoz import verbalcheck

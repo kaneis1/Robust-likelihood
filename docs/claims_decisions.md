@@ -261,3 +261,40 @@ open are recorded too, so the analysis can be audited.
   added to the same inputs; every Qwen, verbalized, and Jev number is unchanged, and OLMo now
   has its rows. A first submission (job 1059884) failed before running because `sbatch --wrap`
   uses `/bin/sh`, which has no `pipefail`.
+
+## Step 3: typicality v0 (`multiwoz/typv0.py`, `configs/typicality_v0.json`)
+
+- **Inputs.** Qwen only, from step 2: Phase 8's 64 samples per text and S(U|h); job A's centering
+  scores of those samples under `broad|impl`; the urewrite and hrewrite scores; and the 64
+  samples under each rewritten hypothesis of the 60-item subset (job A plus job B's recheck).
+  Nothing is rescored, so every statistic of an original pair comes from Phase 8.
+- **Prior weighting.** "Each goal pattern weighted by its corpus frequency among the clean
+  items" is read as: each pool text weighted by how many clean items carry it in their probe
+  (so `broad|impl` counts 235 times, an item's own G once). Weighting by how often a pattern is
+  some user's goal would give the broad and most minus texts weight 0. `per2A` has no pool, so
+  only its uniform row is reported.
+- **Option B centres.** c_b is the bin midpoint for interior bins, and half an interior width
+  beyond the outer edge for the two extreme bins: (−1.5, −0.5, 0.5, 1.5) for the frozen edges,
+  (−1, 0, 1) for (−0.5, 0.5), and (−2.5, …, 2.5) for (−2, −1, 0, 1, 2). Option A uses add-one
+  smoothing over the bins, (count + 1)/(K + bins), as Phase 8's `typicality_scores` does;
+  `per2A` reproduces those scores exactly (tested).
+- **P_sem.** For an utterance, n counts h's samples whose regex tuple matches U's 2.2 annotation,
+  as in step 2. For a sample, n counts the other K − 1 samples with its own regex tuple, so
+  P = (n + 0.5)/K: a sample is held out of its own probability. An utterance rewrite keeps U's
+  annotated slots (its validity check), so its `sem` statistic equals U's by construction, and
+  `sem` bin agreement under utterance rewrites is 1 by construction, not by measurement.
+- **Rewritten hypotheses.** A variant that needs h's own samples (`per2A`, every option A, and
+  `sem`) can score a rewritten hypothesis only where it was sampled, the 60-item subset;
+  `glob1B` and `cent1B` need only the pool and score every item. Rewording ICCs are therefore
+  compared on the subset.
+- **Bin occupancy is reported next to bin agreement.** Qwen's samples have S of a few nats and
+  human utterances about 100, so every original pair falls in the top bin of every S-based
+  variant: agreement there is 1 because nothing moves, not because meaning is tracked.
+- **Dice check.** Pool: the three dice, uniform. μ_h and σ_h are the exact moments of a k-roll
+  surprisal, and option A uses the exact bin mass with no smoothing. With σ_h = 0 (`fair`, and
+  `even` on possible sequences) T is 0 for every possible sequence, so `per2A` gives 0 to both
+  dice; an impossible sequence (S = ∞) falls in the top bin.
+- **Predictions, operationally.** T1 and T2 use named single-slot pairs, mean over slots, both
+  regimes, uniform weighting. T2: an option A variant "ties or erases" when L_J < 0.5·L_E; an
+  option B variant "keeps" when L_J ≥ 0.5·L_E. T3's clause "where raw log-prob ICC < 0.5" is a
+  premise; on the subset the raw ICC is reported beside the result.
