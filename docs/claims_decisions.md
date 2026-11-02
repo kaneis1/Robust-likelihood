@@ -254,3 +254,10 @@ open are recorded too, so the analysis can be audited.
 - **OLMo** scored only the rewrites in job A, following part 6 of the plan, so it has no
   original pairs to compare with; it is reported as pending. `claim1-lm --parts original`
   now scores the clean probe rows, a run of about two GPU-minutes.
+- **OLMo original pairs (2026-11-02, SoC job 1059885, approved by the user).** `claim1-lm --model
+  olmo --parts original` on `xgpi20` (H100 NVL, MIG 3g.47gb), commit `7535043`, 70 seconds: all
+  2,355 clean probe rows scored, finite, `boundary_holds` true
+  (`results/multiwoz/claim1/20261102T062241Z-original-olmo`). `claim1` was rerun with this folder
+  added to the same inputs; every Qwen, verbalized, and Jev number is unchanged, and OLMo now
+  has its rows. A first submission (job 1059884) failed before running because `sbatch --wrap`
+  uses `/bin/sh`, which has no `pipefail`.

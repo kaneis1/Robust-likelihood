@@ -10,13 +10,13 @@ Step 2e of `docs/claims_plan.md`, from GPU jobs A and B, the Claude and GPT runs
 | Qwen token log-prob, 60-item subset | 60 | 6383 |  |
 | Qwen clipped log-prob | 235 | 24935 |  |
 | Qwen centered log-prob | 235 | 24935 |  |
+| OLMo token log-prob | 235 | 24935 |  |
 | Qwen verbalized, exact string | 60 | 5041 | 1342 answers of 0 (no log score), 0 unparsed, 0 failed calls |
 | Qwen verbalized, meaning | 60 | 4220 | 2163 answers of 0 (no log score), 0 unparsed, 0 failed calls |
 | Claude verbalized, exact string | 60 | 1741 | 73 answers of 0 (no log score), 0 unparsed, 0 failed calls |
 | GPT verbalized, exact string | 60 | 1406 | 408 answers of 0 (no log score), 0 unparsed, 0 failed calls |
 | Jev, likely wording | 60 | 4649 |  |
 | Jev, typical wording | 60 | 4649 |  |
-| OLMo token log-prob | pending | – | OLMo scored the rewrites only; its original pairs are needed to compare with them (claim1-lm --model olmo --parts original). |
 
 Noise floor. Job A rescored S(U | broad|impl) for all 235 utterances with the prompt Phase 8 used. 133 scores are identical; the rest differ because batches of another shape take other bfloat16 kernels: |difference| median 0.00, 90th percentile 0.83, max 1.40 nats. A log Bayes factor shift that compares an original with a rewrite spans two such runs, so shifts below about 1 nat are within this floor.
 
@@ -39,6 +39,7 @@ ICC(1) of item-centered scores, groups = (item, hypothesis), members = the origi
 | Qwen token log-prob, 60-item subset | 0.73 [0.68, 0.77] | 0.55 [0.51, 0.60] | 5.44 [4.84, 6.14] | 5.40 [4.72, 6.02] | 5.60 [5.07, 6.11] | 15.10 [13.35, 17.15] |
 | Qwen clipped log-prob | 0.38 [0.33, 0.42] | 0.49 [0.47, 0.59] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | Qwen centered log-prob | 0.74 [0.72, 0.76] | 0.54 [0.51, 0.58] | 5.09 [4.63, 5.49] | 5.03 [4.65, 5.45] | 5.41 [5.07, 5.83] | 14.53 [13.56, 15.27] |
+| OLMo token log-prob | 0.44 [0.41, 0.48] | 0.87 [0.80, 0.95] | 2.22 [2.07, 2.43] | 2.08 [1.97, 2.21] | 2.14 [2.02, 2.31] | 12.72 [12.06, 13.53] |
 | Qwen verbalized, exact string | 0.44 [0.37, 0.52] | 0.73 [0.59, 0.83] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | Qwen verbalized, meaning | 0.41 [0.37, 0.46] | 0.85 [0.76, 0.99] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | Claude verbalized, exact string | 0.20 [0.11, 0.28] | 0.93 [0.87, 0.99] | 1.20 [0.69, 1.61] | – | – | – |
@@ -56,6 +57,7 @@ ICC(1) of item-centered scores, groups = (item, hypothesis), members = the origi
 | Qwen token log-prob, 60-item subset | 7.52 [6.35, 8.35] | 7.01 [5.70, 8.18] | 7.42 [6.20, 8.62] | 9.90 [8.72, 12.06] | 9.96 [8.42, 11.78] |
 | Qwen clipped log-prob | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | Qwen centered log-prob | 8.09 [7.50, 8.64] | 6.24 [5.85, 6.78] | 7.94 [7.26, 8.61] | 9.64 [8.91, 10.44] | 9.35 [8.52, 10.15] |
+| OLMo token log-prob | 3.64 [3.37, 3.90] | 2.33 [2.20, 2.45] | 3.22 [2.98, 3.51] | 4.23 [3.96, 4.64] | 5.32 [5.00, 5.69] |
 | Qwen verbalized, exact string | 0.00 [0.00, 0.69] | 0.00 [0.00, 0.69] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | Qwen verbalized, meaning | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | Claude verbalized, exact string | – | – | 2.30 [1.90, 2.71] | – | – |
@@ -71,6 +73,7 @@ Flip rate of the preferred hypothesis:
 | Qwen token log-prob, 60-item subset | 0.16 [0.12, 0.20] | 0.13 [0.09, 0.17] | 0.14 [0.11, 0.19] | 0.23 [0.17, 0.28] | 0.18 [0.13, 0.23] |
 | Qwen clipped log-prob | 0.02 [0.01, 0.02] | 0.01 [0.00, 0.01] | 0.01 [0.01, 0.02] | 0.01 [0.01, 0.02] | 0.01 [0.01, 0.02] |
 | Qwen centered log-prob | 0.17 [0.14, 0.19] | 0.12 [0.10, 0.13] | 0.15 [0.13, 0.17] | 0.19 [0.16, 0.21] | 0.19 [0.17, 0.22] |
+| OLMo token log-prob | 0.10 [0.09, 0.12] | 0.06 [0.05, 0.08] | 0.08 [0.07, 0.10] | 0.13 [0.11, 0.15] | 0.15 [0.13, 0.17] |
 | Qwen verbalized, exact string | 0.01 [0.00, 0.02] | 0.01 [0.00, 0.02] | 0.00 [0.00, 0.01] | 0.00 [0.00, 0.00] | 0.03 [0.00, 0.07] |
 | Qwen verbalized, meaning | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
 | Claude verbalized, exact string | – | – | 0.27 [0.21, 0.35] | – | – |
@@ -90,6 +93,7 @@ Per item, one textual variant per class of {G, minus:X, broad, contra} (implicit
 | Qwen token log-prob, 60-item subset | 60 | 0.157 [0.111, 0.204] | 0.28 [0.21, 0.35] |
 | Qwen clipped log-prob | 235 | 0.120 [0.107, 0.134] | 0.32 [0.28, 0.37] |
 | Qwen centered log-prob | 235 | 0.163 [0.139, 0.188] | 0.26 [0.22, 0.29] |
+| OLMo token log-prob | 235 | 0.255 [0.236, 0.274] | 0.25 [0.22, 0.28] |
 | Qwen verbalized, exact string | 60 | 0.060 [0.043, 0.079] | 0.23 [0.16, 0.31] |
 | Qwen verbalized, meaning | 60 | 0.123 [0.098, 0.150] | 0.12 [0.07, 0.17] |
 | Claude verbalized, exact string | 60 | 0.106 [0.090, 0.123] | 0.40 [0.32, 0.47] |

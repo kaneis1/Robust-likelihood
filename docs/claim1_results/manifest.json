@@ -29,6 +29,10 @@
       "items": 60,
       "scores": 4649
     },
+    "olmo_tok": {
+      "items": 235,
+      "scores": 24935
+    },
     "qwen_cent": {
       "items": 235,
       "scores": 24935
@@ -54,10 +58,10 @@
       "scores": 4220
     }
   },
-  "elapsed_seconds": 46.7,
-  "finished_at": "2026-11-01T18:10:10Z",
+  "elapsed_seconds": 194.1,
+  "finished_at": "2026-11-02T06:28:17Z",
   "git": {
-    "commit": "e875b10cc7ab2786067953152bc6f205126bead8",
+    "commit": "7535043ba27105085edc2e062513f04ec575f03a",
     "dirty": true
   },
   "input_sha256": {
@@ -74,7 +78,8 @@
       "results/multiwoz/claim1/20261101T094135Z-rewrites-qwen",
       "results/multiwoz/claim1/20261101T100831Z-rewrites-olmo",
       "results/multiwoz/claim1/20261101T165158Z-recheck-qwen",
-      "results/multiwoz/claim1/20261101T165218Z-recheck-olmo"
+      "results/multiwoz/claim1/20261101T165218Z-recheck-olmo",
+      "results/multiwoz/claim1/20261102T062241Z-original-olmo"
     ],
     "phase8": "results/multiwoz/20261101T091346Z-phase8",
     "verbal": [
@@ -91,10 +96,9 @@
     "20261101T165158Z-recheck-qwen": "Qwen/Qwen2.5-7B-Instruct",
     "20261101T165218Z-recheck-olmo": "allenai/OLMo-2-1124-7B-Instruct",
     "20261101T165240Z-verbal-qwen": "Qwen/Qwen2.5-7B-Instruct",
-    "20261101T171650Z-verbal-api": null
+    "20261101T171650Z-verbal-api": null,
+    "20261102T062241Z-original-olmo": "allenai/OLMo-2-1124-7B-Instruct"
   },
-  "pending": {
-    "olmo_tok": "OLMo scored the rewrites only; its original pairs are needed to compare with them (claim1-lm --model olmo --parts original)."
-  },
+  "pending": {},
   "posterior_draws": 50
 }

@@ -1,7 +1,7 @@
 # Claims 1 and 2 on MultiWOZ: what the numbers say
 
 Hand-written notes on `summary.md` (generated) for the C1 and C2 write-up. Runs: 2026-11-01/02.
-Scorecard: R1 pass, R2 fail, R3 fail, R4 fail, R5 pass. OLMo is still pending (see the end).
+Scorecard: R1 pass, R2 fail, R3 fail, R4 fail, R5 pass. OLMo was added on 2026-11-02.
 
 ## C1: token log-probs point the right way, then overshoot and wobble
 
@@ -27,6 +27,15 @@ Scorecard: R1 pass, R2 fail, R3 fail, R4 fail, R5 pass. OLMo is still pending (s
   (32% of draws).
 - **Posterior.** Drawing one wording per hypothesis class flips Qwen's argmax in 26% of draws;
   the SD of P(G) is 0.16.
+- **OLMo, the second family, shows the same pattern at about half the size.** Utterance
+  rewrites move its log Bayes factors by a median 2.3 nats (`pad`), 3.6 (`typo`), 3.2
+  (paraphrase), 4.2 (`verbose`), and 5.3 (translation), with flips in 6–15% of pairs; a
+  hypothesis paraphrase moves its score by about 2.1 nats and a Chinese translation by 12.7.
+  Its ICC(1) is 0.44 (SD ratio 0.87), so on the first half of R2 OLMo would pass where Qwen
+  fails; the scorecard is pre-registered for Qwen and is unchanged. Its posterior argmax
+  flips in 25% of draws (SD of P(G) 0.26). OLMo's originals were scored a day after its
+  rewrites (job 1059885), so its shifts also span two runs; the noise floor was measured for
+  Qwen only.
 
 ## C2: verbalized probabilities track neither the string nor the meaning
 
@@ -57,10 +66,7 @@ Scorecard: R1 pass, R2 fail, R3 fail, R4 fail, R5 pass. OLMo is still pending (s
   barely moves (SD of P(G) under 0.01), consistent with the earlier MultiWOZ finding that its
   breadth penalty is a fraction of the corpus ratio: stable, and compressed.
 
-## Open
+## Coverage
 
-- **OLMo.** Job A scored OLMo on the rewrites only (plan part 6), so it has no original pairs
-  to compare with. `claim1-lm --model olmo --parts original` is a run of about two GPU-minutes;
-  then rerun `claim1` with that folder added.
 - **Coverage.** The API verbalizers saw `para1` and `hpara1` only, and Jev `para1`, `zh`,
   `hpara1`, and `hzh`, as the plan specifies; their other cells are "not run", not zero.
