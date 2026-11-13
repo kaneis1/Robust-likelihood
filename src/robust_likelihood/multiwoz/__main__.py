@@ -201,6 +201,9 @@ def main(argv: list[str] | None = None) -> int:
     analyze_parser.add_argument("--raw", default=str(RAW_DIR))
     analyze_parser.add_argument("--labels", default=None, help="comma-separated model|format labels to keep")
     analyze_parser.add_argument("--out", default=str(Path("docs") / "simulator_results"))
+    report_parser = sub.add_parser("sim-report", help="simulator study Phase 4: summary.md and figures")
+    report_parser.add_argument("--out", default=str(Path("docs") / "simulator_results"))
+    report_parser.add_argument("--no-figures", action="store_true")
     args = parser.parse_args(argv)
     try:
         return _dispatch(args)
@@ -453,6 +456,11 @@ def _dispatch(args) -> int:
                                   p0_lm=[Path(path) for path in args.p0_lm], raw=root / args.raw, out=root / args.out,
                                   labels=args.labels.split(",") if args.labels else None)
         print(json.dumps(summary, indent=2, ensure_ascii=False))
+        return 0
+    if args.command == "sim-report":
+        from robust_likelihood.multiwoz.sim_report import run_sim_report
+
+        print(json.dumps(run_sim_report(root, root / args.out, figures=not args.no_figures), indent=2))
         return 0
     raise ValueError(f"Unknown command {args.command}")
 
