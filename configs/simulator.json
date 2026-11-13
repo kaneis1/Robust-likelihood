@@ -1,0 +1,41 @@
+{
+  "plan": "docs/simulator_study_plan.md",
+  "models": {
+    "qwen25_inst": {"id": "Qwen/Qwen2.5-7B-Instruct", "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+                    "license": "apache-2.0", "speaker_role": "assistant", "end_token": "<|im_end|>", "separator": "",
+                    "template_kwargs": {}, "formats": ["S", "P0"]},
+    "qwen25_broad": {"id": "Qwen/Qwen2.5-7B-Instruct", "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+                     "license": "apache-2.0", "speaker_role": "assistant", "end_token": "<|im_end|>", "separator": "",
+                     "template_kwargs": {}, "formats": ["B"]},
+    "qwen3_base": {"id": "Qwen/Qwen3-8B-Base", "revision": "49e3418fbbbca6ecbdf9608b4d22e5a407081db4",
+                   "license": "apache-2.0", "end_text": "\n", "formats": ["F"]},
+    "qwen3_inst": {"id": "Qwen/Qwen3-8B", "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+                   "license": "apache-2.0", "speaker_role": "assistant", "end_token": "<|im_end|>", "separator": "",
+                   "template_kwargs": {"enable_thinking": false}, "formats": ["S"]},
+    "osim_mid": {"id": "cmu-lti/osim-8b-mid", "revision": "af9ef0347ede45b6ce0cfcf3851ea37da861bb13",
+                 "license": "mit", "speaker_role": "assistant", "end_token": "<|im_end|>", "separator": "",
+                 "template_kwargs": {}, "formats": ["S", "N"]},
+    "osim_final": {"id": "cmu-lti/osim-8b", "revision": "a0002c6686e70684250479d325dc5f14bd366f46",
+                   "license": "mit", "speaker_role": "assistant", "end_token": "<|im_end|>", "separator": "",
+                   "template_kwargs": {}, "formats": ["S", "N"]},
+    "userlm": {"id": "microsoft/UserLM-8b", "revision": "ce576a239996496f13d100df0d987ae6a30f5629",
+               "license": "mit", "speaker_role": "user", "end_token": "<|eot_id|>", "separator": "\n",
+               "template_kwargs": {}, "formats": ["S", "N"], "flag_tokens": ["<|endconversation|>"]}
+  },
+  "prompts": {
+    "S_system": "You are a user talking to a restaurant booking assistant. {H}",
+    "opener": "Hello, welcome to the restaurant booking service. How can I help you?",
+    "B_system": "You are a real person typing to a restaurant booking assistant. Real people write in many different ways: short or long, casual or formal, sometimes with typos. {H}",
+    "N_system": "{H}",
+    "F_header": "The following are first messages that customers typed to a restaurant booking assistant, each after a short description of the customer.",
+    "F_example": "\n\nCustomer: {H}\nMessage: {U}",
+    "F_query": "\n\nCustomer: {H}\nMessage:"
+  },
+  "sampling": {"temperature": 1.0, "top_p": 1.0, "top_k": 0, "repetition_penalty": 1.0, "max_new_tokens": 96},
+  "samples_per_text": 64,
+  "seed": 20261103,
+  "bootstrap": {"replicates": 2000, "seed": 20261103},
+  "fewshot": {"examples": 8, "file": "data/multiwoz/derived/fewshot_examples.json"},
+  "format_check": {"goals_2slot": 3, "goals_3slot": 3, "samples": 8, "p0_pairs": 20, "boundary_pairs": 200,
+                   "boundary_failure_limit": 0.01, "p0_tolerance_nats": 1.0}
+}

@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# Simulator study (docs/simulator_study_plan.md) on one GPU (at least 24 GB, bf16). Do not submit
+# until the user has approved it.
+#
+#   check   Phase 1: every model and format of configs/simulator.json, 8 samples for each of 6
+#           seeded goals, boundary and exact-sampling checks, P0 against Phase 8. About 30-45 min.
+#
+# On the login node first, every model at its pinned revision (configs/simulator.json), with
+# huggingface_hub; the jobs run with HF_HUB_OFFLINE=1 and never pip install.
+#
+# Replace every <PLACEHOLDER> before submitting, or override it on the command line.
+#   Slurm: sbatch scripts/sim_job.sh <stage>
+#   LSF:   bsub < scripts/sim_job.sh   (set STAGE in the environment)
+#   PBS:   qsub -v STAGE=<stage> scripts/sim_job.sh
+#   NUS SoC: sbatch --ignore-pbs -p gpu --gres=gpu:h100-47:1 --time=03:00:00 \
+#            --export=ALL,VENV_DIR=/var/tmp/cuizq-rl,VENV_TAR=$HOME/envs/cuizq-rl.tar scripts/sim_job.sh check
+#
+#SBATCH --job-name=sim-study
+#SBATCH --partition=<GPU_PARTITION>
+#SBATCH --gres=gpu:<GPU_TYPE>:1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=64G
+#SBATCH --time=03:00:00
+#SBATCH --output=sim-study.%j.log
+#
+#BSUB -J sim-study
+#BSUB -q <GPU_QUEUE>
+#BSUB -n 4
+#BSUB -gpu "num=1:gmem=24G"
+#BSUB -R "rusage[mem=64GB]"
+#BSUB -W 03:00
+#BSUB -o sim-study.%J.out
+#BSUB -e sim-study.%J.err
+#
+#PBS -N sim-study
+#PBS -q <GPU_QUEUE>
+#PBS -l select=1:ncpus=4:ngpus=1:mem=64gb
+#PBS -l walltime=03:00:00
+#PBS -P <PROJECT_ID>
+#PBS -j oe
+#PBS -o sim-study.log
+
+set -euo pipefail
+
+STAGE="${1:-${STAGE:?pass the stage: check}}"
+cd "${SLURM_SUBMIT_DIR:-${PBS_O_WORKDIR:-${LS_SUBCWD:-$(pwd)}}}"
+
+# module load <CUDA_MODULE>
+if [ -n "${VENV_TAR:-}" ] && [ ! -x "${VENV_DIR:?VENV_TAR needs VENV_DIR}/bin/python" ]; then
+    df -h "$(dirname "$VENV_DIR")"
+    tar -xf "$VENV_TAR" -C /
+fi
+if [ -n "${VENV_DIR:-}" ]; then source "$VENV_DIR/bin/activate"; fi
+export PYTHONPATH="$PWD/src${PYTHONPATH:+:$PYTHONPATH}"
+export HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}"
+export HF_HUB_OFFLINE=1
+
+nvidia-smi
+python -c "import torch, transformers; print('torch', torch.__version__, 'transformers', transformers.__version__, torch.cuda.get_device_name(0))"
+
+newest_phase8() {
+    for dir in $(ls -1d results/multiwoz/*-phase8 2>/dev/null | sort -r); do
+        if grep -q finished_at "$dir/manifest.json"; then echo "$dir"; return; fi
+    done
+    echo "no finished Phase 8 run in results/multiwoz" >&2
+    exit 1
+}
+
+if [ "$STAGE" = "check" ]; then
+    python -m robust_likelihood.multiwoz sim-check --all --phase8 "$(newest_phase8)"
+else
+    echo "unknown stage $STAGE" >&2
+    exit 2
+fi

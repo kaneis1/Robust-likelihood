@@ -1,0 +1,91 @@
+{
+  "candidates": 462,
+  "examples": [
+    {
+      "H": "The user wants to find a cheap restaurant serving italian food in the centre of town.",
+      "U": "I'm looking for a restaurant that is cheap and is in the centre. Can you help me?",
+      "dialogue_id": "PMUL2064",
+      "n_constrained": 3,
+      "status": {
+        "area": "named",
+        "food": "omitted",
+        "pricerange": "named"
+      }
+    },
+    {
+      "H": "The user wants to find an expensive restaurant serving gastropub food.",
+      "U": "Yeah, could you recommend a good gastropub?",
+      "dialogue_id": "MUL0928",
+      "n_constrained": 2,
+      "status": {
+        "food": "named",
+        "pricerange": "omitted"
+      }
+    },
+    {
+      "H": "The user wants to find a restaurant serving modern european food in the centre of town.",
+      "U": "Need a place to eat, modern euro food at the centre.",
+      "dialogue_id": "MUL1424",
+      "n_constrained": 2,
+      "status": {
+        "area": "named",
+        "food": "named"
+      }
+    },
+    {
+      "H": "The user wants to find an expensive restaurant serving indian food in the west of town.",
+      "U": "I'm looking for a restaurant in the west that serves Indian food.",
+      "dialogue_id": "MUL0980",
+      "n_constrained": 3,
+      "status": {
+        "area": "named",
+        "food": "named",
+        "pricerange": "omitted"
+      }
+    },
+    {
+      "H": "The user wants to find an expensive restaurant serving indian food in the west of town.",
+      "U": "Can you help me find a place to eat?",
+      "dialogue_id": "PMUL4267",
+      "n_constrained": 3,
+      "status": {
+        "area": "omitted",
+        "food": "omitted",
+        "pricerange": "omitted"
+      }
+    },
+    {
+      "H": "The user wants to find a cheap restaurant in the centre of town.",
+      "U": "Hello. I'm looking for a place to dine tonight. I wouldn't like anything expensive, and I'd prefer something in the city center.",
+      "dialogue_id": "MUL1224",
+      "n_constrained": 2,
+      "status": {
+        "area": "named",
+        "pricerange": "named"
+      }
+    },
+    {
+      "H": "The user wants to find an expensive restaurant serving chinese food in the centre of town.",
+      "U": "I'm looking for an expensive restaurant in the centre please.",
+      "dialogue_id": "PMUL2082",
+      "n_constrained": 3,
+      "status": {
+        "area": "named",
+        "food": "omitted",
+        "pricerange": "named"
+      }
+    },
+    {
+      "H": "The user wants to find a moderately priced restaurant serving modern european food.",
+      "U": "I am looking for a modern European restaurant in the moderate range.",
+      "dialogue_id": "MUL0319",
+      "n_constrained": 2,
+      "status": {
+        "food": "named",
+        "pricerange": "named"
+      }
+    }
+  ],
+  "rule": "train-split MUL/PMUL first user turns opening only the restaurant domain, clean goals with 2 or 3 constrained slots, named values matching the goal; 4 two-slot and 4 three-slot turns drawn at random within each size, shuffled",
+  "seed": 20261103
+}

@@ -174,6 +174,15 @@ def main(argv: list[str] | None = None) -> int:
     typ_parser.add_argument("--jev-full", required=True, help="the full Jev run on the original probe")
     typ_parser.add_argument("--claim1", default=str(Path("docs") / "claim1_results" / "metrics.json"))
     typ_parser.add_argument("--out", default=str(Path("docs") / "typicality_v0_results"))
+    fewshot_parser = sub.add_parser("sim-fewshot", help="simulator study: the 8 few-shot examples of format F (raw corpus)")
+    fewshot_parser.add_argument("--raw", default=str(RAW_DIR))
+    check_parser = sub.add_parser("sim-check", help="simulator study Phase 1: format check; needs a GPU")
+    check_parser.add_argument("--models", default=None, help="comma-separated keys of configs/simulator.json")
+    check_parser.add_argument("--all", action="store_true", help="every model and format in the config")
+    check_parser.add_argument("--phase8", required=True, help="folder of the Phase 8 lm-score run (for P0)")
+    check_parser.add_argument("--dtype", default="bfloat16")
+    check_parser.add_argument("--device", default=None)
+    check_parser.add_argument("--batch-size", type=int, default=16)
     args = parser.parse_args(argv)
     try:
         return _dispatch(args)
@@ -394,6 +403,21 @@ def _dispatch(args) -> int:
                                                    dry_run=args.dry_run,
                                                    resume=None if args.resume is None else Path(args.resume))
         print(json.dumps(summary, indent=2, sort_keys=True, ensure_ascii=False))
+        return 0
+    if args.command == "sim-fewshot":
+        from robust_likelihood.multiwoz.sim import write_fewshot
+
+        print(json.dumps(write_fewshot(root, root / args.raw), indent=2))
+        return 0
+    if args.command == "sim-check":
+        from robust_likelihood.multiwoz.sim import format_check
+
+        if not args.all and not args.models:
+            raise ValueError("name --models or pass --all")
+        keys = None if args.all else args.models.split(",")
+        summary = format_check(root, keys, Path(args.phase8), dtype=args.dtype, device=args.device,
+                               batch_size=args.batch_size)
+        print(json.dumps(summary, indent=2))
         return 0
     raise ValueError(f"Unknown command {args.command}")
 
