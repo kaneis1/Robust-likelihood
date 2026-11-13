@@ -194,6 +194,13 @@ def main(argv: list[str] | None = None) -> int:
     score_parser.add_argument("--device", default=None)
     score_parser.add_argument("--batch-size", type=int, default=32)
     score_parser.add_argument("--label", default=None)
+    analyze_parser = sub.add_parser("sim-analyze", help="simulator study Phase 3: metrics from the sim-score runs")
+    analyze_parser.add_argument("--runs", nargs="*", default=[], help="sim-score run folders (others are skipped)")
+    analyze_parser.add_argument("--phase8", default=None, help="the Phase 8 run, analyzed as qwen25_inst|P0")
+    analyze_parser.add_argument("--p0-lm", nargs="*", default=[], help="claims job A Qwen folders (center, rewrites)")
+    analyze_parser.add_argument("--raw", default=str(RAW_DIR))
+    analyze_parser.add_argument("--labels", default=None, help="comma-separated model|format labels to keep")
+    analyze_parser.add_argument("--out", default=str(Path("docs") / "simulator_results"))
     args = parser.parse_args(argv)
     try:
         return _dispatch(args)
@@ -437,6 +444,15 @@ def _dispatch(args) -> int:
                             include_fail=True if args.include_fail else None, batch_size=args.batch_size,
                             dtype=args.dtype, device=args.device, label=args.label)
         print(json.dumps(summary, indent=2))
+        return 0
+    if args.command == "sim-analyze":
+        from robust_likelihood.multiwoz.sim_analyze import run_sim_analyze
+
+        summary = run_sim_analyze(root, runs=[Path(path) for path in args.runs],
+                                  phase8=Path(args.phase8) if args.phase8 else None,
+                                  p0_lm=[Path(path) for path in args.p0_lm], raw=root / args.raw, out=root / args.out,
+                                  labels=args.labels.split(",") if args.labels else None)
+        print(json.dumps(summary, indent=2, ensure_ascii=False))
         return 0
     raise ValueError(f"Unknown command {args.command}")
 

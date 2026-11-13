@@ -127,3 +127,24 @@ fallback is not needed.
   9,383 hypothesis-rewrite pairs, and 894 rewritten hypotheses for `hsample`.
 - **Self-checks before any scoring:** template check, exact sampling, and the boundary of every pair
   the run scores; failures go to `boundary_failures.jsonl`, and more than 1% stop the run.
+
+## Phase 3 interpretations (`sim-analyze`, `multiwoz/sim_analyze.py`)
+
+- **Human percentile** counts a cut-off sample as at least as surprising when its lower bound
+  already is, and leaves it out otherwise. Reported over all clean pairs and over the gold pairs
+  (`G|impl`, which serves both regimes for 3-slot goals, as in `metrics.goal_key`).
+- **Style** compares each clean item's human turn with one sample under its gold hypothesis (the
+  first that ended), so distinct-2 compares sets of the same size (235). The typo proxy is a word
+  outside the words that occur in at least 5 MultiWOZ 2.2 train dialogues.
+- **Slot naming:** the extractor's value for the slot is neither `none` nor `dontcare`. a and b are
+  item-averaged shares with item-bootstrap intervals; ln(a/b) uses pooled counts with b smoothed as
+  (n + 0.5) / (N + 1). S3 reads the slot means with b under `minus:X|impl`.
+- **Q4:** the six typv0 variants and `cent1B` with the 6-bin edges. Bin occupancy under both
+  weightings; the size principle, contradiction gap, and bin agreement under uniform weighting.
+- **Q5 paired differences** (second − first, same item draws): median human percentile, share
+  beyond all samples, mean of μ_h over pairs, and the median gold standardized gap, for
+  `osim_mid` vs `osim_final` and the two clean contrasts (`qwen3_base` → `osim_mid`,
+  `qwen3_inst` → `osim_final`).
+- **Check on P0:** the analysis on Phase 8 + claims job A reproduces claim 1's utterance shifts and
+  ICC exactly and typicality v0's bin occupancies exactly; posterior instability differs in the third
+  decimal (0.161 vs 0.163) only because the wording draws use this study's seed.

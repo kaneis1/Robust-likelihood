@@ -146,9 +146,15 @@ def held_out_sem(tuples: list[tuple]) -> tuple[list[float], list[float]]:
 
 
 class Inputs:
-    """Samples per hypothesis source (an original text, or a rewritten unit) and every scored cell."""
+    """Samples per hypothesis source (an original text, or a rewritten unit) and every scored cell.
 
-    def __init__(self, root: Path, phase8: Path, lm_runs: list[Path], derived: Path | None = None):
+    phase8 is a folder with lm_scores.jsonl and lm_samples.jsonl: the Phase 8 run, or a simulator
+    run (multiwoz/sim_score.py), whose own rewrite parts are then read under its model_key. A sample
+    row that carries S_broad uses it; Phase 8's take it from the claims centering part. A sample cut
+    off at max_new_tokens (S None, simulator runs only) is left out, as Phase 8 dropped them."""
+
+    def __init__(self, root: Path, phase8: Path, lm_runs: list[Path], derived: Path | None = None,
+                 model_key: str = "qwen"):
         derived = derived or root / DERIVED_DIR
         vocab = load_vocab(derived)
         extractor = Extractor(vocab)
@@ -158,18 +164,21 @@ class Inputs:
         self.metas = item_meta(self.items, self.probe)
         self.subset = json.loads((derived / "robustness_subset.json").read_text(encoding="utf-8"))
         self.pool = sorted({row["text"] for row in self.probe})
-        lm = read_lm_runs(lm_runs).get("qwen", {})
+        lm = read_lm_runs(lm_runs).get(model_key, {})
         broad_of_sample = {(row["hyp_text"], row["sample"]): row["S"] for row in lm.get("center", [])
                            if row["source"] == "sample"}
         self.samples: dict[str, dict[str, list]] = {}
         pool = set(self.pool)
         for row in read_jsonl(phase8 / "lm_samples.jsonl"):
-            if row["text"] in pool:
+            if row["text"] in pool and row.get("S") is not None:
                 found = self.samples.setdefault(row["text"], {"S": [], "cent": [], "tuples": []})
                 found["S"].append(row["S"])
-                found["cent"].append(row["S"] - broad_of_sample[(row["text"], row["sample"])])
+                broad = row["S_broad"] if "S_broad" in row else broad_of_sample[(row["text"], row["sample"])]
+                found["cent"].append(row["S"] - broad)
                 found["tuples"].append(tuple(extractor.extract(row["reply"]).values()))
         for row in lm.get("hsample", []):
+            if row.get("S") is None:
+                continue
             found = self.samples.setdefault(row["unit_id"], {"S": [], "cent": [], "tuples": []})
             found["S"].append(row["S"])
             found["cent"].append(row["S"] - row["S_broad"])
