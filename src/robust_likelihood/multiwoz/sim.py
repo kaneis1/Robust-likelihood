@@ -241,6 +241,15 @@ def generation_config(sim_format: SimFormat, settings: dict, pad: int):
     return sampling_config(settings, sim_format.end, pad)
 
 
+def use_config(model, config):
+    """Make config the model's own generation_config, as multiwoz.lm does. Otherwise transformers
+    (4.50 on) fills every option left at its global default (temperature 1, top_p 1, repetition
+    penalty 1) from the model's generation_config, which for Qwen3-8B and UserLM-8b means
+    temperature 0.6 and top_p below 1."""
+    model.generation_config = config
+    return config
+
+
 def draw(model, sim_format: SimFormat, hypothesis: str, count: int, config, seed: int) -> list[dict]:
     """count samples, each with its text, the raw decoded reply, the reply tokens, and whether it ended."""
     import torch
@@ -250,6 +259,7 @@ def draw(model, sim_format: SimFormat, hypothesis: str, count: int, config, seed
     tokenizer = sim_format.tokenizer
     prefix = sim_format.encode(sim_format.prefix_text(hypothesis))
     device = next(model.parameters()).device
+    use_config(model, config)
     torch.manual_seed(seed)
     ids = torch.tensor([prefix], dtype=torch.long, device=device)
     extra = {"tokenizer": tokenizer} if sim_format.fmt == "F" else {}
@@ -381,8 +391,8 @@ def format_check(
             generation = generation_config(sim_format, settings, pad)
             # The newline stop of F is a stopping rule, not a logits processor, so the check runs without it.
             first_prefix = sim_format.encode(sim_format.prefix_text(goals[0]["H"]))
-            exact = sampling_is_exact(model, first_prefix, sampling_config(
-                settings, sim_format.end if sim_format.end is not None else tokenizer.eos_token_id, pad))
+            exact = sampling_is_exact(model, first_prefix, use_config(model, sampling_config(
+                settings, sim_format.end if sim_format.end is not None else tokenizer.eos_token_id, pad)))
             boundary_failures = [(row["item_id"], row["hyp_key"]) for row in boundary_pairs
                                  if not sim_format.boundary_holds(row["text"], row["utterance"])]
             found = {"model": key, "format": fmt, "model_id": model_id, "revision": revision,

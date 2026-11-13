@@ -126,6 +126,22 @@ def test_fewshot_selection_is_stratified_seeded_and_keeps_an_omission():
         select_fewshot([candidate(i, 2) for i in range(10)] + [candidate(100 + i, 3) for i in range(10)], 7)
 
 
+def test_sampling_stays_exact_when_the_model_ships_a_low_temperature():
+    torch = pytest.importorskip("torch")
+    transformers = pytest.importorskip("transformers")
+    from robust_likelihood.lmcore import sampling_config, sampling_is_exact
+    from robust_likelihood.multiwoz.sim import use_config
+
+    torch.manual_seed(0)
+    model = transformers.GPT2LMHeadModel(transformers.GPT2Config(
+        vocab_size=64, n_positions=32, n_embd=16, n_layer=1, n_head=2)).eval()
+    model.generation_config = transformers.GenerationConfig(do_sample=True, temperature=0.6, top_p=0.9)
+    settings = {"temperature": 1.0, "top_p": 1.0, "top_k": 0, "repetition_penalty": 1.0, "max_new_tokens": 3}
+    config = sampling_config(settings, 63, 63)
+    assert not sampling_is_exact(model, [1, 2, 3], config)
+    assert sampling_is_exact(model, [1, 2, 3], use_config(model, config))
+
+
 def test_check_goals_draw_two_and_three_slot_items():
     from robust_likelihood.storage import read_jsonl
 

@@ -71,3 +71,23 @@ fallback is not needed.
 - **Format check.** 3 two-slot and 3 three-slot clean items (seed 20261103), their `G|impl`
   texts; 8 samples each; the boundary check on 200 seeded clean probe pairs per (model, format);
   P0 against Phase 8 on 20 seeded pairs.
+
+## Phase 1 runs
+
+- **First run, `20261113T145208Z-sim-check` (SoC job 1134263, commit `89ce6a1`): not used.**
+  transformers 4.50 and later fill every generation option left at its global default
+  (temperature 1, top_p 1, repetition penalty 1) from the model's own `generation_config`, when
+  that config was saved by transformers 4.50 or later. Qwen3-8B ships temperature 0.6 / top_p
+  0.95 and UserLM-8b temperature 0.6 / top_p 0.9, so their samples were drawn from a warped
+  distribution; the exact-sampling check reported it (`qwen3_inst` S, `userlm` S and N). Qwen2.5's
+  config predates 4.50 and the OSim configs only add a BOS id, so those combinations were exact.
+  Fix: `sim.use_config` makes the sampling config the model's own before every draw and the
+  exactness check, as `multiwoz.lm` already does (`model.generation_config = generation`).
+- **OSim tokenizer warning.** transformers warns that the OSim tokenizers carry "an incorrect
+  regex pattern" (a Mistral-tokenizer check). Both OSim `tokenizer.json` files are byte-identical
+  to Qwen3-8B's (sha256 `aeb13307…`), and nothing is patched unless `fix_mistral_regex` is set, so
+  OSim tokenizes exactly as Qwen3 does; the warning is a false positive.
+- **P0 against Phase 8.** The prefix is token-for-token the Phase 8 prefix; |S − S_phase8| on 20
+  pairs had median 0.27 and maximum 1.18 nats. The rescoring noise measured between two runs of
+  this setup (`claims_decisions.md`, job A) was 90th percentile 0.83 and maximum 1.40 nats, so the
+  plan's "1-nat batch noise" is read as that measured spread, and P0 is taken to reproduce Phase 8.
