@@ -83,6 +83,9 @@ fallback is not needed.
   config predates 4.50 and the OSim configs only add a BOS id, so those combinations were exact.
   Fix: `sim.use_config` makes the sampling config the model's own before every draw and the
   exactness check, as `multiwoz.lm` already does (`model.generation_config = generation`).
+- **Second run, `20261113T150256Z-sim-check` (SoC job 1134378, commit `0aae875`): the Phase 1
+  result.** All 11 (model, format) combinations sample exactly, pass the template check, and have
+  0/200 boundary failures. Written to `docs/simulator_results/format_check.md`.
 - **OSim tokenizer warning.** transformers warns that the OSim tokenizers carry "an incorrect
   regex pattern" (a Mistral-tokenizer check). Both OSim `tokenizer.json` files are byte-identical
   to Qwen3-8B's (sha256 `aeb13307…`), and nothing is patched unless `fix_mistral_regex` is set, so
