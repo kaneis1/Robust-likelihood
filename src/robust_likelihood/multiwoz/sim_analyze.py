@@ -9,8 +9,11 @@ Q1 coverage. A pair's human percentile is the share of the hypothesis's own samp
 A sample cut off at max_new_tokens counts as >= when its lower bound S_lower already is, and is
 left out otherwise. Semantic coverage asks whether any sample under the gold hypothesis carries U's
 annotated slot tuple (the regex extractor); style compares each human turn with one sample under
-its gold hypothesis (the first that ended). The typo proxy is a word outside the MultiWOZ 2.2 train
-vocabulary, counting words that occur in at least DICTIONARY_DIALOGUES dialogues.
+its gold hypothesis (the first that ended). The plan's typo proxy is a word outside the MultiWOZ 2.2
+train vocabulary, counting words that occur in at least DICTIONARY_DIALOGUES dialogues; in the
+simulators' samples it mostly catches content MultiWOZ users never mention, so it reads as "outside
+the corpus vocabulary", not as typos. The regex extractor finds a named constrained slot in the human
+turns at 0.738, against 0.740 from the annotation, so a_model and the corpus a are comparable.
 Q2 fidelity. A sample names a slot when the extractor finds a value for it (not none, not
 dontcare). a_model(X): samples under the gold hypothesis naming constrained X; b_model(X): samples
 under minus:X naming X. ln(a/b) from pooled counts, b smoothed as (n + 0.5) / (N + 1).

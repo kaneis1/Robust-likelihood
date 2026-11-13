@@ -135,7 +135,15 @@ fallback is not needed.
   (`G|impl`, which serves both regimes for 3-slot goals, as in `metrics.goal_key`).
 - **Style** compares each clean item's human turn with one sample under its gold hypothesis (the
   first that ended), so distinct-2 compares sets of the same size (235). The typo proxy is a word
-  outside the words that occur in at least 5 MultiWOZ 2.2 train dialogues.
+  outside the words that occur in at least 5 MultiWOZ 2.2 train dialogues. In OSim's samples the
+  flagged words are mostly not typos but content MultiWOZ users never mention (birthday, romantic,
+  girlfriend, anniversary, York, Paris), so the report calls it "word outside vocabulary".
+- **Extractor check:** on the 235 human turns the regex extractor finds a named constrained slot at
+  0.738, against 0.740 from the 2.2 annotation, so a_model is comparable with the corpus a.
+- **Sample flags** (manifest counts) are heuristics. Under S, "Sure, …" and "We have …" are mostly
+  user-voice replies to the opener ("Sure, I'd like to book a table…", "We have a specific diet"),
+  and the one OSim-Mid sample with `<think>` is a garbled pure-sampling draw (S = 59.7), not a
+  thinking mode.
 - **Slot naming:** the extractor's value for the slot is neither `none` nor `dontcare`. a and b are
   item-averaged shares with item-bootstrap intervals; ln(a/b) uses pooled counts with b smoothed as
   (n + 0.5) / (N + 1). S3 reads the slot means with b under `minus:X|impl`.

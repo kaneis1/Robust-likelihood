@@ -334,8 +334,10 @@ def summary_markdown(metrics: dict, manifest: dict, discussion: str | None) -> s
                      with_ci(q1["semantic"]["median_p_sem"], "median", 3)])
     parts.append(table(["Model · format", "S/word, human", "S/word, samples", "slot tuple covered", "median P_sem"],
                        rows))
-    parts += ["", "Style: each human turn against one sample under its gold hypothesis (235 each). Typo proxy: a "
-                  "word outside the MultiWOZ 2.2 train vocabulary (words in at least 5 dialogues).", ""]
+    parts += ["", "Style: each human turn against one sample under its gold hypothesis (235 each). Outside "
+                  "vocabulary: a word not among those in at least 5 MultiWOZ 2.2 train dialogues; for people this "
+                  "is mostly typos, for the simulators mostly content MultiWOZ users never mention (birthday, "
+                  "romantic, anniversary, a city).", ""]
     first = runs[labels[0]]["q1"]["style"]["human"] if labels else {}
     rows = [["**human turns**", num(first.get("median_words"), 0), pct(first.get("greeting")), pct(first.get("question")),
              pct(first.get("non_dictionary")), num(first.get("distinct_2"), 3)]]
@@ -343,7 +345,7 @@ def summary_markdown(metrics: dict, manifest: dict, discussion: str | None) -> s
         found = runs[label]["q1"]["style"]["samples"]
         rows.append([name(label), num(found.get("median_words"), 0), pct(found.get("greeting")),
                      pct(found.get("question")), pct(found.get("non_dictionary")), num(found.get("distinct_2"), 3)])
-    parts.append(table(["Text", "median words", "greeting", "question", "non-dictionary word", "distinct-2"], rows))
+    parts.append(table(["Text", "median words", "greeting", "question", "word outside vocabulary", "distinct-2"], rows))
     parts += ["", "![](fig1_surprisal.png)", ""]
 
     parts += ["## Q2 Fidelity", "", "Slot naming in the samples, mean over the three slots (a: under the gold "
