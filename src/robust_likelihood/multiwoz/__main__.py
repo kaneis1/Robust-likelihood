@@ -183,6 +183,17 @@ def main(argv: list[str] | None = None) -> int:
     check_parser.add_argument("--dtype", default="bfloat16")
     check_parser.add_argument("--device", default=None)
     check_parser.add_argument("--batch-size", type=int, default=16)
+    score_parser = sub.add_parser("sim-score", help="simulator study Phase 2: one model and format; needs a GPU")
+    score_parser.add_argument("--model", required=True, help="a key of configs/simulator.json")
+    score_parser.add_argument("--format", required=True, dest="fmt", help="S, B, N, or F")
+    score_parser.add_argument("--parts", default=None,
+                              help="comma-separated of samples,human,urewrite,hrewrite,hsample (default: all the "
+                                   "plan runs for the model)")
+    score_parser.add_argument("--include-fail", action="store_true", help="also score the fail_info probe rows")
+    score_parser.add_argument("--dtype", default="bfloat16")
+    score_parser.add_argument("--device", default=None)
+    score_parser.add_argument("--batch-size", type=int, default=32)
+    score_parser.add_argument("--label", default=None)
     args = parser.parse_args(argv)
     try:
         return _dispatch(args)
@@ -417,6 +428,14 @@ def _dispatch(args) -> int:
         keys = None if args.all else args.models.split(",")
         summary = format_check(root, keys, Path(args.phase8), dtype=args.dtype, device=args.device,
                                batch_size=args.batch_size)
+        print(json.dumps(summary, indent=2))
+        return 0
+    if args.command == "sim-score":
+        from robust_likelihood.multiwoz.sim_score import sim_score
+
+        summary = sim_score(root, args.model, args.fmt, parts=args.parts.split(",") if args.parts else None,
+                            include_fail=True if args.include_fail else None, batch_size=args.batch_size,
+                            dtype=args.dtype, device=args.device, label=args.label)
         print(json.dumps(summary, indent=2))
         return 0
     raise ValueError(f"Unknown command {args.command}")

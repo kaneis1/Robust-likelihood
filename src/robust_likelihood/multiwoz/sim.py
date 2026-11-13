@@ -192,16 +192,28 @@ class SimFormat:
             if self.end is None or self.end == getattr(tokenizer, "unk_token_id", None):
                 raise ValueError(f"{spec['end_token']} is not a token of {spec['id']}")
         self.flag_tokens = tuple(spec.get("flag_tokens", ()))
+        self._texts: dict[str, str] = {}
+        self._ids: dict[str, list[int]] = {}
 
     def messages(self, hypothesis: str) -> list[dict]:
         return chat_messages(self.fmt, self.spec, self.prompts, hypothesis)
 
     def prefix_text(self, hypothesis: str) -> str:
-        if self.fmt == "F":
-            return fewshot_prefix(self.prompts, self.examples, hypothesis)
-        rendered = self.tokenizer.apply_chat_template(self.messages(hypothesis), add_generation_prompt=True,
-                                                      tokenize=False, **self.spec.get("template_kwargs", {}))
-        return rendered + self.spec.get("separator", "")
+        if hypothesis not in self._texts:
+            if self.fmt == "F":
+                self._texts[hypothesis] = fewshot_prefix(self.prompts, self.examples, hypothesis)
+            else:
+                rendered = self.tokenizer.apply_chat_template(
+                    self.messages(hypothesis), add_generation_prompt=True, tokenize=False,
+                    **self.spec.get("template_kwargs", {}))
+                self._texts[hypothesis] = rendered + self.spec.get("separator", "")
+        return self._texts[hypothesis]
+
+    def prefix_ids(self, hypothesis: str) -> list[int]:
+        """The prefix tokens, cached per hypothesis; callers copy before extending."""
+        if hypothesis not in self._ids:
+            self._ids[hypothesis] = self.encode(self.prefix_text(hypothesis))
+        return self._ids[hypothesis]
 
     def encode(self, text: str) -> list[int]:
         encoded = self.tokenizer(text, add_special_tokens=False)
@@ -212,7 +224,7 @@ class SimFormat:
 
     def scored(self, hypothesis: str, utterance: str, prefix: list[int] | None = None) -> tuple[list[int], int]:
         """Tokens and the first scored index: prefix, reply, and the end token of a chat format."""
-        prefix = prefix if prefix is not None else self.encode(self.prefix_text(hypothesis))
+        prefix = prefix if prefix is not None else self.prefix_ids(hypothesis)
         reply = self.encode(self.reply_text(utterance))
         return prefix + reply + ([] if self.end is None else [self.end]), len(prefix)
 
@@ -251,13 +263,14 @@ def use_config(model, config):
 
 
 def draw(model, sim_format: SimFormat, hypothesis: str, count: int, config, seed: int) -> list[dict]:
-    """count samples, each with its text, the raw decoded reply, the reply tokens, and whether it ended."""
+    """count samples, each with its text, the raw decoded reply, the reply tokens (chat formats, and F
+    samples cut off at max_new_tokens), and whether it ended."""
     import torch
 
     from robust_likelihood.lmcore import with_settings
 
     tokenizer = sim_format.tokenizer
-    prefix = sim_format.encode(sim_format.prefix_text(hypothesis))
+    prefix = sim_format.prefix_ids(hypothesis)
     device = next(model.parameters()).device
     use_config(model, config)
     torch.manual_seed(seed)
@@ -274,7 +287,8 @@ def draw(model, sim_format: SimFormat, hypothesis: str, count: int, config, seed
             ended = bool(cut)
             text = raw[: min(cut)] if cut else raw
             text = text[1:] if text.startswith(" ") else text
-            found.append({"text": text, "raw": raw, "tokens": None, "ended": ended})
+            # An ended F sample is rescored from its text; one cut off keeps its tokens for a lower bound.
+            found.append({"text": text, "raw": raw, "tokens": None if ended else row, "ended": ended})
         else:
             ended = sim_format.end in row
             tokens = row[: row.index(sim_format.end)] if ended else row
@@ -288,7 +302,7 @@ def sample_surprisals(model, sim_format: SimFormat, hypothesis: str, samples: li
     samples), its text rescored for F, whose newline stop can fall inside a token."""
     from robust_likelihood.lmcore import scored_sequence, surprisals
 
-    prefix = sim_format.encode(sim_format.prefix_text(hypothesis))
+    prefix = sim_format.prefix_ids(hypothesis)
     sequences, where = [], []
     for index, sample in enumerate(samples):
         if not sample["ended"]:

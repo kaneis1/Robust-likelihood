@@ -3,7 +3,10 @@
 # until the user has approved it.
 #
 #   check   Phase 1: every model and format of configs/simulator.json, 8 samples for each of 6
-#           seeded goals, boundary and exact-sampling checks, P0 against Phase 8. About 30-45 min.
+#           seeded goals, boundary and exact-sampling checks, P0 against Phase 8. About 5 min.
+#   score   Phase 2, one model and format per job: sim_job.sh score <model> <format> [parts]
+#           (parts comma-separated; default all the plan runs for the model). About 0.5 H100-hour,
+#           1-1.5 with hsample (osim_mid, osim_final, qwen25_inst).
 #
 # On the login node first, every model at its pinned revision (configs/simulator.json), with
 # huggingface_hub; the jobs run with HF_HUB_OFFLINE=1 and never pip install.
@@ -14,6 +17,7 @@
 #   PBS:   qsub -v STAGE=<stage> scripts/sim_job.sh
 #   NUS SoC: sbatch --ignore-pbs -p gpu --gres=gpu:h100-47:1 --time=03:00:00 \
 #            --export=ALL,VENV_DIR=/var/tmp/cuizq-rl,VENV_TAR=$HOME/envs/cuizq-rl.tar scripts/sim_job.sh check
+#            (the same with: scripts/sim_job.sh score osim_mid S)
 #
 #SBATCH --job-name=sim-study
 #SBATCH --partition=<GPU_PARTITION>
@@ -42,13 +46,19 @@
 
 set -euo pipefail
 
-STAGE="${1:-${STAGE:?pass the stage: check}}"
+STAGE="${1:-${STAGE:?pass the stage: check or score}}"
 cd "${SLURM_SUBMIT_DIR:-${PBS_O_WORKDIR:-${LS_SUBCWD:-$(pwd)}}}"
 
 # module load <CUDA_MODULE>
-if [ -n "${VENV_TAR:-}" ] && [ ! -x "${VENV_DIR:?VENV_TAR needs VENV_DIR}/bin/python" ]; then
-    df -h "$(dirname "$VENV_DIR")"
-    tar -xf "$VENV_TAR" -C /
+if [ -n "${VENV_TAR:-}" ]; then
+    # Jobs sharing a node take turns, so none starts on a half-unpacked environment.
+    (
+        flock 9
+        if [ ! -x "${VENV_DIR:?VENV_TAR needs VENV_DIR}/bin/python" ]; then
+            df -h "$(dirname "$VENV_DIR")"
+            tar -xf "$VENV_TAR" -C /
+        fi
+    ) 9>"$(dirname "$VENV_DIR")/.$(basename "$VENV_DIR").lock"
 fi
 if [ -n "${VENV_DIR:-}" ]; then source "$VENV_DIR/bin/activate"; fi
 export PYTHONPATH="$PWD/src${PYTHONPATH:+:$PYTHONPATH}"
@@ -68,6 +78,11 @@ newest_phase8() {
 
 if [ "$STAGE" = "check" ]; then
     python -m robust_likelihood.multiwoz sim-check --all --phase8 "$(newest_phase8)"
+elif [ "$STAGE" = "score" ]; then
+    MODEL="${2:-${MODEL:?pass the model key}}"
+    FORMAT="${3:-${FORMAT:?pass the format}}"
+    PARTS="${4:-${PARTS:-}}"
+    python -m robust_likelihood.multiwoz sim-score --model "$MODEL" --format "$FORMAT" ${PARTS:+--parts "$PARTS"}
 else
     echo "unknown stage $STAGE" >&2
     exit 2

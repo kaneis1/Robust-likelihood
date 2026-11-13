@@ -25,7 +25,14 @@ recorded too, so the analysis can be audited.
 Full hashes are in `configs/simulator.json`. `cmu-lti/osim-8b` resolves, so the `-post`
 fallback is not needed.
 
-## Open for the user (Phase 1 stop)
+## Decided at the Phase 1 stop (user, 2026-11-13)
+
+- **Primary format S** for `osim_mid`, `osim_final`, and `userlm` (S with the opener in the
+  assistant role for UserLM, item 3 below). The other primaries have one format each: `qwen25_inst`
+  S, `qwen25_broad` B, `qwen3_base` F, `qwen3_inst` S. The formats and primaries are frozen
+  (`configs/simulator.json`, `primary` per model). N stays available as the plan's sensitivity check.
+
+## Still open for the user (asked again at the Phase 2 stop)
 
 1. **OSim lineage.** The `cmu-lti/osim-8b` card lists `Qwen/Qwen3-8B` (the instruct model) as its
    base: Qwen3-8B midtrained on OdysSim, then task RL and expert consolidation. `osim-8b-mid` is
@@ -94,3 +101,20 @@ fallback is not needed.
   pairs had median 0.27 and maximum 1.18 nats. The rescoring noise measured between two runs of
   this setup (`claims_decisions.md`, job A) was 90th percentile 0.83 and maximum 1.40 nats, so the
   plan's "1-nat batch noise" is read as that measured spread, and P0 is taken to reproduce Phase 8.
+
+## Phase 2 interpretations (`sim-score`, `multiwoz/sim_score.py`)
+
+- **Sample count.** The clean probe has 463 distinct hypothesis texts (the plan guessed about
+  1,000), so 463 × 64 samples per run. Seed rule as Phase 8: `torch.manual_seed(text_seed(20261103,
+  text))` per hypothesis text.
+- **Cut-off samples.** Phase 8 dropped samples that reached `max_new_tokens` without the end
+  marker. They are kept here with `S = None`, `ended = false`, and `S_lower`, the surprisal of their
+  96 tokens, a lower bound on their S; `lm_hypotheses.jsonl` reports mean and SD over ended samples
+  only, as Phase 8 did, so the analysis can use either rule.
+- **S_broad** of a sample is its decoded text rescored under `broad|impl` (the claims centering
+  text, which is the `broad|impl` probe text), as claims job A did for Phase 8's samples.
+- **P0 is not rerun.** The Phase 8 run and claims job A are the `qwen25_inst | P0` data.
+- **Rewrites** are the pairs of claims job A (`claim1_lm.plan_pairs`): 13,197 utterance-rewrite and
+  9,383 hypothesis-rewrite pairs, and 894 rewritten hypotheses for `hsample`.
+- **Self-checks before any scoring:** template check, exact sampling, and the boundary of every pair
+  the run scores; failures go to `boundary_failures.jsonl`, and more than 1% stop the run.
