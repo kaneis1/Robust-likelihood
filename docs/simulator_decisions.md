@@ -32,7 +32,16 @@ fallback is not needed.
   S, `qwen25_broad` B, `qwen3_base` F, `qwen3_inst` S. The formats and primaries are frozen
   (`configs/simulator.json`, `primary` per model). N stays available as the plan's sensitivity check.
 
-## Still open for the user (asked again at the Phase 2 stop)
+## Decided at the Phase 2 stop (user, 2026-11-13)
+
+- **Jobs:** the 7 primary (model, format) runs, all parts the plan names, and N for `osim_mid`,
+  `osim_final`, and `userlm` as sensitivity runs with the `samples` and `human` parts only.
+- **`osim_inst` is dropped** (item 2 below); the study has 7 model keys.
+- **Q5 is reported both ways** (item 1 below): `qwen3_base` → `osim_mid` and `qwen3_inst` →
+  `osim_final` as the clean contrasts, and `osim_mid` vs `osim_final` with the confound stated.
+- **UserLM's S** (item 3) and **the few-shot draw** (item 4) are kept as implemented.
+
+## The Phase 1 open items, as raised
 
 1. **OSim lineage.** The `cmu-lti/osim-8b` card lists `Qwen/Qwen3-8B` (the instruct model) as its
    base: Qwen3-8B midtrained on OdysSim, then task RL and expert consolidation. `osim-8b-mid` is
