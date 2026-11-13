@@ -1,0 +1,55 @@
+{
+  "bootstrap": {
+    "replicates": 2000,
+    "seed": 20261103
+  },
+  "dictionary": {
+    "rule": "words in >= 5 MultiWOZ 2.2 train dialogues",
+    "size": 2447
+  },
+  "elapsed_seconds": 248.1,
+  "finished_at": "2026-11-13T18:48:44Z",
+  "git": {
+    "commit": "2ff47e9ae95ba5066016393bec8758853ec713f1",
+    "dirty": true
+  },
+  "inputs": {
+    "osim_final|N": [
+      "results/multiwoz/20261113T181014Z-sim-osim_final-N"
+    ],
+    "osim_final|S": [
+      "results/multiwoz/20261113T162704Z-sim-osim_final-S"
+    ],
+    "osim_mid|N": [
+      "results/multiwoz/20261113T175148Z-sim-osim_mid-N"
+    ],
+    "osim_mid|S": [
+      "results/multiwoz/20261113T154405Z-sim-osim_mid-S"
+    ],
+    "qwen25_broad|B": [
+      "results/multiwoz/20261113T163534Z-sim-qwen25_broad-B"
+    ],
+    "qwen25_inst|P0": [
+      "results/multiwoz/20261101T091346Z-phase8",
+      "results/multiwoz/claim1/20261101T093512Z-center-qwen",
+      "results/multiwoz/claim1/20261101T094135Z-rewrites-qwen",
+      "results/multiwoz/claim1/20261101T165158Z-recheck-qwen"
+    ],
+    "qwen25_inst|S": [
+      "results/multiwoz/20261113T154427Z-sim-qwen25_inst-S"
+    ],
+    "qwen3_base|F": [
+      "results/multiwoz/20261113T171734Z-sim-qwen3_base-F"
+    ],
+    "qwen3_inst|S": [
+      "results/multiwoz/20261113T165338Z-sim-qwen3_inst-S"
+    ],
+    "userlm|N": [
+      "results/multiwoz/20261113T181754Z-sim-userlm-N"
+    ],
+    "userlm|S": [
+      "results/multiwoz/20261113T171948Z-sim-userlm-S"
+    ]
+  },
+  "kind": "sim-analyze"
+}

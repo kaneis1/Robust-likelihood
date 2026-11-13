@@ -115,7 +115,8 @@ def figure_surprisal(plt, runs: dict, labels: list[str], out: Path) -> list[Path
     ax.set_xlabel("surprisal S under the gold hypothesis (nats, log scale; box 25-75%, whiskers 5-95%)")
     ax.grid(axis="x", color=INK["grid"], linewidth=0.6)
     handles = [plt.Rectangle((0, 0), 1, 1, color=HUMAN), plt.Rectangle((0, 0), 1, 1, color=MODEL)]
-    ax.legend(handles, ["human first turn", "model's own samples"], loc="lower right", fontsize=8, frameon=False)
+    ax.legend(handles, ["human first turn", "model's own samples"], loc="upper center", bbox_to_anchor=(0.5, -0.08),
+              ncol=2, fontsize=8, frameon=False)
     ax.set_title("Human first turns against each model's own samples", fontsize=10, color=INK["primary"])
     write_csv(out / "fig1_surprisal.csv", rows)
     paths = _save(figure, out / "fig1_surprisal")
@@ -141,6 +142,10 @@ def figure_naming(plt, runs: dict, labels: list[str], out: Path) -> list[Path]:
                          "low": (found.get("ci95") or [None, None])[0], "high": (found.get("ci95") or [None, None])[1]})
         _dots(ax, [LABELS.get(label, label) for label in labels], points, intervals, scale=scale)
         reference = (corpus or {}).get("a_corpus" if field == "a_model" else "b_corpus")
+        if field == "b_model_impl":
+            top = max([value for value in points if value is not None]
+                      + [interval[1] for interval in intervals if interval] + [reference or 0])
+            ax.set_xlim(0, top * 2)
         if reference is not None:
             ax.axvline(reference, color=INK["primary"], linestyle=DASHED, linewidth=1)
             ax.text(reference, 1.01, "corpus", transform=ax.get_xaxis_transform(), ha="center", fontsize=7,
@@ -310,6 +315,22 @@ def summary_markdown(metrics: dict, manifest: dict, discussion: str | None) -> s
                        [[row["id"], row["statement"], "**pass**" if row["pass"] else "fail"]
                         for row in metrics["predictions"]]))
     parts += ["", "Values behind each verdict are in `metrics.json` under `predictions`.", ""]
+
+    parts += ["## Sample health", "",
+              "Over the 64 samples of each of the 463 clean hypothesis texts. Cut off: no end marker within 96 "
+              "tokens (kept with a lower bound on S). Empty: the model ended the turn at once. Phase 8 (P0) "
+              "dropped its cut-off samples, so its rate is not recorded.", ""]
+    rows = []
+    for label in labels:
+        found = runs[label].get("health") or {}
+        flags = found.get("flags", {})
+        recorded = found.get("flags_recorded")
+        rows.append([name(label), pct(found.get("cut_off")) if recorded else "–", pct(found.get("empty")),
+                     pct(flags.get("<|endconversation|>", 0.0)) if recorded else "–",
+                     pct(flags.get("assistant_opening", 0.0)) if recorded else "–"])
+    parts.append(table(["Model · format", "cut off", "empty", "<|endconversation|>", "\"Sure…\"-type opening"],
+                       rows))
+    parts += [""]
 
     parts += ["## Q1 Coverage", "",
               "Human percentile: the share of a hypothesis's own samples at least as surprising as the human turn "

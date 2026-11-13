@@ -307,6 +307,17 @@ def typicality(run: Run, typ: dict, changed: dict, corpus_boot, boot: ItemBoot, 
     return result
 
 
+def health(run: Run) -> dict:
+    """Shares of the samples over the clean texts that were cut off, empty, or flagged."""
+    rows = [row for found in run.samples.values() for row in found]
+    flagged: Counter = Counter(name for row in rows for name in row.get("flags", []))
+    total = len(rows) or 1
+    return {"drawn": len(rows), "cut_off": sum(1 for row in rows if row.get("S") is None) / total,
+            "empty": sum(1 for row in rows if row.get("S") is not None and not row["reply"].strip()) / total,
+            "flags": {name: count / total for name, count in sorted(flagged.items()) if name != "truncated"},
+            "flags_recorded": any("flags" in row for row in rows)}
+
+
 def concentration(run: Run) -> dict:
     means, distinct, top = [], [], []
     for rows in run.samples.values():
@@ -459,7 +470,7 @@ def run_sim_analyze(root: Path, *, runs: list[Path], phase8: Path | None, p0_lm:
                  "q2": {"naming": naming(run, metas, boot, reference), "raw_occam": occam_summary(items, log, changed,
                                                                                                   corpus_boot)},
                  "q4": typicality(run, typ, changed, corpus_boot, boot, clean_ids),
-                 "q5": concentration(run)}
+                 "q5": concentration(run), "health": health(run)}
         if run.has_rewrites:
             scorer = Scorer(label, "loglik", log, items=clean_ids)
             block["q3"] = {"rewording": rewording(scorer, metas, boot), "utterance": utterance(scorer, metas, boot),

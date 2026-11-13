@@ -128,6 +128,28 @@ fallback is not needed.
 - **Self-checks before any scoring:** template check, exact sampling, and the boundary of every pair
   the run scores; failures go to `boundary_failures.jsonl`, and more than 1% stop the run.
 
+## Phase 2 runs (SoC jobs 1134814–1134823, commit `93b2ed5`, H100 NVL MIG 3g.47gb, 2 at a time)
+
+| Run | Job | Minutes |
+|---|---|---|
+| `qwen25_inst · S` (all parts) | 1134814 | 43 |
+| `osim_mid · S` (all parts) | 1134815 | 51 |
+| `osim_final · S` (all parts) | 1134816 | 53 |
+| `qwen25_broad · B` | 1134817 | 18 |
+| `qwen3_inst · S` | 1134818 | 24 |
+| `qwen3_base · F` | 1134819 | 60 |
+| `userlm · S` | 1134820 | 32 |
+| `osim_mid · N` (samples, human) | 1134821 | 18 |
+| `osim_final · N` (samples, human) | 1134822 | 19 |
+| `userlm · N` (samples, human) | 1134823 | 24 |
+
+About 5.7 GPU-hours in all. Every run passed the template, exact-sampling, and boundary checks
+(0 failures). The run folders stay in `results/multiwoz/` (gitignored); `docs/simulator_results/`
+holds the aggregates. UserLM under S puts 6.5% of its samples on an empty turn and runs 7.1% past
+96 tokens into unrelated text; the report's sample-health table shows these rates for every run.
+Two samples files hold U+2028 inside sample text, which `storage.read_jsonl` used to split on;
+it now splits rows at newlines only.
+
 ## Phase 3 interpretations (`sim-analyze`, `multiwoz/sim_analyze.py`)
 
 - **Human percentile** counts a cut-off sample as at least as surprising when its lower bound
