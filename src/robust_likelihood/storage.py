@@ -28,7 +28,9 @@ def read_jsonl(path: Path) -> list[dict]:
     if not path.exists():
         return []
     rows = []
-    for line in path.read_text(encoding="utf-8").splitlines():
+    # Rows end at "\n" only: str.splitlines() would also split inside a string at U+2028, U+2029, or
+    # U+0085, which json.dumps(ensure_ascii=False) writes unescaped (model samples can contain them).
+    for line in path.read_text(encoding="utf-8").split("\n"):
         if line.strip():
             rows.append(json.loads(line))
     return rows
