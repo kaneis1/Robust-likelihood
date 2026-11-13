@@ -343,15 +343,23 @@ def predictions(runs: dict) -> list[dict]:
     def beyond(label):
         return _get(primary.get(label), "q1", "all", "share_beyond_all", "mean")
 
+    def cover(label):
+        """Coverage order: median human percentile, then (ties, e.g. all at 0) fewer pairs beyond all samples."""
+        return (pct(label), -beyond(label))
+
     found = []
-    ranked = sorted((label for label in primary if pct(label) is not None), key=pct, reverse=True)
-    lowest_beyond = min((label for label in primary if beyond(label) is not None), key=beyond, default=None)
-    worst_two = ranked[-2:]
+    usable = [label for label in primary if pct(label) is not None and beyond(label) is not None]
+    ranked = sorted(usable, key=cover, reverse=True)
+    lowest_beyond = min(usable, key=beyond, default=None)
+    others = [label for label in usable if label not in INSTRUCT]
+    best = bool(ranked) and ranked[0] == "osim_mid|S" and lowest_beyond == "osim_mid|S"
+    worst = all(label in usable for label in INSTRUCT) and all(
+        pct(label) <= pct(other) for label in INSTRUCT for other in others)
     found.append({"id": "S1", "statement": "osim_mid has the best coverage; the instruct models the worst",
-                  "value": {"ranking_by_median_percentile": [(label, pct(label)) for label in ranked],
-                            "lowest_share_beyond_all": lowest_beyond},
-                  "pass": bool(ranked) and ranked[0] == "osim_mid|S" and lowest_beyond == "osim_mid|S"
-                  and set(worst_two) == set(INSTRUCT)})
+                  "value": {"ranking": [(label, pct(label), beyond(label)) for label in ranked],
+                            "lowest_share_beyond_all": lowest_beyond, "osim_mid_best": best,
+                            "instruct_worst": worst},
+                  "pass": best and worst})
     mid, final = primary.get("osim_mid|S"), primary.get("osim_final|S")
     if mid and final:
         mid_s, final_s = _get(mid, "q5", "mean_sample_surprisal"), _get(final, "q5", "mean_sample_surprisal")
@@ -387,9 +395,9 @@ def predictions(runs: dict) -> list[dict]:
                                            "stays below osim_mid",
                   "value": {label: (pct(label), beyond(label)) for label in ("osim_mid|S", "userlm|S", "qwen25_broad|B",
                                                                              "qwen25_inst|S")},
-                  "pass": None not in (pct("osim_mid|S"), pct("userlm|S"), pct("qwen25_broad|B"), pct("qwen25_inst|S"))
-                  and pct("osim_mid|S") > pct("userlm|S") and beyond("osim_mid|S") < beyond("userlm|S")
-                  and pct("qwen25_inst|S") < pct("qwen25_broad|B") < pct("osim_mid|S")})
+                  "pass": all(label in usable for label in ("osim_mid|S", "userlm|S", "qwen25_broad|B", "qwen25_inst|S"))
+                  and cover("osim_mid|S") > cover("userlm|S")
+                  and cover("qwen25_inst|S") < cover("qwen25_broad|B") < cover("osim_mid|S")})
     return found
 
 

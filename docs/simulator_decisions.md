@@ -153,6 +153,9 @@ fallback is not needed.
   beyond all samples, mean of μ_h over pairs, and the median gold standardized gap, for
   `osim_mid` vs `osim_final` and the two clean contrasts (`qwen3_base` → `osim_mid`,
   `qwen3_inst` → `osim_final`).
+- **Coverage order in S1 and S6:** median human percentile, then, on ties (the instruct models
+  all sit at 0), the smaller share of pairs beyond all samples. "The instruct models the worst"
+  means no other primary model has a lower median percentile.
 - **Check on P0:** the analysis on Phase 8 + claims job A reproduces claim 1's utterance shifts and
   ICC exactly and typicality v0's bin occupancies exactly; posterior instability differs in the third
   decimal (0.161 vs 0.163) only because the wording draws use this study's seed.

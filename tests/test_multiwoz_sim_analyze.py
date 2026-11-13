@@ -77,8 +77,12 @@ def test_predictions_score_the_primary_runs():
     runs = {"osim_mid|S": block(0.4, 0.1, 30.0, 0.75, 0.01, 5.0, 0.3),
             "osim_final|S": block(0.2, 0.3, 15.0, 0.85, 0.005, 5.0, 0.6),
             "userlm|S": block(0.3, 0.2, 25.0, 0.6, 0.02, 4.0, 0.4),
-            "qwen25_broad|B": block(0.1, 0.5, 6.0, 0.95, 0.001, 6.0, 0.9),
+            # The three instruct-based runs tie at a median percentile of 0; beyond-all orders them.
+            "qwen25_broad|B": block(0.0, 0.5, 6.0, 0.95, 0.001, 6.0, 0.9),
             "qwen25_inst|S": block(0.0, 0.9, 5.0, 0.99, 0.0, 7.0, 1.0),
-            "qwen3_inst|S": block(0.01, 0.8, 3.0, 0.97, 0.0, 7.0, 1.0)}
+            "qwen3_inst|S": block(0.0, 0.8, 3.0, 0.97, 0.0, 7.0, 1.0)}
     found = {row["id"]: row["pass"] for row in predictions(runs)}
     assert found == {"S1": True, "S2": True, "S3": True, "S4": True, "S5": True, "S6": True}
+    runs["userlm|S"] = block(0.5, 0.0, 25.0, 0.6, 0.02, 4.0, 0.4)  # now userlm covers best
+    found = {row["id"]: row["pass"] for row in predictions(runs)}
+    assert not found["S1"] and not found["S6"]
