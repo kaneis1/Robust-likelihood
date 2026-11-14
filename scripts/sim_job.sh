@@ -10,6 +10,9 @@
 #   pilot   Phase 5, one model per job: sim_job.sh pilot <model>. User turns 2 and 3 of the 60
 #           dialogues of configs/simulator.json phase5, 32 samples per (dialogue, turn, hypothesis).
 #           About 0.5-1 H100-hour.
+#   noise   Noise floor of the utterance-rewrite shifts: sim_job.sh noise <model:format,...>. Each
+#           Phase 2 urewrite part again with the original utterances, and the human part again.
+#           About 4 min per model.
 #
 # On the login node first, every model at its pinned revision (configs/simulator.json), with
 # huggingface_hub; the jobs run with HF_HUB_OFFLINE=1 and never pip install.
@@ -49,7 +52,7 @@
 
 set -euo pipefail
 
-STAGE="${1:-${STAGE:?pass the stage: check, score or pilot}}"
+STAGE="${1:-${STAGE:?pass the stage: check, score, pilot or noise}}"
 cd "${SLURM_SUBMIT_DIR:-${PBS_O_WORKDIR:-${LS_SUBCWD:-$(pwd)}}}"
 
 # module load <CUDA_MODULE>
@@ -89,6 +92,9 @@ elif [ "$STAGE" = "score" ]; then
 elif [ "$STAGE" = "pilot" ]; then
     MODEL="${2:-${MODEL:?pass the model key}}"
     python -m robust_likelihood.multiwoz sim-pilot --model "$MODEL"
+elif [ "$STAGE" = "noise" ]; then
+    RUNS="${2:-${RUNS:?pass model:format,...}}"
+    python -m robust_likelihood.multiwoz sim-noise --runs "$RUNS"
 else
     echo "unknown stage $STAGE" >&2
     exit 2

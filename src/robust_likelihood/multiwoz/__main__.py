@@ -219,6 +219,13 @@ def main(argv: list[str] | None = None) -> int:
                                       help="sim-pilot and sim-score run folders (others are skipped)")
     pilot_analyze_parser.add_argument("--out", default=str(Path("docs") / "simulator_results" / "pilot"))
     pilot_analyze_parser.add_argument("--no-figures", action="store_true")
+    noise_parser = sub.add_parser("sim-noise", help="simulator study: null urewrite rescoring (noise floor); needs a GPU")
+    noise_parser.add_argument("--runs", required=True, help="comma-separated model:format, e.g. osim_mid:S,userlm:S")
+    noise_parser.add_argument("--dtype", default="bfloat16")
+    noise_parser.add_argument("--device", default=None)
+    noise_analyze_parser = sub.add_parser("sim-noise-analyze", help="simulator study: noise floor against real shifts")
+    noise_analyze_parser.add_argument("--runs", nargs="*", default=[], help="sim-noise and sim-score run folders")
+    noise_analyze_parser.add_argument("--out", default=str(Path("docs") / "simulator_results"))
     args = parser.parse_args(argv)
     try:
         return _dispatch(args)
@@ -495,6 +502,17 @@ def _dispatch(args) -> int:
         summary = run_pilot_analyze(root, runs=[Path(path) for path in args.runs], out=root / args.out,
                                     figures=not args.no_figures)
         print(json.dumps(summary, indent=2, ensure_ascii=False))
+        return 0
+    if args.command == "sim-noise":
+        from robust_likelihood.multiwoz.sim_noise import sim_noise_many
+
+        summary = sim_noise_many(root, args.runs.split(","), dtype=args.dtype, device=args.device)
+        print(json.dumps(summary, indent=2))
+        return 0
+    if args.command == "sim-noise-analyze":
+        from robust_likelihood.multiwoz.sim_noise import run_noise_analyze
+
+        print(json.dumps(run_noise_analyze(root, runs=[Path(path) for path in args.runs], out=root / args.out), indent=2))
         return 0
     raise ValueError(f"Unknown command {args.command}")
 
