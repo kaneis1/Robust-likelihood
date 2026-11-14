@@ -1,0 +1,1872 @@
+{
+  "dialogues": [
+    "SNG01335",
+    "SNG01436",
+    "SNG01456",
+    "SNG01527",
+    "SNG01715",
+    "SNG01728",
+    "SNG01744",
+    "SNG01879",
+    "SNG01896",
+    "SNG01922",
+    "SNG02051",
+    "SNG02067",
+    "SNG02106",
+    "SNG02148",
+    "SNG02289",
+    "SNG0452",
+    "SNG0454",
+    "SNG0458",
+    "SNG0465",
+    "SNG0466",
+    "SNG0470",
+    "SNG0477",
+    "SNG0486",
+    "SNG0490",
+    "SNG0492",
+    "SNG0499",
+    "SNG0511",
+    "SNG0512",
+    "SNG0515",
+    "SNG0518",
+    "SNG0524",
+    "SNG0541",
+    "SNG0561",
+    "SNG0580",
+    "SNG0588",
+    "SNG0589",
+    "SNG0604",
+    "SNG0605",
+    "SNG0611",
+    "SNG0615",
+    "SNG0618",
+    "SNG0620",
+    "SNG0635",
+    "SNG0642",
+    "SNG0651",
+    "SNG0652",
+    "SNG0664",
+    "SNG0682",
+    "SNG0694",
+    "SNG0713",
+    "SNG0722",
+    "SNG0741",
+    "SNG0743",
+    "SNG0745",
+    "SNG1204",
+    "SNG1224",
+    "SNG1276",
+    "SNG1281",
+    "SNG1300",
+    "SNG1374"
+  ],
+  "discordant_with_turn_1": {
+    "2": [],
+    "3": [
+      [
+        "userlm|S",
+        "osim_mid|S"
+      ]
+    ]
+  },
+  "examples": [
+    {
+      "history": [
+        {
+          "speaker": "USER",
+          "utterance": "I am looking for a restaurant. The restaurant should be in the centre and should be in the moderate price range"
+        },
+        {
+          "speaker": "SYSTEM",
+          "utterance": "Hello. What type of food are you looking for? There are 21 locations that fit these criteria."
+        }
+      ],
+      "hypothesis": "The user wants to find a moderately priced restaurant serving turkish food in the centre of town.",
+      "item_id": "SNG01728",
+      "models": {
+        "osim_final|S": {
+          "human_S": 12.102784156799316,
+          "percentile": 0.125,
+          "samples": [
+            "Turkish.",
+            "Yeah, can you give me the one that serve Turkish food?",
+            "I am interested in Turkish food"
+          ]
+        },
+        "osim_mid|S": {
+          "human_S": 11.766271591186523,
+          "percentile": 0.25,
+          "samples": [
+            "Turkish.",
+            "Yeah, it could be anything",
+            "I am interested in Turkish food."
+          ]
+        },
+        "qwen25_inst|S": {
+          "human_S": 29.146102905273438,
+          "percentile": 0.0,
+          "samples": [
+            "I am in the mood for Turkish food. Can you suggest a place that serves Turkish cuisine?",
+            "I'm in the mood for Turkish food. Can you suggest a restaurant that serves Turkish cuisine and is located in the centre of town?",
+            "I'm looking for a Turkish restaurant that's moderately priced and located in the center of town. Could you provide me with any options that match this description?"
+          ]
+        },
+        "qwen3_inst|S": {
+          "human_S": 34.4013557434082,
+          "percentile": 0.0,
+          "samples": [
+            "I'm looking for Turkish food.",
+            "I'm looking for Turkish food.",
+            "I'm looking for Turkish food."
+          ]
+        },
+        "userlm|S": {
+          "human_S": 13.74856948852539,
+          "percentile": 0.65625,
+          "samples": [
+            "I am looking for the brazilian rod\u00edzio but it can be that not in the centre of the town. Hence the requirement of moderately price restaurant",
+            "I am looking for a restaurant. The restaurant should be in the centre and should be in the moderate price range. The food can be sentarian but preferably for africant or turkish food",
+            "the restaurants has to serve turkish food "
+          ]
+        }
+      },
+      "turn": 2,
+      "utterance": "I am looking for one that serves Turkish food."
+    },
+    {
+      "history": [
+        {
+          "speaker": "USER",
+          "utterance": "I am looking for a restaurant. The restaurant should be in the centre and should be in the moderate price range"
+        },
+        {
+          "speaker": "SYSTEM",
+          "utterance": "Hello. What type of food are you looking for? There are 21 locations that fit these criteria."
+        },
+        {
+          "speaker": "USER",
+          "utterance": "I am looking for one that serves Turkish food."
+        },
+        {
+          "speaker": "SYSTEM",
+          "utterance": "I have Anatolia and Efes Restaurant. Do you have a preference?"
+        }
+      ],
+      "hypothesis": "The user wants to find a moderately priced restaurant serving turkish food in the centre of town.",
+      "item_id": "SNG01728",
+      "models": {
+        "osim_final|S": {
+          "human_S": 18.316360473632812,
+          "percentile": 0.375,
+          "samples": [
+            "Yes, please book one for Anatolia",
+            "Anatolia works for me",
+            "What is the type of atmosphere like at Efes Restaurant?"
+          ]
+        },
+        "osim_mid|S": {
+          "human_S": 19.0275821685791,
+          "percentile": 0.40625,
+          "samples": [
+            "Yes I have a preference. I do not want Anatolia. I do not like seafood.",
+            "Anatolia works for me",
+            "What is the type of atmosphere in Efes Restaurant?"
+          ]
+        },
+        "qwen25_inst|S": {
+          "human_S": 52.62029266357422,
+          "percentile": 0.0,
+          "samples": [
+            "I don't mind which one. Can you tell me more about these restaurants, like their ratings and whether they have a reservation service?",
+            "Let me check the details for both Anatolia and Efes Restaurant to see which one offers Turkish cuisine. Upon checking, both Anatolia and Efes Restaurant serve Turkish food. Which one would you prefer, or would you like information on both?",
+            "I would prefer Anatolia. Can you provide me with more information about it, such as their specialties or any special offers? Also, do you need any more details to help you book a table?"
+          ]
+        },
+        "qwen3_inst|S": {
+          "human_S": 36.06317138671875,
+          "percentile": 0.0,
+          "samples": [
+            "Yes, I am looking for a restaurant that serves Turkish food. I would like to book a table at Anatolia or Efes Restaurant. Do you have availability for the next few days?",
+            "Anatolia and Efes Restaurant both serve Turkish food, and they are both located in the centre of town with a moderate price range. Would you like more details about either of them, or would you prefer to book one of them directly?",
+            "Yes, I would like to book a table at Anatolia."
+          ]
+        },
+        "userlm|S": {
+          "human_S": 28.053829193115234,
+          "percentile": 0.4375,
+          "samples": [
+            "Looking at the price lists on the websites, I would choose Efes Restaurant for this requirement",
+            "Please consider the ratings as well",
+            "<|endconversation|>assistant\nI'm sorry, it seems I have misunderstood your request. Do you have a particular restaurant in mind for your booking?"
+          ]
+        }
+      },
+      "turn": 3,
+      "utterance": "No, I just need the address of one of them."
+    }
+  ],
+  "generated_at": "2026-11-14T06:30:29Z",
+  "git": {
+    "commit": "c14a94c4a04a0ffa4ec59ed41133c1a0d3e54914",
+    "dirty": true
+  },
+  "ranking": {
+    "1": [
+      "userlm|S",
+      "osim_mid|S",
+      "osim_final|S",
+      "qwen25_inst|S",
+      "qwen3_inst|S"
+    ],
+    "2": [
+      "userlm|S",
+      "osim_mid|S",
+      "osim_final|S",
+      "qwen25_inst|S",
+      "qwen3_inst|S"
+    ],
+    "3": [
+      "osim_mid|S",
+      "userlm|S",
+      "osim_final|S",
+      "qwen25_inst|S",
+      "qwen3_inst|S"
+    ]
+  },
+  "runs": {
+    "osim_final|S": {
+      "paired": {
+        "2": {
+          "median_percentile": {
+            "ci95": [
+              0.0625,
+              0.21953124999999574
+            ],
+            "difference": 0.15625
+          },
+          "share_beyond_all": {
+            "ci95": [
+              -0.4653629542058683,
+              -0.22997390572390586
+            ],
+            "difference": -0.35157545605306795
+          }
+        },
+        "3": {
+          "median_percentile": {
+            "ci95": [
+              0.125,
+              0.28125
+            ],
+            "difference": 0.1875
+          },
+          "share_beyond_all": {
+            "ci95": [
+              -0.46155778894472366,
+              -0.2739088875160704
+            ],
+            "difference": -0.36981757877280264
+          }
+        }
+      },
+      "turns": {
+        "1": {
+          "all": {
+            "median_percentile": {
+              "ci95": [
+                0.0,
+                0.03125
+              ],
+              "items": 60,
+              "median": 0.0,
+              "n": 603
+            },
+            "pairs": 603,
+            "share_below_005": {
+              "ci95": [
+                0.6584513028478546,
+                0.8096907345575959
+              ],
+              "items": 60,
+              "mean": 0.7346600331674958,
+              "n": 603
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.44665319865319864,
+                0.5989769540093941
+              ],
+              "items": 60,
+              "mean": 0.5223880597014925,
+              "n": 603
+            }
+          },
+          "gold": {
+            "median_percentile": {
+              "ci95": [
+                0.03125,
+                0.0625
+              ],
+              "items": 60,
+              "median": 0.03125,
+              "n": 60
+            },
+            "pairs": 60,
+            "share_below_005": {
+              "ci95": [
+                0.43333333333333335,
+                0.6833333333333333
+              ],
+              "items": 60,
+              "mean": 0.5666666666666667,
+              "n": 60
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.18333333333333332,
+                0.4166666666666667
+              ],
+              "items": 60,
+              "mean": 0.3,
+              "n": 60
+            }
+          },
+          "health": {
+            "assistant_opening": 0.0,
+            "cut_off": 0.00013469827586206896,
+            "empty": 0.0,
+            "other_flag": 0.0,
+            "restaurant_voice": 0.00013469827586206896,
+            "samples": 7424,
+            "think_block": 0.0
+          },
+          "per_word": {
+            "human": {
+              "ci95": [
+                1.8115499587286086,
+                2.0942524804009333
+              ],
+              "items": 60,
+              "median": 1.9161906634574328,
+              "n": 60
+            },
+            "samples": {
+              "ci95": [
+                0.6518856048583984,
+                0.7253442091100356
+              ],
+              "items": 60,
+              "median": 0.6843046041635367,
+              "n": 1919
+            }
+          }
+        },
+        "2": {
+          "all": {
+            "median_percentile": {
+              "ci95": [
+                0.09375,
+                0.25
+              ],
+              "items": 60,
+              "median": 0.15625,
+              "n": 603
+            },
+            "pairs": 603,
+            "share_below_005": {
+              "ci95": [
+                0.203611744034916,
+                0.3762761714855434
+              ],
+              "items": 60,
+              "mean": 0.28689883913764513,
+              "n": 603
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.10965630114566285,
+                0.23841861159327352
+              ],
+              "items": 60,
+              "mean": 0.17081260364842454,
+              "n": 603
+            }
+          },
+          "gold": {
+            "median_percentile": {
+              "ci95": [
+                0.0625,
+                0.25
+              ],
+              "items": 60,
+              "median": 0.125,
+              "n": 60
+            },
+            "pairs": 60,
+            "share_below_005": {
+              "ci95": [
+                0.2,
+                0.43374999999999775
+              ],
+              "items": 60,
+              "mean": 0.31666666666666665,
+              "n": 60
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.1,
+                0.31666666666666665
+              ],
+              "items": 60,
+              "mean": 0.2,
+              "n": 60
+            }
+          },
+          "health": {
+            "assistant_opening": 0.004508706467661692,
+            "cut_off": 0.0004664179104477612,
+            "empty": 0.0,
+            "other_flag": 0.0,
+            "restaurant_voice": 0.0001554726368159204,
+            "samples": 19296,
+            "think_block": 0.0
+          },
+          "per_word": {
+            "human": {
+              "ci95": [
+                2.136200848747702,
+                2.7965449980327017
+              ],
+              "items": 60,
+              "median": 2.512574144772121,
+              "n": 60
+            },
+            "samples": {
+              "ci95": [
+                1.4988329821825028,
+                1.7338053392039403
+              ],
+              "items": 60,
+              "median": 1.6158535944951047,
+              "n": 1920
+            }
+          }
+        },
+        "3": {
+          "all": {
+            "median_percentile": {
+              "ci95": [
+                0.125,
+                0.28125
+              ],
+              "items": 60,
+              "median": 0.1875,
+              "n": 603
+            },
+            "pairs": 603,
+            "share_below_005": {
+              "ci95": [
+                0.15896494156928212,
+                0.3442622950819672
+              ],
+              "items": 60,
+              "mean": 0.2504145936981758,
+              "n": 603
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.09090527119938885,
+                0.22442663528647944
+              ],
+              "items": 60,
+              "mean": 0.15257048092868988,
+              "n": 603
+            }
+          },
+          "gold": {
+            "median_percentile": {
+              "ci95": [
+                0.09375,
+                0.28125
+              ],
+              "items": 60,
+              "median": 0.15625,
+              "n": 60
+            },
+            "pairs": 60,
+            "share_below_005": {
+              "ci95": [
+                0.16666666666666666,
+                0.4
+              ],
+              "items": 60,
+              "mean": 0.2833333333333333,
+              "n": 60
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.08333333333333333,
+                0.26666666666666666
+              ],
+              "items": 60,
+              "mean": 0.16666666666666666,
+              "n": 60
+            }
+          },
+          "health": {
+            "assistant_opening": 0.010520315091210614,
+            "cut_off": 0.0004664179104477612,
+            "empty": 0.0,
+            "other_flag": 0.0,
+            "restaurant_voice": 0.0001554726368159204,
+            "samples": 19296,
+            "think_block": 0.0
+          },
+          "per_word": {
+            "human": {
+              "ci95": [
+                2.295584201812744,
+                2.809983317057292
+              ],
+              "items": 60,
+              "median": 2.562677976820204,
+              "n": 60
+            },
+            "samples": {
+              "ci95": [
+                1.819198489189148,
+                1.981181716918945
+              ],
+              "items": 60,
+              "median": 1.8904807090759277,
+              "n": 1920
+            }
+          }
+        }
+      }
+    },
+    "osim_mid|S": {
+      "paired": {
+        "2": {
+          "median_percentile": {
+            "ci95": [
+              0.0625,
+              0.28125
+            ],
+            "difference": 0.1875
+          },
+          "share_beyond_all": {
+            "ci95": [
+              -0.004926922607173392,
+              0.07547566196289836
+            ],
+            "difference": 0.03150912106135987
+          }
+        },
+        "3": {
+          "median_percentile": {
+            "ci95": [
+              0.0625,
+              0.28125
+            ],
+            "difference": 0.1875
+          },
+          "share_beyond_all": {
+            "ci95": [
+              -0.00169786505434092,
+              0.05950606193689197
+            ],
+            "difference": 0.02487562189054726
+          }
+        }
+      },
+      "turns": {
+        "1": {
+          "all": {
+            "median_percentile": {
+              "ci95": [
+                0.15625,
+                0.25
+              ],
+              "items": 60,
+              "median": 0.1875,
+              "n": 603
+            },
+            "pairs": 603,
+            "share_below_005": {
+              "ci95": [
+                0.043687691405486416,
+                0.1189329617888098
+              ],
+              "items": 60,
+              "mean": 0.0779436152570481,
+              "n": 603
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.006711409395973154,
+                0.03140495867768595
+              ],
+              "items": 60,
+              "mean": 0.01824212271973466,
+              "n": 603
+            }
+          },
+          "gold": {
+            "median_percentile": {
+              "ci95": [
+                0.1875,
+                0.375
+              ],
+              "items": 60,
+              "median": 0.28125,
+              "n": 60
+            },
+            "pairs": 60,
+            "share_below_005": {
+              "ci95": [
+                0.0,
+                0.08333333333333333
+              ],
+              "items": 60,
+              "mean": 0.03333333333333333,
+              "n": 60
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 60,
+              "mean": 0.0,
+              "n": 60
+            }
+          },
+          "health": {
+            "assistant_opening": 0.002963362068965517,
+            "cut_off": 0.0005387931034482759,
+            "empty": 0.0,
+            "other_flag": 0.0,
+            "restaurant_voice": 0.0004040948275862069,
+            "samples": 7424,
+            "think_block": 0.0
+          },
+          "per_word": {
+            "human": {
+              "ci95": [
+                1.601872494346217,
+                1.7720894132341658
+              ],
+              "items": 60,
+              "median": 1.6738087744939896,
+              "n": 60
+            },
+            "samples": {
+              "ci95": [
+                1.4624260266621907,
+                1.5414085388183594
+              ],
+              "items": 60,
+              "median": 1.4961875279744465,
+              "n": 1919
+            }
+          }
+        },
+        "2": {
+          "all": {
+            "median_percentile": {
+              "ci95": [
+                0.28125,
+                0.46875
+              ],
+              "items": 60,
+              "median": 0.375,
+              "n": 603
+            },
+            "pairs": 603,
+            "share_below_005": {
+              "ci95": [
+                0.042617735939881794,
+                0.15398938233088857
+              ],
+              "items": 60,
+              "mean": 0.09286898839137644,
+              "n": 603
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.01666254125412541,
+                0.09137796108291028
+              ],
+              "items": 60,
+              "mean": 0.04975124378109453,
+              "n": 603
+            }
+          },
+          "gold": {
+            "median_percentile": {
+              "ci95": [
+                0.21875,
+                0.46875
+              ],
+              "items": 60,
+              "median": 0.40625,
+              "n": 60
+            },
+            "pairs": 60,
+            "share_below_005": {
+              "ci95": [
+                0.03333333333333333,
+                0.2
+              ],
+              "items": 60,
+              "mean": 0.11666666666666667,
+              "n": 60
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.0,
+                0.05
+              ],
+              "items": 60,
+              "mean": 0.016666666666666666,
+              "n": 60
+            }
+          },
+          "health": {
+            "assistant_opening": 0.02886608623548922,
+            "cut_off": 0.00036276948590381424,
+            "empty": 0.0,
+            "other_flag": 0.0,
+            "restaurant_voice": 0.0004664179104477612,
+            "samples": 19296,
+            "think_block": 0.00025912106135986734
+          },
+          "per_word": {
+            "human": {
+              "ci95": [
+                1.9861502647399902,
+                2.5845978260040283
+              ],
+              "items": 60,
+              "median": 2.335995901198614,
+              "n": 60
+            },
+            "samples": {
+              "ci95": [
+                2.1935806274414062,
+                2.4290229787730206
+              ],
+              "items": 60,
+              "median": 2.3129554748535157,
+              "n": 1919
+            }
+          }
+        },
+        "3": {
+          "all": {
+            "median_percentile": {
+              "ci95": [
+                0.28125,
+                0.46875
+              ],
+              "items": 60,
+              "median": 0.375,
+              "n": 603
+            },
+            "pairs": 603,
+            "share_below_005": {
+              "ci95": [
+                0.052274359673179234,
+                0.16023224361870167
+              ],
+              "items": 60,
+              "mean": 0.10281923714759536,
+              "n": 603
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.017004644497392866,
+                0.07504603436141132
+              ],
+              "items": 60,
+              "mean": 0.04311774461028192,
+              "n": 603
+            }
+          },
+          "gold": {
+            "median_percentile": {
+              "ci95": [
+                0.25,
+                0.46875
+              ],
+              "items": 60,
+              "median": 0.375,
+              "n": 60
+            },
+            "pairs": 60,
+            "share_below_005": {
+              "ci95": [
+                0.05,
+                0.2
+              ],
+              "items": 60,
+              "mean": 0.11666666666666667,
+              "n": 60
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.0,
+                0.08333333333333333
+              ],
+              "items": 60,
+              "mean": 0.03333333333333333,
+              "n": 60
+            }
+          },
+          "health": {
+            "assistant_opening": 0.031353648424543946,
+            "cut_off": 0.0003109452736318408,
+            "empty": 0.0,
+            "other_flag": 0.0,
+            "restaurant_voice": 0.00041459369817578774,
+            "samples": 19296,
+            "think_block": 5.182421227197347e-05
+          },
+          "per_word": {
+            "human": {
+              "ci95": [
+                2.1793060302734375,
+                2.73590764132413
+              ],
+              "items": 60,
+              "median": 2.4995902172930826,
+              "n": 60
+            },
+            "samples": {
+              "ci95": [
+                2.3964629390022973,
+                2.5560098487452456
+              ],
+              "items": 60,
+              "median": 2.474269231160482,
+              "n": 1919
+            }
+          }
+        }
+      }
+    },
+    "qwen25_inst|S": {
+      "paired": {
+        "2": {
+          "median_percentile": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "difference": 0.0
+          },
+          "share_beyond_all": {
+            "ci95": [
+              -0.20672846290834218,
+              -0.10049023929297557
+            ],
+            "difference": -0.14925373134328357
+          }
+        },
+        "3": {
+          "median_percentile": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "difference": 0.0
+          },
+          "share_beyond_all": {
+            "ci95": [
+              -0.2066129476584023,
+              -0.08702791461412152
+            ],
+            "difference": -0.14096185737976785
+          }
+        }
+      },
+      "turns": {
+        "1": {
+          "all": {
+            "median_percentile": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 60,
+              "median": 0.0,
+              "n": 603
+            },
+            "pairs": 603,
+            "share_below_005": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "items": 60,
+              "mean": 1.0,
+              "n": 603
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.9949577709871827,
+                1.0
+              ],
+              "items": 60,
+              "mean": 0.9983416252072969,
+              "n": 603
+            }
+          },
+          "gold": {
+            "median_percentile": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 60,
+              "median": 0.0,
+              "n": 60
+            },
+            "pairs": 60,
+            "share_below_005": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "items": 60,
+              "mean": 1.0,
+              "n": 60
+            },
+            "share_beyond_all": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "items": 60,
+              "mean": 1.0,
+              "n": 60
+            }
+          },
+          "health": {
+            "assistant_opening": 0.00013469827586206896,
+            "cut_off": 0.00026939655172413793,
+            "empty": 0.0,
+            "other_flag": 0.0,
+            "restaurant_voice": 0.0,
+            "samples": 7424,
+            "think_block": 0.0
+          },
+          "per_word": {
+            "human": {
+              "ci95": [
+                5.9437408447265625,
+                6.677051544189453
+              ],
+              "items": 60,
+              "median": 6.2713757565147,
+              "n": 60
+            },
+            "samples": {
+              "ci95": [
+                0.16451637744903563,
+                0.1895625694938328
+              ],
+              "items": 60,
+              "median": 0.17782015712172897,
+              "n": 1920
+            }
+          }
+        },
+        "2": {
+          "all": {
+            "median_percentile": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 60,
+              "median": 0.0,
+              "n": 603
+            },
+            "pairs": 603,
+            "share_below_005": {
+              "ci95": [
+                0.8777201669030307,
+                0.9585423462159401
+              ],
+              "items": 60,
+              "mean": 0.9220563847429519,
+              "n": 603
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.7913907284768212,
+                0.8981339611542761
+              ],
+              "items": 60,
+              "mean": 0.8490878938640133,
+              "n": 603
+            }
+          },
+          "gold": {
+            "median_percentile": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 60,
+              "median": 0.0,
+              "n": 60
+            },
+            "pairs": 60,
+            "share_below_005": {
+              "ci95": [
+                0.8833333333333333,
+                1.0
+              ],
+              "items": 60,
+              "mean": 0.95,
+              "n": 60
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.7666666666666667,
+                0.95
+              ],
+              "items": 60,
+              "mean": 0.8666666666666667,
+              "n": 60
+            }
+          },
+          "health": {
+            "assistant_opening": 0.05939054726368159,
+            "cut_off": 0.013266998341625208,
+            "empty": 0.0,
+            "other_flag": 0.0,
+            "restaurant_voice": 0.0018656716417910447,
+            "samples": 19296,
+            "think_block": 0.0
+          },
+          "per_word": {
+            "human": {
+              "ci95": [
+                5.824641957002528,
+                7.588901095920139
+              ],
+              "items": 60,
+              "median": 6.667944465364728,
+              "n": 60
+            },
+            "samples": {
+              "ci95": [
+                0.5370670318603515,
+                0.6087616040156438
+              ],
+              "items": 60,
+              "median": 0.5744043005837334,
+              "n": 1906
+            }
+          }
+        },
+        "3": {
+          "all": {
+            "median_percentile": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 60,
+              "median": 0.0,
+              "n": 603
+            },
+            "pairs": 603,
+            "share_below_005": {
+              "ci95": [
+                0.882144929019929,
+                0.9673749010313989
+              ],
+              "items": 60,
+              "mean": 0.9303482587064676,
+              "n": 603
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.7915930474754004,
+                0.9116727161500815
+              ],
+              "items": 60,
+              "mean": 0.857379767827529,
+              "n": 603
+            }
+          },
+          "gold": {
+            "median_percentile": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 60,
+              "median": 0.0,
+              "n": 60
+            },
+            "pairs": 60,
+            "share_below_005": {
+              "ci95": [
+                0.8833333333333333,
+                1.0
+              ],
+              "items": 60,
+              "mean": 0.95,
+              "n": 60
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.7666666666666667,
+                0.95
+              ],
+              "items": 60,
+              "mean": 0.8666666666666667,
+              "n": 60
+            }
+          },
+          "health": {
+            "assistant_opening": 0.10582504145936981,
+            "cut_off": 0.007307213930348258,
+            "empty": 0.0,
+            "other_flag": 0.0,
+            "restaurant_voice": 0.0008810116086235489,
+            "samples": 19296,
+            "think_block": 0.0
+          },
+          "per_word": {
+            "human": {
+              "ci95": [
+                5.968611145019532,
+                6.904890696207683
+              ],
+              "items": 60,
+              "median": 6.427402985401642,
+              "n": 60
+            },
+            "samples": {
+              "ci95": [
+                0.5189659595489502,
+                0.616071135909469
+              ],
+              "items": 60,
+              "median": 0.5696991752175724,
+              "n": 1905
+            }
+          }
+        }
+      }
+    },
+    "qwen3_inst|S": {
+      "paired": {
+        "2": {
+          "median_percentile": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "difference": 0.0
+          },
+          "share_beyond_all": {
+            "ci95": [
+              -0.005050505050505083,
+              0.0
+            ],
+            "difference": -0.0016583747927031434
+          }
+        },
+        "3": {
+          "median_percentile": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "difference": 0.0
+          },
+          "share_beyond_all": {
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "difference": 0.0
+          }
+        }
+      },
+      "turns": {
+        "1": {
+          "all": {
+            "median_percentile": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 60,
+              "median": 0.0,
+              "n": 603
+            },
+            "pairs": 603,
+            "share_below_005": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "items": 60,
+              "mean": 1.0,
+              "n": 603
+            },
+            "share_beyond_all": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "items": 60,
+              "mean": 1.0,
+              "n": 603
+            }
+          },
+          "gold": {
+            "median_percentile": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 60,
+              "median": 0.0,
+              "n": 60
+            },
+            "pairs": 60,
+            "share_below_005": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "items": 60,
+              "mean": 1.0,
+              "n": 60
+            },
+            "share_beyond_all": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "items": 60,
+              "mean": 1.0,
+              "n": 60
+            }
+          },
+          "health": {
+            "assistant_opening": 0.0,
+            "cut_off": 0.0004040948275862069,
+            "empty": 0.0,
+            "other_flag": 0.0,
+            "restaurant_voice": 0.0,
+            "samples": 7424,
+            "think_block": 0.0
+          },
+          "per_word": {
+            "human": {
+              "ci95": [
+                5.782960158128005,
+                6.685816838191106
+              ],
+              "items": 60,
+              "median": 6.299456342061361,
+              "n": 60
+            },
+            "samples": {
+              "ci95": [
+                0.0813379498089061,
+                0.10197701237418434
+              ],
+              "items": 60,
+              "median": 0.08874325879982539,
+              "n": 1920
+            }
+          }
+        },
+        "2": {
+          "all": {
+            "median_percentile": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 60,
+              "median": 0.0,
+              "n": 603
+            },
+            "pairs": 603,
+            "share_below_005": {
+              "ci95": [
+                0.9949494949494949,
+                1.0
+              ],
+              "items": 60,
+              "mean": 0.9983416252072969,
+              "n": 603
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.9949494949494949,
+                1.0
+              ],
+              "items": 60,
+              "mean": 0.9983416252072969,
+              "n": 603
+            }
+          },
+          "gold": {
+            "median_percentile": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 60,
+              "median": 0.0,
+              "n": 60
+            },
+            "pairs": 60,
+            "share_below_005": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "items": 60,
+              "mean": 1.0,
+              "n": 60
+            },
+            "share_beyond_all": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "items": 60,
+              "mean": 1.0,
+              "n": 60
+            }
+          },
+          "health": {
+            "assistant_opening": 0.0012956053067993366,
+            "cut_off": 0.005907960199004975,
+            "empty": 0.0,
+            "other_flag": 0.0,
+            "restaurant_voice": 0.009432006633499171,
+            "samples": 19296,
+            "think_block": 0.0
+          },
+          "per_word": {
+            "human": {
+              "ci95": [
+                6.232550938924153,
+                7.739588810847356
+              ],
+              "items": 60,
+              "median": 6.724796104431152,
+              "n": 60
+            },
+            "samples": {
+              "ci95": [
+                0.21064179473453098,
+                0.2909714308652011
+              ],
+              "items": 60,
+              "median": 0.2544212977091471,
+              "n": 1909
+            }
+          }
+        },
+        "3": {
+          "all": {
+            "median_percentile": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 60,
+              "median": 0.0,
+              "n": 603
+            },
+            "pairs": 603,
+            "share_below_005": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "items": 60,
+              "mean": 1.0,
+              "n": 603
+            },
+            "share_beyond_all": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "items": 60,
+              "mean": 1.0,
+              "n": 603
+            }
+          },
+          "gold": {
+            "median_percentile": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 60,
+              "median": 0.0,
+              "n": 60
+            },
+            "pairs": 60,
+            "share_below_005": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "items": 60,
+              "mean": 1.0,
+              "n": 60
+            },
+            "share_beyond_all": {
+              "ci95": [
+                1.0,
+                1.0
+              ],
+              "items": 60,
+              "mean": 1.0,
+              "n": 60
+            }
+          },
+          "health": {
+            "assistant_opening": 0.013163349917081261,
+            "cut_off": 0.0036276948590381426,
+            "empty": 0.0,
+            "other_flag": 0.0,
+            "restaurant_voice": 0.0023839137645107794,
+            "samples": 19296,
+            "think_block": 0.0
+          },
+          "per_word": {
+            "human": {
+              "ci95": [
+                6.666304045177641,
+                7.600205993652343
+              ],
+              "items": 60,
+              "median": 7.242799758911133,
+              "n": 60
+            },
+            "samples": {
+              "ci95": [
+                0.21057321911766416,
+                0.27308341435023714
+              ],
+              "items": 60,
+              "median": 0.2441400979955991,
+              "n": 1914
+            }
+          }
+        }
+      }
+    },
+    "userlm|S": {
+      "paired": {
+        "2": {
+          "median_percentile": {
+            "ci95": [
+              -0.03125,
+              0.15625
+            ],
+            "difference": 0.0625
+          },
+          "share_beyond_all": {
+            "ci95": [
+              0.0,
+              0.039154916791930415
+            ],
+            "difference": 0.013266998341625208
+          }
+        },
+        "3": {
+          "median_percentile": {
+            "ci95": [
+              -0.0625,
+              0.125
+            ],
+            "difference": 0.0
+          },
+          "share_beyond_all": {
+            "ci95": [
+              0.001644736842105263,
+              0.013422818791946308
+            ],
+            "difference": 0.006633499170812604
+          }
+        }
+      },
+      "turns": {
+        "1": {
+          "all": {
+            "median_percentile": {
+              "ci95": [
+                0.28125,
+                0.34375
+              ],
+              "items": 60,
+              "median": 0.3125,
+              "n": 603
+            },
+            "pairs": 603,
+            "share_below_005": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 60,
+              "mean": 0.0,
+              "n": 603
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 60,
+              "mean": 0.0,
+              "n": 603
+            }
+          },
+          "gold": {
+            "median_percentile": {
+              "ci95": [
+                0.34375,
+                0.5
+              ],
+              "items": 60,
+              "median": 0.4375,
+              "n": 60
+            },
+            "pairs": 60,
+            "share_below_005": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 60,
+              "mean": 0.0,
+              "n": 60
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "items": 60,
+              "mean": 0.0,
+              "n": 60
+            }
+          },
+          "health": {
+            "assistant_opening": 0.0018857758620689656,
+            "cut_off": 0.07165948275862069,
+            "empty": 0.06115301724137931,
+            "other_flag": 0.020743534482758622,
+            "restaurant_voice": 0.002963362068965517,
+            "samples": 7424,
+            "think_block": 0.0
+          },
+          "per_word": {
+            "human": {
+              "ci95": [
+                1.8487327575683594,
+                2.3092189364963107
+              ],
+              "items": 60,
+              "median": 2.126474126180013,
+              "n": 60
+            },
+            "samples": {
+              "ci95": [
+                2.1966729845319475,
+                2.3718411922454834
+              ],
+              "items": 60,
+              "median": 2.2770147884593293,
+              "n": 1791
+            }
+          }
+        },
+        "2": {
+          "all": {
+            "median_percentile": {
+              "ci95": [
+                0.3125,
+                0.46875
+              ],
+              "items": 60,
+              "median": 0.375,
+              "n": 603
+            },
+            "pairs": 603,
+            "share_below_005": {
+              "ci95": [
+                0.011608623548922056,
+                0.08180642486641615
+              ],
+              "items": 60,
+              "mean": 0.03980099502487562,
+              "n": 603
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.0,
+                0.039154916791930415
+              ],
+              "items": 60,
+              "mean": 0.013266998341625208,
+              "n": 603
+            }
+          },
+          "gold": {
+            "median_percentile": {
+              "ci95": [
+                0.3125,
+                0.5625
+              ],
+              "items": 60,
+              "median": 0.34375,
+              "n": 60
+            },
+            "pairs": 60,
+            "share_below_005": {
+              "ci95": [
+                0.0,
+                0.08333333333333333
+              ],
+              "items": 60,
+              "mean": 0.03333333333333333,
+              "n": 60
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.0,
+                0.05
+              ],
+              "items": 60,
+              "mean": 0.016666666666666666,
+              "n": 60
+            }
+          },
+          "health": {
+            "assistant_opening": 0.009742951907131012,
+            "cut_off": 0.02047056384742952,
+            "empty": 0.022595356550580432,
+            "other_flag": 0.03005804311774461,
+            "restaurant_voice": 0.0010883084577114428,
+            "samples": 19296,
+            "think_block": 0.0
+          },
+          "per_word": {
+            "human": {
+              "ci95": [
+                2.547687530517578,
+                2.93734073638916
+              ],
+              "items": 60,
+              "median": 2.6608767736525762,
+              "n": 60
+            },
+            "samples": {
+              "ci95": [
+                2.4866490364074707,
+                2.783131408691406
+              ],
+              "items": 60,
+              "median": 2.6404062722616146,
+              "n": 1882
+            }
+          }
+        },
+        "3": {
+          "all": {
+            "median_percentile": {
+              "ci95": [
+                0.25,
+                0.4375
+              ],
+              "items": 60,
+              "median": 0.3125,
+              "n": 603
+            },
+            "pairs": 603,
+            "share_below_005": {
+              "ci95": [
+                0.00655710874406375,
+                0.026101141924959218
+              ],
+              "items": 60,
+              "mean": 0.014925373134328358,
+              "n": 603
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.001644736842105263,
+                0.013422818791946308
+              ],
+              "items": 60,
+              "mean": 0.006633499170812604,
+              "n": 603
+            }
+          },
+          "gold": {
+            "median_percentile": {
+              "ci95": [
+                0.25,
+                0.46875
+              ],
+              "items": 60,
+              "median": 0.3125,
+              "n": 60
+            },
+            "pairs": 60,
+            "share_below_005": {
+              "ci95": [
+                0.0,
+                0.05
+              ],
+              "items": 60,
+              "mean": 0.016666666666666666,
+              "n": 60
+            },
+            "share_beyond_all": {
+              "ci95": [
+                0.0,
+                0.05
+              ],
+              "items": 60,
+              "mean": 0.016666666666666666,
+              "n": 60
+            }
+          },
+          "health": {
+            "assistant_opening": 0.012126865671641791,
+            "cut_off": 0.017983001658374794,
+            "empty": 0.02643034825870647,
+            "other_flag": 0.04405058043117745,
+            "restaurant_voice": 0.0008810116086235489,
+            "samples": 19296,
+            "think_block": 0.0
+          },
+          "per_word": {
+            "human": {
+              "ci95": [
+                2.7860068729945593,
+                3.1861912863595143
+              ],
+              "items": 60,
+              "median": 2.994384002685547,
+              "n": 60
+            },
+            "samples": {
+              "ci95": [
+                2.7647443771362306,
+                2.9590868949890137
+              ],
+              "items": 60,
+              "median": 2.887833913167318,
+              "n": 1883
+            }
+          }
+        }
+      }
+    }
+  },
+  "samples_per_context": 32,
+  "sources": {
+    "osim_final|S": {
+      "checks": {
+        "boundary_failure_rate": 0.0,
+        "boundary_failures": 0,
+        "boundary_pairs": 1206,
+        "history_kept": true,
+        "sampling_is_exact": true,
+        "template_check": true
+      },
+      "commit": "c14a94c4a04a0ffa4ec59ed41133c1a0d3e54914",
+      "elapsed_seconds": 1818.2,
+      "pilot": "20261114T052054Z-sim-pilot-osim_final-S",
+      "turn_1": "20261113T162704Z-sim-osim_final-S"
+    },
+    "osim_mid|S": {
+      "checks": {
+        "boundary_failure_rate": 0.0,
+        "boundary_failures": 0,
+        "boundary_pairs": 1206,
+        "history_kept": true,
+        "sampling_is_exact": true,
+        "template_check": true
+      },
+      "commit": "c14a94c4a04a0ffa4ec59ed41133c1a0d3e54914",
+      "elapsed_seconds": 1916.0,
+      "pilot": "20261114T044853Z-sim-pilot-osim_mid-S",
+      "turn_1": "20261113T154405Z-sim-osim_mid-S"
+    },
+    "qwen25_inst|S": {
+      "checks": {
+        "boundary_failure_rate": 0.0,
+        "boundary_failures": 0,
+        "boundary_pairs": 1206,
+        "history_kept": true,
+        "sampling_is_exact": true,
+        "template_check": true
+      },
+      "commit": "c14a94c4a04a0ffa4ec59ed41133c1a0d3e54914",
+      "elapsed_seconds": 1803.6,
+      "pilot": "20261114T053248Z-sim-pilot-qwen25_inst-S",
+      "turn_1": "20261113T154427Z-sim-qwen25_inst-S"
+    },
+    "qwen3_inst|S": {
+      "checks": {
+        "boundary_failure_rate": 0.0,
+        "boundary_failures": 0,
+        "boundary_pairs": 1206,
+        "history_kept": true,
+        "sampling_is_exact": true,
+        "template_check": true
+      },
+      "commit": "c14a94c4a04a0ffa4ec59ed41133c1a0d3e54914",
+      "elapsed_seconds": 2133.4,
+      "pilot": "20261114T055117Z-sim-pilot-qwen3_inst-S",
+      "turn_1": "20261113T165338Z-sim-qwen3_inst-S"
+    },
+    "userlm|S": {
+      "checks": {
+        "boundary_failure_rate": 0.0,
+        "boundary_failures": 0,
+        "boundary_pairs": 1206,
+        "history_kept": true,
+        "sampling_is_exact": true,
+        "template_check": true
+      },
+      "commit": "c14a94c4a04a0ffa4ec59ed41133c1a0d3e54914",
+      "elapsed_seconds": 2651.7,
+      "pilot": "20261114T044833Z-sim-pilot-userlm-S",
+      "turn_1": "20261113T171948Z-sim-userlm-S"
+    }
+  },
+  "turns": [
+    "1",
+    "2",
+    "3"
+  ]
+}

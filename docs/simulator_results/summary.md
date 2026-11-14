@@ -334,7 +334,12 @@ It is a reasonable third model to check results against, not a reference.
    - The N sensitivity runs agree with S for OSim-8B-Mid (median percentile 0.27 vs 0.22). Under N,
      OSim-8B often answers as the assistant (36% of samples), and UserLM drifts off topic (37% cut off).
      So S was the right primary format.
-9. **Next, if useful.**
-   - The optional multi-turn pilot (Phase 5: turns 2–3 with the real history, coverage only). It needs
-     your go-ahead.
-   - The noise-floor check in note 5, before the claims draft cites S4.
+9. **The ranking holds at later turns (Phase 5 pilot, [pilot/pilot.md](pilot/pilot.md)).** User turns 2
+   and 3 of 60 dialogues were given the real history in the prompt.
+   - The coverage order is the same as at turn 1, except that OSim-8B-Mid and UserLM swap at turn 3
+     within their intervals.
+   - The instruct models stay at a median percentile of 0.
+   - OSim-8B-Mid's median percentile rises from 0.19 to 0.38.
+   - OSim-8B's share beyond all samples falls from 52% to 15–17%, so RL's narrowing is mostly a
+     first-turn effect.
+10. **Next, if useful.** The noise-floor check in note 5, before the claims draft cites S4.

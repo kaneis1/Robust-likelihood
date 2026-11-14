@@ -213,3 +213,22 @@ GPU jobs. Nothing frozen changes; the choices the plan leaves open:
   over the dialogues; the ranking per turn is Phase 3's (median percentile, then share beyond all).
 - **Output:** `docs/simulator_results/pilot/` (`pilot.md`, `pilot_metrics.json`, fig 7), apart
   from the Phase 4 report.
+
+## Phase 5 runs (SoC jobs 1138653–1138657, commit `c14a94c`, H100 NVL MIG 3g.47gb, 2 at a time)
+
+Before submitting, the tokenizer-only checks ran on the login node for all five models (template,
+history kept, boundary on all 1,206 pairs: all passed; prompts at most 205 tokens). Every run then
+passed the same checks on the GPU, and its sampling was exact.
+
+| Job | Model | Run | Sampling (s) | Ended | Cut off |
+|---|---|---|---|---|---|
+| 1138653 | osim_mid | `20261114T044853Z-sim-pilot-osim_mid-S` | 1,862 | 38,579 | 13 |
+| 1138654 | userlm | `20261114T044833Z-sim-pilot-userlm-S` | 2,623 | 37,850 | 742 |
+| 1138655 | osim_final | `20261114T052054Z-sim-pilot-osim_final-S` | 1,761 | 38,574 | 18 |
+| 1138656 | qwen25_inst | `20261114T053248Z-sim-pilot-qwen25_inst-S` | 1,784 | 38,195 | 397 |
+| 1138657 | qwen3_inst | `20261114T055117Z-sim-pilot-qwen3_inst-S` | 2,078 | 38,408 | 184 |
+
+About 2.8 GPU-hours in all, 38,592 samples per model. The example dialogue in `pilot.md` is a seeded
+draw (`random.Random(20261103).choice` of the sorted pilot dialogues), not a chosen one. A check
+behind the pilot discussion: Qwen2.5-7B-Instruct's assistant-voice samples do not explain its lower
+share beyond all samples at turns 2–3 (85.3% with them, 86.4% without).
