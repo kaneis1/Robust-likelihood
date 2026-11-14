@@ -15,12 +15,13 @@ def test_null_rows_put_the_original_utterance_back():
 
 
 def test_compare_reads_real_shifts_against_the_noise():
-    noise = [{"kind": "para1", "delta": value} for value in (0.1, -0.2, 0.3, 0.1, 0.0)]
+    noise = [{"kind": "para1", "delta": value} for value in (0.1, -0.2, 0.3, 0.1, 0.0, 0.0, 0.0)]
     real = [{"kind": "para2", "delta": value} for value in (2.0, -0.05, 1.0, 0.25)]
     found = compare(real, noise)["para"]
-    assert found["noise_p50"] == 0.1 and found["noise_p95"] == 0.3
-    assert found["real_above_noise_p95"] == 0.5  # 2.0 and 1.0 exceed 0.3
-    assert compare([], [])["zh"]["real_above_noise_p95"] is None
+    assert found["noise_p50"] == 0.1 and found["noise_zero_share"] == pytest.approx(3 / 7)
+    assert found["changed_p50"] == 0.2 and found["changed_p95"] == 0.3  # the zeros left out: 0.1 0.1 0.2 0.3
+    assert found["real_above_changed_p95"] == 0.5  # 2.0 and 1.0 exceed 0.3
+    assert compare([], [])["zh"]["real_above_changed_p95"] is None
     assert quantile([], 0.5) is None
 
 

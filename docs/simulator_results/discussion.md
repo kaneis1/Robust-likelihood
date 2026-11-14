@@ -60,11 +60,19 @@ It is a reasonable third model to check results against, not a reference.
    paraphrase is 1–2 nats for the base and simulator models, up to 3 under translation into Chinese.
    For the instruct models it is 6–8 nats.
    - The large shifts in claim 1 are a property of the instruct models' narrow distributions.
-   - Part of the 1–2 nats may be bfloat16 rescoring noise: between runs, 0.27 nats median and 0.83 at the
-     90th percentile per score, and a Bayes-factor shift combines four scores.
-   - A noise-floor rescoring, about a GPU-minute per model, would settle how much.
+   - **The 1–2 nats are real, not rescoring noise** ([noise_floor.md](noise_floor.md)). The check
+     rescored every rewrite pair with the original utterance put back. The resulting noise in
+     |Δ log BF| has a median of 0.15–0.21 nats for the base and simulator models (0.31–0.47 for the
+     instruct models). That counts only pairs whose batch layout changed; the others reproduce their
+     scores bit for bit.
+   - For the base and simulator models, 62–85% of real paraphrase shifts lie above the noise's 95th
+     percentile.
+   - Noise only adds to |Δ|, so S4's failure is not a noise artifact. The noise-free shifts are, if
+     anything, a little smaller.
+   - Rescoring in the same layout reproduces Phase 2 exactly, so the runs are deterministic. The
+     noise comes only from batch layout (padding width and batch size in bfloat16).
    - The claims draft should state claim 1 for the likelihoods it was measured with, or restate it with
-     these results.
+     these results: about 1–2 nats under paraphrase with human-like models, and 6–8 with instruct models.
 6. **Typicality regains signal with a human-like reference (S5 holds).** With the base model, OSim-8B-Mid
    or UserLM as the reference, glob1A puts 0.3–21% of human pairs in its extreme bin, against 100% with
    Qwen. The size principle survives (L_J ÷ L_E 1.1–2.5, against 0.0). The semantic variant sem1B stays at
@@ -90,4 +98,5 @@ It is a reasonable third model to check results against, not a reference.
    - OSim-8B-Mid's median percentile rises from 0.19 to 0.38.
    - OSim-8B's share beyond all samples falls from 52% to 15–17%, so RL's narrowing is mostly a
      first-turn effect.
-10. **Next, if useful.** The noise-floor check in note 5, before the claims draft cites S4.
+10. **Next.** Nothing from the plan is pending. A multi-turn version of the few-shot format F
+    would be needed to test Qwen3-8B-Base on later turns.

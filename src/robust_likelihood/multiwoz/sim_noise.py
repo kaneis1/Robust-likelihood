@@ -156,16 +156,21 @@ def quantile(values: list[float], q: float) -> float | None:
 
 
 def compare(real_rows: list[dict], null_rows_: list[dict]) -> dict:
-    """Per rewrite group: the noise's |Δ| quantiles, and the share of real |Δ| above its 95th percentile."""
+    """Per rewrite group: the noise's |Δ| quantiles, over all pairs and over the pairs whose null scores
+    changed (a null row in the same batch shape as its original reproduces it bit for bit, which a real
+    rewrite, of another length, never does), and the share of real |Δ| above the changed-layout p95."""
     found = {}
     for group, kinds in U_GROUPS.items():
         noise = [abs(row["delta"]) for row in null_rows_ if row["kind"] in kinds]
+        changed = [value for value in noise if value != 0]
         real = [abs(row["delta"]) for row in real_rows if row["kind"] in kinds]
-        p95 = quantile(noise, 0.95)
-        found[group] = {"noise_p50": quantile(noise, 0.5), "noise_p90": quantile(noise, 0.9), "noise_p95": p95,
-                        "real_p50": quantile(real, 0.5),
-                        "real_above_noise_p95": (sum(1 for value in real if value > p95) / len(real)
-                                                 if real and p95 is not None else None)}
+        p95 = quantile(changed, 0.95)
+        found[group] = {"noise_p50": quantile(noise, 0.5), "noise_p90": quantile(noise, 0.9),
+                        "noise_p95": quantile(noise, 0.95), "noise_zero_share": (1 - len(changed) / len(noise)
+                                                                                 if noise else None),
+                        "changed_p50": quantile(changed, 0.5), "changed_p95": p95, "real_p50": quantile(real, 0.5),
+                        "real_above_changed_p95": (sum(1 for value in real if value > p95) / len(real)
+                                                   if real and p95 is not None else None)}
     return found
 
 
@@ -222,19 +227,23 @@ def noise_markdown(payload: dict) -> str:
              "|Δ log BF| from those scores is rescoring noise alone, aggregated exactly as the real shifts "
              "(median over the size-principle and contradiction pairs, 95% item-bootstrap intervals). "
              f"Noise runs at commit {', '.join(f'`{commit[:7]}`' for commit in commits)}; generated "
-             f"{payload['generated_at']}.", ""]
+             f"{payload['generated_at']}.", "",
+             "A null row that lands in a batch of the same shape as its original reproduces the original bit for "
+             "bit (see the last table), so about half the null pairs have no noise at all, and the overall noise "
+             "median understates what a real rewrite, which always changes length, carries. The columns marked "
+             "*changed* use only the null pairs whose scores moved: the conservative noise floor.", ""]
     for group in ("para", "zh", "typo", "pad", "verbose"):
         lines += [f"## {group}", ""]
         body = []
         for label in labels:
             block = runs[label]
             versus = block["compare"][group]
+            above = versus["real_above_changed_p95"]
             body.append([name[label], with_ci(block["real"][group]["abs_delta"], "median"),
-                         with_ci(block["noise"][group]["abs_delta"], "median"), num(versus["noise_p90"]),
-                         num(versus["noise_p95"]),
-                         "–" if versus["real_above_noise_p95"] is None else f"{100 * versus['real_above_noise_p95']:.0f}%"])
-        lines += [table(["Model", "Real median |Δ log BF|", "Noise median |Δ log BF|", "Noise p90", "Noise p95",
-                         "Real pairs above noise p95"], body), ""]
+                         with_ci(block["noise"][group]["abs_delta"], "median"), num(versus["changed_p50"]),
+                         num(versus["changed_p95"]), "–" if above is None else f"{100 * above:.0f}%"])
+        lines += [table(["Model", "Real median |Δ log BF|", "Noise median, all", "Noise median, changed",
+                         "Noise p95, changed", "Real pairs above changed p95"], body), ""]
     lines += ["## Rescoring the human part in its own layout", "",
               "The human pairs scored again in Phase 2's order and batches, against Phase 2's scores.", ""]
     lines += [table(["Model", "Pairs", "Identical", "Median |gap| (nats)", "Max |gap| (nats)"],

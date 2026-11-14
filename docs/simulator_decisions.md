@@ -232,3 +232,20 @@ About 2.8 GPU-hours in all, 38,592 samples per model. The example dialogue in `p
 draw (`random.Random(20261103).choice` of the sorted pilot dialogues), not a chosen one. A check
 behind the pilot discussion: Qwen2.5-7B-Instruct's assistant-voice samples do not explain its lower
 share beyond all samples at turns 2–3 (85.3% with them, 86.4% without).
+
+## Noise-floor check (`sim-noise`, `multiwoz/sim_noise.py`; user go-ahead 2026-11-14)
+
+SoC jobs 1139303 (`qwen25_inst:S,qwen25_broad:B,qwen3_inst:S,qwen3_base:F`) and 1139304
+(`osim_mid:S,osim_final:S,userlm:S`), commit `a408f62`, H100 NVL MIG 3g.47gb, about 0.5 GPU-hours.
+
+- **Design:** each run's Phase 2 urewrite part again, every rewrite replaced by its item's original
+  utterance (same rows, order, batch size 32, bfloat16, code path); claim 1's utterance metric on
+  those scores is noise alone. The human part was also rescored in its own layout.
+- **Same layout reproduces Phase 2 bit for bit** (2,355 of 2,355 pairs, every run): the runs are
+  deterministic, and the noise is batch layout alone. The earlier "0.27 median, 0.83 p90" per score
+  came from P0 against Phase 8, a different layout and run.
+- **Interpretation added after seeing the runs:** 62% of null scores land in a batch of the same
+  shape as their original and come out identical, which a real rewrite (another length) never does.
+  The report therefore gives the noise over all null pairs and over the pairs whose scores changed,
+  and reads the real shifts against the second (conservative) one. Per score, the changed rows
+  differ by a median of 0.13–0.41 nats (p90 0.36–1.11) across models.
