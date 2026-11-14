@@ -181,3 +181,35 @@ it now splits rows at newlines only.
 - **Check on P0:** the analysis on Phase 8 + claims job A reproduces claim 1's utterance shifts and
   ICC exactly and typicality v0's bin occupancies exactly; posterior instability differs in the third
   decimal (0.161 vs 0.163) only because the wording draws use this study's seed.
+
+## Phase 5: multi-turn pilot (`sim-pilot`, `multiwoz/sim_pilot.py`; user go-ahead 2026-11-14)
+
+The user asked to run the optional pilot after the Phase 4 report, which clears its STOP and its
+GPU jobs. Nothing frozen changes; the choices the plan leaves open:
+
+- **Models:** the five S-format chat models (`qwen25_inst`, `qwen3_inst`, `osim_mid`,
+  `osim_final`, `userlm`), as the plan says. Qwen3-8B-Base · F is out: its few-shot examples are
+  first turns, and a multi-turn F would be a new format.
+- **Context:** format S unchanged, then the real history: the system prompt with H, the opener,
+  then every earlier turn, MultiWOZ user turns in the simulated human's role and system turns in the
+  other role, as each model's chat template renders a conversation (Qwen3 with
+  `enable_thinking=False`, so its earlier turns carry no think block). The opener stays, so the
+  first-turn context is Phase 2's exactly. Each run checks that the template still closes the
+  human's turn with the end token after a history, that every earlier turn appears verbatim in the
+  prefix, the token boundary of every scored pair, and exact sampling.
+- **Dialogues:** 60 of the 235 clean dialogues, drawn with `random.Random(20261103)` from the
+  sorted ids; every clean dialogue reaches user turn 3 with strict USER/SYSTEM alternation, and the
+  draw happens to hold 30 two-slot and 30 three-slot goals. User turn n is 2.2 turn 2(n − 1).
+  Utterances are the 2.2 text as stored (none has stray whitespace). The dialogues and histories are
+  committed in `data/multiwoz/derived/multiturn_pilot.jsonl`, so the jobs never read the raw corpus.
+- **Hypotheses:** every clean hypothesis of the dialogue (9–11), as at turn 1: 1,206
+  (dialogue, turn, hypothesis) contexts per model, 32 samples each (38,592 per model), seed
+  `text_seed(20261103, "pilot|{item}|{turn}|{text}")`. A hypothesis still describes only the search
+  constraints, so booking details in a later human turn (people, day, time) are the user's own, for
+  every model alike.
+- **Turn 1 for comparison:** the Phase 2 run of each model on the same 60 dialogues with each
+  hypothesis's first 32 of its 64 samples (independent draws), so the share beyond all samples rests
+  on 32 samples at every turn. Turn 2 and 3 against turn 1 are paired item-bootstrap differences
+  over the dialogues; the ranking per turn is Phase 3's (median percentile, then share beyond all).
+- **Output:** `docs/simulator_results/pilot/` (`pilot.md`, `pilot_metrics.json`, fig 7), apart
+  from the Phase 4 report.

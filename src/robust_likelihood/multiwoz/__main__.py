@@ -204,6 +204,21 @@ def main(argv: list[str] | None = None) -> int:
     report_parser = sub.add_parser("sim-report", help="simulator study Phase 4: summary.md and figures")
     report_parser.add_argument("--out", default=str(Path("docs") / "simulator_results"))
     report_parser.add_argument("--no-figures", action="store_true")
+    pilot_plan_parser = sub.add_parser("sim-pilot-plan",
+                                       help="simulator study Phase 5: the pilot dialogues and histories (raw corpus)")
+    pilot_plan_parser.add_argument("--raw", default=str(RAW_DIR))
+    pilot_parser = sub.add_parser("sim-pilot", help="simulator study Phase 5: one model, turns 2-3; needs a GPU")
+    pilot_parser.add_argument("--model", required=True, help="a key of configs/simulator.json phase5.models")
+    pilot_parser.add_argument("--format", default=None, dest="fmt", help="default: phase5.format (S)")
+    pilot_parser.add_argument("--dtype", default="bfloat16")
+    pilot_parser.add_argument("--device", default=None)
+    pilot_parser.add_argument("--batch-size", type=int, default=32)
+    pilot_parser.add_argument("--label", default=None)
+    pilot_analyze_parser = sub.add_parser("sim-pilot-analyze", help="simulator study Phase 5: coverage by turn")
+    pilot_analyze_parser.add_argument("--runs", nargs="*", default=[],
+                                      help="sim-pilot and sim-score run folders (others are skipped)")
+    pilot_analyze_parser.add_argument("--out", default=str(Path("docs") / "simulator_results" / "pilot"))
+    pilot_analyze_parser.add_argument("--no-figures", action="store_true")
     args = parser.parse_args(argv)
     try:
         return _dispatch(args)
@@ -461,6 +476,25 @@ def _dispatch(args) -> int:
         from robust_likelihood.multiwoz.sim_report import run_sim_report
 
         print(json.dumps(run_sim_report(root, root / args.out, figures=not args.no_figures), indent=2))
+        return 0
+    if args.command == "sim-pilot-plan":
+        from robust_likelihood.multiwoz.sim_pilot import write_pilot_plan
+
+        print(json.dumps(write_pilot_plan(root, root / args.raw), indent=2))
+        return 0
+    if args.command == "sim-pilot":
+        from robust_likelihood.multiwoz.sim_pilot import sim_pilot
+
+        summary = sim_pilot(root, args.model, args.fmt, batch_size=args.batch_size, dtype=args.dtype,
+                            device=args.device, label=args.label)
+        print(json.dumps(summary, indent=2))
+        return 0
+    if args.command == "sim-pilot-analyze":
+        from robust_likelihood.multiwoz.sim_pilot_report import run_pilot_analyze
+
+        summary = run_pilot_analyze(root, runs=[Path(path) for path in args.runs], out=root / args.out,
+                                    figures=not args.no_figures)
+        print(json.dumps(summary, indent=2, ensure_ascii=False))
         return 0
     raise ValueError(f"Unknown command {args.command}")
 

@@ -92,9 +92,10 @@ def tally(rows: list[dict]) -> dict:
     return counts
 
 
-def sample_block(model, sim_format: SimFormat, hypothesis: str, count: int, config, seed: int, batch_size: int,
-                 pad: int, centering_text: str) -> list[dict]:
-    """count samples under hypothesis, each with S, S_lower if cut off, S_broad if ended, and its flags."""
+def sample_block(model, sim_format: SimFormat, hypothesis, count: int, config, seed: int, batch_size: int,
+                 pad: int, centering_text: str | None) -> list[dict]:
+    """count samples under hypothesis, each with S, S_lower if cut off, S_broad if ended (None without a
+    centering text), and its flags."""
     from robust_likelihood.lmcore import surprisals
 
     found = draw(model, sim_format, hypothesis, count, config, seed)
@@ -104,10 +105,12 @@ def sample_block(model, sim_format: SimFormat, hypothesis: str, count: int, conf
     lower = dict(zip(cut, surprisals(model, [(prefix + found[index]["tokens"], len(prefix)) for index in cut],
                                      batch_size, pad))) if cut else {}
     ended = [index for index, sample in enumerate(found) if sample["ended"]]
-    broad_prefix = sim_format.prefix_ids(centering_text)
-    broad = dict(zip(ended, surprisals(
-        model, [sim_format.scored(centering_text, found[index]["text"], broad_prefix) for index in ended],
-        batch_size, pad))) if ended else {}
+    broad = {}
+    if centering_text is not None and ended:
+        broad_prefix = sim_format.prefix_ids(centering_text)
+        broad = dict(zip(ended, surprisals(
+            model, [sim_format.scored(centering_text, found[index]["text"], broad_prefix) for index in ended],
+            batch_size, pad)))
     rows = []
     for index, sample in enumerate(found):
         row = {"sample": index, "reply": sample["text"], "S": own[index], "S_broad": broad.get(index),

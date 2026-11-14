@@ -7,6 +7,9 @@
 #   score   Phase 2, one model and format per job: sim_job.sh score <model> <format> [parts]
 #           (parts comma-separated; default all the plan runs for the model). About 0.5 H100-hour,
 #           1-1.5 with hsample (osim_mid, osim_final, qwen25_inst).
+#   pilot   Phase 5, one model per job: sim_job.sh pilot <model>. User turns 2 and 3 of the 60
+#           dialogues of configs/simulator.json phase5, 32 samples per (dialogue, turn, hypothesis).
+#           About 0.5-1 H100-hour.
 #
 # On the login node first, every model at its pinned revision (configs/simulator.json), with
 # huggingface_hub; the jobs run with HF_HUB_OFFLINE=1 and never pip install.
@@ -46,7 +49,7 @@
 
 set -euo pipefail
 
-STAGE="${1:-${STAGE:?pass the stage: check or score}}"
+STAGE="${1:-${STAGE:?pass the stage: check, score or pilot}}"
 cd "${SLURM_SUBMIT_DIR:-${PBS_O_WORKDIR:-${LS_SUBCWD:-$(pwd)}}}"
 
 # module load <CUDA_MODULE>
@@ -83,6 +86,9 @@ elif [ "$STAGE" = "score" ]; then
     FORMAT="${3:-${FORMAT:?pass the format}}"
     PARTS="${4:-${PARTS:-}}"
     python -m robust_likelihood.multiwoz sim-score --model "$MODEL" --format "$FORMAT" ${PARTS:+--parts "$PARTS"}
+elif [ "$STAGE" = "pilot" ]; then
+    MODEL="${2:-${MODEL:?pass the model key}}"
+    python -m robust_likelihood.multiwoz sim-pilot --model "$MODEL"
 else
     echo "unknown stage $STAGE" >&2
     exit 2

@@ -38,6 +38,9 @@
   "bootstrap": {"replicates": 2000, "seed": 20261103},
   "fewshot": {"examples": 8, "file": "data/multiwoz/derived/fewshot_examples.json"},
   "phase2": {"hsample_models": ["osim_mid", "osim_final", "qwen25_inst"], "include_fail": false},
+  "phase5": {"models": ["qwen25_inst", "qwen3_inst", "osim_mid", "osim_final", "userlm"], "format": "S",
+             "dialogues": 60, "user_turns": [2, 3], "samples": 32,
+             "file": "data/multiwoz/derived/multiturn_pilot.jsonl"},
   "format_check": {"goals_2slot": 3, "goals_3slot": 3, "samples": 8, "p0_pairs": 20, "boundary_pairs": 200,
                    "boundary_failure_limit": 0.01, "p0_tolerance_nats": 1.0}
 }
