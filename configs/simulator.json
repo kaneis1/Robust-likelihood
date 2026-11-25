@@ -50,7 +50,7 @@
                  "hsample_models": ["qwen3_base"], "xscore_models": ["qwen3_base"], "xscore_samples": 32,
                  "student": {"id": "Qwen/Qwen3-0.6B-Base", "revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
                              "license": "apache-2.0"},
-                 "baseline_models": ["qwen3_06_base"], "teacher_scheme": null},
+                 "baseline_models": ["qwen3_06_base"], "teacher_scheme": "cent1B:6bins"},
   "format_check": {"goals_2slot": 3, "goals_3slot": 3, "samples": 8, "p0_pairs": 20, "boundary_pairs": 200,
                    "boundary_failure_limit": 0.01, "p0_tolerance_nats": 1.0}
 }

@@ -297,8 +297,12 @@ def fixed_bins(inputs: Inputs, cells: list[dict], variants: dict[str, dict], wei
 def hypothesis_rewording(inputs: Inputs, log: dict, label: str, metas: dict, boot: ItemBoot, changed: dict,
                          corpus_boot) -> dict:
     """Argmax flips and SD of P(G) over hypothesis rewordings, and the size principle under each rewording."""
+    reworded = sum(1 for (_, _, hvar, uvar) in log if hvar in H_KINDS and uvar == ORIGINAL)
+    if not reworded:  # e.g. glob1A with no samples under the reworded texts: nothing was measured
+        return {"measured": False}
     scorer = Scorer(label, "loglik", log, items=sorted(inputs.clean))
-    found = {"posterior": posterior(scorer, metas, boot, SEED), "size_kept": {}}
+    found = {"measured": True, "reworded_scores": reworded, "posterior": posterior(scorer, metas, boot, SEED),
+             "size_kept": {}}
     for kind in H_KINDS:
         reworded: dict[str, dict[str, float]] = {}
         for (item, key, hvar, uvar), value in log.items():

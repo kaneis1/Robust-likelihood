@@ -260,7 +260,7 @@ def part_b_table(models: dict) -> list[str]:
     for label in labels:
         for name in ("raw",) + VARIANTS:
             block = _get(models[label], "part_b", name)
-            if not block:
+            if not block or block.get("measured") is False:
                 continue
             kept = [value for value in (block.get("size_kept") or {}).values() if value is not None]
             agree = [] if name == "raw" else [
