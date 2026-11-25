@@ -1,0 +1,31 @@
+{
+  "plan": "docs/clips_small_lm_plan.md",
+  "seed": 20261126,
+  "bootstrap": {"replicates": 2000, "seed": 20261126},
+  "clips": {"repository": "https://github.com/probcomp/CLIPS.jl", "commit": "6536a2a86d6b4837481a00e630a2e302c90a5278"},
+  "score": {"max_tokens": 64, "stop": "\n", "batch_size": 32, "dtype": "bfloat16", "determinism_keys": 200},
+  "models": {
+    "qwen3_0p6b": {"id": "Qwen/Qwen3-0.6B-Base", "revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+                   "license": "apache-2.0", "kind": "base", "params_b": 0.6},
+    "qwen3_1p7b": {"id": "Qwen/Qwen3-1.7B-Base", "revision": "ea980cb0a6c2ae4b936e82123acc929f1cec04c1",
+                   "license": "apache-2.0", "kind": "base", "params_b": 1.7},
+    "qwen3_4b": {"id": "Qwen/Qwen3-4B-Base", "revision": "906bfd4b4dc7f14ee4320094d8b41684abff8539",
+                 "license": "apache-2.0", "kind": "base", "params_b": 4.0},
+    "qwen3_8b": {"id": "Qwen/Qwen3-8B-Base", "revision": "49e3418fbbbca6ecbdf9608b4d22e5a407081db4",
+                 "license": "apache-2.0", "kind": "base", "params_b": 8.2},
+    "smollm2_1p7b": {"id": "HuggingFaceTB/SmolLM2-1.7B", "revision": "effd688a12921b4cc83e3312b6feb579f70f9c71",
+                     "license": "apache-2.0", "kind": "base", "params_b": 1.7},
+    "qwen3_8b_inst": {"id": "Qwen/Qwen3-8B", "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+                      "license": "apache-2.0", "kind": "instruct", "params_b": 8.2, "base": "qwen3_8b"},
+    "qwen25_7b_inst": {"id": "Qwen/Qwen2.5-7B-Instruct", "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+                       "license": "apache-2.0", "kind": "instruct", "params_b": 7.6},
+    "osim_mid": {"id": "cmu-lti/osim-8b-mid", "revision": "af9ef0347ede45b6ce0cfcf3851ea37da861bb13",
+                 "license": "mit", "kind": "simulator", "params_b": 8.2, "optional": true}
+  },
+  "published": {
+    "note": "Table 1 of Zhi-Xuan, Ying, Mansinghka & Tenenbaum (AAMAS 2024), from curie and davinci-002",
+    "mdkg": {"clips_p_true": 0.74, "language_only_p_true": 0.55, "action_only_p_true": 0.31,
+             "clips_goal_correlation": 0.93, "humans_p_true": 0.67},
+    "vh": {"clips_p_true": 0.63, "language_only_p_true": 0.37, "action_only_p_true": 0.25}
+  }
+}

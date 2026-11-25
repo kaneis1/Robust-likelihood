@@ -1,0 +1,65 @@
+{"domain":"mdkg","index":0,"literal_text":"Can you pass me the red key?","observed_actions":7,"plan_id":"1.1.keys","problem_id":"1","text":"Can you pass me the red key?","timestep":7,"true_goal":"(has human gem2)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you pass me the red key?","observed_actions":10,"plan_id":"2.1.keys","problem_id":"2","text":"Can you pass me the red key?","timestep":10,"true_goal":"(has human gem2)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you hand me that key?","observed_actions":18,"plan_id":"2.2.keys","problem_id":"2","text":"Can you hand me that key?","timestep":18,"true_goal":"(has human gem2)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you pass me the red keys?","observed_actions":10,"plan_id":"3.1.keys","problem_id":"3","text":"Can you pass me the red keys?","timestep":10,"true_goal":"(has human gem1)"}
+{"domain":"mdkg","index":0,"literal_text":"Give me a red key for this door?","observed_actions":10,"plan_id":"3.2.keys","problem_id":"3","text":"Give me a red key for this door?","timestep":10,"true_goal":"(has human gem1)"}
+{"domain":"mdkg","index":0,"literal_text":"I need a key for this yellow door.","observed_actions":4,"plan_id":"3.3.keys","problem_id":"3","text":"I need a key for this yellow door.","timestep":4,"true_goal":"(has human gem3)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you pass me the red keys?","observed_actions":8,"plan_id":"4.1.keys","problem_id":"4","text":"Can you pass me the red keys?","timestep":8,"true_goal":"(has human gem3)"}
+{"domain":"mdkg","index":0,"literal_text":"Can I have the blue keys?","observed_actions":8,"plan_id":"4.2.keys","problem_id":"4","text":"Can I have the blue keys?","timestep":8,"true_goal":"(has human gem1)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you pass me the blue key?","observed_actions":4,"plan_id":"5.1.keys","problem_id":"5","text":"Can you pass me the blue key?","timestep":4,"true_goal":"(has human gem4)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you get the yellow key?","observed_actions":3,"plan_id":"6.1.keys","problem_id":"6","text":"I'm going for the red key, can you get the yellow key?","timestep":3,"true_goal":"(has human gem4)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you find a yellow key?","observed_actions":3,"plan_id":"6.2.keys","problem_id":"6","text":"On my way to pick up the blue key, can you find a yellow key?","timestep":3,"true_goal":"(has human gem2)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you get a red key?","observed_actions":6,"plan_id":"7.1.keys","problem_id":"7","text":"I'm picking up the yellow key. Can you get a red key?","timestep":6,"true_goal":"(has human gem2)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you pick up a red key?","observed_actions":4,"plan_id":"8.1.keys","problem_id":"8","text":"I'll get the blue key. Can you pick up a red key?","timestep":4,"true_goal":"(has human gem4)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you get a blue key?","observed_actions":4,"plan_id":"8b.2.keys","problem_id":"8b","text":"I will pick up the red key. Can you get a blue one?","timestep":4,"true_goal":"(has human gem4)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you go get the red key?","observed_actions":8,"plan_id":"9.1.keys","problem_id":"9","text":"Can you go get the red key?","timestep":8,"true_goal":"(has human gem3)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you find a yellow key?","observed_actions":6,"plan_id":"10.1.keys","problem_id":"10","text":"I will pick up this red key. Can you find a yellow one?","timestep":6,"true_goal":"(has human gem1)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you find a yellow key?","observed_actions":6,"plan_id":"10b.2.keys","problem_id":"10b","text":"I will pick up this blue key. Can you find a yellow one?","timestep":6,"true_goal":"(has human gem4)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you get the key for this door?","observed_actions":12,"plan_id":"11.1.keys","problem_id":"11","text":"Can you get the key for this door?","timestep":12,"true_goal":"(has human gem1)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you get me a key for this door?","observed_actions":8,"plan_id":"11.2.keys","problem_id":"11","text":"Can you get me a key for this door?","timestep":8,"true_goal":"(has human gem4)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you come and unlock this door?","observed_actions":8,"plan_id":"12.1.doors","problem_id":"12","text":"Can you come and unlock this door?","timestep":8,"true_goal":"(has human gem4)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you go and unlock that door?","observed_actions":8,"plan_id":"12.2.doors","problem_id":"12","text":"Can you go and unlock that door?","timestep":8,"true_goal":"(has human gem1)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you open the blue door?","observed_actions":10,"plan_id":"13.1.doors","problem_id":"13","text":"Can you open the blue door?","timestep":10,"true_goal":"(has human gem3)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you help me unlock the blue door there?","observed_actions":16,"plan_id":"13.2.doors","problem_id":"13","text":"Can you help me unlock the blue door there?","timestep":16,"true_goal":"(has human gem1)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you get the blue door?","observed_actions":0,"plan_id":"14.1.doors","problem_id":"14","text":"I'm picking up the red key. Can you get the blue door?","timestep":0,"true_goal":"(has human gem2)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you open the red door there?","observed_actions":0,"plan_id":"15.1.doors","problem_id":"15","text":"Can you open the red door there?","timestep":0,"true_goal":"(has human gem4)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you get the blue door there?","observed_actions":0,"plan_id":"16.1.doors","problem_id":"16","text":"Can you get the blue door there? I'll pick up the key for the red door.","timestep":0,"true_goal":"(has human gem3)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you come and get this red door?","observed_actions":6,"plan_id":"17.1.doors","problem_id":"17","text":"Can you come and get this red door?","timestep":6,"true_goal":"(has human gem2)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you unlock this red door?","observed_actions":4,"plan_id":"18.1.doors","problem_id":"18","text":"Can you unlock this red door?","timestep":4,"true_goal":"(has human gem1)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you pass me the blue key?","observed_actions":4,"plan_id":"19.1.keys","problem_id":"19","text":"Can you pass me the blue key?","timestep":4,"true_goal":"(has human gem2)"}
+{"domain":"mdkg","index":0,"literal_text":"Can you come and get this blue door?","observed_actions":10,"plan_id":"20.1.doors","problem_id":"20","text":"Can you come and get this blue door?","timestep":10,"true_goal":"(has human gem2)"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":7,"plan_id":"1.1","problem_id":"1","text":"Can you get the wine?","timestep":7,"true_goal":"stew_chicken"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":5,"plan_id":"1.2","problem_id":"1","text":"I need a knife, can you get it?","timestep":3,"true_goal":"salad_veggie"}
+{"domain":"vh","index":1,"literal_text":null,"observed_actions":5,"plan_id":"1.2","problem_id":"1","text":"And the cucumber too.","timestep":5,"true_goal":"salad_veggie"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":3,"plan_id":"1.3","problem_id":"1","text":"Could you hand me a knife?","timestep":3,"true_goal":"salad_chicken"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":3,"plan_id":"1.4","problem_id":"1","text":"Can you get the chicken?","timestep":3,"true_goal":"stew_chicken"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":3,"plan_id":"1.5","problem_id":"1","text":"Can you get the salmon?","timestep":3,"true_goal":"stew_salmon"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":3,"plan_id":"1.6","problem_id":"1","text":"Can you get the wine?","timestep":1,"true_goal":"stew_chicken"}
+{"domain":"vh","index":1,"literal_text":null,"observed_actions":3,"plan_id":"1.6","problem_id":"1","text":"And I need the veggies for the stew.","timestep":3,"true_goal":"stew_chicken"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":5,"plan_id":"1.7","problem_id":"1","text":"I'll need a knife for this salad.","timestep":3,"true_goal":"salad_potato"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":3,"plan_id":"1.8","problem_id":"1","text":"Can you get an onion and a carrot?","timestep":1,"true_goal":"stew_potato"}
+{"domain":"vh","index":1,"literal_text":null,"observed_actions":3,"plan_id":"1.8","problem_id":"1","text":"And also a potato?","timestep":3,"true_goal":"stew_potato"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":3,"plan_id":"2.1","problem_id":"2","text":"Can you get a fork and a knife?","timestep":3,"true_goal":"set_table1"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":7,"plan_id":"2.2","problem_id":"2","text":"Go get the forks and knives.","timestep":7,"true_goal":"set_table2"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":9,"plan_id":"2.3","problem_id":"2","text":"Can you fetch the knives?","timestep":7,"true_goal":"set_table3"}
+{"domain":"vh","index":1,"literal_text":null,"observed_actions":9,"plan_id":"2.3","problem_id":"2","text":"And the forks?","timestep":9,"true_goal":"set_table3"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":7,"plan_id":"2.4","problem_id":"2","text":"Get a bowl from the cabinet.","timestep":7,"true_goal":"set_table1b"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":13,"plan_id":"2.5","problem_id":"2","text":"Can you get the knives?","timestep":9,"true_goal":"set_table2b"}
+{"domain":"vh","index":1,"literal_text":null,"observed_actions":13,"plan_id":"2.5","problem_id":"2","text":"Can you get the bowls too?","timestep":13,"true_goal":"set_table2b"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":15,"plan_id":"2.6","problem_id":"2","text":"Can you get the plates?","timestep":13,"true_goal":"set_table3b"}
+{"domain":"vh","index":1,"literal_text":null,"observed_actions":15,"plan_id":"2.6","problem_id":"2","text":"Bring the bowls too!","timestep":15,"true_goal":"set_table3b"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":11,"plan_id":"2.7","problem_id":"2","text":"Could you get some plates?","timestep":5,"true_goal":"set_table2b"}
+{"domain":"vh","index":1,"literal_text":null,"observed_actions":11,"plan_id":"2.7","problem_id":"2","text":"And also some bowls?","timestep":11,"true_goal":"set_table2b"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":3,"plan_id":"2.8","problem_id":"2","text":"Grab another plate.","timestep":3,"true_goal":"plate2"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":7,"plan_id":"2.9","problem_id":"2","text":"Can you help me with these plates?","timestep":7,"true_goal":"plate4"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":9,"plan_id":"3.1","problem_id":"3","text":"Can you get two more glasses?","timestep":7,"true_goal":"wine3"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":5,"plan_id":"3.2","problem_id":"3","text":"Can you get three glasses?","timestep":5,"true_goal":"juice3"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":5,"plan_id":"3.3","problem_id":"3","text":"Can you get two forks?","timestep":2,"true_goal":"wine2p"}
+{"domain":"vh","index":1,"literal_text":null,"observed_actions":5,"plan_id":"3.3","problem_id":"3","text":"And two glasses?","timestep":5,"true_goal":"wine2p"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":5,"plan_id":"3.4","problem_id":"3","text":"We need two glasses, could you get them from the cabinet?","timestep":3,"true_goal":"juice2"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":4,"plan_id":"3.5","problem_id":"3","text":"Could you find two glasses?","timestep":2,"true_goal":"juice2p"}
+{"domain":"vh","index":1,"literal_text":null,"observed_actions":4,"plan_id":"3.5","problem_id":"3","text":"Get some forks as well.","timestep":4,"true_goal":"juice2p"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":7,"plan_id":"3.6","problem_id":"3","text":"Can you get some wine?","timestep":3,"true_goal":"wine1p"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":7,"plan_id":"3.7","problem_id":"3","text":"I would love to have some juice.","timestep":3,"true_goal":"juice1"}
+{"domain":"vh","index":0,"literal_text":null,"observed_actions":7,"plan_id":"3.8","problem_id":"3","text":"Can you get a few glasses?","timestep":5,"true_goal":"wine2p"}
+{"domain":"vh","index":1,"literal_text":null,"observed_actions":7,"plan_id":"3.8","problem_id":"3","text":"And some wine too.","timestep":7,"true_goal":"wine2p"}

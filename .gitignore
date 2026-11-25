@@ -10,3 +10,5 @@ data/massive/**/*.jsonl
 data/massive/**/*.tar.gz
 data/massive/**/*.jsonl.gz
 data/multiwoz/raw/
+external/
+data/clips/raw/
