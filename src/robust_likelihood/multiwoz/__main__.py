@@ -202,6 +202,11 @@ def main(argv: list[str] | None = None) -> int:
     score_parser.add_argument("--device", default=None)
     score_parser.add_argument("--batch-size", type=int, default=32)
     score_parser.add_argument("--label", default=None)
+    for command, text in (("typ-quantile", "week of 24 Nov Part C: quantile-bin typicality from saved samples"),
+                          ("wk-analyze", "week of 24 Nov Parts A-C: metrics from the uperturb, hsample, Phase 2 runs")):
+        week_parser = sub.add_parser(command, help=text)
+        week_parser.add_argument("--runs", nargs="+", required=True, help="sim-score and sim-week run folders")
+        week_parser.add_argument("--out", default="docs/week_nov24_results")
     analyze_parser = sub.add_parser("sim-analyze", help="simulator study Phase 3: metrics from the sim-score runs")
     analyze_parser.add_argument("--runs", nargs="*", default=[], help="sim-score run folders (others are skipped)")
     analyze_parser.add_argument("--phase8", default=None, help="the Phase 8 run, analyzed as qwen25_inst|P0")
@@ -497,6 +502,13 @@ def _dispatch(args) -> int:
                             samples_dir=Path(args.samples_dir) if args.samples_dir else None,
                             hsample_limit=args.hsample_limit)
         print(json.dumps(summary, indent=2))
+        return 0
+    if args.command in ("typ-quantile", "wk-analyze"):
+        from robust_likelihood.multiwoz.wk_analyze import run_wk_analyze
+
+        summary = run_wk_analyze(root, runs=[Path(path) for path in args.runs], out=root / args.out,
+                                 parts=("c",) if args.command == "typ-quantile" else ("a", "b", "c"))
+        print(json.dumps(summary, indent=2, ensure_ascii=False))
         return 0
     if args.command == "sim-analyze":
         from robust_likelihood.multiwoz.sim_analyze import run_sim_analyze
