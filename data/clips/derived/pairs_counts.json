@@ -1,0 +1,52 @@
+{
+  "mdkg": {
+    "check": {
+      "duplicate_prompts_within_a_particle": 0,
+      "particle_prompts_not_recorded": 0,
+      "particles_with_weights_not_summing_to_1": 0,
+      "passes": true,
+      "pragmatic_keys_without_particle": 0
+    },
+    "commands_per_goal": {
+      "max": 10,
+      "mean": 4.129166666666666
+    },
+    "goals_per_problem": {
+      "max": 4,
+      "mean": 4.0,
+      "min": 4
+    },
+    "pairs_by_role": {
+      "mdkg_literal": 3974,
+      "mdkg_pragmatic": 273
+    },
+    "problems": 30,
+    "unique_pairs": 4247,
+    "unique_prompts": 410
+  },
+  "vh": {
+    "check": {
+      "duplicate_prompts_within_a_particle": 0,
+      "particle_prompts_not_recorded": 0,
+      "particles_with_weights_not_summing_to_1": 0,
+      "passes": true,
+      "pragmatic_keys_without_particle": 0
+    },
+    "commands_per_goal": {
+      "max": 52,
+      "mean": 12.05084745762712
+    },
+    "goals_per_problem": {
+      "max": 12,
+      "mean": 10.08,
+      "min": 6
+    },
+    "pairs_by_role": {
+      "vh_literal": 2146,
+      "vh_pragmatic": 1753
+    },
+    "problems": 25,
+    "unique_pairs": 3899,
+    "unique_prompts": 332
+  }
+}
