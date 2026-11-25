@@ -112,3 +112,40 @@ too, so the analysis can be audited.
 | 1201097 | `uperturb`, six models in turn, 2,395 units (24,011 pairs per model) | gpu |
 | 1201013 | `hsample`, `qwen3_base`·F, 894 reworded hypotheses × 64 | gpu-long |
 | 1201014 | `xscore`, `qwen3_base`·F, 289,514 pairs | gpu-long |
+
+## STOP 3: the training target (2026-11-26)
+
+- The plan 5.1 rule, applied to `metrics_abc.json`: cent1Q's bin agreement with `qwen3_base` as the
+  reference is 66.0% under para1 and 79.4% under typo1, against 81.8% and 89.5% for cent1B:6bins
+  (more than 2 points below on both); its size principle kept is 1.27. **The rule chooses
+  cent1B:6bins**, recorded as `week_nov24.teacher_scheme` in `configs/simulator.json`.
+- Teacher constants: H = −9.259, sigma = 5.914 (cent statistic, 463 texts, uniform weights); edges
+  −2, −1, 0, 1, 2 in T; bin centres −2.5 … 2.5; regression target clipped to [−2.53, 2.07], the
+  pooled 0.5% and 99.5% quantiles of T.
+- Held-out foods (seed 20261124, 5 of the 23 food values of clean gold goals): african, european,
+  french, mexican, spanish. 17 items have one as their gold food. 54 of the 463 texts name one.
+
+## STOP 4: the training runs
+
+- The user's instruction of 2026-11-26 ("after execute everything, push it to the github") is taken
+  as the go-ahead for STOPs 3 and 4: the target follows the frozen rule, and the three runs are
+  submitted at the cost the smoke run measured.
+- **Student smoke run** (SoC job 1201403, 3.6 minutes, R-mlp and C-mlp with `--limit 3200`, the
+  smoke `xscore` run): 0.3 s per training step at batch 64, prediction about 1,100 pairs/s, the
+  validation loss falls. Full runs: about 275,000 training pairs, about 8,600 steps, about 50
+  minutes each with prediction, about 2.5 GPU-hours for the three (the plan said 1–2).
+- **Not in the plan's text, decided before any result:** LoRA alpha 32, no dropout; no warmup;
+  validation every 1,000 steps and at the end; the primary score of a regression student is the
+  continuous −(H + sigma·T̂), of the classifier the expected score; the bin forms are reported
+  next to them. D2–D3 and the verdict read the primary score; D4 reads the student's bins.
+- D4 compares with the teacher's own bin agreement under para1 (81.8% for cent1B:6bins); the plan's
+  86.4% is cent1B's over both paraphrase kinds.
+- Jobs 1201439 (R-lin), 1201440 (R-mlp), 1201441 (C-mlp) wait on `xscore` (afterok). Baseline 3,
+  `Qwen3-0.6B-Base` with the F prompt and no training: SoC job 1201438 (`qwen3_06_base`, parts human,
+  urewrite, hrewrite).
+
+## Runs (2026-11-26)
+
+- `uperturb`, job 1201097, commit `22e6829`, all six models, 24,011 pairs each: 5–8 minutes of
+  scoring per model. Rescoring the same original in different units' batches gives the same score
+  for every pair of five models (median and p90 0.000 nats); for UserLM the p90 is 0.097.

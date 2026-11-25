@@ -166,11 +166,82 @@ def figure_fixed_quantile(plt, models: dict, out: Path) -> list[Path]:
     return paths
 
 
-def write_figures(out: Path, metrics: dict) -> list[Path]:
+def figure_student(plt, part_d: dict, out: Path) -> list[Path]:
+    runs = [run for run in ("R-lin", "R-mlp", "C-mlp") if run in part_d.get("students", {})]
+    if not runs:
+        return []
+    figure, axes = plt.subplots(1, len(runs), figsize=(4.2 * len(runs), 4.2), sharex=True, sharey=True)
+    axes = axes if len(runs) > 1 else [axes]
+    rows = []
+    for ax, run in zip(axes, runs):
+        pairs = part_d["students"][run]["human_pairs"]
+        for unseen, color, marker, label in ((0, "#2a78d6", "o", "seen food"), (1, "#eb6834", "s", "unseen food")):
+            mine = [pair for pair in pairs if pair[2] == unseen]
+            ax.scatter([pair[0] for pair in mine], [pair[1] for pair in mine], s=16 if unseen else 9, color=color,
+                       marker=marker, alpha=0.9 if unseen else 0.45, linewidths=0, label=label)
+            rows += [{"run": run, "teacher_T": pair[0], "student_T": pair[1], "unseen_food": unseen} for pair in mine]
+        low = min(min(pair[0] for pair in pairs), min(pair[1] for pair in pairs))
+        high = max(max(pair[0] for pair in pairs), max(pair[1] for pair in pairs))
+        ax.plot([low, high], [low, high], color=INK["primary"], linestyle=DASHED, linewidth=0.8)
+        rho = _get(part_d, "students", run, "agreement", "all", "spearman")
+        ax.set_title(f"{run}: Spearman {num(rho)}", fontsize=9, color=INK["primary"])
+        ax.set_xlabel("teacher T (64 samples, 8B)", fontsize=8)
+        ax.grid(color=INK["grid"], linewidth=0.6)
+    axes[0].set_ylabel("student T-hat (0.6B)", fontsize=8)
+    axes[0].legend(fontsize=7, frameon=False, loc="upper left")
+    figure.suptitle("Student against teacher on the 2,355 human pairs (dashed: equality)", fontsize=10,
+                    color=INK["primary"])
+    figure.tight_layout(rect=(0, 0, 1, 0.94))
+    write_csv(out / "fig4_student_teacher.csv", rows)
+    paths = _save(figure, out / "fig4_student_teacher")
+    plt.close(figure)
+    return paths
+
+
+def figure_robustness(plt, part_d: dict, out: Path) -> list[Path]:
+    found = part_d.get("figure5")
+    if not found:
+        return []
+    kinds = ("para1", "typo1", "fill2", "hypothesis rewording")
+    scorers = list(found)
+    colors = ("#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4")
+    figure, ax = plt.subplots(figsize=(9, 3.8))
+    width = 0.8 / len(scorers)
+    rows = []
+    for index, scorer in enumerate(scorers):
+        for position, kind in enumerate(kinds):
+            block = found[scorer].get(kind) or {}
+            value, interval = block.get("mean"), block.get("ci95")
+            rows.append({"scorer": scorer, "kind": kind, "argmax_flip": value,
+                         "low": (interval or [None, None])[0], "high": (interval or [None, None])[1]})
+            if value is None:
+                continue
+            x = position + (index - (len(scorers) - 1) / 2) * width
+            ax.bar([x], [value], width=width * 0.9, color=colors[index % len(colors)],
+                   label=scorer if position == 0 else None)
+            if interval:
+                ax.vlines(x, interval[0], interval[1], color=INK["secondary"], linewidth=1)
+    ax.set_xticks(range(len(kinds)))
+    ax.set_xticklabels(kinds, fontsize=8)
+    ax.set_ylabel("posterior argmax flip rate", fontsize=8)
+    ax.grid(axis="y", color=INK["grid"], linewidth=0.6)
+    ax.legend(fontsize=7, frameon=False, loc="upper left")
+    ax.set_title("How often the top hypothesis changes: raw log-likelihood, the teacher and the students",
+                 fontsize=10, color=INK["primary"])
+    write_csv(out / "fig5_robustness.csv", rows)
+    paths = _save(figure, out / "fig5_robustness")
+    plt.close(figure)
+    return paths
+
+
+def write_figures(out: Path, metrics: dict, part_d: dict | None = None) -> list[Path]:
     plt = _pyplot()
     models = metrics["models"]
-    return (figure_dose(plt, models, out) + figure_bin_change(plt, models, out)
-            + figure_fixed_quantile(plt, models, out))
+    paths = (figure_dose(plt, models, out) + figure_bin_change(plt, models, out)
+             + figure_fixed_quantile(plt, models, out))
+    if part_d:
+        paths += figure_student(plt, part_d, out) + figure_robustness(plt, part_d, out)
+    return paths
 
 
 # ---------------------------------------------------------------- markdown
@@ -300,6 +371,63 @@ def part_c_table(models: dict) -> list[str]:
     return parts
 
 
+def part_d_tables(part_d: dict | None) -> list[str]:
+    parts = ["## Part D: a first trained typicality estimator", ""]
+    if not part_d:
+        return parts + ["The student runs are not in yet.", ""]
+    scheme = part_d["scheme"]
+    parts += [f"Teacher: {scheme['choice']} with Qwen3-8B-Base · F as the reference (H {num(scheme['H'])}, "
+              f"sigma {num(scheme['sigma'])}). Held-out foods: {', '.join(part_d['held_out_foods'])} "
+              f"({len(part_d['unseen_food_items'])} items). Student: Qwen3-0.6B-Base with LoRA r 16.", ""]
+    students = part_d["students"]
+    rows = [[run, f"{block['train_pairs']:,}", str(block.get("best_step")), num(block.get("best_val_loss"), 3),
+             num((block.get("train_seconds") or 0) / 60, 1), num(block.get("pairs_per_second"), 0)]
+            for run, block in students.items()]
+    parts += ["**Training**", "", table(["Run", "Training pairs", "Best step", "Best val loss", "Minutes",
+                                          "Pairs/s (prediction)"], rows), ""]
+    rows = []
+    for run, block in students.items():
+        agree = block["agreement"]
+        rows.append([run, num(_get(agree, "all", "spearman")), num(_get(agree, "seen_food", "spearman")),
+                     num(_get(agree, "unseen_food", "spearman")),
+                     with_ci(_get(agree, "all", "exact_bin"), "mean", percent=True),
+                     with_ci(_get(agree, "all", "within_one_bin"), "mean", percent=True),
+                     num(_get(agree, "synthetic_val", "spearman")),
+                     num(_get(agree, "synthetic_held_out_food", "spearman"))])
+    parts += ["**Agreement with the teacher** (human pairs; the synthetic columns are held-out samples)", "",
+              table(["Run", "Spearman", "Seen food", "Unseen food", "Exact bin", "Within one bin",
+                     "Synthetic val", "Synthetic, held-out food"], rows), ""]
+    rows = []
+    forms = {"R-lin": ("cont", "bin"), "R-mlp": ("cont", "bin"), "C-mlp": ("expected", "argmax")}
+
+    def inference_row(label: str, found: dict) -> list[str]:
+        return [label, num(_get(found, "size_kept", "named")), num(_get(found, "size_kept", "omitted")),
+                num(found.get("contra_log_bf")), with_ci(found.get("mean_log_p_goal"), "mean"),
+                with_ci(found.get("top1"), "mean", percent=True)]
+
+    for run, block in students.items():
+        for form in forms[run]:
+            rows.append(inference_row(f"{run} · {form}", _get(block, "forms", form, "all") or {}))
+    for name, label in (("teacher", "teacher (64 samples, 8B)"), ("raw_8b", "raw log-lik, Qwen3-8B-Base · F"),
+                        ("raw_06b", "raw log-lik, Qwen3-0.6B-Base · F, untrained"), ("jev_likely", "Jev (likely)"),
+                        ("jev_typical", "Jev (typical)")):
+        found = _get(part_d, "baselines", name, "all")
+        if found:
+            rows.append(inference_row(label, found))
+    parts += ["**Inference on the human pairs** (size principle kept: L_J ÷ L_E, implicit regime)", "",
+              table(["Score", "Size kept, named", "Size kept, omitted", "Contra log BF", "Mean log P(G)", "Top-1"],
+                    rows), ""]
+    cost = part_d.get("teacher_cost")
+    if cost:
+        speeds = ", ".join(f"{run} {num(block.get('pairs_per_second'), 0)}" for run, block in students.items())
+        parts += [f"**Cost.** The teacher needs {num(cost['seconds_per_new_hypothesis'], 1)} s of 8B sampling and "
+                  f"scoring per new hypothesis text; the students score {speeds} pairs per second.", ""]
+    verdict = part_d.get("verdict")
+    if verdict:
+        parts += [f"**Verdict (frozen rule): {verdict['verdict']}.**", ""]
+    return parts
+
+
 def scorecard(predictions: list[dict]) -> list[str]:
     rows = [[item["id"], item["statement"], "pass" if item["pass"] else "fail"] for item in predictions]
     return ["## Prediction scorecard", "", table(["ID", "Prediction", "Result"], rows), ""]
@@ -318,12 +446,14 @@ def summary_markdown(metrics: dict, manifest: dict, discussion: str | None, simu
     parts += part_b_table(models)
     parts += part_c_table(models)
     choice = metrics.get("teacher_choice")
+    part_d = metrics.get("part_d")
     if choice:
         parts += ["**Training target (plan 5.1 rule).** " + choice["rule"] + f". cent1Q: para1 "
                   f"{pct(choice['cent1Q']['para1'])}, typo1 {pct(choice['cent1Q']['typo1'])}, size kept "
                   f"{num(choice['cent1Q']['size_kept'])}; cent1B:6bins: para1 {pct(choice['cent1B:6bins']['para1'])}, "
                   f"typo1 {pct(choice['cent1B:6bins']['typo1'])}. **Rule's choice: {choice['choice']}.**", ""]
-    parts += scorecard(metrics.get("predictions", []) + metrics.get("predictions_d", []))
+    parts += part_d_tables(part_d)
+    parts += scorecard(metrics.get("predictions", []) + (part_d or {}).get("predictions", []))
     if discussion:
         parts += [discussion.strip(), ""]
     return "\n".join(parts)
@@ -332,13 +462,15 @@ def summary_markdown(metrics: dict, manifest: dict, discussion: str | None, simu
 def run_wk_report(root: Path, out: Path, figures: bool = True) -> dict:
     metrics = read_json(out / "metrics_abc.json")
     manifest = read_json(out / "manifest_abc.json")
+    part_d = read_json(out / "metrics_d.json") if (out / "metrics_d.json").exists() else None
+    metrics["part_d"] = part_d
     simulator_path = root / "docs" / "simulator_results" / "metrics.json"
     simulator = read_json(simulator_path) if simulator_path.exists() else None
     discussion_path = out / "discussion.md"
     discussion = discussion_path.read_text(encoding="utf-8") if discussion_path.exists() else None
     headline_path = out / "headline.md"
     headline = headline_path.read_text(encoding="utf-8").strip().splitlines() if headline_path.exists() else None
-    paths = write_figures(out, metrics) if figures else []
+    paths = write_figures(out, metrics, part_d) if figures else []
     (out / "summary.md").write_text(summary_markdown(metrics, manifest, discussion, simulator, headline),
                                     encoding="utf-8", newline="\n")
     return {"summary": str(out / "summary.md"), "figures": [str(path) for path in paths]}

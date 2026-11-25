@@ -132,6 +132,25 @@ def robustness(log: dict, bins: dict | None, metas: dict, boot: ItemBoot, item_i
     return found
 
 
+def part_a_flips(log: dict, metas: dict, boot: ItemBoot, item_ids: list[str], kind: str) -> dict:
+    """Posterior argmax flips between a Part A unit and its co-batched original (keys orig:kind and kind)."""
+    from robust_likelihood.multiwoz.wk_analyze import orig
+
+    ids, flips = [], []
+    for item in item_ids:
+        classes = posterior_classes(metas[item])
+        before = [log.get((item, key, ORIGINAL, orig(kind))) for key in classes]
+        after = [log.get((item, key, ORIGINAL, kind)) for key in classes]
+        if len(classes) >= 2 and None not in before and None not in after:
+            ids.append(item)
+            flips.append(float(max(range(len(classes)), key=before.__getitem__)
+                               != max(range(len(classes)), key=after.__getitem__)))
+    return boot.mean(ids, flips)
+
+
+FIGURE_KINDS = ("para1", "typo1", "fill2", "hypothesis rewording")
+
+
 def agreement_with_teacher(rows: list[dict], boot: ItemBoot) -> dict:
     if not rows:
         return {"pairs": 0}
@@ -179,6 +198,8 @@ def run_student_eval(root: Path, *, runs: list[Path], phase2: list[Path], jev: P
                  if row["set"] == "human" and row.get("teacher")]
         block["agreement"] = {scope: agreement_with_teacher([row for row in human if row["item_id"] in set(ids)], boot)
                               for scope, ids in scopes.items()}
+        unseen_set = set(unseen)
+        block["human_pairs"] = [[row["T"], row["T_hat"], int(row["item_id"] in unseen_set)] for row in human]
         for split in ("synthetic_val", "synthetic_held_out_food"):
             synthetic = [{"item_id": clean_ids[0], "T_hat": value["T"], "bin_hat": value["bin"], "T": row["T"],
                           "bin": row["bin"]} for row, value in zip(rows, values) if row["set"] == split]
@@ -226,6 +247,8 @@ def run_student_eval(root: Path, *, runs: list[Path], phase2: list[Path], jev: P
             "claims": model.get("part_c", {}).get(scheme["choice"], {}).get("agreement"),
             "part_a": model.get("typicality", {}).get(scheme["choice"]),
             "rewording": model.get("part_b", {}).get(scheme["choice"])}
+    if teacher_run is not None:
+        result["figure5"] = figure_five(root, derived, result, scheme, inputs, week, metas, boot, clean_ids)
     small = phase2_runs.get("qwen3_06_base|F") or week.get("qwen3_06_base|F", {}).get("human")
     if small is not None:
         scores = {(row["item_id"], row["hyp_key"]): row["S"] for row in read_jsonl(small / "lm_scores.jsonl")
@@ -258,6 +281,42 @@ def run_student_eval(root: Path, *, runs: list[Path], phase2: list[Path], jev: P
                 "elapsed_seconds": round(time.monotonic() - clock, 1)}
     write_json(out / "manifest_d.json", manifest)
     return {"out": str(out), "predictions": result["predictions"], "verdict": result["verdict"]}
+
+
+def figure_five(root: Path, derived: Path, result: dict, scheme: dict, inputs, week: dict, metas: dict, boot: ItemBoot,
+                clean_ids: list[str]) -> dict:
+    """Posterior argmax flip rates of raw log-likelihood (8B), the teacher and each student's primary score
+    under para1, typo1, fill2 and hypothesis rewording. Part A's kinds are read against the co-batched
+    original for the 8B scores, and against the student's own prediction on the original turn."""
+    from robust_likelihood.multiwoz.typv0 import load_typv0_config, pool_weights
+    from robust_likelihood.multiwoz.wk_analyze import perturb_cells, perturb_log
+    from robust_likelihood.multiwoz.wk_quantile import scores_of, specs
+
+    found: dict = {}
+    raw = result["baselines"]["raw_8b"]["robustness"]
+    uperturb = week.get("qwen3_base|F", {}).get("uperturb")
+    rows = read_jsonl(uperturb / "uperturb.jsonl") if uperturb is not None else []
+    raw_part_a = perturb_log(rows)
+    found["raw log-likelihood (8B)"] = {
+        "para1": _get(raw, "kinds", "para1", "argmax_flip"),
+        "typo1": part_a_flips(raw_part_a, metas, boot, clean_ids, "typo1") if rows else None,
+        "fill2": part_a_flips(raw_part_a, metas, boot, clean_ids, "fill2") if rows else None,
+        "hypothesis rewording": _get(raw, "posterior_hrewrite", "argmax_flip_rate")}
+    spec = specs(load_typv0_config(root))[scheme["choice"]]
+    weights = pool_weights(inputs.probe, "uniform")
+    log, bins, _ = scores_of(inputs, spec, weights)
+    teacher = robustness(log, bins, metas, boot, clean_ids, SEED)
+    part_a, _, _ = scores_of(inputs, spec, weights, perturb_cells(rows)) if rows else ({}, None, None)
+    found[f"teacher ({scheme['choice']}, 64 samples, 8B)"] = {
+        "para1": _get(teacher, "kinds", "para1", "argmax_flip"),
+        "typo1": part_a_flips(part_a, metas, boot, clean_ids, "typo1") if rows else None,
+        "fill2": part_a_flips(part_a, metas, boot, clean_ids, "fill2") if rows else None,
+        "hypothesis rewording": _get(teacher, "posterior_hrewrite", "argmax_flip_rate")}
+    for run, block in result["students"].items():
+        robust = _get(block, "forms", PRIMARY[run], "robustness")
+        found[f"student {run}"] = {kind: _get(robust, "kinds", kind, "argmax_flip") for kind in ("para1", "typo1", "fill2")}
+        found[f"student {run}"]["hypothesis rewording"] = _get(robust, "posterior_hrewrite", "argmax_flip_rate")
+    return found
 
 
 def _get(block, *path):
