@@ -16,6 +16,8 @@
 #   week    docs/week_nov24_plan.md: sim_job.sh week <model:format,...> <parts> [sim-score arguments],
 #           one sim-score run per model in turn, parts of uperturb, xscore, hsample (e.g. xscore needs
 #           --samples-dir <the model's Phase 2 run>; a smoke run adds --first-items N --hsample-limit N).
+#   student docs/week_nov24_plan.md Part D: sim_job.sh student <R-lin,R-mlp,C-mlp> <scheme> <phase2> <xscore run>
+#           [student-train arguments], one training run per name in turn, each with its predictions.
 #
 # On the login node first, every model at its pinned revision (configs/simulator.json), with
 # huggingface_hub; the jobs run with HF_HUB_OFFLINE=1 and never pip install.
@@ -55,7 +57,7 @@
 
 set -euo pipefail
 
-STAGE="${1:-${STAGE:?pass the stage: check, score, pilot, noise or week}}"
+STAGE="${1:-${STAGE:?pass the stage: check, score, pilot, noise, week or student}}"
 cd "${SLURM_SUBMIT_DIR:-${PBS_O_WORKDIR:-${LS_SUBCWD:-$(pwd)}}}"
 
 # module load <CUDA_MODULE>
@@ -104,6 +106,15 @@ elif [ "$STAGE" = "week" ]; then
     shift 3 || true
     for RUN in ${RUNS//,/ }; do
         python -m robust_likelihood.multiwoz sim-score --model "${RUN%%:*}" --format "${RUN##*:}" --parts "$PARTS" "$@"
+    done
+elif [ "$STAGE" = "student" ]; then
+    NAMES="${2:?pass the run names}"
+    SCHEME="${3:?pass the bin scheme}"
+    PHASE2="${4:?pass the Phase 2 run}"
+    XSCORE="${5:?pass the xscore run}"
+    shift 5
+    for NAME in ${NAMES//,/ }; do
+        python -m robust_likelihood.multiwoz student-train --run "$NAME" --scheme "$SCHEME" --phase2 "$PHASE2" --xscore "$XSCORE" "$@"
     done
 else
     echo "unknown stage $STAGE" >&2

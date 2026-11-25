@@ -13,6 +13,9 @@
     "qwen3_inst": {"id": "Qwen/Qwen3-8B", "revision": "b968826d9c46dd6066d109eabc6255188de91218",
                    "license": "apache-2.0", "speaker_role": "assistant", "end_token": "<|im_end|>", "separator": "",
                    "template_kwargs": {"enable_thinking": false}, "primary": "S", "formats": ["S"]},
+    "qwen3_06_base": {"id": "Qwen/Qwen3-0.6B-Base", "revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+                      "license": "apache-2.0", "end_text": "\n", "primary": "F", "formats": ["F"],
+                      "note": "week_nov24 Part D baseline 3 only: raw log-likelihood of the student's backbone"},
     "osim_mid": {"id": "cmu-lti/osim-8b-mid", "revision": "af9ef0347ede45b6ce0cfcf3851ea37da861bb13",
                  "license": "mit", "speaker_role": "assistant", "end_token": "<|im_end|>", "separator": "",
                  "template_kwargs": {}, "primary": "S", "formats": ["S", "N"]},
@@ -44,7 +47,10 @@
   "week_nov24": {"plan": "docs/week_nov24_plan.md", "seed": 20261124,
                  "uperturb_models": ["qwen3_base:F", "osim_mid:S", "osim_final:S", "userlm:S", "qwen25_inst:S",
                                      "qwen3_inst:S"],
-                 "hsample_models": ["qwen3_base"], "xscore_models": ["qwen3_base"], "xscore_samples": 32},
+                 "hsample_models": ["qwen3_base"], "xscore_models": ["qwen3_base"], "xscore_samples": 32,
+                 "student": {"id": "Qwen/Qwen3-0.6B-Base", "revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+                             "license": "apache-2.0"},
+                 "baseline_models": ["qwen3_06_base"], "teacher_scheme": null},
   "format_check": {"goals_2slot": 3, "goals_3slot": 3, "samples": 8, "p0_pairs": 20, "boundary_pairs": 200,
                    "boundary_failure_limit": 0.01, "p0_tolerance_nats": 1.0}
 }

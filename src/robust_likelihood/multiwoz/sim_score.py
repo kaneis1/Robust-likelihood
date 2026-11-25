@@ -251,8 +251,8 @@ def sim_score(
               "boundary_failures": len(failed), "boundary_failure_rate": rate}
     # A run for the week-of-24-Nov plan gets its own kind and folder name, so sim_analyze.discover still
     # finds each model's Phase 2 run as its newest sim-score run.
-    week_run = bool(set(parts) & set(EXTRA_PARTS)) or ("hsample" in parts
-                                                        and key not in config["phase2"]["hsample_models"])
+    week_run = (bool(set(parts) & set(EXTRA_PARTS)) or key in week.get("baseline_models", [])
+                or ("hsample" in parts and key not in config["phase2"]["hsample_models"]))
     run_dir = (results_root or root / RESULTS_DIR) / (
         f"{started.strftime('%Y%m%dT%H%M%SZ')}-{'simwk' if week_run else 'sim'}-{key}-{fmt}"
         + (f"-{label}" if label else ""))

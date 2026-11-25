@@ -207,6 +207,21 @@ def main(argv: list[str] | None = None) -> int:
         week_parser = sub.add_parser(command, help=text)
         week_parser.add_argument("--runs", nargs="+", required=True, help="sim-score and sim-week run folders")
         week_parser.add_argument("--out", default="docs/week_nov24_results")
+    student_parser = sub.add_parser("student-train", help="week of 24 Nov Part D: train one student; needs a GPU")
+    student_parser.add_argument("--run", required=True, choices=["R-lin", "R-mlp", "C-mlp"])
+    student_parser.add_argument("--scheme", required=True, choices=["cent1B:6bins", "cent1Q"],
+                                help="the bin scheme frozen at STOP 3")
+    student_parser.add_argument("--phase2", required=True, help="qwen3_base's Phase 2 run (samples, human scores)")
+    student_parser.add_argument("--xscore", required=True, help="the sim-week run with xscore.jsonl")
+    student_parser.add_argument("--device", default=None)
+    student_parser.add_argument("--limit", type=int, default=None, help="smoke run: only the first N training pairs")
+    student_parser.add_argument("--eval-every", type=int, default=None)
+    student_eval_parser = sub.add_parser("student-eval", help="week of 24 Nov Part D: metrics from the student runs")
+    student_eval_parser.add_argument("--runs", nargs="+", required=True, help="student run folders")
+    student_eval_parser.add_argument("--phase2", nargs="+", required=True,
+                                     help="sim-score and sim-week run folders (teacher, baselines)")
+    student_eval_parser.add_argument("--jev", default=None, help="the Jev full run (scores.jsonl)")
+    student_eval_parser.add_argument("--out", default="docs/week_nov24_results")
     wk_report_parser = sub.add_parser("wk-report", help="week of 24 Nov: summary.md and figures")
     wk_report_parser.add_argument("--out", default="docs/week_nov24_results")
     wk_report_parser.add_argument("--no-figures", action="store_true")
@@ -511,6 +526,22 @@ def _dispatch(args) -> int:
 
         summary = run_wk_analyze(root, runs=[Path(path) for path in args.runs], out=root / args.out,
                                  parts=("c",) if args.command == "typ-quantile" else ("a", "b", "c"))
+        print(json.dumps(summary, indent=2, ensure_ascii=False))
+        return 0
+    if args.command == "student-train":
+        from robust_likelihood.multiwoz.wk_student import student_train
+
+        summary = student_train(root, args.run, scheme_choice=args.scheme, phase2=Path(args.phase2),
+                                xscore_dir=Path(args.xscore), device=args.device, limit=args.limit,
+                                settings={"eval_every": args.eval_every} if args.eval_every else None)
+        print(json.dumps(summary, indent=2))
+        return 0
+    if args.command == "student-eval":
+        from robust_likelihood.multiwoz.wk_student_eval import run_student_eval
+
+        summary = run_student_eval(root, runs=[Path(path) for path in args.runs],
+                                   phase2=[Path(path) for path in args.phase2],
+                                   jev=Path(args.jev) if args.jev else None, out=root / args.out)
         print(json.dumps(summary, indent=2, ensure_ascii=False))
         return 0
     if args.command == "wk-report":
