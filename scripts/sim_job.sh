@@ -111,8 +111,17 @@ elif [ "$STAGE" = "student" ]; then
     NAMES="${2:?pass the run names}"
     SCHEME="${3:?pass the bin scheme}"
     PHASE2="${4:?pass the Phase 2 run}"
-    XSCORE="${5:?pass the xscore run}"
+    XSCORE="${5:?pass the xscore run, or newest}"
     shift 5
+    if [ "$XSCORE" = "newest" ]; then
+        # The newest finished, non-smoke sim-week run that has xscore.jsonl.
+        XSCORE=""
+        for dir in $(ls -1d results/multiwoz/*-simwk-qwen3_base-F 2>/dev/null | sort -r); do
+            if [ -f "$dir/xscore.jsonl" ] && grep -q finished_at "$dir/manifest.json"; then XSCORE="$dir"; break; fi
+        done
+        if [ -z "$XSCORE" ]; then echo "no finished xscore run in results/multiwoz" >&2; exit 1; fi
+        echo "xscore run: $XSCORE"
+    fi
     for NAME in ${NAMES//,/ }; do
         python -m robust_likelihood.multiwoz student-train --run "$NAME" --scheme "$SCHEME" --phase2 "$PHASE2" --xscore "$XSCORE" "$@"
     done
