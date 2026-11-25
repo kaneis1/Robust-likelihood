@@ -13,6 +13,9 @@
 #   noise   Noise floor of the utterance-rewrite shifts: sim_job.sh noise <model:format,...>. Each
 #           Phase 2 urewrite part again with the original utterances, and the human part again.
 #           About 4 min per model.
+#   week    docs/week_nov24_plan.md: sim_job.sh week <model:format,...> <parts> [sim-score arguments],
+#           one sim-score run per model in turn, parts of uperturb, xscore, hsample (e.g. xscore needs
+#           --samples-dir <the model's Phase 2 run>; a smoke run adds --first-items N --hsample-limit N).
 #
 # On the login node first, every model at its pinned revision (configs/simulator.json), with
 # huggingface_hub; the jobs run with HF_HUB_OFFLINE=1 and never pip install.
@@ -52,7 +55,7 @@
 
 set -euo pipefail
 
-STAGE="${1:-${STAGE:?pass the stage: check, score, pilot or noise}}"
+STAGE="${1:-${STAGE:?pass the stage: check, score, pilot, noise or week}}"
 cd "${SLURM_SUBMIT_DIR:-${PBS_O_WORKDIR:-${LS_SUBCWD:-$(pwd)}}}"
 
 # module load <CUDA_MODULE>
@@ -95,6 +98,13 @@ elif [ "$STAGE" = "pilot" ]; then
 elif [ "$STAGE" = "noise" ]; then
     RUNS="${2:-${RUNS:?pass model:format,...}}"
     python -m robust_likelihood.multiwoz sim-noise --runs "$RUNS"
+elif [ "$STAGE" = "week" ]; then
+    RUNS="${2:-${RUNS:?pass model:format,...}}"
+    PARTS="${3:-${PARTS:?pass the parts}}"
+    shift 3 || true
+    for RUN in ${RUNS//,/ }; do
+        python -m robust_likelihood.multiwoz sim-score --model "${RUN%%:*}" --format "${RUN##*:}" --parts "$PARTS" "$@"
+    done
 else
     echo "unknown stage $STAGE" >&2
     exit 2

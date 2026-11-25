@@ -127,6 +127,10 @@ def main(argv: list[str] | None = None) -> int:
     rewrites_parser.add_argument("--workers", type=int, default=4)
     rewrites_parser.add_argument("--nli-device", default=None, help="cuda, mps, or cpu; detected when omitted")
     rewrites_parser.add_argument("--label", default=None)
+    rewrites_parser.add_argument("--kind", default=None,
+                                 help="only this kind (e.g. terse, docs/week_nov24_plan.md A2); its accepted rewrites "
+                                      "go to derived/<kind>.jsonl")
+    rewrites_parser.add_argument("--dry-run", action="store_true", help="count the units and calls; no API call")
     claim_parser = sub.add_parser("claim1-lm", help="claims plan 2c job A parts; needs the lm extra and a GPU")
     claim_parser.add_argument("--model", default="qwen", help="model key in configs/claims.json")
     claim_parser.add_argument("--parts", default="center,urewrite,hrewrite,hsample")
@@ -187,8 +191,12 @@ def main(argv: list[str] | None = None) -> int:
     score_parser.add_argument("--model", required=True, help="a key of configs/simulator.json")
     score_parser.add_argument("--format", required=True, dest="fmt", help="S, B, N, or F")
     score_parser.add_argument("--parts", default=None,
-                              help="comma-separated of samples,human,urewrite,hrewrite,hsample (default: all the "
-                                   "plan runs for the model)")
+                              help="comma-separated of samples,human,urewrite,hrewrite,hsample, or the week-of-24-Nov "
+                                   "parts uperturb,xscore (default: all the Phase 2 plan runs for the model)")
+    score_parser.add_argument("--samples-dir", default=None, help="xscore: the model's Phase 2 run (its samples)")
+    score_parser.add_argument("--first-items", type=int, default=None,
+                              help="smoke run: only the first N clean items (sorted ids)")
+    score_parser.add_argument("--hsample-limit", type=int, default=None, help="smoke run: only the first N hsample units")
     score_parser.add_argument("--include-fail", action="store_true", help="also score the fail_info probe rows")
     score_parser.add_argument("--dtype", default="bfloat16")
     score_parser.add_argument("--device", default=None)
@@ -362,11 +370,24 @@ def _dispatch(args) -> int:
             return 1
         return 0
     if args.command == "rewrites":
-        from robust_likelihood.multiwoz.rewrites import cost_estimate, full_llm_units, run_rewrites, write_derived
+        from robust_likelihood.multiwoz.rewrites import (
+            cost_estimate,
+            full_llm_units,
+            planned_units,
+            run_rewrites,
+            write_derived,
+            write_extra,
+        )
 
+        kinds = (args.kind,) if args.kind else None
+        if args.dry_run:
+            print(json.dumps(planned_units(root / DERIVED_DIR, kinds or ()), indent=2))
+            return 0
         summary = run_rewrites(root, pilot=args.pilot, workers=args.workers, nli_device=args.nli_device,
-                               label=args.label)
-        if args.pilot:
+                               label=args.label, kinds=kinds)
+        if args.kind and not args.pilot:
+            summary["derived"] = write_extra(Path(summary["run_dir"]), root / DERIVED_DIR, args.kind)
+        elif args.pilot:
             price = read_json(root / "configs" / "dice.json")["api_prices_usd_per_mtok"]["claude"]
             summary["full_run_estimate"] = cost_estimate(summary, full_llm_units(root / DERIVED_DIR), price)
         else:
@@ -465,9 +486,16 @@ def _dispatch(args) -> int:
     if args.command == "sim-score":
         from robust_likelihood.multiwoz.sim_score import sim_score
 
+        items = None
+        if args.first_items:
+            clean = sorted(item["item_id"] for item in read_jsonl(root / DERIVED_DIR / "items.jsonl")
+                           if item["set"] == "clean")
+            items = set(clean[:args.first_items])
         summary = sim_score(root, args.model, args.fmt, parts=args.parts.split(",") if args.parts else None,
                             include_fail=True if args.include_fail else None, batch_size=args.batch_size,
-                            dtype=args.dtype, device=args.device, label=args.label)
+                            dtype=args.dtype, device=args.device, label=args.label, items=items,
+                            samples_dir=Path(args.samples_dir) if args.samples_dir else None,
+                            hsample_limit=args.hsample_limit)
         print(json.dumps(summary, indent=2))
         return 0
     if args.command == "sim-analyze":

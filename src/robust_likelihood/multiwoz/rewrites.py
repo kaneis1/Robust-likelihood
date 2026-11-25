@@ -41,7 +41,10 @@ NLI_MODEL = "MoritzLaurer/DeBERTa-v3-large-mnli-fever-anli-ling-wanli"
 NLI_REVISION = "b3546ea6b0346eb6f8d5d68b13c7dc6d0376b3d7"
 UTTERANCE_KINDS = ("typo", "pad", "para1", "para2", "verbose", "zh")
 HYPOTHESIS_KINDS = ("hpara1", "hpara2", "hpara3", "hzh")
-LLM_KINDS = {"para1", "para2", "verbose", "zh", "hpara1", "hpara2", "hpara3", "hzh"}
+# Utterance kinds added later (docs/week_nov24_plan.md A2). They run only when asked for by name, and
+# their accepted rewrites go to their own derived file, so the claims run and rewrites.jsonl are unchanged.
+EXTRA_UTTERANCE_KINDS = ("terse",)
+LLM_KINDS = {"para1", "para2", "verbose", "zh", "hpara1", "hpara2", "hpara3", "hzh", "terse"}
 CHINESE_KINDS = {"zh", "hzh"}
 # `pad` keeps the message untouched between a fixed opener and closer, and the message never entails a
 # greeting, so NLI rejects pads by design; pads are checked by regex only (docs/claims_decisions.md).
@@ -58,6 +61,10 @@ PARAPHRASE = (
     "day, time) and add nothing."
 )
 VERBOSE = "Rewrite this message to be about twice as long without adding any new information, preference, or detail."
+TERSE = (
+    "Rewrite this message as the shortest message a real user might type with the same preferences. Keep every "
+    "detail (cuisine, area, price, people, day, time) and every statement of no preference, and add nothing."
+)
 HYPOTHESIS_PARAPHRASE = (
     "Rewrite this description of a user of a restaurant booking assistant so it means exactly the same thing. "
     "Keep every detail and add nothing."
@@ -129,6 +136,8 @@ def llm_messages(kind: str, text: str, explicit: bool = False) -> list[dict]:
         instruction, tail = PARAPHRASE, REPLY_ONLY
     elif kind == "verbose":
         instruction, tail = VERBOSE, REPLY_ONLY
+    elif kind == "terse":
+        instruction, tail = TERSE, REPLY_ONLY
     elif kind in CHINESE_KINDS:
         instruction, tail = TO_CHINESE, TRANSLATION_ONLY
     elif kind.startswith("hpara"):
@@ -140,12 +149,16 @@ def llm_messages(kind: str, text: str, explicit: bool = False) -> list[dict]:
     return [{"role": "user", "content": f"{instruction} {tail}\n\n{text}"}]
 
 
-def build_units(items: list[dict], probe: list[dict], vocab: dict) -> list[dict]:
-    """One unit per (original text, kind), with the slot tuple a valid rewrite must keep."""
+def build_units(items: list[dict], probe: list[dict], vocab: dict, kinds: tuple[str, ...] | None = None) -> list[dict]:
+    """One unit per (original text, kind), with the slot tuple a valid rewrite must keep. kinds limits the
+    units to those kinds (and may name an extra utterance kind); None builds the claims run's kinds."""
+    utterance_kinds = UTTERANCE_KINDS if kinds is None else tuple(
+        kind for kind in UTTERANCE_KINDS + EXTRA_UTTERANCE_KINDS if kind in kinds)
+    hypothesis_kinds = HYPOTHESIS_KINDS if kinds is None else tuple(kind for kind in HYPOTHESIS_KINDS if kind in kinds)
     units = []
     for item in items:
         truth = annotated_tuple(item, vocab)
-        for kind in UTTERANCE_KINDS:
+        for kind in utterance_kinds:
             units.append({"unit_id": f"u:{item['item_id']}:{kind}", "side": "utterance", "kind": kind,
                           "item_id": item["item_id"], "original": item["utterance"], "expected": truth,
                           "explicit": False})
@@ -157,7 +170,7 @@ def build_units(items: list[dict], probe: list[dict], vocab: dict) -> list[dict]
     for text, row in sorted(texts.items()):
         digest = hashlib.sha256(text.encode("utf-8")).hexdigest()[:12]
         expected = {slot: [value] for slot, value in hypothesis_tuple(row).items()}
-        for kind in HYPOTHESIS_KINDS:
+        for kind in hypothesis_kinds:
             units.append({"unit_id": f"h:{digest}:{kind}", "side": "hypothesis", "kind": kind, "text_id": digest,
                           "original": text, "expected": expected, "explicit": row["regime"] == "expl"})
     return units
@@ -214,6 +227,7 @@ def run_rewrites(
     sleeper=time.sleep,
     nli=None,
     now: datetime | None = None,
+    kinds: tuple[str, ...] | None = None,
 ) -> dict:
     derived = derived or root / DERIVED_DIR
     vocab = load_vocab(derived)
@@ -222,7 +236,7 @@ def run_rewrites(
     chosen = set(choose_items(items, "clean", pilot, unit_seed("rewrites:pilot") if pilot else None))
     items = [item for item in items if item["item_id"] in chosen]
     probe = [row for row in read_jsonl(derived / "probe.jsonl") if row["set"] == "clean"]
-    units = build_units(items, probe, vocab)
+    units = build_units(items, probe, vocab, kinds)
     client, settings = api_client(root, "claude", transport=transport, environ=environ)
     started = now or datetime.now(timezone.utc)
     run_dir = (results_root or root / RESULTS_DIR / "rewrites") / (
@@ -232,7 +246,9 @@ def run_rewrites(
         "provider": "claude", "requested_model_id": settings["model_id"], "requested_temperature": 1.0,
         "prompts": {"para": PARAPHRASE, "verbose": VERBOSE, "hpara": HYPOTHESIS_PARAPHRASE,
                     "keep_no_preference": KEEP_NO_PREFERENCE, "zh": TO_CHINESE, "back": TO_ENGLISH,
-                    "reply_only": REPLY_ONLY, "translation_only": TRANSLATION_ONLY},
+                    "reply_only": REPLY_ONLY, "translation_only": TRANSLATION_ONLY,
+                    **({"terse": TERSE} if kinds and "terse" in kinds else {})},
+        "kinds": None if kinds is None else list(kinds),
         "openers": list(OPENERS), "closers": list(CLOSERS),
         "nli": {"model": NLI_MODEL, "revision": NLI_REVISION, "threshold": NLI_THRESHOLD,
                 "regex_only_kinds": sorted(REGEX_ONLY_KINDS)},
@@ -308,7 +324,7 @@ def run_rewrites(
         append_jsonl(run_dir / "candidates.jsonl", records)
         pending = [unit for unit in pending if unit["unit_id"] not in accepted]
     rates = {}
-    for kind in UTTERANCE_KINDS + HYPOTHESIS_KINDS:
+    for kind in UTTERANCE_KINDS + HYPOTHESIS_KINDS + EXTRA_UTTERANCE_KINDS:
         mine = [unit for unit in units if unit["kind"] == kind]
         if mine:
             rates[kind] = {"units": len(mine), "accepted": sum(1 for unit in mine if unit["unit_id"] in accepted),
@@ -339,6 +355,29 @@ def run_rewrites(
             "unchanged": sum(1 for record in accepted.values() if not record["changed"]),
             "api_calls": len(calls), "input_tokens": usage_in, "output_tokens": usage_out, "acceptance": rates,
             "temperature_sent": temperature["value"]}
+
+
+def planned_units(derived: Path, kinds: tuple[str, ...]) -> dict:
+    """The units a run of these kinds would send, before any call (the dry run of a STOP)."""
+    vocab = load_vocab(derived)
+    items = [item for item in read_jsonl(derived / "items.jsonl") if item["set"] == "clean"]
+    probe = [row for row in read_jsonl(derived / "probe.jsonl") if row["set"] == "clean"]
+    units = build_units(items, probe, vocab, kinds)
+    llm = [unit for unit in units if unit["kind"] in LLM_KINDS]
+    calls = len(llm) + sum(1 for unit in llm if unit["kind"] in CHINESE_KINDS)
+    return {"kinds": list(kinds), "units": len(units), "llm_units": len(llm),
+            "first_attempt_calls": calls + (1 if llm else 0), "max_calls": ATTEMPTS * calls + (1 if llm else 0),
+            "by_kind": {kind: sum(1 for unit in units if unit["kind"] == kind) for kind in kinds}}
+
+
+def write_extra(run_dir: Path, derived: Path, kind: str) -> dict:
+    """The accepted rewrites of an extra utterance kind, to derived/<kind>.jsonl; rewrites.jsonl is untouched."""
+    if kind not in EXTRA_UTTERANCE_KINDS:
+        raise ValueError(f"{kind} is not an extra utterance kind")
+    kept = sorted((row for row in read_jsonl(run_dir / "accepted.jsonl")
+                   if row["kind"] == kind and row["unit_id"] not in AUDIT_REJECTED), key=lambda row: row["unit_id"])
+    write_jsonl(derived / f"{kind}.jsonl", kept)
+    return {"file": f"{kind}.jsonl", "rewrites": len(kept)}
 
 
 def full_llm_units(derived: Path) -> int:

@@ -41,6 +41,10 @@
   "phase5": {"models": ["qwen25_inst", "qwen3_inst", "osim_mid", "osim_final", "userlm"], "format": "S",
              "dialogues": 60, "user_turns": [2, 3], "samples": 32,
              "file": "data/multiwoz/derived/multiturn_pilot.jsonl"},
+  "week_nov24": {"plan": "docs/week_nov24_plan.md", "seed": 20261124,
+                 "uperturb_models": ["qwen3_base:F", "osim_mid:S", "osim_final:S", "userlm:S", "qwen25_inst:S",
+                                     "qwen3_inst:S"],
+                 "hsample_models": ["qwen3_base"], "xscore_models": ["qwen3_base"], "xscore_samples": 32},
   "format_check": {"goals_2slot": 3, "goals_3slot": 3, "samples": 8, "p0_pairs": 20, "boundary_pairs": 200,
                    "boundary_failure_limit": 0.01, "p0_tolerance_nats": 1.0}
 }
