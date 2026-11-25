@@ -252,7 +252,8 @@ def student_train(
     pairs, counts = build_pairs(read_jsonl(phase2 / "lm_samples.jsonl"), read_jsonl(xscore_dir / "xscore.jsonl"),
                                 set(inputs.pool), set(foods), Extractor(load_vocab(derived)), scheme)
     targets = human_targets(inputs, scheme)
-    run_dir = (results_root or root / RESULTS_DIR) / f"{started.strftime('%Y%m%dT%H%M%SZ')}-student-{run}"
+    run_dir = (results_root or root / RESULTS_DIR) / (
+        f"{started.strftime('%Y%m%dT%H%M%SZ')}-student-{run}" + ("-smoke" if limit else ""))
     if tokenizer is None:
         from transformers import AutoTokenizer
 
