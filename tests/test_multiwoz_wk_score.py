@@ -56,7 +56,7 @@ def test_fixed_units_correct_restaurant_and_keep_the_slots():
 def test_load_units_takes_valid_perturbations_fixed_and_terse(tmp_path: Path):
     units = load_units(DERIVED)
     kinds = {row["kind"] for row in units}
-    assert sum(1 for row in units if row["kind"] != "fixed" and row["kind"] != "terse") == 2058
+    assert sum(1 for row in units if row["kind"] not in ("fixed", "terse", "terse_rx")) == 2058
     assert sum(1 for row in units if row["kind"] == "fixed") == 6 and "typo1" in kinds
     for name in ("perturbations.jsonl", "fixed.jsonl"):
         (tmp_path / name).write_bytes((DERIVED / name).read_bytes())

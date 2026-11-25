@@ -55,7 +55,7 @@ INSTRUCT = ("qwen25_inst|S", "qwen3_inst|S")
 TYPO = ("typo1", "typo2", "typo4")
 FILL = ("fill1", "fill2", "fill4")
 STYLE = ("lower", "nopunct", "noapos")
-KINDS = TYPO + ("slottypo1",) + STYLE + FILL + ("terse", "fixed")
+KINDS = TYPO + ("slottypo1",) + STYLE + FILL + ("terse", "terse_rx", "fixed")
 TEACHER = "qwen3_base|F"
 TYPICALITY = ("glob1A", "glob1B", "cent1B", "cent1B:6bins", "glob1Q", "cent1Q", "glob1Q:3q", "cent1Q:3q")
 
@@ -221,7 +221,7 @@ def raw_metrics(found: list[dict], per_token: dict[str, float], boot: ItemBoot) 
                                               [row["delta_log_p"] for row in mine if row["op"] == op])
                               for op in sorted({row["op"] for row in mine if row["op"]})}
         tokens = [(row["item_id"], per_token[row["unit_id"]]) for row in mine if row["unit_id"] in per_token]
-        if kind in FILL + ("terse",) and tokens:
+        if kind in FILL + ("terse", "terse_rx") and tokens:
             block["delta_log_p_per_token"] = boot.median([item for item, _ in tokens], [value for _, value in tokens])
         if kind == "slottypo1":
             kept = []

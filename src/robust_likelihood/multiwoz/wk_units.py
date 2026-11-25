@@ -7,6 +7,10 @@ Three sources, in the schema of derived/perturbations.jsonl (unit_id "<item>|<ki
   human turn is the perturbed text's opposite: the original carries the natural typo and the unit
   removes it. Descriptive only (n = 6).
 - terse (A2): the accepted `terse` rewrites of rewrites.py (derived/terse.jsonl), once that API run exists.
+- terse_rx (sensitivity, not in the plan's predictions): per unit, the first candidate of the same run that
+  passes the regex slot check, whatever its NLI (derived/terse_rx.jsonl). NLI in the backward direction
+  rejects most telegraphic rewrites ("thai restaurant west" does not entail the full sentence), so the
+  accepted `terse` set keeps the less terse ones; terse_rx shows what that selection hides.
 """
 
 from __future__ import annotations
@@ -22,6 +26,7 @@ MISSPELLED = re.compile(r"\b(?:restuarant|resturant)\b", re.IGNORECASE)
 PERTURBATIONS = "perturbations.jsonl"
 FIXED = "fixed.jsonl"
 TERSE = "terse.jsonl"
+TERSE_RX = "terse_rx.jsonl"
 
 
 def fix_restaurant(text: str) -> tuple[str, list[dict]]:
@@ -58,6 +63,19 @@ def terse_units(rows: list[dict]) -> list[dict]:
     return found
 
 
+def terse_rx_rows(candidates: list[dict], units: dict[str, dict]) -> list[dict]:
+    """The first regex-passing candidate per terse unit (candidates.jsonl of the terse run)."""
+    chosen: dict[str, dict] = {}
+    for record in sorted(candidates, key=lambda found: (found["unit_id"], found["attempt"])):
+        if record["unit_id"] not in chosen and record.get("slots_kept") and record.get("rewrite"):
+            chosen[record["unit_id"]] = record
+    return [{"unit_id": unit_id, "item_id": units[unit_id]["item_id"], "kind": "terse_rx",
+             "original": units[unit_id]["original"], "rewrite": record["rewrite"], "attempt": record["attempt"],
+             "nli_forward": record.get("nli_forward"), "nli_backward": record.get("nli_backward"),
+             "accepted": record.get("accepted")}
+            for unit_id, record in sorted(chosen.items())]
+
+
 def load_units(derived: Path, items: set[str] | None = None) -> list[dict]:
     """The valid units uperturb scores: perturbations, then fixed and terse where their files exist."""
     rows = [row for row in read_jsonl(derived / PERTURBATIONS) if row["valid"]]
@@ -65,4 +83,7 @@ def load_units(derived: Path, items: set[str] | None = None) -> list[dict]:
         rows += [row for row in read_jsonl(derived / FIXED) if row["valid"]]
     if (derived / TERSE).exists():
         rows += terse_units(read_jsonl(derived / TERSE))
+    if (derived / TERSE_RX).exists():
+        rows += [dict(row, unit_id=row["unit_id"].replace("|terse", "|terse_rx"), kind="terse_rx")
+                 for row in terse_units(read_jsonl(derived / TERSE_RX))]
     return [row for row in rows if items is None or row["item_id"] in items]
