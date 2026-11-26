@@ -241,3 +241,10 @@ paper's own result files on OSF; `tests/test_clips.py` checks this whenever the 
   before the cancellation keep their rows, and the evaluation keeps, per problem, the rows of the
   newest file. The cluster's limit of 32 submitted jobs per user refused 28 of the 56 chunks; a feeder
   on the login node (`~/feed_chunks.sh`, under nohup) submits them as slots free up.
+- **Perturbed scores:** SoC GPU job 1206071 (one H100 NVL MIG 3g.47gb slice, as every GPU job here),
+  57 minutes for the eight models (2 to 11 minutes each; small batches use the slice less well than
+  Phase 2), 15,344 sequences per model, none over 64 tokens. The manifests name commit 0812419 for
+  `qwen3_0p6b` and be05574 for the rest: the cluster checkout was fast-forwarded while the job ran,
+  and nothing between the two touches the scoring code.
+- **GPU naming.** `gpu:h100-47` on the SoC cluster is a MIG slice (3g.47gb: 47 GB, about 3/7 of an H100
+  NVL's compute), not a whole H100; "one H100" earlier in this file means that slice.

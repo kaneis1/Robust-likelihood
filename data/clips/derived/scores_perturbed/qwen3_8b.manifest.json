@@ -1,0 +1,24 @@
+{
+  "batches": 2068,
+  "batches_file": "/home/c/cuizq/Robust-likelihood/data/clips/derived/batches.jsonl",
+  "device": "cuda:0",
+  "dtype": "bfloat16",
+  "elapsed_seconds": 608.5,
+  "finished_at": "2026-11-26T12:18:24Z",
+  "git": {
+    "commit": "be05574691ad560d02ef1869b0cbe7f4f7868536",
+    "dirty": false
+  },
+  "kind": "clips-score-perturbed",
+  "layout": "one batch per (instruction, prompt): the original output and every perturbed one",
+  "model": "Qwen/Qwen3-8B-Base",
+  "model_key": "qwen3_8b",
+  "over_max_tokens": 0,
+  "revision": "49e3418fbbbca6ecbdf9608b4d22e5a407081db4",
+  "sequences": 15344,
+  "started_at": "2026-11-26T12:08:15Z",
+  "versions": {
+    "torch": "2.14.1+cu126",
+    "transformers": "4.57.6"
+  }
+}

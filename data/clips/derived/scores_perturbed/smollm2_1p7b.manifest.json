@@ -1,0 +1,24 @@
+{
+  "batches": 2068,
+  "batches_file": "/home/c/cuizq/Robust-likelihood/data/clips/derived/batches.jsonl",
+  "device": "cuda:0",
+  "dtype": "bfloat16",
+  "elapsed_seconds": 207.2,
+  "finished_at": "2026-11-26T12:00:59Z",
+  "git": {
+    "commit": "be05574691ad560d02ef1869b0cbe7f4f7868536",
+    "dirty": false
+  },
+  "kind": "clips-score-perturbed",
+  "layout": "one batch per (instruction, prompt): the original output and every perturbed one",
+  "model": "HuggingFaceTB/SmolLM2-1.7B",
+  "model_key": "smollm2_1p7b",
+  "over_max_tokens": 0,
+  "revision": "effd688a12921b4cc83e3312b6feb579f70f9c71",
+  "sequences": 15344,
+  "started_at": "2026-11-26T11:57:32Z",
+  "versions": {
+    "torch": "2.14.1+cu126",
+    "transformers": "4.57.6"
+  }
+}

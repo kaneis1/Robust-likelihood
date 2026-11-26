@@ -1,0 +1,24 @@
+{
+  "batches": 2068,
+  "batches_file": "/home/c/cuizq/Robust-likelihood/data/clips/derived/batches.jsonl",
+  "device": "cuda:0",
+  "dtype": "bfloat16",
+  "elapsed_seconds": 633.1,
+  "finished_at": "2026-11-26T12:48:30Z",
+  "git": {
+    "commit": "be05574691ad560d02ef1869b0cbe7f4f7868536",
+    "dirty": false
+  },
+  "kind": "clips-score-perturbed",
+  "layout": "one batch per (instruction, prompt): the original output and every perturbed one",
+  "model": "cmu-lti/osim-8b-mid",
+  "model_key": "osim_mid",
+  "over_max_tokens": 0,
+  "revision": "af9ef0347ede45b6ce0cfcf3851ea37da861bb13",
+  "sequences": 15344,
+  "started_at": "2026-11-26T12:37:57Z",
+  "versions": {
+    "torch": "2.14.1+cu126",
+    "transformers": "4.57.6"
+  }
+}
