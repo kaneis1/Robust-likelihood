@@ -73,6 +73,14 @@ def form_key(form: str) -> str:
     return "bin_score" if form == "bin" else form
 
 
+def top1_credit(values: list[float]) -> float:
+    """Top-1 credit of the true class (index 0) under random tie-breaking: 1/k when it ties k-way at the top.
+    Binned scores tie often; taking the first maximum would count every tie as a hit."""
+    top = max(values)
+    tied = sum(1 for value in values if value == top)
+    return 1.0 / tied if values[0] == top else 0.0
+
+
 def inference(log: dict, items: list[dict], metas: dict, changed: dict, corpus_boot, boot: ItemBoot,
               item_ids: list[str]) -> dict:
     """Size principle kept, contradiction log BF, mean log P(G) and top-1 accuracy, on the original pairs."""
@@ -95,7 +103,7 @@ def inference(log: dict, items: list[dict], metas: dict, changed: dict, corpus_b
         p_goal = weights[0] / sum(weights)
         ids.append(item)
         log_p.append(math.log(max(p_goal, 1e-300)))
-        top1.append(float(max(range(len(values)), key=values.__getitem__) == 0))
+        top1.append(top1_credit(values))
     return {"size_kept": kept, "contra_log_bf": size["contra_mean_log_bf"], "contra_ci95": size["contra_mean_log_bf_ci95"],
             "mean_log_p_goal": boot.mean(ids, log_p), "top1": boot.mean(ids, top1), "items": len(ids)}
 

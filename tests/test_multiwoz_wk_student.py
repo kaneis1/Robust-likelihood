@@ -112,3 +112,12 @@ def test_student_values_and_verdict():
     assert verdict(students(0.8, 1.2, 4.0))["verdict"] == "The pipeline works"
     assert verdict(students(0.8, 3.0, 4.0))["verdict"] == "Learns the teacher but not the task"
     assert verdict(students(0.5, 1.0, 4.0))["verdict"] == "Does not learn the teacher"
+
+
+def test_top1_credit_splits_ties():
+    from robust_likelihood.multiwoz.wk_student_eval import top1_credit
+
+    assert top1_credit([-1.0, -2.0, -3.0]) == 1.0
+    assert top1_credit([-2.0, -1.0, -3.0]) == 0.0
+    assert top1_credit([-1.0, -1.0, -1.0, -4.0]) == pytest.approx(1 / 3)
+    assert top1_credit([-2.0, -1.0, -1.0]) == 0.0

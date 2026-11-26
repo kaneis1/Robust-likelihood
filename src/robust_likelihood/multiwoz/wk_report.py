@@ -203,8 +203,10 @@ def figure_robustness(plt, part_d: dict, out: Path) -> list[Path]:
     if not found:
         return []
     kinds = ("para1", "typo1", "fill2", "hypothesis rewording")
-    scorers = list(found)
-    colors = ("#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4")
+    order = ("raw", "teacher", "student R-lin", "student R-mlp", "student C-mlp")
+    scorers = sorted(found, key=lambda name: next((i for i, prefix in enumerate(order) if name.startswith(prefix)),
+                                                  len(order)))
+    colors = ("#2a78d6", "#e87ba4", "#1baf7a", "#eda100", "#eb6834")
     figure, ax = plt.subplots(figsize=(9, 3.8))
     width = 0.8 / len(scorers)
     rows = []
@@ -414,7 +416,8 @@ def part_d_tables(part_d: dict | None) -> list[str]:
         found = _get(part_d, "baselines", name, "all")
         if found:
             rows.append(inference_row(label, found))
-    parts += ["**Inference on the human pairs** (size principle kept: L_J ÷ L_E, implicit regime)", "",
+    parts += ["**Inference on the human pairs** (size principle kept: L_J ÷ L_E, implicit regime; "
+              "top-1 gives 1/k credit when the true goal ties k-way at the top, which binned scores often do)", "",
               table(["Score", "Size kept, named", "Size kept, omitted", "Contra log BF", "Mean log P(G)", "Top-1"],
                     rows), ""]
     cost = part_d.get("teacher_cost")
