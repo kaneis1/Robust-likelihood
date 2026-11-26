@@ -89,3 +89,40 @@ Revisions are pinned in `configs/clips.json`. The four 8B-class models are the s
 revisions, already on the cluster; Qwen3-1.7B-Base, Qwen3-4B-Base and SmolLM2-1.7B are downloaded on the
 login node (`python -m robust_likelihood.clips download`, Xet disabled because its Rust client exceeds
 the login node's memory cap).
+All seven models' snapshots are complete in the cluster's Hugging Face cache at the pinned revisions
+(checked 2026-11-26); `osim_mid` is the simulator study's checkpoint. The CPU download job (1201741)
+failed because the Python environment exists only on the login node and GPU nodes, so the downloads
+ran on the login node instead.
+
+## Phase 1: the record pass (2026-11-26, STOP 2)
+
+SoC CPU jobs 1201735 (mDKG, 35 min 47 s) and 1201736 (VirtualHome, 4 min 4 s), commit `760aecc`
+(rebased as `cf8f4f0`). Most of mDKG's time is the literal listener, which asks every lifted command
+of every step.
+
+| | mDKG | VirtualHome |
+|---|---|---|
+| Problems | 30 | 25 |
+| Goals per problem | 4 | 6–12 (mean 10.1) |
+| Commands per goal | mean 4.1, max 10 | mean 12.1, max 52 |
+| Unique prompts | 410 | 332 |
+| Unique (role, prompt, output) keys | 4,247 (3,974 literal, 273 pragmatic) | 3,899 (2,146 literal, 1,753 pragmatic) |
+| Check (particle prompts = pragmatic keys; prompts distinct; weights sum to 1) | passes | passes |
+
+- The check compares the prompts each particle's utterance model built from its own plan
+  (`enumerate_commands`, logged by `record_particles`) with the pragmatic keys the record log holds,
+  in both directions; there are no mismatches, no duplicate prompts within a particle, and every
+  particle's command weights sum to 1.
+- Scores do not depend on the role, so Phase 2 scores **7,295 distinct (prompt, output) pairs** per
+  model. Prompt plus output: mean 1,326 characters, max 2,492, 9.7 million in all (about 2.5 million
+  tokens per model).
+
+## Phase 2 estimate (STOP 3)
+
+- One GPU job (`gpu` partition, one H100) scores the models in turn, bf16, batch 32, plus the
+  200-key determinism check per model.
+- Measured reference: the week-of-24-Nov `uperturb` job scored 24,011 pairs of similar total length
+  with each 8B model in 5–8 minutes. Estimate here: 3–8 minutes of scoring per 8B model, 1–3 for the
+  smaller ones, plus 1–3 minutes to load each model from NFS; **under one H100-hour for all eight**,
+  well inside the plan's "under one H100-hour per model".
+- The plan's shared-prefix cache is not used: the prompts are short and batching is already fast.
