@@ -149,3 +149,17 @@ too, so the analysis can be audited.
 - `uperturb`, job 1201097, commit `22e6829`, all six models, 24,011 pairs each: 5–8 minutes of
   scoring per model. Rescoring the same original in different units' batches gives the same score
   for every pair of five models (median and p90 0.000 nats); for UserLM the p90 is 0.097.
+- `xscore`, job 1201014, `qwen3_base`·F, 2 h 15 min on gpu-long, finished 07:10 SGT; run
+  `results/multiwoz/20261125T205547Z-simwk-qwen3_base-F` (70 MB `xscore.jsonl`, kept on the cluster).
+- Students, jobs 1201439–41, 35 minutes each (33 of training): 266,006 training pairs, 13,321
+  validation pairs, 8,314 steps. Runs `results/multiwoz/20261125T231020Z-student-R-lin`,
+  `20261125T231020Z-student-R-mlp` and `20261125T234525Z-student-C-mlp`. The checkpoints
+  (`checkpoint.pt`, 42–53 MB) stay on the cluster under `~/Robust-likelihood/` at the same paths;
+  `manifest.json` and `predictions.jsonl` were copied back.
+- Part D evaluation: `student-eval --runs <the three> --phase2 results/multiwoz/2026111*-sim-*
+  results/multiwoz/20261125T19*-simwk-* results/multiwoz/20261125T20*-simwk-* --jev
+  results/multiwoz/20261026T034616Z-full --out docs/week_nov24_results`, then `wk-report`.
+- **Found while checking the results:** top-1 counted a tie at the top as a hit for the true goal,
+  because `max` returns the first index. Binned scores tie often, so binned top-1 read 83–86%. It now
+  gives 1/k credit for a k-way tie (`top1_credit`); binned top-1 is 51–56%, continuous scores
+  unchanged. No prediction reads top-1.

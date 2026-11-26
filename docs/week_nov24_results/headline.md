@@ -1,0 +1,4 @@
+- **A. Typos and filler:** one typo or filler sentence costs 11–17 nats of log p but moves the Bayes factor only 8–13% for Qwen3-8B-Base and the simulators; the instruct models are 2–10 times less robust.
+- **B. Hypothesis rewording:** the top hypothesis changes for 6.8% of items with raw log-likelihood and 15–16% with binned typicality; the bin edges, not the score, are the fragile part.
+- **C. Quantile bins:** they lose to fixed edges under every rewrite (para1 bin agreement 66% against 82%), so the frozen rule trained on cent1B:6bins.
+- **D. Trained estimator:** a 0.6B student matches the teacher (Spearman 0.92–0.94, no drop on unseen cuisines), keeps the size principle and the contradiction gap, scores about 8,000 times faster, and changes its top hypothesis less often than raw 8B log-likelihood; the untrained 0.6B log-probability is as accurate but less stable (D6 fails).

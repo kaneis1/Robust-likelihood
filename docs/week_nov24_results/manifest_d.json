@@ -1,0 +1,53 @@
+{
+  "bootstrap": {
+    "replicates": 2000,
+    "seed": 20261124
+  },
+  "elapsed_seconds": 51.2,
+  "finished_at": "2026-11-26T05:55:14Z",
+  "git": {
+    "commit": "b4dd020995ae42f4c8618a69f9644c538b272878",
+    "dirty": true
+  },
+  "jev": "results/multiwoz/20261026T034616Z-full",
+  "kind": "student-eval",
+  "phase2": [
+    "results/multiwoz/20261113T145208Z-sim-check",
+    "results/multiwoz/20261113T150256Z-sim-check",
+    "results/multiwoz/20261113T154405Z-sim-osim_mid-S",
+    "results/multiwoz/20261113T154427Z-sim-qwen25_inst-S",
+    "results/multiwoz/20261113T162704Z-sim-osim_final-S",
+    "results/multiwoz/20261113T163534Z-sim-qwen25_broad-B",
+    "results/multiwoz/20261113T165338Z-sim-qwen3_inst-S",
+    "results/multiwoz/20261113T171734Z-sim-qwen3_base-F",
+    "results/multiwoz/20261113T171948Z-sim-userlm-S",
+    "results/multiwoz/20261113T175148Z-sim-osim_mid-N",
+    "results/multiwoz/20261113T181014Z-sim-osim_final-N",
+    "results/multiwoz/20261113T181754Z-sim-userlm-N",
+    "results/multiwoz/20261114T044833Z-sim-pilot-userlm-S",
+    "results/multiwoz/20261114T044853Z-sim-pilot-osim_mid-S",
+    "results/multiwoz/20261114T052054Z-sim-pilot-osim_final-S",
+    "results/multiwoz/20261114T053248Z-sim-pilot-qwen25_inst-S",
+    "results/multiwoz/20261114T055117Z-sim-pilot-qwen3_inst-S",
+    "results/multiwoz/20261114T063951Z-sim-noise-osim_mid-S",
+    "results/multiwoz/20261114T064020Z-sim-noise-qwen25_inst-S",
+    "results/multiwoz/20261114T064127Z-sim-noise-osim_final-S",
+    "results/multiwoz/20261114T064142Z-sim-noise-qwen25_broad-B",
+    "results/multiwoz/20261114T064316Z-sim-noise-userlm-S",
+    "results/multiwoz/20261114T064359Z-sim-noise-qwen3_inst-S",
+    "results/multiwoz/20261114T064617Z-sim-noise-qwen3_base-F",
+    "results/multiwoz/20261125T192916Z-simwk-qwen3_base-F",
+    "results/multiwoz/20261125T193419Z-simwk-qwen3_base-F",
+    "results/multiwoz/20261125T195125Z-simwk-osim_mid-S",
+    "results/multiwoz/20261125T195748Z-simwk-osim_final-S",
+    "results/multiwoz/20261125T200506Z-simwk-userlm-S",
+    "results/multiwoz/20261125T201339Z-simwk-qwen25_inst-S",
+    "results/multiwoz/20261125T201948Z-simwk-qwen3_inst-S",
+    "results/multiwoz/20261125T203838Z-simwk-qwen3_06_base-F"
+  ],
+  "runs": [
+    "results/multiwoz/20261125T231020Z-student-R-lin",
+    "results/multiwoz/20261125T231020Z-student-R-mlp",
+    "results/multiwoz/20261125T234525Z-student-C-mlp"
+  ]
+}
