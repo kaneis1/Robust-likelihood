@@ -169,3 +169,14 @@ paper's own result files on OSF; `tests/test_clips.py` checks this whenever the 
 - **The setup check** (plan: STOP if action-only IP misses by more than 0.02): action-only P(g_true)
   against 0.31 (mDKG) and 0.25 (VH). The paper's files give 0.314 and 0.250. The check also reports the
   largest per-problem gap against the paper's file.
+
+## Phase 3 runs (2026-11-26)
+
+- **Setup check passes.** `qwen3_8b` replays, SoC CPU jobs 1205800 (mDKG) and 1205801 (VH, 16 minutes).
+  Action-only IP gives P(g_true) 0.2499 over the 25 VH problems against the published 0.25, and
+  matches the paper's own result file problem by problem (largest gap 0.0; mDKG's first two problems
+  4e-10). The planner and the action model are therefore the paper's, and only the language model
+  differs.
+- A replay runs every assistance policy for every modality: about 7 minutes per mDKG problem (about
+  3.5 hours per model) and 16 minutes for all of VH. The other 14 replays (seven models × two domains)
+  are SoC jobs 1205867–1205880 on the `long` partition.
