@@ -21,6 +21,12 @@ once, so the copies can be regenerated and audited:
    printer reads a global `goals` (`1:length(goals)`), which the loop assigns. In the REPL, where CLIPS's
    loops were presumably run, that assignment makes a global; run as a script it makes a loop-local
    variable and the printer fails with UndefVarError. Declaring it global restores the REPL behavior.
+9. The literal listener's top-5 printout and its `top_5_commands` / `top_5_command_probs` columns take
+   at most the commands there are. For an instruction sequence, virtual-home/src/inference.jl keeps only
+   the commands within 0.99 cumulative probability before combining, and a sharper model than davinci-002
+   can leave fewer than five; the original's `commands[idx]` for idx in 1:5 then fails with BoundsError
+   (found in the VH replays of qwen3_1p7b, qwen3_8b_inst and qwen25_7b_inst). With five or more commands
+   the copy behaves exactly as the original. No metric reads these columns.
 """
 
 from __future__ import annotations
@@ -75,6 +81,9 @@ def transform(original: str, domain: str) -> str:
                         "            RECORD || CSV.write(inference_df_path, inference_df)  # (6)\n")
     text = replace_once(text, "            for modalities in MODALITIES\n",
                         "            for modalities in (RECORD ? () : MODALITIES)  # (6)\n")
+    text = replace_once(text, "        for idx in 1:5\n", "        for idx in 1:min(5, length(commands))  # (9)\n")
+    text = replace_once(text, " for c in commands[1:5]], ", " for c in commands[1:min(5, end)]], ")  # (9)
+    text = replace_once(text, "string(command_probs[1:5])", "string(command_probs[1:min(5, end)])")  # (9)
     return HEADER.format(folder=folder) + text
 
 

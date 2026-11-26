@@ -238,7 +238,7 @@ for plan_id in chosen_plans(PLAN_IDS)  # (4)
 
         # Print top 5 commands and their probabilities
         println("Top 5 most probable commands:")
-        for idx in 1:5
+        for idx in 1:min(5, length(commands))  # (9)
             command_str = repr("text/plain", commands[idx])
             @printf("%.3f: %s\n", command_probs[idx], command_str)
         end
@@ -261,8 +261,8 @@ for plan_id in chosen_plans(PLAN_IDS)  # (4)
         entry[:top_command] = repr("text/llm", top_command)
         entry[:top_command_prob] = command_probs[1]
         entry[:top_5_commands] =
-            join([repr("text/llm", c) for c in commands[1:5]], "\n")
-        entry[:top_5_command_probs] = string(command_probs[1:5])
+            join([repr("text/llm", c) for c in commands[1:min(5, end)]], "\n")
+        entry[:top_5_command_probs] = string(command_probs[1:min(5, end)])
         for i in 1:16
             entry[Symbol("assist_probs_$i")] = 0.0
         end
