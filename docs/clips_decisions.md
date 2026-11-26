@@ -248,3 +248,16 @@ paper's own result files on OSF; `tests/test_clips.py` checks this whenever the 
   and nothing between the two touches the scoring code.
 - **GPU naming.** `gpu:h100-47` on the SoC cluster is a MIG slice (3g.47gb: 47 GB, about 3/7 of an H100
   NVL's compute), not a whole H100; "one H100" earlier in this file means that slice.
+
+## Phase 5: how the scorecard reads C1–C4 (fixed before any mDKG result)
+
+- Every prediction reads CLIPS's P(g_true) and goal correlation from complete replays only (30 mDKG and
+  25 VH problems); a model with a partial replay scores "–".
+- **C2:** "within 0.05" means |P(g_true) − qwen3_8b's| ≤ 0.05 in each domain; "qwen3_0p6b is not" means
+  it misses that in at least one domain.
+- **C3:** `qwen3_8b_inst` must be below `qwen3_8b` on mDKG goal correlation and on P(g_true) in each
+  domain. This reading was fixed after the preliminary VH replays were seen (P(g_true) 0.63 for both),
+  but before any mDKG replay of either model had finished; it is the stricter of the two readings
+  (the other would compare the mean over domains).
+- **C4:** strict order CLIPS > language-only IP > action-only IP in each domain, for each of
+  `qwen3_1p7b`, `qwen3_4b`, `qwen3_8b`, `smollm2_1p7b`.
