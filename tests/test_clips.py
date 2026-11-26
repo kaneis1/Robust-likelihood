@@ -37,6 +37,9 @@ def test_copied_loops_regenerate_exactly():
         original = (CLIPS / folder / "experiments.jl").read_text(encoding="utf-8")
         assert loops.transform(original, domain) == (ROOT / "julia" / "clips" / f"{domain}_experiments.jl").read_text(
             encoding="utf-8")
+        original = (CLIPS / folder / "src" / "assistance.jl").read_text(encoding="utf-8")
+        assert loops.transform_assistance(original, domain) == (
+            ROOT / "julia" / "clips" / f"{domain}_assistance.jl").read_text(encoding="utf-8")
 
 
 def test_transform_refuses_a_changed_original():

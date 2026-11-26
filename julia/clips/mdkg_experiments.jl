@@ -17,7 +17,7 @@ include(joinpath(CLIPS_DIR, "src", "plan_io.jl"))
 include(joinpath(CLIPS_DIR, "src", "heuristics.jl"))
 include(joinpath(CLIPS_DIR, "src", "utterances.jl"))
 include(joinpath(CLIPS_DIR, "src", "inference.jl"))
-include(joinpath(CLIPS_DIR, "src", "assistance.jl"))
+include(joinpath(@__DIR__, "mdkg_assistance.jl"))  # (10)
 CLIPS_MODE = configure_from_env!()
 RECORD = CLIPS_MODE == :record
 
