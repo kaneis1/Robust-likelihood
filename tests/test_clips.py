@@ -203,3 +203,19 @@ def test_swapping_an_instruction_moves_the_posterior_by_the_mixture_change():
     found = unit_effect(problem, 3, logged, original, perturbed)
     assert found["p_true"] == 0.5 and abs(found["p_true_new"] - 0.25) < 1e-12 and found["flip"]
     assert abs(found["delta_log_bf"] + math.log(3)) < 1e-12
+
+
+def test_merged_rows_keep_the_newest_file_per_plan(tmp_path):
+    from robust_likelihood.clips.evaluate import merged_rows, run_files
+
+    def write(path, rows):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("plan_id,value\n" + "".join(f"{plan},{value}\n" for plan, value in rows), encoding="utf-8")
+
+    write(tmp_path / "experiments_2026-11-26T10-00-00.csv", [("a", 1), ("a", 2), ("b", 1)])
+    write(tmp_path / "plans-b" / "experiments_2026-11-26T11-00-00.csv", [("b", 9), ("c", 9)])
+    write(tmp_path / "plans-c" / "experiments_2026-11-26T09-00-00.csv", [("c", 5)])
+    paths = run_files(tmp_path, "experiments")
+    assert [path.name[12:22] for path in paths] == ["2026-11-26"] * 3
+    rows = merged_rows(paths)
+    assert [(row["plan_id"], row["value"]) for row in rows] == [("a", "1"), ("a", "2"), ("b", "9"), ("c", "9")]

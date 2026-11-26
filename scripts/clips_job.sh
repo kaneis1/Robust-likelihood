@@ -47,8 +47,10 @@ elif [ "$STAGE" = "replay" ]; then
     MODEL="${3:?pass the model key}"
     export CLIPS_MODE=replay
     export CLIPS_TABLE="results/clips/tables/$MODEL.jsonl"  # python -m robust_likelihood.clips table --model $MODEL
-    export CLIPS_RESULTS="results/clips/$MODEL/$DOMAIN"
+    # A subset of plans (comma-separated) runs in its own subfolder, named after its first plan, so chunks of
+    # one model started in the same second never write the same timestamped file; the evaluation merges them.
     export CLIPS_PLANS="${4:-}"
+    export CLIPS_RESULTS="results/clips/$MODEL/$DOMAIN${4:+/plans-${4%%,*}}"
     "$JULIA" --project=julia/clips "julia/clips/${DOMAIN}_experiments.jl"
 else
     echo "unknown stage $STAGE" >&2

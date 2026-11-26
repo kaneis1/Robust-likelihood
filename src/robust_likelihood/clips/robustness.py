@@ -35,7 +35,7 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-from robust_likelihood.clips.evaluate import pearson, read_humans
+from robust_likelihood.clips.evaluate import pearson, read_humans, run_rows
 from robust_likelihood.clips.perturb import KINDS
 from robust_likelihood.clips.record import prompt_id
 from robust_likelihood.storage import read_json, read_jsonl, write_json, write_jsonl
@@ -212,17 +212,18 @@ def model_effects(root: Path, model: str, units: list[dict], cobatched: list[dic
     by_key = {f"{row['domain']}:{row['plan_id']}:{row['index']}": row for row in utterances}
     problems: dict[tuple[str, str], Problem] = {}
     for domain in ("mdkg", "vh"):
-        folder = root / "results" / "clips" / model / domain
-        inference = sorted(folder.glob("inferences_per_timestep_*.csv"))
-        experiments = sorted(folder.glob("experiments_*.csv"))
-        if not inference or not experiments:
+        inference, _ = run_rows(root, model, domain, "inferences_per_timestep")
+        rows, _ = run_rows(root, model, domain, "experiments")
+        if not inference or not rows:
             continue
-        finals, rows = final_rows(read_csv(inference[-1])), read_csv(experiments[-1])
+        finals = final_rows(inference)
+        done = {row["plan_id"] for row in rows}
         mine: dict[str, list[dict]] = defaultdict(list)
         for row in particles[domain]:
             mine[row["plan_id"]].append(row)
         for plan, final in finals.items():
-            problems[(domain, plan)] = Problem(plan, final, mine[plan], true_goal_index(rows, plan))
+            if plan in done:  # a plan still being replayed has its inference rows but no experiments rows yet
+                problems[(domain, plan)] = Problem(plan, final, mine[plan], true_goal_index(rows, plan))
     found = []
     for unit in units:
         if not unit["valid"] or (unit["domain"], unit["plan_id"]) not in problems:

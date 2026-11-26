@@ -188,9 +188,27 @@ def humans_row(humans: dict[str, dict], replicates: int = 2000, seed: int = 2026
                                 ("assist_recall", "assist_recall"))}
 
 
-def newest_run(root: Path, model: str, domain: str) -> Path | None:
-    found = sorted((root / "results" / "clips" / model / domain).glob("experiments_*.csv"))
-    return found[-1] if found else None
+def run_files(folder: Path, prefix: str) -> list[Path]:
+    """A replay's result files of one kind, in its folder and its plan-chunk subfolders, oldest first (the
+    file names carry the start time)."""
+    return sorted(folder.rglob(f"{prefix}_*.csv"), key=lambda path: path.name)
+
+
+def merged_rows(paths: list[Path]) -> list[dict]:
+    """Rows of several result files of one model and domain; a plan in more than one file keeps the rows of
+    the newest file only."""
+    by_plan: dict[str, list[dict]] = {}
+    for path in paths:
+        mine: dict[str, list[dict]] = {}
+        for row in read_rows([path]):
+            mine.setdefault(row["plan_id"], []).append(row)
+        by_plan.update(mine)
+    return [row for plan in sorted(by_plan) for row in by_plan[plan]]
+
+
+def run_rows(root: Path, model: str, domain: str, prefix: str = "experiments") -> tuple[list[dict], list[Path]]:
+    paths = run_files(root / "results" / "clips" / model / domain, prefix)
+    return merged_rows(paths), paths
 
 
 def action_only_check(ours: list[dict], paper: list[dict], domain: str, published: float) -> dict:
@@ -223,14 +241,13 @@ def run_evaluate(root: Path, models: list[str], out: Path, reference_model: str 
             result["paper_files"][domain] = table1(paper_rows[domain], domain, humans=humans, replicates=replicates,
                                                    seed=seed)
     for domain in DOMAIN_DIRS:
-        reference_path = newest_run(root, reference_model, domain)
-        reference = read_rows([reference_path]) if reference_path else None
+        reference, _ = run_rows(root, reference_model, domain)
+        reference = reference or None
         for model in models:
-            path = newest_run(root, model, domain)
-            if path is None:
+            rows, paths = run_rows(root, model, domain)
+            if not rows:
                 continue
-            rows = read_rows([path])
-            result["runs"].setdefault(model, {})[domain] = path.relative_to(root).as_posix()
+            result["runs"].setdefault(model, {})[domain] = [path.relative_to(root).as_posix() for path in paths]
             result["models"].setdefault(model, {})[domain] = table1(rows, domain, reference=reference, humans=humans,
                                                                     replicates=replicates, seed=seed)
             if domain in paper_rows:
