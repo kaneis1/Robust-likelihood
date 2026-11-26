@@ -225,3 +225,19 @@ paper's own result files on OSF; `tests/test_clips.py` checks this whenever the 
   for this door?" (adds "you"). 33 accepted para2 rewrites are identical to their para1: short
   instructions leave little room. They are kept as units (the effect is then the same), and C5 reads
   para1 as the plan says.
+
+## Phase 3 replays: a loop fix and plan chunks (2026-11-26)
+
+- Three VH replays (`qwen3_1p7b`, `qwen3_8b_inst`, `qwen25_7b_inst`; jobs 1205870, 1205876, 1205878)
+  failed with BoundsError in the literal listener's top-5 printout. Fixed as loop difference (9)
+  (`loops.py`); their partial output was moved to `results/clips/<model>/vh-failed-<job>/` and the three
+  replays were resubmitted (jobs 1206077–1206079). The VH replays of the other five models were
+  unaffected (more than five commands survived for every problem).
+- mDKG replays take 15–20 minutes per problem (four literal and eighteen pragmatic assistance runs), so
+  a full sequential replay is 8–10 hours. The eight sequential mDKG jobs were cancelled after about an
+  hour, and each model's unfinished problems were resubmitted as chunks of four (`clips_job.sh replay
+  mdkg <model> <plans>`, results in `plans-<first plan>/` subfolders). A problem counts as finished when
+  its last row (modalities "action, utterance", `qmdp_plan`, estim mean) is written; problems finished
+  before the cancellation keep their rows, and the evaluation keeps, per problem, the rows of the
+  newest file. The cluster's limit of 32 submitted jobs per user refused 28 of the 56 chunks; a feeder
+  on the login node (`~/feed_chunks.sh`, under nohup) submits them as slots free up.
