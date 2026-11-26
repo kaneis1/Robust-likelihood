@@ -180,3 +180,35 @@ paper's own result files on OSF; `tests/test_clips.py` checks this whenever the 
 - A replay runs every assistance policy for every modality: about 7 minutes per mDKG problem (about
   3.5 hours per model) and 16 minutes for all of VH. The other 14 replays (seven models × two domains)
   are SoC jobs 1205867–1205880 on the `long` partition.
+
+## Phase 4 design (2026-11-26, before any perturbed score exists)
+
+- **No new Julia replays.** Pragmatic inference keeps one particle per (goal, cost profile) and never
+  resamples, and an instruction enters a particle's trace score only through its TableMixture term. So
+  the posterior under a swapped instruction is the replay's final trace score per particle, minus the
+  original term, plus the new one (`robustness.py`). Checked on the `qwen3_8b` replays: with the
+  original instruction it reproduces the logged P(g_true) to 3e-15 (VH, 35 instructions; mDKG), each
+  modality's goal posterior is the particle softmax summed by goal (to 3e-15), and the experiments
+  file's posteriors equal the inference file's final step. The true goal's index, which the loops do
+  not log, is the k whose `goal_probs_k` equals `true_goal_probs` in all three modalities' rows
+  (unique for every problem).
+- **Co-batched scores.** Each (instruction, prompt) is one batch holding the original output and every
+  valid perturbed output of that instruction; both sides of every Δ use these scores (2,068 batches,
+  13,142 sequences before paraphrases). The Phase 2 table enters only as the term subtracted from the
+  replay's trace.
+- **Protected list.** As the plan lists it, plus the heads of VirtualHome's compound type names (fork,
+  knife, glass, board): the instructions say "forks" and "glasses", while the PDDL says `cutleryfork`
+  and `waterglass`. Contractions are expanded before comparing ("I'll" counts as "i", "don't" as
+  "not"). Fill sentences contain no protected word ("Thank you." would add "you"): openers "Hey.",
+  "Hi.", "Quick favour.", "Real quick."; thanks "Thanks!", "Thanks.", "Cheers.".
+- **Valid units before paraphrases:** typo1 29/30 mDKG and 19/35 VH, typo2 15 and 11 (short
+  instructions have few words of four or more letters that are not protected); fill1, fill2, lower,
+  nopunct all 65.
+- **Paraphrase prompt** (`perturb.PARAPHRASE`, in rewrites.py's form): "Rewrite this instruction so it
+  means exactly the same thing. Keep every colour, object, number and person (me, you) and add
+  nothing. Reply with the rewritten text only." Accepted when the protected words are kept and the
+  NLI model gives at least 0.8 both ways; up to 3 attempts per unit. 130 units: 131 to 391 calls.
+- **How C5 and C6 are read**, fixed now: on the two domains pooled (65 instructions), with the per-domain
+  values reported next to them. "Base models of 1.7B or more" are `qwen3_1p7b`, `qwen3_4b`, `qwen3_8b`
+  and `smollm2_1p7b`; C6 compares `qwen3_8b_inst` with `qwen3_8b` and `qwen25_7b_inst` with nothing
+  (it has no base counterpart in the list), so C6 reads the Qwen3 pair only.

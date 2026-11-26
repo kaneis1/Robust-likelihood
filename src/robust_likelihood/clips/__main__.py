@@ -37,6 +37,18 @@ def main(argv: list[str] | None = None) -> int:
     evaluate_parser.add_argument("--models", default=None, help="comma-separated keys (default: all with a replay)")
     evaluate_parser.add_argument("--reference", default="qwen3_8b", help="the model whose CLIPS the relative metrics use")
     evaluate_parser.add_argument("--out", default="docs/clips_results")
+    perturb_parser = sub.add_parser("perturb", help="Phase 4: perturbations.jsonl and the co-batched batches.jsonl")
+    perturb_parser.add_argument("--paraphrases", default=None, help="a paraphrase run whose accepted units to add")
+    para_parser = sub.add_parser("paraphrase", help="Phase 4: para1 and para2 through claude (API; STOP first)")
+    para_parser.add_argument("--dry-run", action="store_true", help="count the units and calls; no API call")
+    para_parser.add_argument("--workers", type=int, default=4)
+    para_parser.add_argument("--nli-device", default=None)
+    perturbed_parser = sub.add_parser("score-perturbed", help="Phase 4: score batches.jsonl with one model (GPU)")
+    perturbed_parser.add_argument("--model", required=True)
+    perturbed_parser.add_argument("--device", default=None)
+    robust_parser = sub.add_parser("robustness", help="Phase 4: the posterior under each perturbed instruction")
+    robust_parser.add_argument("--models", default=None)
+    robust_parser.add_argument("--out", default="docs/clips_results")
     args = parser.parse_args(argv)
     root = repo_root()
     if args.command == "copy-loops":
@@ -95,6 +107,57 @@ def main(argv: list[str] | None = None) -> int:
         models = args.models.split(",") if args.models else list(load_clips_config(root)["models"])
         result = run_evaluate(root, models, root / args.out, args.reference)
         print(json.dumps({"runs": result["runs"], "action_only_check": result["action_only_check"]}, indent=2))
+        return 0
+    if args.command == "perturb":
+        from robust_likelihood.clips import perturb
+        from robust_likelihood.multiwoz.perturb import load_lexicon
+        from robust_likelihood.storage import read_json, read_jsonl, write_json
+
+        seed = read_json(root / "configs" / "clips.json")["seed"]
+        utterances = read_jsonl(root / DERIVED / "utterances.jsonl")
+        units = perturb.build_units(utterances, perturb.protected_set(root / CLIPS_ROOT), seed,
+                                    load_lexicon(root / "data" / "multiwoz" / "derived"))
+        if args.paraphrases:
+            units += read_jsonl(Path(args.paraphrases) / "accepted.jsonl")
+        particles = [row for domain in ("mdkg", "vh")
+                     for row in read_jsonl(root / "results" / "clips" / "record" / f"{domain}.particles.jsonl")]
+        batches = perturb.batches(units, utterances, perturb.utterance_prompts(particles, utterances))
+        write_jsonl(root / DERIVED / "perturbations.jsonl", units)
+        write_jsonl(root / DERIVED / "batches.jsonl", batches)
+        found = {"units": perturb.counts(units), "batches": len(batches),
+                 "sequences": sum(len(row["outputs"]) for row in batches),
+                 "paraphrase_run": args.paraphrases}
+        write_json(root / DERIVED / "perturbations_counts.json", found)
+        print(json.dumps(found, indent=2))
+        return 0
+    if args.command == "paraphrase":
+        from robust_likelihood.clips import paraphrase
+        from robust_likelihood.storage import read_jsonl
+
+        if args.dry_run:
+            print(json.dumps(paraphrase.plan(read_jsonl(root / DERIVED / "utterances.jsonl")), indent=2))
+            return 0
+        print(json.dumps(paraphrase.run_paraphrases(root, workers=args.workers, nli_device=args.nli_device), indent=2))
+        return 0
+    if args.command == "score-perturbed":
+        from robust_likelihood.clips.robustness import score_batches
+
+        print(json.dumps(score_batches(root, args.model, batches_file=root / DERIVED / "batches.jsonl",
+                                       prompts_file=root / DERIVED / "prompts.jsonl",
+                                       out=root / DERIVED / "scores_perturbed", device=args.device), indent=2))
+        return 0
+    if args.command == "robustness":
+        from robust_likelihood.clips.robustness import run_robustness
+        from robust_likelihood.clips.score import load_clips_config
+
+        models = args.models.split(",") if args.models else list(load_clips_config(root)["models"])
+        result = run_robustness(root, models, root / args.out)
+        print(json.dumps({model: {scope: {kind: {"units": block["units"],
+                                                  "abs_delta_p_true": block["abs_delta_p_true"]["median"],
+                                                  "argmax_flip": block["argmax_flip"]["rate"]}
+                                           for kind, block in found.items()}
+                                  for scope, found in blocks.items()}
+                          for model, blocks in result["models"].items()}, indent=1))
         return 0
     return 2
 

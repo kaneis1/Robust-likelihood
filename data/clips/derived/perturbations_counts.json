@@ -1,0 +1,59 @@
+{
+  "batches": 2068,
+  "paraphrase_run": null,
+  "sequences": 12373,
+  "units": {
+    "mdkg": {
+      "fill1": {
+        "units": 30,
+        "valid": 30
+      },
+      "fill2": {
+        "units": 30,
+        "valid": 30
+      },
+      "lower": {
+        "units": 30,
+        "valid": 30
+      },
+      "nopunct": {
+        "units": 30,
+        "valid": 30
+      },
+      "typo1": {
+        "units": 30,
+        "valid": 29
+      },
+      "typo2": {
+        "units": 30,
+        "valid": 15
+      }
+    },
+    "vh": {
+      "fill1": {
+        "units": 35,
+        "valid": 35
+      },
+      "fill2": {
+        "units": 35,
+        "valid": 35
+      },
+      "lower": {
+        "units": 35,
+        "valid": 35
+      },
+      "nopunct": {
+        "units": 35,
+        "valid": 35
+      },
+      "typo1": {
+        "units": 35,
+        "valid": 19
+      },
+      "typo2": {
+        "units": 35,
+        "valid": 11
+      }
+    }
+  }
+}

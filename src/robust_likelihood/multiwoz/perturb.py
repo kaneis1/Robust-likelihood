@@ -98,10 +98,19 @@ def overlaps(start: int, end: int, spans: list[tuple[int, int]]) -> bool:
     return any(start < span_end and span_start < end for span_start, span_end in spans)
 
 
-def typo_candidates(text: str, extractor: Extractor) -> list[tuple[int, int, str]]:
-    spans = protected_spans(text, extractor)
+def protected_words(extra=()) -> frozenset[str]:
+    """The words a typo never touches: the negations and restrictors above, plus extra (lower-cased).
+    The default keeps MultiWOZ's behavior; CLIPS passes its own list (docs/clips_small_lm_plan.md Phase 4)."""
+    return frozenset(PROTECTED_WORDS | {word.lower() for word in extra})
+
+
+def typo_candidates(text: str, extractor: Extractor | None,
+                    protected: frozenset[str] | None = None) -> list[tuple[int, int, str]]:
+    """Words a typo may edit. Without an extractor there are no slot spans, only the protected words."""
+    spans = protected_spans(text, extractor) if extractor is not None else []
+    protected = protected_words() if protected is None else protected
     return [(start, end, word) for start, end, word in words(text)
-            if len(word) >= MIN_WORD and word.isalpha() and word.lower() not in PROTECTED_WORDS
+            if len(word) >= MIN_WORD and word.isalpha() and word.lower() not in protected
             and not overlaps(start, end, spans)]
 
 

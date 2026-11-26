@@ -150,3 +150,56 @@ def test_table1_on_two_problems():
     assert found["action_only"]["rel_human_cost"]["mean"] == pytest.approx((2.0 + 2.0) / 2)
     assert found["literal"]["rel_plan_length"]["mean"] == pytest.approx((3.0 + 1.5) / 2)
     assert found["literal"]["p_true"]["mean"] is None and "language_only" not in found
+
+
+def test_protected_tokens_and_validity():
+    from robust_likelihood.clips.perturb import protected_tokens, valid
+
+    protected = frozenset({"red", "key", "keys", "two", "me", "you", "i", "not", "glasses"})
+    assert protected_tokens("I'll get the red key, don't you?", protected) == {"i": 1, "red": 1, "key": 1, "not": 1,
+                                                                             "you": 1}
+    assert valid("Can you get two glasses?", "Could you fetch two glasses?", protected)
+    assert not valid("Can you get two glasses?", "Could you fetch a couple of glasses?", protected)
+    assert not valid("Can you get two glasses?", "Can you get two glasses?", protected)
+    assert valid("Pass me the red key.", "pass me the red key.", protected)
+    assert not valid("Get 2 keys.", "Get keys.", protected)
+
+
+def test_perturbations_keep_protected_words_and_batches_put_the_original_first():
+    from robust_likelihood.clips.perturb import batches, perturb_instruction, utterance_prompts
+
+    protected = frozenset({"red", "key", "me", "you", "pass"})
+    row = {"domain": "mdkg", "plan_id": "1.1.keys", "index": 0, "timestep": 7,
+           "text": "Can you please pass me the red key?"}
+    units = perturb_instruction(row, protected, 1, frozenset())
+    kinds = {unit["kind"]: unit for unit in units}
+    assert kinds["typo1"]["valid"] and "please" not in kinds["typo1"]["rewrite"]
+    assert kinds["typo2"]["rewrite"] is None and not kinds["typo2"]["valid"]
+    assert kinds["fill2"]["rewrite"].endswith(row["text"] + " " + kinds["fill2"]["added"][1])
+    particles = [{"plan_id": "1.1.keys", "t": 7, "output": " " + row["text"], "prompts": ["P1", "P2"]},
+                 {"plan_id": "1.1.keys", "t": 7, "output": " " + row["text"], "prompts": ["P2"]}]
+    prompts = utterance_prompts(particles, [row])
+    assert prompts == {"mdkg:1.1.keys:0": ["P1", "P2"]}
+    found = batches(units, [row], prompts)
+    assert len(found) == 2 and all(batch["outputs"][0] == " " + row["text"] for batch in found)
+    assert len(found[0]["outputs"]) == 1 + sum(unit["valid"] for unit in units)
+
+
+def test_swapping_an_instruction_moves_the_posterior_by_the_mixture_change():
+    import math
+
+    from robust_likelihood.clips.robustness import Problem, unit_effect
+
+    particles = [{"plan_id": "p", "particle": 1, "goal": 1, "t": 3, "prompts": ["A"], "probs": [1.0]},
+                 {"plan_id": "p", "particle": 2, "goal": 2, "t": 3, "prompts": ["B"], "probs": [1.0]}]
+    final = {"trace_scores_1": "-1.0", "trace_scores_2": "-1.0", "utt_trace_scores_1": "-2.0",
+             "utt_trace_scores_2": "-2.0"}
+    problem = Problem("p", final, particles, true_goal=1)
+    from robust_likelihood.clips.record import prompt_id
+
+    logged = {prompt_id("A"): -2.0, prompt_id("B"): -2.0}.get
+    original = logged
+    perturbed = {prompt_id("A"): -2.0, prompt_id("B"): -2.0 + math.log(3)}.get
+    found = unit_effect(problem, 3, logged, original, perturbed)
+    assert found["p_true"] == 0.5 and abs(found["p_true_new"] - 0.25) < 1e-12 and found["flip"]
+    assert abs(found["delta_log_bf"] + math.log(3)) < 1e-12
