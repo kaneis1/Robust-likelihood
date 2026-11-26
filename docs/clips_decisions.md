@@ -121,8 +121,10 @@ of every step.
 
 - One GPU job (`gpu` partition, one H100) scores the models in turn, bf16, batch 32, plus the
   200-key determinism check per model.
-- Measured reference: the week-of-24-Nov `uperturb` job scored 24,011 pairs of similar total length
-  with each 8B model in 5–8 minutes. Estimate here: 3–8 minutes of scoring per 8B model, 1–3 for the
-  smaller ones, plus 1–3 minutes to load each model from NFS; **under one H100-hour for all eight**,
-  well inside the plan's "under one H100-hour per model".
+- Estimate from the token count: about 2.5 million tokens per model. A bf16 8B forward pass on one
+  H100 handles at least 10,000 tokens per second with padding, so about 4 minutes of scoring per 8B
+  model and 1–2 for the smaller ones, plus 1–3 minutes to load each model from NFS. For scale, the
+  week-of-24-Nov `uperturb` job scored 24,011 shorter pairs per 8B model in 5–8 minutes. **Under one
+  H100-hour for all eight**, well inside the plan's "under one H100-hour per model"; the job's
+  manifests record the measured time.
 - The plan's shared-prefix cache is not used: the prompts are short and batching is already fast.
