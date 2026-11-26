@@ -1,0 +1,36 @@
+{
+  "determinism": {
+    "keys": 200,
+    "layout": "reversed order, batch size 7",
+    "max_abs_difference": 0.5106334686279297
+  },
+  "device": "cuda:0",
+  "distinct_pairs": 7295,
+  "dtype": "bfloat16",
+  "elapsed_seconds": 81.0,
+  "finished_at": "2026-11-26T10:34:33Z",
+  "git": {
+    "commit": "6846d55a95ab2164e466ca481cbfd2d87da4b373",
+    "dirty": false
+  },
+  "kind": "clips-score",
+  "max_tokens": 64,
+  "model": "HuggingFaceTB/SmolLM2-1.7B",
+  "model_key": "smollm2_1p7b",
+  "over_max_tokens": 0,
+  "pairs_file": "/home/c/cuizq/Robust-likelihood/data/clips/derived/pairs.jsonl",
+  "prompt_tokens": {
+    "max": 793,
+    "mean": 425.5080191912269
+  },
+  "prompts_file": "/home/c/cuizq/Robust-likelihood/data/clips/derived/prompts.jsonl",
+  "revision": "effd688a12921b4cc83e3312b6feb579f70f9c71",
+  "scoring_seconds": 65.4,
+  "started_at": "2026-11-26T10:33:12Z",
+  "table_keys": 8146,
+  "versions": {
+    "python": "3.12.3",
+    "torch": "2.14.1+cu126",
+    "transformers": "4.57.6"
+  }
+}

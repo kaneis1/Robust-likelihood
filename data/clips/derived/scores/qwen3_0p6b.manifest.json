@@ -1,0 +1,36 @@
+{
+  "determinism": {
+    "keys": 200,
+    "layout": "reversed order, batch size 7",
+    "max_abs_difference": 0.4699897766113281
+  },
+  "device": "cuda:0",
+  "distinct_pairs": 7295,
+  "dtype": "bfloat16",
+  "elapsed_seconds": 52.5,
+  "finished_at": "2026-11-26T10:31:43Z",
+  "git": {
+    "commit": "6846d55a95ab2164e466ca481cbfd2d87da4b373",
+    "dirty": false
+  },
+  "kind": "clips-score",
+  "max_tokens": 64,
+  "model": "Qwen/Qwen3-0.6B-Base",
+  "model_key": "qwen3_0p6b",
+  "over_max_tokens": 0,
+  "pairs_file": "/home/c/cuizq/Robust-likelihood/data/clips/derived/pairs.jsonl",
+  "prompt_tokens": {
+    "max": 729,
+    "mean": 387.22206991089786
+  },
+  "prompts_file": "/home/c/cuizq/Robust-likelihood/data/clips/derived/prompts.jsonl",
+  "revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+  "scoring_seconds": 42.7,
+  "started_at": "2026-11-26T10:30:51Z",
+  "table_keys": 8146,
+  "versions": {
+    "python": "3.12.3",
+    "torch": "2.14.1+cu126",
+    "transformers": "4.57.6"
+  }
+}
