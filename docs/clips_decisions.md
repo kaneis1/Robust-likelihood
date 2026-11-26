@@ -128,3 +128,44 @@ of every step.
   H100-hour for all eight**, well inside the plan's "under one H100-hour per model"; the job's
   manifests record the measured time.
 - The plan's shared-prefix cache is not used: the prompts are short and batching is already fast.
+
+## Decided at STOPs 2 and 3 (user, 2026-11-26)
+
+The user approved the record counts and one GPU job scoring all eight models. Before submitting, the
+cluster checkout moved from `week-nov24` (with CLIPS files copied in untracked) to `clips-small-lm`;
+the 15 untracked copies were older versions of tracked files (11 identical, 4 from before the
+prompt-id split) and were removed first. SoC job 1205678 (`sim_job.sh clips`, gpu partition).
+
+## Phase 2 finding: batch layout moves a score by up to about 0.5 nats
+
+The determinism check (200 keys rescored in reversed order at batch size 7) finds a largest gap of
+0.47 nats for `qwen3_0p6b`, 0.59 for `qwen3_1p7b` and 0.51 for `smollm2_1p7b`. Scores are bf16 logits
+put through a float32 log-softmax; a different batch shape runs different kernels, and the rounding
+differences add up over a continuation of up to 64 tokens. In Phase 3 each key is scored once, so this
+is fixed noise on every score. In Phase 4 it would leak into every Δ, so each perturbed instruction's
+pairs are scored in the same batches as the original's, as the week-of-24-Nov `uperturb` part did.
+Later scoring runs also report the median and p90 gap.
+
+## Phase 3: the Table 1 definitions (plan 3; not stated in the plan, settled against the paper)
+
+The plan names the metrics, not their exact form. Each definition below was chosen because it
+reproduces **every cell** of the paper's Table 1 (both domains, all methods, the humans row) from the
+paper's own result files on OSF; `tests/test_clips.py` checks this whenever the files are present.
+
+- **Methods.** CLIPS = pragmatic inference with modalities "action, utterance"; language-only IP =
+  "utterance"; action-only IP = "action". All three use offline QMDP assistance (`qmdp_act`, estim
+  mode): section 3.1 of the paper, "we ran Algorithm 2 in offline mode, fixing the inferred posterior".
+  The literal listeners use estim mean (literal naive and efficient in mDKG, literal in VH).
+- **P(g_true)**, **assistance precision and recall**: means over problems of `true_goal_probs`,
+  `assist_precision`, `assist_recall`; the paper's brackets are standard errors over problems.
+- **Relative plan length and human cost**: per problem, `plan_length` and `speaker_cost` divided by
+  the reference CLIPS's, then the mean over problems. The reference is CLIPS with `qwen3_8b`, as the
+  plan says. The human's cost is the `speaker_cost` column; `plan_cost` gives other numbers.
+- **Goal correlation** (mDKG): Pearson r over the 30 × 4 (problem, goal) cells of `goal_probs_k`
+  against the mean human ratings. **Assistance correlation**: Pearson r over each problem's real
+  assistance options (the first `option_count`) against the mean human ratings; including the padded
+  zeros gives larger r for the baselines (action-only 0.50 against the published 0.45).
+- Intervals: bootstrap over problems, 2,000 replicates, seed 20261126.
+- **The setup check** (plan: STOP if action-only IP misses by more than 0.02): action-only P(g_true)
+  against 0.31 (mDKG) and 0.25 (VH). The paper's files give 0.314 and 0.250. The check also reports the
+  largest per-problem gap against the paper's file.
