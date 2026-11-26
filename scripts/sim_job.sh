@@ -18,6 +18,9 @@
 #           --samples-dir <the model's Phase 2 run>; a smoke run adds --first-items N --hsample-limit N).
 #   student docs/week_nov24_plan.md Part D: sim_job.sh student <R-lin,R-mlp,C-mlp> <scheme> <phase2> <xscore run>
 #           [student-train arguments], one training run per name in turn, each with its predictions.
+#   clips   docs/clips_small_lm_plan.md Phase 2: sim_job.sh clips <model,...> (keys of configs/clips.json),
+#           per model in turn the scores of data/clips/derived/pairs.jsonl, then its replay table in
+#           results/clips/tables/. About 5-10 minutes per model.
 #
 # On the login node first, every model at its pinned revision (configs/simulator.json), with
 # huggingface_hub; the jobs run with HF_HUB_OFFLINE=1 and never pip install.
@@ -57,7 +60,7 @@
 
 set -euo pipefail
 
-STAGE="${1:-${STAGE:?pass the stage: check, score, pilot, noise, week or student}}"
+STAGE="${1:-${STAGE:?pass the stage: check, score, pilot, noise, week, student or clips}}"
 cd "${SLURM_SUBMIT_DIR:-${PBS_O_WORKDIR:-${LS_SUBCWD:-$(pwd)}}}"
 
 # module load <CUDA_MODULE>
@@ -124,6 +127,12 @@ elif [ "$STAGE" = "student" ]; then
     fi
     for NAME in ${NAMES//,/ }; do
         python -m robust_likelihood.multiwoz student-train --run "$NAME" --scheme "$SCHEME" --phase2 "$PHASE2" --xscore "$XSCORE" "$@"
+    done
+elif [ "$STAGE" = "clips" ]; then
+    MODELS="${2:?pass the model keys}"
+    for MODEL in ${MODELS//,/ }; do
+        python -m robust_likelihood.clips score --model "$MODEL"
+        python -m robust_likelihood.clips table --model "$MODEL"
     done
 else
     echo "unknown stage $STAGE" >&2
