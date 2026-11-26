@@ -1,0 +1,33 @@
+{
+  "accepted": 124,
+  "accepted_by_kind": {
+    "para1": 61,
+    "para2": 63
+  },
+  "api_calls": 153,
+  "api_failures": 0,
+  "attempts": 3,
+  "finished_at": "2026-11-26T11:50:48Z",
+  "git": {
+    "commit": "adc921fac23224ddb497bef64df7a960213a8934",
+    "dirty": false
+  },
+  "input_tokens": 11504,
+  "kind": "clips-paraphrases",
+  "nli": {
+    "model": "MoritzLaurer/DeBERTa-v3-large-mnli-fever-anli-ling-wanli",
+    "revision": "b3546ea6b0346eb6f8d5d68b13c7dc6d0376b3d7",
+    "threshold": 0.8
+  },
+  "output_tokens": 2242,
+  "prompt": "Rewrite this instruction so it means exactly the same thing. Keep every colour, object, number and person (me, you) and add nothing. Reply with the rewritten text only.",
+  "provider": "claude",
+  "requested_model_id": "claude-fable-5-1",
+  "requested_temperature": 1.0,
+  "returned_model_ids": [
+    "claude-fable-5-1"
+  ],
+  "started_at": "2026-11-26T11:49:27Z",
+  "temperature_sent": 1.0,
+  "units": 130
+}

@@ -212,3 +212,16 @@ paper's own result files on OSF; `tests/test_clips.py` checks this whenever the 
   values reported next to them. "Base models of 1.7B or more" are `qwen3_1p7b`, `qwen3_4b`, `qwen3_8b`
   and `smollm2_1p7b`; C6 compares `qwen3_8b_inst` with `qwen3_8b` and `qwen25_7b_inst` with nothing
   (it has no base counterpart in the list), so C6 reads the Qwen3 pair only.
+
+## Phase 4 runs (2026-11-26)
+
+- **Decided at STOP 4 (user):** the paraphrase run and one GPU job scoring the perturbed instructions
+  with all eight models.
+- **Paraphrases:** run `results/clips/paraphrases/20261126T114927Z` (manifest copied to
+  `data/clips/derived/paraphrases_manifest.json`), `claude-fable-5-1` at temperature 1, 153 calls, no
+  failure, 11,504 input and 2,242 output tokens. 124 of 130 units accepted (para1 61, para2 63). The 6
+  rejected units all broke the protected-word rule on every attempt, e.g. "Grab another plate." →
+  "Get one more plate." (adds "one"), "Give me a red key for this door?" → "Could you give me a red key
+  for this door?" (adds "you"). 33 accepted para2 rewrites are identical to their para1: short
+  instructions leave little room. They are kept as units (the effect is then the same), and C5 reads
+  para1 as the plan says.

@@ -1,7 +1,7 @@
 {
   "batches": 2068,
-  "paraphrase_run": null,
-  "sequences": 12373,
+  "paraphrase_run": "results/clips/paraphrases/20261126T114927Z",
+  "sequences": 15344,
   "units": {
     "mdkg": {
       "fill1": {
@@ -19,6 +19,14 @@
       "nopunct": {
         "units": 30,
         "valid": 30
+      },
+      "para1": {
+        "units": 28,
+        "valid": 28
+      },
+      "para2": {
+        "units": 29,
+        "valid": 29
       },
       "typo1": {
         "units": 30,
@@ -45,6 +53,14 @@
       "nopunct": {
         "units": 35,
         "valid": 35
+      },
+      "para1": {
+        "units": 33,
+        "valid": 33
+      },
+      "para2": {
+        "units": 34,
+        "valid": 34
       },
       "typo1": {
         "units": 35,
