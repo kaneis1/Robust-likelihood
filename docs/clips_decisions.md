@@ -261,3 +261,17 @@ paper's own result files on OSF; `tests/test_clips.py` checks this whenever the 
   (the other would compare the mean over domains).
 - **C4:** strict order CLIPS > language-only IP > action-only IP in each domain, for each of
   `qwen3_1p7b`, `qwen3_4b`, `qwen3_8b`, `smollm2_1p7b`.
+- **A second upstream failure (loop difference 10).** 17 mDKG chunks of `qwen3_8b`, `qwen3_0p6b`,
+  `qwen3_1p7b` and `smollm2_1p7b` failed in CLIPS's `pragmatic_assistance_qmdp_act`: when the
+  assistant acts, the best action of every goal above the probability threshold is collected, and
+  `SymbolicPlanners.best_action` returns `missing` when a goal's policy has no action from the state.
+  The paper's posteriors never reached such a state; ours do, because the local models leave more
+  probability on goals the planner cannot complete from there. `src/assistance.jl` is now copied into
+  `julia/clips/<domain>_assistance.jl` with that one line taking `wait` for a missing best action, as
+  the same function already does three lines earlier for the speaker. Problems finished before the
+  change ran without a missing best action, so their rows are those the fixed code would give.
+- **Throughput.** The cluster runs at most 16 jobs per user (32 submitted). `scripts/clips_multi.sh`
+  runs up to four replays (separate single-threaded Julia processes, 5–7 GB each) in one job. The
+  problems left by the failed chunks went into 7 such jobs (27 replays of two problems each), fed by a
+  second login-node feeder; chunks already queued keep running as single jobs and use the fixed code
+  when they start. A final sweep (`requeue_mdkg.py`) lists anything still unfinished.
