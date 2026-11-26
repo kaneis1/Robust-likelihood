@@ -219,3 +219,33 @@ def test_merged_rows_keep_the_newest_file_per_plan(tmp_path):
     assert [path.name[12:22] for path in paths] == ["2026-11-26"] * 3
     rows = merged_rows(paths)
     assert [(row["plan_id"], row["value"]) for row in rows] == [("a", "1"), ("a", "2"), ("b", "9"), ("c", "9")]
+
+
+def test_predictions_need_complete_replays_and_read_the_rules():
+    from robust_likelihood.clips.report import predictions
+
+    def block(p, problems, r=None):
+        found = {"problems": problems, "p_true": {"mean": p}}
+        if r is not None:
+            found["goal_correlation"] = {"r": r}
+        return found
+
+    def domains(p_mdkg, p_vh, r, problems=(30, 25), lang=0.5, action=0.3):
+        return {"mdkg": {"clips": block(p_mdkg, problems[0], r), "language_only": block(lang, problems[0]),
+                         "action_only": block(action, problems[0])},
+                "vh": {"clips": block(p_vh, problems[1]), "language_only": block(lang - 0.1, problems[1]),
+                       "action_only": block(action - 0.05, problems[1])}}
+
+    phase3 = {"models": {"qwen3_8b": domains(0.76, 0.63, 0.9), "qwen3_1p7b": domains(0.73, 0.60, 0.88),
+                         "qwen3_0p6b": domains(0.60, 0.62, 0.7), "qwen3_4b": domains(0.75, 0.64, 0.9),
+                         "smollm2_1p7b": domains(0.74, 0.6, 0.9), "qwen3_8b_inst": domains(0.70, 0.61, 0.8)}}
+    flips = {"qwen3_8b": 0.05, "qwen3_8b_inst": 0.12}
+    phase4 = {"models": {model: {"both": {kind: {"abs_delta_p_true": {"median": 0.02},
+                                                 "argmax_flip": {"rate": flips.get(model, 0.05)}}
+                                          for kind in ("para1", "typo1")}}
+                         for model in ("qwen3_1p7b", "qwen3_4b", "qwen3_8b", "smollm2_1p7b", "qwen3_8b_inst")}}
+    found = {row["id"]: row["pass"] for row in predictions(phase3, phase4)}
+    assert found == {"C1": True, "C2": True, "C3": True, "C4": True, "C5": True, "C6": True}
+    phase3["models"]["qwen3_8b"] = domains(0.76, 0.63, 0.9, problems=(12, 25))
+    partial = {row["id"]: row["pass"] for row in predictions(phase3, phase4)}
+    assert partial["C1"] is None and partial["C2"] is None and partial["C3"] is None

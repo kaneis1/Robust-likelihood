@@ -49,6 +49,9 @@ def main(argv: list[str] | None = None) -> int:
     robust_parser = sub.add_parser("robustness", help="Phase 4: the posterior under each perturbed instruction")
     robust_parser.add_argument("--models", default=None)
     robust_parser.add_argument("--out", default="docs/clips_results")
+    report_parser = sub.add_parser("report", help="Phase 5: summary.md, figures and the scorecard")
+    report_parser.add_argument("--out", default="docs/clips_results")
+    report_parser.add_argument("--no-figures", action="store_true")
     args = parser.parse_args(argv)
     root = repo_root()
     if args.command == "copy-loops":
@@ -158,6 +161,11 @@ def main(argv: list[str] | None = None) -> int:
                                            for kind, block in found.items()}
                                   for scope, found in blocks.items()}
                           for model, blocks in result["models"].items()}, indent=1))
+        return 0
+    if args.command == "report":
+        from robust_likelihood.clips.report import run_report
+
+        print(json.dumps(run_report(root, root / args.out, figures=not args.no_figures), indent=2))
         return 0
     return 2
 
