@@ -33,6 +33,10 @@ def main(argv: list[str] | None = None) -> int:
     table_parser.add_argument("--out", default="results/clips/tables")
     download_parser = sub.add_parser("download", help="fetch the models of configs/clips.json at their revisions")
     download_parser.add_argument("--models", default=None, help="comma-separated keys (default: all)")
+    evaluate_parser = sub.add_parser("evaluate", help="Phase 3: Table 1 per model from the replays' result files")
+    evaluate_parser.add_argument("--models", default=None, help="comma-separated keys (default: all with a replay)")
+    evaluate_parser.add_argument("--reference", default="qwen3_8b", help="the model whose CLIPS the relative metrics use")
+    evaluate_parser.add_argument("--out", default="docs/clips_results")
     args = parser.parse_args(argv)
     root = repo_root()
     if args.command == "copy-loops":
@@ -83,6 +87,14 @@ def main(argv: list[str] | None = None) -> int:
             path = snapshot_download(spec["id"], revision=spec["revision"],
                                      allow_patterns=["*.json", "*.safetensors", "*.txt", "*.model", "*.tiktoken"])
             print(key, path)
+        return 0
+    if args.command == "evaluate":
+        from robust_likelihood.clips.evaluate import run_evaluate
+        from robust_likelihood.clips.score import load_clips_config
+
+        models = args.models.split(",") if args.models else list(load_clips_config(root)["models"])
+        result = run_evaluate(root, models, root / args.out, args.reference)
+        print(json.dumps({"runs": result["runs"], "action_only_check": result["action_only_check"]}, indent=2))
         return 0
     return 2
 

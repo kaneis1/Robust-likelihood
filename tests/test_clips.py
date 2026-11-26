@@ -94,3 +94,59 @@ def test_split_prompts_keeps_each_prompt_once():
     pairs, prompts = split_prompts(rows)
     assert prompts == [{"prompt_id": prompt_id("P"), "prompt": "P"}]
     assert all(row["prompt_id"] == prompt_id("P") and "prompt" not in row for row in pairs)
+
+
+RAW = ROOT / "data" / "clips" / "raw" / "results"
+# Table 1 of the paper (AAMAS 2024, arXiv v1): P(g_true), precision, recall, rel. plan length, rel. human cost,
+# goal correlation, assistance correlation; None where the paper prints a dash.
+PUBLISHED_TABLE1 = {
+    "mdkg": {"clips": (0.74, 0.97, 0.97, 1.00, 1.00, 0.93, 0.96),
+             "language_only": (0.55, 0.90, 0.83, 1.26, 1.18, 0.74, 0.83),
+             "action_only": (0.31, 0.43, 0.40, 1.68, 1.46, 0.15, 0.45),
+             "literal_efficient": (None, 0.65, 0.54, 1.55, 1.58, None, 0.47),
+             "literal_naive": (None, 0.58, 0.47, 1.54, 1.52, None, 0.54)},
+    "vh": {"clips": (0.63, 0.87, 1.00, 1.00, 1.00, None, None),
+           "language_only": (0.37, 0.59, 0.96, 1.33, 1.35, None, None),
+           "action_only": (0.25, 0.61, 0.84, 1.30, 1.33, None, None),
+           "literal": (None, 0.64, 0.70, 1.48, 1.54, None, None)},
+}
+
+
+@pytest.mark.skipif(not RAW.exists(), reason="the paper's OSF result files are not downloaded")
+def test_evaluate_reproduces_the_published_table_from_the_paper_files():
+    from robust_likelihood.clips.evaluate import DOMAIN_DIRS, read_humans, read_rows, table1
+
+    humans = read_humans(RAW / "doors-keys-gems" / "mean_human_responses.csv")
+    keys = ("p_true", "assist_precision", "assist_recall", "rel_plan_length", "rel_human_cost", "goal_correlation",
+            "assist_correlation")
+    for domain, folder in DOMAIN_DIRS.items():
+        rows = read_rows([RAW / folder / "literal_experiments.csv", RAW / folder / "pragmatic_experiments.csv"])
+        found = table1(rows, domain, humans=humans, replicates=10)
+        for method, published in PUBLISHED_TABLE1[domain].items():
+            for key, value in zip(keys, published):
+                block = found[method].get(key) or {}
+                mine = block.get("mean", block.get("r"))
+                assert (mine is None) == (value is None), (domain, method, key)
+                if value is not None:
+                    assert round(mine, 2) == value, (domain, method, key, mine)
+
+
+def test_table1_on_two_problems():
+    from robust_likelihood.clips.evaluate import table1
+
+    def row(plan, method, modality, p, length, cost, **extra):
+        return {"plan_id": plan, "infer_method": method, "modalities": modality, "estim_type": extra.pop("estim", "mode"),
+                "assist_method": extra.pop("assist", "qmdp_act"), "true_goal_probs": p, "assist_precision": "1.0",
+                "assist_recall": "0.5", "plan_length": length, "speaker_cost": cost, "option_count": "2", **extra}
+
+    rows = [row("a", "pragmatic", "action, utterance", "0.8", "10", "5"), row("b", "pragmatic", "action, utterance", "0.6", "20", "10"),
+            row("a", "pragmatic", "action", "0.2", "20", "10"), row("b", "pragmatic", "action", "0.4", "20", "20"),
+            row("a", "literal", "", "", "30", "5", assist="literal", estim="mean"),
+            row("b", "literal", "", "", "30", "5", assist="literal", estim="mean"),
+            row("b", "literal", "", "", "99", "99", assist="literal", estim="mode")]
+    found = table1(rows, "vh", replicates=10)
+    assert found["clips"]["p_true"]["mean"] == pytest.approx(0.7)
+    assert found["action_only"]["rel_plan_length"]["mean"] == pytest.approx((2.0 + 1.0) / 2)
+    assert found["action_only"]["rel_human_cost"]["mean"] == pytest.approx((2.0 + 2.0) / 2)
+    assert found["literal"]["rel_plan_length"]["mean"] == pytest.approx((3.0 + 1.5) / 2)
+    assert found["literal"]["p_true"]["mean"] is None and "language_only" not in found
