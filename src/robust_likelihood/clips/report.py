@@ -12,6 +12,7 @@ Every figure is written as .png, .pdf and .csv.
 
 from __future__ import annotations
 
+import math
 import random
 from pathlib import Path
 
@@ -243,28 +244,53 @@ def figure_p_true(plt, phase3: dict, models: list[str], out: Path) -> list[Path]
 
 
 def figure_correlation(plt, phase3: dict, config: dict, models: list[str], out: Path) -> list[Path]:
-    figure, ax = plt.subplots(figsize=(6.4, 4.2))
+    figure, ax = plt.subplots(figsize=(7.2, 4.4))
     rows = []
     for model in models:
         block = _get(phase3, "models", model, "mdkg", "clips", "goal_correlation")
         if not block or block.get("r") is None:
             continue
         spec = config["models"][model]
-        size, kind = spec["params_b"], spec["kind"]
         interval = block.get("ci95") or [block["r"], block["r"]]
-        ax.errorbar([size], [block["r"]], yerr=[[block["r"] - interval[0]], [interval[1] - block["r"]]], fmt="o",
-                    color=TYPE_COLORS[kind], ecolor=INK["secondary"], elinewidth=0.8, markersize=7)
-        ax.annotate(LABELS[model], (size, block["r"]), textcoords="offset points", xytext=(6, -3), fontsize=7,
-                    color=INK["secondary"])
-        rows.append({"model": model, "params_b": size, "kind": kind, "goal_r": block["r"], "low": interval[0],
-                     "high": interval[1]})
+        rows.append({"model": model, "params_b": spec["params_b"], "kind": spec["kind"], "goal_r": block["r"],
+                     "low": interval[0], "high": interval[1]})
+    # Models of about the same size (within a factor 1.15) share a column: dodge them sideways, highest r
+    # first, and stack their labels to the right of the column at least LABEL_GAP apart.
+    groups: list[list[dict]] = []
+    for row in sorted(rows, key=lambda row: row["params_b"]):
+        if groups and row["params_b"] <= groups[-1][0]["params_b"] * 1.15:
+            groups[-1].append(row)
+        else:
+            groups.append([row])
+    label_gap = 0.014
+    ticks = {}
+    for group in groups:
+        low, high = group[0]["params_b"], group[-1]["params_b"]
+        base = math.sqrt(low * high)
+        ticks[base] = f"{low:g}B" if low == high else f"{low:g}–{high:g}B"
+        group.sort(key=lambda row: -row["goal_r"])
+        xs = [base * math.exp(0.07 * (j - (len(group) - 1) / 2)) for j in range(len(group))]
+        label_x = max(xs) * 1.12
+        label_y = None
+        for x, row in zip(xs, group):
+            r, (low, high) = row["goal_r"], (row["low"], row["high"])
+            ax.errorbar([x], [r], yerr=[[r - low], [high - r]], fmt="o", color=TYPE_COLORS[row["kind"]],
+                        ecolor=INK["secondary"], elinewidth=0.8, markersize=7)
+            label_y = r if label_y is None else min(r, label_y - label_gap)
+            ax.annotate(LABELS[row["model"]], (x, r), xytext=(label_x, label_y), textcoords="data", fontsize=7,
+                        color=INK["secondary"], va="center",
+                        arrowprops={"arrowstyle": "-", "color": INK["muted"], "linewidth": 0.5,
+                                    "shrinkA": 0, "shrinkB": 4})
     published = _get(phase3, "paper_files", "mdkg", "clips", "goal_correlation", "r")
     if published is not None:
         ax.axhline(published, color=INK["muted"], linestyle=DASHED, linewidth=0.9)
-        ax.text(0.55, published + 0.005, f"paper (curie): {published:.2f}", fontsize=7, color=INK["muted"])
+        ax.text(0.47, published + 0.005, f"paper (curie): {published:.2f}", fontsize=7, color=INK["muted"])
     for kind, color in TYPE_COLORS.items():
         ax.plot([], [], "o", color=color, label=kind)
     ax.set_xscale("log")
+    ax.set_xticks(list(ticks), list(ticks.values()))
+    ax.minorticks_off()
+    ax.set_xlim(0.42, max(ticks, default=8) * 3.2)
     ax.set_xlabel("parameters (billions, log scale)", fontsize=8)
     ax.set_ylabel("Pearson r with mean human goal ratings (mDKG, 95% CI)", fontsize=8)
     ax.grid(color=INK["grid"], linewidth=0.6)

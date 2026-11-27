@@ -1,0 +1,197 @@
+{
+  "bootstrap": {
+    "replicates": 2000,
+    "seed": 20261126
+  },
+  "elapsed_seconds": 23.1,
+  "finished_at": "2026-11-27T06:17:49Z",
+  "kind": "clips-evaluate",
+  "models": [
+    "qwen3_0p6b",
+    "qwen3_1p7b",
+    "qwen3_4b",
+    "qwen3_8b",
+    "smollm2_1p7b",
+    "qwen3_8b_inst",
+    "qwen25_7b_inst",
+    "osim_mid"
+  ],
+  "reference_model": "qwen3_8b",
+  "runs": {
+    "osim_mid": {
+      "mdkg": [
+        "results/clips/osim_mid/mdkg/experiments_2026-11-26T19-13-06.csv",
+        "results/clips/osim_mid/mdkg/plans-3.2.keys/experiments_2026-11-26T22-47-04.csv",
+        "results/clips/osim_mid/mdkg/plans-5.1.keys/experiments_2026-11-26T22-47-20.csv",
+        "results/clips/osim_mid/mdkg/plans-8.1.keys/experiments_2026-11-26T22-47-49.csv",
+        "results/clips/osim_mid/mdkg/plans-10b.2.keys/experiments_2026-11-26T22-53-27.csv",
+        "results/clips/osim_mid/mdkg/plans-12.2.doors/experiments_2026-11-26T22-59-53.csv",
+        "results/clips/osim_mid/mdkg/plans-15.1.doors/experiments_2026-11-26T23-15-28.csv",
+        "results/clips/osim_mid/mdkg/plans-19.1.keys/experiments_2026-11-26T23-47-24.csv"
+      ],
+      "vh": [
+        "results/clips/osim_mid/vh/experiments_2026-11-26T19-13-06.csv"
+      ]
+    },
+    "qwen25_7b_inst": {
+      "mdkg": [
+        "results/clips/qwen25_7b_inst/mdkg/experiments_2026-11-26T19-13-07.csv",
+        "results/clips/qwen25_7b_inst/mdkg/plans-3.2.keys/experiments_2026-11-26T22-02-06.csv",
+        "results/clips/qwen25_7b_inst/mdkg/plans-5.1.keys/experiments_2026-11-26T22-02-19.csv",
+        "results/clips/qwen25_7b_inst/mdkg/plans-8.1.keys/experiments_2026-11-26T22-03-45.csv",
+        "results/clips/qwen25_7b_inst/mdkg/plans-10b.2.keys/experiments_2026-11-26T22-32-36.csv",
+        "results/clips/qwen25_7b_inst/mdkg/plans-12.2.doors/experiments_2026-11-26T22-38-00.csv",
+        "results/clips/qwen25_7b_inst/mdkg/plans-15.1.doors/experiments_2026-11-26T22-38-08.csv",
+        "results/clips/qwen25_7b_inst/mdkg/plans-19.1.keys/experiments_2026-11-26T22-43-07.csv"
+      ],
+      "vh": [
+        "results/clips/qwen25_7b_inst/vh/experiments_2026-11-26T19-53-52.csv"
+      ]
+    },
+    "qwen3_0p6b": {
+      "mdkg": [
+        "results/clips/qwen3_0p6b/mdkg/experiments_2026-11-26T19-13-24.csv",
+        "results/clips/qwen3_0p6b/mdkg/plans-11.2.keys/experiments_2026-11-26T19-56-43.csv",
+        "results/clips/qwen3_0p6b/mdkg/plans-6.2.keys/experiments_2026-11-26T19-56-43.csv",
+        "results/clips/qwen3_0p6b/mdkg/plans-9.1.keys/experiments_2026-11-26T19-56-43.csv",
+        "results/clips/qwen3_0p6b/mdkg/plans-2.2.keys/experiments_2026-11-26T19-56-48.csv",
+        "results/clips/qwen3_0p6b/mdkg/plans-4.1.keys/experiments_2026-11-26T19-56-49.csv",
+        "results/clips/qwen3_0p6b/mdkg/plans-13.2.doors/experiments_2026-11-26T19-59-36.csv",
+        "results/clips/qwen3_0p6b/mdkg/plans-17.1.doors/experiments_2026-11-26T20-05-10.csv",
+        "results/clips/qwen3_0p6b/mdkg/plans-6.2.keys/experiments_2026-11-26T22-49-45.csv",
+        "results/clips/qwen3_0p6b/mdkg/plans-8.1.keys/experiments_2026-11-26T22-49-57.csv",
+        "results/clips/qwen3_0p6b/mdkg/plans-11.2.keys/experiments_2026-11-26T23-17-07.csv",
+        "results/clips/qwen3_0p6b/mdkg/plans-12.2.doors/experiments_2026-11-26T23-17-09.csv",
+        "results/clips/qwen3_0p6b/mdkg/plans-10b.2.keys/experiments_2026-11-26T23-17-14.csv",
+        "results/clips/qwen3_0p6b/mdkg/plans-9.1.keys/experiments_2026-11-26T23-17-18.csv",
+        "results/clips/qwen3_0p6b/mdkg/plans-16.1.doors/experiments_2026-11-26T23-20-14.csv",
+        "results/clips/qwen3_0p6b/mdkg/plans-18.1.doors/experiments_2026-11-26T23-20-14.csv",
+        "results/clips/qwen3_0p6b/mdkg/plans-20.1.doors/experiments_2026-11-26T23-20-39.csv",
+        "results/clips/qwen3_0p6b/mdkg/plans-3.3.keys/experiments_2026-11-27T13-12-00.csv",
+        "results/clips/qwen3_0p6b/mdkg/plans-5.1.keys/experiments_2026-11-27T13-12-15.csv",
+        "results/clips/qwen3_0p6b/mdkg/plans-6.1.keys/experiments_2026-11-27T13-12-15.csv"
+      ],
+      "vh": [
+        "results/clips/qwen3_0p6b/vh/experiments_2026-11-26T19-13-21.csv"
+      ]
+    },
+    "qwen3_1p7b": {
+      "mdkg": [
+        "results/clips/qwen3_1p7b/mdkg/experiments_2026-11-26T19-13-19.csv",
+        "results/clips/qwen3_1p7b/mdkg/plans-3.1.keys/experiments_2026-11-26T20-05-38.csv",
+        "results/clips/qwen3_1p7b/mdkg/plans-4.2.keys/experiments_2026-11-26T20-05-50.csv",
+        "results/clips/qwen3_1p7b/mdkg/plans-7.1.keys/experiments_2026-11-26T20-08-47.csv",
+        "results/clips/qwen3_1p7b/mdkg/plans-10.1.keys/experiments_2026-11-26T20-09-34.csv",
+        "results/clips/qwen3_1p7b/mdkg/plans-12.1.doors/experiments_2026-11-26T20-10-04.csv",
+        "results/clips/qwen3_1p7b/mdkg/plans-14.1.doors/experiments_2026-11-26T20-10-07.csv",
+        "results/clips/qwen3_1p7b/mdkg/plans-18.1.doors/experiments_2026-11-26T20-12-35.csv",
+        "results/clips/qwen3_1p7b/mdkg/plans-10.1.keys/experiments_2026-11-26T23-20-38.csv",
+        "results/clips/qwen3_1p7b/mdkg/plans-13.2.doors/experiments_2026-11-26T23-28-13.csv",
+        "results/clips/qwen3_1p7b/mdkg/plans-17.1.doors/experiments_2026-11-26T23-28-13.csv",
+        "results/clips/qwen3_1p7b/mdkg/plans-11.1.keys/experiments_2026-11-26T23-28-20.csv",
+        "results/clips/qwen3_1p7b/mdkg/plans-12.2.doors/experiments_2026-11-26T23-28-30.csv",
+        "results/clips/qwen3_1p7b/mdkg/plans-19.1.keys/experiments_2026-11-26T23-31-12.csv",
+        "results/clips/qwen3_1p7b/mdkg/plans-5.1.keys/experiments_2026-11-27T13-12-00.csv",
+        "results/clips/qwen3_1p7b/mdkg/plans-6.2.keys/experiments_2026-11-27T13-12-04.csv",
+        "results/clips/qwen3_1p7b/mdkg/plans-9.1.keys/experiments_2026-11-27T13-12-04.csv",
+        "results/clips/qwen3_1p7b/mdkg/plans-6.1.keys/experiments_2026-11-27T13-12-13.csv"
+      ],
+      "vh": [
+        "results/clips/qwen3_1p7b/vh/experiments_2026-11-26T19-53-52.csv"
+      ]
+    },
+    "qwen3_4b": {
+      "mdkg": [
+        "results/clips/qwen3_4b/mdkg/experiments_2026-11-26T19-13-09.csv",
+        "results/clips/qwen3_4b/mdkg/plans-3.1.keys/experiments_2026-11-26T20-33-38.csv",
+        "results/clips/qwen3_4b/mdkg/plans-4.2.keys/experiments_2026-11-26T20-35-44.csv",
+        "results/clips/qwen3_4b/mdkg/plans-7.1.keys/experiments_2026-11-26T20-41-41.csv",
+        "results/clips/qwen3_4b/mdkg/plans-10.1.keys/experiments_2026-11-26T20-43-54.csv",
+        "results/clips/qwen3_4b/mdkg/plans-12.1.doors/experiments_2026-11-26T20-49-06.csv",
+        "results/clips/qwen3_4b/mdkg/plans-14.1.doors/experiments_2026-11-26T21-06-53.csv",
+        "results/clips/qwen3_4b/mdkg/plans-18.1.doors/experiments_2026-11-26T21-08-56.csv",
+        "results/clips/qwen3_4b/mdkg/plans-10b.2.keys/experiments_2026-11-27T13-12-11.csv",
+        "results/clips/qwen3_4b/mdkg/plans-11.1.keys/experiments_2026-11-27T13-12-11.csv",
+        "results/clips/qwen3_4b/mdkg/plans-6.2.keys/experiments_2026-11-27T13-12-14.csv",
+        "results/clips/qwen3_4b/mdkg/plans-5.1.keys/experiments_2026-11-27T13-12-19.csv",
+        "results/clips/qwen3_4b/mdkg/plans-6.1.keys/experiments_2026-11-27T13-12-27.csv",
+        "results/clips/qwen3_4b/mdkg/plans-10.1.keys/experiments_2026-11-27T13-12-29.csv",
+        "results/clips/qwen3_4b/mdkg/plans-9.1.keys/experiments_2026-11-27T13-12-29.csv",
+        "results/clips/qwen3_4b/mdkg/plans-11.2.keys/experiments_2026-11-27T13-12-31.csv",
+        "results/clips/qwen3_4b/mdkg/plans-12.2.doors/experiments_2026-11-27T13-12-31.csv",
+        "results/clips/qwen3_4b/mdkg/plans-13.1.doors/experiments_2026-11-27T13-12-31.csv",
+        "results/clips/qwen3_4b/mdkg/plans-13.2.doors/experiments_2026-11-27T13-12-31.csv"
+      ],
+      "vh": [
+        "results/clips/qwen3_4b/vh/experiments_2026-11-26T19-13-06.csv"
+      ]
+    },
+    "qwen3_8b": {
+      "mdkg": [
+        "results/clips/qwen3_8b/mdkg/experiments_2026-11-26T18-55-50.csv",
+        "results/clips/qwen3_8b/mdkg/plans-3.1.keys/experiments_2026-11-26T19-56-37.csv",
+        "results/clips/qwen3_8b/mdkg/plans-7.1.keys/experiments_2026-11-26T19-56-40.csv",
+        "results/clips/qwen3_8b/mdkg/plans-4.2.keys/experiments_2026-11-26T19-56-42.csv",
+        "results/clips/qwen3_8b/mdkg/plans-14.1.doors/experiments_2026-11-26T19-56-43.csv",
+        "results/clips/qwen3_8b/mdkg/plans-18.1.doors/experiments_2026-11-26T19-56-47.csv",
+        "results/clips/qwen3_8b/mdkg/plans-10.1.keys/experiments_2026-11-26T19-57-07.csv",
+        "results/clips/qwen3_8b/mdkg/plans-12.1.doors/experiments_2026-11-26T19-57-07.csv",
+        "results/clips/qwen3_8b/mdkg/plans-13.2.doors/experiments_2026-11-26T22-48-06.csv",
+        "results/clips/qwen3_8b/mdkg/plans-11.1.keys/experiments_2026-11-26T22-48-11.csv",
+        "results/clips/qwen3_8b/mdkg/plans-12.2.doors/experiments_2026-11-26T22-48-17.csv",
+        "results/clips/qwen3_8b/mdkg/plans-10.1.keys/experiments_2026-11-26T22-48-28.csv",
+        "results/clips/qwen3_8b/mdkg/plans-17.1.doors/experiments_2026-11-26T22-49-43.csv",
+        "results/clips/qwen3_8b/mdkg/plans-19.1.keys/experiments_2026-11-26T22-49-51.csv",
+        "results/clips/qwen3_8b/mdkg/plans-5.1.keys/experiments_2026-11-27T13-11-57.csv",
+        "results/clips/qwen3_8b/mdkg/plans-6.1.keys/experiments_2026-11-27T13-11-57.csv",
+        "results/clips/qwen3_8b/mdkg/plans-6.2.keys/experiments_2026-11-27T13-12-07.csv",
+        "results/clips/qwen3_8b/mdkg/plans-9.1.keys/experiments_2026-11-27T13-12-12.csv"
+      ],
+      "vh": [
+        "results/clips/qwen3_8b/vh/experiments_2026-11-26T18-55-49.csv"
+      ]
+    },
+    "qwen3_8b_inst": {
+      "mdkg": [
+        "results/clips/qwen3_8b_inst/mdkg/experiments_2026-11-26T19-13-07.csv",
+        "results/clips/qwen3_8b_inst/mdkg/plans-3.2.keys/experiments_2026-11-26T21-18-09.csv",
+        "results/clips/qwen3_8b_inst/mdkg/plans-5.1.keys/experiments_2026-11-26T21-22-33.csv",
+        "results/clips/qwen3_8b_inst/mdkg/plans-8.1.keys/experiments_2026-11-26T21-24-07.csv",
+        "results/clips/qwen3_8b_inst/mdkg/plans-10b.2.keys/experiments_2026-11-26T21-25-11.csv",
+        "results/clips/qwen3_8b_inst/mdkg/plans-12.2.doors/experiments_2026-11-26T21-36-59.csv",
+        "results/clips/qwen3_8b_inst/mdkg/plans-15.1.doors/experiments_2026-11-26T21-52-35.csv",
+        "results/clips/qwen3_8b_inst/mdkg/plans-19.1.keys/experiments_2026-11-26T21-54-30.csv"
+      ],
+      "vh": [
+        "results/clips/qwen3_8b_inst/vh/experiments_2026-11-26T19-53-52.csv"
+      ]
+    },
+    "smollm2_1p7b": {
+      "mdkg": [
+        "results/clips/smollm2_1p7b/mdkg/experiments_2026-11-26T19-13-09.csv",
+        "results/clips/smollm2_1p7b/mdkg/plans-2.2.keys/experiments_2026-11-26T20-13-19.csv",
+        "results/clips/smollm2_1p7b/mdkg/plans-4.1.keys/experiments_2026-11-26T20-14-10.csv",
+        "results/clips/smollm2_1p7b/mdkg/plans-6.2.keys/experiments_2026-11-26T20-14-48.csv",
+        "results/clips/smollm2_1p7b/mdkg/plans-9.1.keys/experiments_2026-11-26T20-19-03.csv",
+        "results/clips/smollm2_1p7b/mdkg/plans-11.2.keys/experiments_2026-11-26T20-20-33.csv",
+        "results/clips/smollm2_1p7b/mdkg/plans-13.2.doors/experiments_2026-11-26T20-30-32.csv",
+        "results/clips/smollm2_1p7b/mdkg/plans-17.1.doors/experiments_2026-11-26T20-31-16.csv",
+        "results/clips/smollm2_1p7b/mdkg/plans-6.2.keys/experiments_2026-11-26T23-31-05.csv",
+        "results/clips/smollm2_1p7b/mdkg/plans-8.1.keys/experiments_2026-11-26T23-31-05.csv",
+        "results/clips/smollm2_1p7b/mdkg/plans-11.2.keys/experiments_2026-11-26T23-31-22.csv",
+        "results/clips/smollm2_1p7b/mdkg/plans-12.2.doors/experiments_2026-11-26T23-36-02.csv",
+        "results/clips/smollm2_1p7b/mdkg/plans-19.1.keys/experiments_2026-11-26T23-36-02.csv",
+        "results/clips/smollm2_1p7b/mdkg/plans-16.1.doors/experiments_2026-11-26T23-36-03.csv",
+        "results/clips/smollm2_1p7b/mdkg/plans-10.1.keys/experiments_2026-11-27T13-12-07.csv",
+        "results/clips/smollm2_1p7b/mdkg/plans-6.1.keys/experiments_2026-11-27T13-12-08.csv",
+        "results/clips/smollm2_1p7b/mdkg/plans-11.1.keys/experiments_2026-11-27T13-12-10.csv",
+        "results/clips/smollm2_1p7b/mdkg/plans-5.1.keys/experiments_2026-11-27T13-12-13.csv",
+        "results/clips/smollm2_1p7b/mdkg/plans-10b.2.keys/experiments_2026-11-27T13-12-18.csv",
+        "results/clips/smollm2_1p7b/mdkg/plans-9.1.keys/experiments_2026-11-27T13-12-24.csv"
+      ],
+      "vh": [
+        "results/clips/smollm2_1p7b/vh/experiments_2026-11-26T19-13-08.csv"
+      ]
+    }
+  }
+}

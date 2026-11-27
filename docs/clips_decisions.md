@@ -275,3 +275,22 @@ paper's own result files on OSF; `tests/test_clips.py` checks this whenever the 
   problems left by the failed chunks went into 7 such jobs (27 replays of two problems each), fed by a
   second login-node feeder; chunks already queued keep running as single jobs and use the fixed code
   when they start. A final sweep (`requeue_mdkg.py`) lists anything still unfinished.
+
+## Phase 3 and 4 completion and Phase 5 (2026-11-27)
+
+- **The last replays.** 29 single-chunk jobs that had started before difference (10) reached the
+  cluster (20:57 on 2026-11-26) failed with the same MethodError; every job started after it finished.
+  The final sweep found 28 problems left (`qwen3_4b` 11, `smollm2_1p7b` 6, `qwen3_8b` 4, `qwen3_1p7b` 4,
+  `qwen3_0p6b` 3). They ran as 7 `clips_multi.sh` jobs of four single-problem replays, all without a
+  failure. Every model now has all 30 mDKG and 25 VH problems; the newest run of each problem is the
+  one merged, and each merged problem has its final row.
+- **The setup check passes for all 8 models in both domains:** action-only P(g_true) 0.314 (mDKG) and
+  0.250 (VH), largest per-problem gap to the paper's file 5e-10.
+- **The true goal's index (Phase 4).** The loop logs the true goal's label and its probability, not its
+  index k. Matching goal_probs_k to true_goal_probs was ambiguous for `10.1.keys` under one model (two
+  goals tied). k is now the label's place in `GOALS` (mDKG: gem1–gem4) or in the problem's goal set
+  (VH: `goals/sets/<problem>.txt`), and goal_probs_k must still equal true_goal_probs in every
+  pragmatic `qmdp_act` row. On every problem where the old match was unique the two agree.
+- **Figure 2.** Models of about the same size share a column (dodged, labels stacked to the right), and
+  the x axis is labelled at the sizes (0.6B, 1.7B, 4B, 7.6–8.2B).
+- **Scorecard:** C1 fail, C2 fail (0.6B is not worse), C3 pass (its VH margin is 0.0006), C4–C6 pass.

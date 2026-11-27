@@ -1,0 +1,102 @@
+[
+  {
+    "id": "C1",
+    "pass": false,
+    "statement": "qwen3_8b: mDKG P(g_true) within 0.05 of 0.74 and goal correlation >= 0.85",
+    "value": {
+      "goal_r": 0.8263827413995061,
+      "p_true": 0.6606354005213003
+    }
+  },
+  {
+    "id": "C2",
+    "pass": false,
+    "statement": "qwen3_1p7b within 0.05 of qwen3_8b on P(g_true) in both domains; qwen3_0p6b is not",
+    "value": {
+      "qwen3_0p6b": {
+        "mdkg": 0.6795789651271621,
+        "vh": 0.6119664430400208
+      },
+      "qwen3_1p7b": {
+        "mdkg": 0.6781637288490752,
+        "vh": 0.6169964563169857
+      },
+      "qwen3_8b": {
+        "mdkg": 0.6606354005213003,
+        "vh": 0.6289999297819459
+      }
+    }
+  },
+  {
+    "id": "C3",
+    "pass": true,
+    "statement": "qwen3_8b_inst below qwen3_8b on mDKG goal correlation and on P(g_true) in both domains",
+    "value": {
+      "qwen3_8b": {
+        "goal_r": 0.8263827413995061,
+        "mdkg": 0.6606354005213003,
+        "vh": 0.6289999297819459
+      },
+      "qwen3_8b_inst": {
+        "goal_r": 0.7869277457072886,
+        "mdkg": 0.6399993969281863,
+        "vh": 0.6284348203981339
+      }
+    }
+  },
+  {
+    "id": "C4",
+    "pass": true,
+    "statement": "CLIPS > language-only IP > action-only IP on P(g_true), every base model of 1.7B or more, both domains",
+    "value": {
+      "qwen3_1p7b:mdkg": true,
+      "qwen3_1p7b:vh": true,
+      "qwen3_4b:mdkg": true,
+      "qwen3_4b:vh": true,
+      "qwen3_8b:mdkg": true,
+      "qwen3_8b:vh": true,
+      "smollm2_1p7b:mdkg": true,
+      "smollm2_1p7b:vh": true
+    }
+  },
+  {
+    "id": "C5",
+    "pass": true,
+    "statement": "base models of 1.7B or more: median |\u0394 P(g_true)| <= 0.10 under para1 and <= 0.05 under typo1, argmax flips <= 10% (both domains pooled)",
+    "value": {
+      "qwen3_1p7b": {
+        "para1_abs_delta": 0.0032079915549030336,
+        "para1_flip": 0.01639344262295082,
+        "typo1_abs_delta": 0.0025335917917315987,
+        "typo1_flip": 0.041666666666666664
+      },
+      "qwen3_4b": {
+        "para1_abs_delta": 0.003280830780210797,
+        "para1_flip": 0.03278688524590164,
+        "typo1_abs_delta": 0.002991399636167791,
+        "typo1_flip": 0.0
+      },
+      "qwen3_8b": {
+        "para1_abs_delta": 0.0038326062510841696,
+        "para1_flip": 0.03278688524590164,
+        "typo1_abs_delta": 0.0009949593414733116,
+        "typo1_flip": 0.0
+      },
+      "smollm2_1p7b": {
+        "para1_abs_delta": 0.004256255647419049,
+        "para1_flip": 0.03278688524590164,
+        "typo1_abs_delta": 0.0034299207842163892,
+        "typo1_flip": 0.020833333333333332
+      }
+    }
+  },
+  {
+    "id": "C6",
+    "pass": true,
+    "statement": "qwen3_8b_inst flips the argmax under para1 more often than qwen3_8b (both domains pooled)",
+    "value": {
+      "qwen3_8b": 0.03278688524590164,
+      "qwen3_8b_inst": 0.08196721311475409
+    }
+  }
+]
