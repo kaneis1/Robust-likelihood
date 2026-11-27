@@ -115,18 +115,34 @@ def final_rows(inference: list[dict]) -> dict[str, dict]:
     return found
 
 
-def true_goal_index(experiments: list[dict], plan: str) -> int:
-    """The k whose goal_probs_k equals true_goal_probs in all three modalities' rows (the loop does not log k)."""
-    candidates = None
-    for row in experiments:
-        if row["plan_id"] != plan or row["infer_method"] != "pragmatic" or row["assist_method"] != "qmdp_act":
-            continue
-        found = {k for k in range(1, 13) if row.get(f"goal_probs_{k}") not in (None, "")
-                 and row[f"goal_probs_{k}"] == row["true_goal_probs"]}
-        candidates = found if candidates is None else candidates & found
-    if not candidates or len(candidates) != 1:
-        raise ValueError(f"cannot identify the true goal of {plan}: {candidates}")
-    return next(iter(candidates))
+MDKG_GOALS = ("gem1", "gem2", "gem3", "gem4")  # GOALS in doors-keys-gems/experiments.jl, in order
+VH_GOAL_SETS = Path("external/CLIPS.jl/virtual-home/dataset/goals/sets")
+
+
+def goal_labels(root: Path, domain: str, problem_id: str) -> list[str]:
+    """The goals in the order of goal_probs_1, goal_probs_2, ...: GOALS for mDKG, the problem's goal set for VH."""
+    if domain == "mdkg":
+        return list(MDKG_GOALS)
+    return (root / VH_GOAL_SETS / f"{problem_id}.txt").read_text(encoding="utf-8").splitlines()
+
+
+def true_goal_index(root: Path, domain: str, experiments: list[dict], plan: str) -> int:
+    """The k of the plan's true goal (the loop logs its label, not k), checked against true_goal_probs.
+
+    The label's position in goal_labels gives k; goal_probs_k must then equal true_goal_probs in every
+    pragmatic qmdp_act row. Matching on the probabilities alone is ambiguous when two goals tie.
+    """
+    rows = [row for row in experiments if row["plan_id"] == plan and row["infer_method"] == "pragmatic"
+            and row["assist_method"] == "qmdp_act"]
+    if not rows or len({row["true_goal"] for row in rows}) != 1:
+        raise ValueError(f"cannot identify the true goal of {plan}: {sorted({row['true_goal'] for row in rows})}")
+    labels = goal_labels(root, domain, rows[0]["problem_id"])
+    if rows[0]["true_goal"] not in labels:
+        raise ValueError(f"the true goal {rows[0]['true_goal']} of {plan} is not among {labels}")
+    k = labels.index(rows[0]["true_goal"]) + 1
+    if any(row[f"goal_probs_{k}"] != row["true_goal_probs"] for row in rows):
+        raise ValueError(f"goal_probs_{k} of {plan} differs from true_goal_probs")
+    return k
 
 
 def goal_marginal(log_weights: dict[int, float], goals: dict[int, int]) -> dict[int, float]:
@@ -217,13 +233,14 @@ def model_effects(root: Path, model: str, units: list[dict], cobatched: list[dic
         if not inference or not rows:
             continue
         finals = final_rows(inference)
-        done = {row["plan_id"] for row in rows}
+        done = {row["plan_id"] for row in rows if row["infer_method"] == "pragmatic" and row["assist_method"] == "qmdp_act"}
         mine: dict[str, list[dict]] = defaultdict(list)
         for row in particles[domain]:
             mine[row["plan_id"]].append(row)
         for plan, final in finals.items():
-            if plan in done:  # a plan still being replayed has its inference rows but no experiments rows yet
-                problems[(domain, plan)] = Problem(plan, final, mine[plan], true_goal_index(rows, plan))
+            if plan in done:  # a plan still being replayed, or cut short, has inference rows but no pragmatic rows
+                problems[(domain, plan)] = Problem(plan, final, mine[plan],
+                                                   true_goal_index(root, domain, rows, plan))
     found = []
     for unit in units:
         if not unit["valid"] or (unit["domain"], unit["plan_id"]) not in problems:

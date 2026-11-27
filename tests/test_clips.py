@@ -208,6 +208,23 @@ def test_swapping_an_instruction_moves_the_posterior_by_the_mixture_change():
     assert abs(found["delta_log_bf"] + math.log(3)) < 1e-12
 
 
+def test_true_goal_index_reads_the_label_when_two_goals_tie():
+    from robust_likelihood.clips.robustness import true_goal_index
+
+    def row(**probs):
+        return {"plan_id": "10.1.keys", "problem_id": "10", "infer_method": "pragmatic", "assist_method": "qmdp_act",
+                "true_goal": "gem4", "true_goal_probs": "0.4", **{f"goal_probs_{k}": v for k, v in probs.items()}}
+
+    rows = [row(**{"1": "0.4", "2": "0.1", "3": "0.1", "4": "0.4"}), row(**{"1": "0.4", "2": "0.1", "3": "0.1", "4": "0.4"})]
+    assert true_goal_index(ROOT, "mdkg", rows, "10.1.keys") == 4
+    rows[1]["goal_probs_4"] = "0.3"
+    with pytest.raises(ValueError):
+        true_goal_index(ROOT, "mdkg", rows, "10.1.keys")
+    vh = [{"plan_id": "1.2", "problem_id": "1", "infer_method": "pragmatic", "assist_method": "qmdp_act",
+           "true_goal": "salad_chicken", "true_goal_probs": "0.7", "goal_probs_1": "0.1", "goal_probs_2": "0.7"}]
+    assert true_goal_index(ROOT, "vh", vh, "1.2") == 2
+
+
 def test_merged_rows_keep_the_newest_file_per_plan(tmp_path):
     from robust_likelihood.clips.evaluate import merged_rows, run_files
 
