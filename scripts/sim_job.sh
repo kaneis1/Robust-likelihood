@@ -23,6 +23,8 @@
 #           results/clips/tables/. About 5-10 minutes per model.
 #   clips-perturbed  Phase 4: sim_job.sh clips-perturbed <model,...>, per model in turn the co-batched
 #           scores of data/clips/derived/batches.jsonl (python -m robust_likelihood.clips perturb first).
+#   clips-noplanner  Phase 6: sim_job.sh clips-noplanner <model,...>, per model in turn the map prompts
+#           of data/clips/derived/noplanner/ (python -m robust_likelihood.clips noplanner-build first).
 #
 # On the login node first, every model at its pinned revision (configs/simulator.json), with
 # huggingface_hub; the jobs run with HF_HUB_OFFLINE=1 and never pip install.
@@ -62,7 +64,7 @@
 
 set -euo pipefail
 
-STAGE="${1:-${STAGE:?pass the stage: check, score, pilot, noise, week, student, clips or clips-perturbed}}"
+STAGE="${1:-${STAGE:?pass the stage: check, score, pilot, noise, week, student, clips, clips-perturbed or clips-noplanner}}"
 cd "${SLURM_SUBMIT_DIR:-${PBS_O_WORKDIR:-${LS_SUBCWD:-$(pwd)}}}"
 
 # module load <CUDA_MODULE>
@@ -140,6 +142,11 @@ elif [ "$STAGE" = "clips-perturbed" ]; then
     MODELS="${2:?pass the model keys}"
     for MODEL in ${MODELS//,/ }; do
         python -m robust_likelihood.clips score-perturbed --model "$MODEL"
+    done
+elif [ "$STAGE" = "clips-noplanner" ]; then
+    MODELS="${2:?pass the model keys}"
+    for MODEL in ${MODELS//,/ }; do
+        python -m robust_likelihood.clips score-noplanner --model "$MODEL"
     done
 else
     echo "unknown stage $STAGE" >&2

@@ -294,3 +294,27 @@ paper's own result files on OSF; `tests/test_clips.py` checks this whenever the 
 - **Figure 2.** Models of about the same size share a column (dodged, labels stacked to the right), and
   the x axis is labelled at the sizes (0.6B, 1.7B, 4B, 7.6–8.2B).
 - **Scorecard:** C1 fail, C2 fail (0.6B is not worse), C3 pass (its VH margin is 0.0006), C4–C6 pass.
+
+## Phase 6 design (2026-11-27, approved by the user; written before any score exists)
+
+- **Decided (user):** "run it" — the optional Phase 6, with one GPU job scoring the map prompts.
+- **States.** CLIPS.jl's `ascii.jl` parses ASCII grids into PDDL but does not draw a state, so
+  `noplanner.py` does: the problem's ASCII grid, read the way `ascii_to_pddl` reads it (and checked
+  against the problem's `.pddl` file: size, walls, positions, colours, locks), then the observed actions
+  before the instruction, each checked against the domain's precondition. Before an instruction there
+  are only moves, waits and three pickups. All 30 instructions simulate without a failed precondition.
+- **The prompt** keeps the plan's "Map: … Goal: the human wants gem k. Instruction:" and adds two
+  lines the plan's "text description" leaves open: a legend (ASCII letters mean nothing to a model
+  otherwise: `r` is the red key, `R` the locked red door) and what each agent holds (a picked-up key
+  leaves the map; 3 of 30 states). Gem k is drawn as the digit k, so the goal names a cell. Unlocked
+  doors would be drawn as floor (none occur). No few-shot examples: the plan has none, and there are
+  no commands to show.
+- **Scoring.** Phase 2's score, log P(" " + instruction + "\n" | prompt), no chat template, bf16. The
+  four goal prompts of an instruction differ only in one digit and are scored as one batch (the Phase 2
+  layout finding); a layout check scores all again in reversed order, batch size 7.
+- **Posterior.** P(g | u, map) is the softmax of the four scores (uniform prior over the problem's four
+  gems; chance is 0.25).
+- **C7 reading:** for each of the 8 models, the mean over the 30 problems of P(g_true) without the
+  planner is below that model's language-only IP P(g_true) on mDKG (Table 1). Reported with it: the
+  paired difference per problem with a bootstrap interval, top-1 accuracy, goal correlation with
+  humans, and how many posteriors are flat (max − min < 0.05).

@@ -1,3 +1,4 @@
+import math
 from pathlib import Path
 
 import pytest
@@ -269,3 +270,83 @@ def test_predictions_need_complete_replays_and_read_the_rules():
     phase3["models"]["qwen3_8b"] = domains(0.76, 0.63, 0.9, problems=(12, 25))
     partial = {row["id"]: row["pass"] for row in predictions(phase3, phase4)}
     assert partial["C1"] is None and partial["C2"] is None and partial["C3"] is None
+
+
+def test_noplanner_grid_matches_the_pddl_problem_and_follows_the_plan():
+    from robust_likelihood.clips.noplanner import MDKG, apply, check_against_pddl, observed_actions, parse_ascii, render
+
+    grid = parse_ascii((ROOT / MDKG / "problems" / "1.txt").read_text(encoding="utf-8"))
+    check_against_pddl(grid, (ROOT / MDKG / "problems" / "1.pddl").read_text(encoding="utf-8"))
+    assert grid.agents == {"human": (7, 4), "robot": (5, 1)} and grid.objects["gem1"]["colour"] == "red"
+    actions, marks = observed_actions((ROOT / MDKG / "plans" / "observed" / "1.1.keys.pddl").read_text(encoding="utf-8"))
+    assert marks == [7]
+    for action in actions[:7]:
+        apply(grid, action)
+    rows, holds = render(grid)
+    assert rows[0] == "r...mWW1" and rows[3] == ".Rh....." and rows[7] == "2W3WWWW4"
+    assert holds == "The human has nothing. The robot has nothing."
+    with pytest.raises(ValueError):
+        apply(grid, "(up human)")  # a wall above
+    with pytest.raises(ValueError):
+        apply(grid, "(left human)")  # the locked red door
+    with pytest.raises(ValueError):
+        apply(grid, "(pickup human key1)")  # not on the key's cell
+    apply(grid, "(down human)")
+    assert grid.agents["human"] == (3, 5)
+
+
+def test_noplanner_build_writes_four_goal_prompts_per_instruction(tmp_path):
+    from robust_likelihood.clips.noplanner import LEGEND, build, posterior
+    from robust_likelihood.storage import read_jsonl
+
+    found = build(ROOT, tmp_path)
+    assert found["instructions"] == 30 and found["pairs"] == 120 and found["holding"] == 3
+    states = read_jsonl(tmp_path / "states.jsonl")
+    prompts = {row["prompt_id"]: row["prompt"] for row in read_jsonl(tmp_path / "prompts.jsonl")}
+    first = states[0]
+    assert len(first["prompt_ids"]) == 4 and 1 <= first["true_goal"] <= 4
+    texts = [prompts[key] for key in first["prompt_ids"]]
+    assert texts[0].startswith(LEGEND + "\nMap:\n") and texts[1].endswith("Goal: the human wants gem 2.\nInstruction:")
+    assert {text.replace(f"gem {k + 1}.", "gem k.") for k, text in enumerate(texts)} == {texts[0].replace("gem 1.", "gem k.")}
+    assert posterior([0.0, 0.0, math.log(2), float("-inf")]) == pytest.approx([0.25, 0.25, 0.5, 0.0])
+
+
+def test_score_noplanner_on_a_tiny_model(tmp_path):
+    torch = pytest.importorskip("torch")
+    transformers = pytest.importorskip("transformers")
+    import shutil
+
+    from robust_likelihood.clips.noplanner import OUT, SCORES, build, score_noplanner
+    from robust_likelihood.storage import read_jsonl, write_jsonl
+    from test_multiwoz_sim_score import TinyTokenizer
+
+    (tmp_path / "configs").mkdir()
+    shutil.copy(ROOT / "configs" / "clips.json", tmp_path / "configs" / "clips.json")
+    build(ROOT, tmp_path / OUT)
+    write_jsonl(tmp_path / OUT / "states.jsonl", read_jsonl(tmp_path / OUT / "states.jsonl")[:3])
+    torch.manual_seed(0)
+    model = transformers.GPT2LMHeadModel(transformers.GPT2Config(
+        vocab_size=48, n_positions=1024, n_embd=16, n_layer=1, n_head=2)).eval()
+    found = score_noplanner(tmp_path, "qwen3_0p6b", tokenizer=TinyTokenizer(), model=model, device="cpu")
+    assert found["instructions"] == 3 and found["uneven"] == 0 and found["layout_max_abs"] < 1e-3
+    rows = read_jsonl(tmp_path / SCORES / "qwen3_0p6b.jsonl")
+    assert len(rows) == 3 and all(len(row["scores"]) == 4 for row in rows)
+
+
+def test_run_noplanner_reads_the_true_goal_posterior(tmp_path):
+    import shutil
+
+    from robust_likelihood.clips.noplanner import OUT, SCORES, build, run_noplanner
+    from robust_likelihood.storage import read_jsonl, write_jsonl
+
+    (tmp_path / "configs").mkdir()
+    shutil.copy(ROOT / "configs" / "clips.json", tmp_path / "configs" / "clips.json")
+    build(ROOT, tmp_path / OUT)
+    states = read_jsonl(tmp_path / OUT / "states.jsonl")
+    write_jsonl(tmp_path / SCORES / "m.jsonl", [
+        {"plan_id": state["plan_id"], "prompt_ids": state["prompt_ids"], "output": " x",
+         "scores": [math.log(3) if k + 1 == state["true_goal"] else 0.0 for k in range(4)]} for state in states])
+    found = run_noplanner(tmp_path, ["m", "absent"], tmp_path / "out")["models"]
+    assert list(found) == ["m"] and found["m"]["p_true"]["mean"] == pytest.approx(0.5)
+    assert found["m"]["top1"]["mean"] == 1.0 and found["m"]["uniform_like"] == 0
+    assert (tmp_path / "out" / "metrics_phase6.json").exists()

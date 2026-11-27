@@ -49,6 +49,13 @@ def main(argv: list[str] | None = None) -> int:
     robust_parser = sub.add_parser("robustness", help="Phase 4: the posterior under each perturbed instruction")
     robust_parser.add_argument("--models", default=None)
     robust_parser.add_argument("--out", default="docs/clips_results")
+    sub.add_parser("noplanner-build", help="Phase 6: the mDKG states, map prompts and pairs (no planner)")
+    noplanner_score_parser = sub.add_parser("score-noplanner", help="Phase 6: score the map prompts with one model (GPU)")
+    noplanner_score_parser.add_argument("--model", required=True)
+    noplanner_score_parser.add_argument("--device", default=None)
+    noplanner_parser = sub.add_parser("noplanner", help="Phase 6: P(g_true) without the planner, against the replays")
+    noplanner_parser.add_argument("--models", default=None)
+    noplanner_parser.add_argument("--out", default="docs/clips_results")
     report_parser = sub.add_parser("report", help="Phase 5: summary.md, figures and the scorecard")
     report_parser.add_argument("--out", default="docs/clips_results")
     report_parser.add_argument("--no-figures", action="store_true")
@@ -161,6 +168,28 @@ def main(argv: list[str] | None = None) -> int:
                                            for kind, block in found.items()}
                                   for scope, found in blocks.items()}
                           for model, blocks in result["models"].items()}, indent=1))
+        return 0
+    if args.command == "noplanner-build":
+        from robust_likelihood.clips.noplanner import build
+
+        print(json.dumps(build(root)))
+        return 0
+    if args.command == "score-noplanner":
+        from robust_likelihood.clips.noplanner import score_noplanner
+
+        print(json.dumps(score_noplanner(root, args.model, device=args.device), indent=2))
+        return 0
+    if args.command == "noplanner":
+        from robust_likelihood.clips.noplanner import run_noplanner
+        from robust_likelihood.clips.score import load_clips_config
+
+        models = args.models.split(",") if args.models else list(load_clips_config(root)["models"])
+        result = run_noplanner(root, models, root / args.out)
+        print(json.dumps({model: {"p_true": block["p_true"]["mean"], "top1": block["top1"]["mean"],
+                                  "goal_r": (block.get("goal_correlation") or {}).get("r"),
+                                  "language_only_p_true": block.get("language_only_p_true"),
+                                  "minus_language_only": (block.get("minus_language_only") or {}).get("mean")}
+                          for model, block in result["models"].items()}, indent=1))
         return 0
     if args.command == "report":
         from robust_likelihood.clips.report import run_report

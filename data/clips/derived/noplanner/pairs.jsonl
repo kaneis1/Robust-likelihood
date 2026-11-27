@@ -1,0 +1,120 @@
+{"goal":1,"output":" Can you pass me the red key?","plan_id":"1.1.keys","prompt_id":"8c42d4c39dc056ef","role":"noplanner"}
+{"goal":2,"output":" Can you pass me the red key?","plan_id":"1.1.keys","prompt_id":"560b7358d45cb6be","role":"noplanner"}
+{"goal":3,"output":" Can you pass me the red key?","plan_id":"1.1.keys","prompt_id":"e75a31f2f5a63cb2","role":"noplanner"}
+{"goal":4,"output":" Can you pass me the red key?","plan_id":"1.1.keys","prompt_id":"b256dd806e1943df","role":"noplanner"}
+{"goal":1,"output":" Can you pass me the red key?","plan_id":"2.1.keys","prompt_id":"4dee1a0a0bb6b796","role":"noplanner"}
+{"goal":2,"output":" Can you pass me the red key?","plan_id":"2.1.keys","prompt_id":"baa2b904e5cce03f","role":"noplanner"}
+{"goal":3,"output":" Can you pass me the red key?","plan_id":"2.1.keys","prompt_id":"ff1d7dc12a0b8a14","role":"noplanner"}
+{"goal":4,"output":" Can you pass me the red key?","plan_id":"2.1.keys","prompt_id":"d5d393356e061edd","role":"noplanner"}
+{"goal":1,"output":" Can you hand me that key?","plan_id":"2.2.keys","prompt_id":"a456ddc8d544abac","role":"noplanner"}
+{"goal":2,"output":" Can you hand me that key?","plan_id":"2.2.keys","prompt_id":"06dee1395555cbc0","role":"noplanner"}
+{"goal":3,"output":" Can you hand me that key?","plan_id":"2.2.keys","prompt_id":"89cd07bfb8e80f43","role":"noplanner"}
+{"goal":4,"output":" Can you hand me that key?","plan_id":"2.2.keys","prompt_id":"edd3822afb36f188","role":"noplanner"}
+{"goal":1,"output":" Can you pass me the red keys?","plan_id":"3.1.keys","prompt_id":"765f71eace203637","role":"noplanner"}
+{"goal":2,"output":" Can you pass me the red keys?","plan_id":"3.1.keys","prompt_id":"6f092fc843107bd3","role":"noplanner"}
+{"goal":3,"output":" Can you pass me the red keys?","plan_id":"3.1.keys","prompt_id":"05464638bf162fe5","role":"noplanner"}
+{"goal":4,"output":" Can you pass me the red keys?","plan_id":"3.1.keys","prompt_id":"2e49c1a42fd99574","role":"noplanner"}
+{"goal":1,"output":" Give me a red key for this door?","plan_id":"3.2.keys","prompt_id":"765f71eace203637","role":"noplanner"}
+{"goal":2,"output":" Give me a red key for this door?","plan_id":"3.2.keys","prompt_id":"6f092fc843107bd3","role":"noplanner"}
+{"goal":3,"output":" Give me a red key for this door?","plan_id":"3.2.keys","prompt_id":"05464638bf162fe5","role":"noplanner"}
+{"goal":4,"output":" Give me a red key for this door?","plan_id":"3.2.keys","prompt_id":"2e49c1a42fd99574","role":"noplanner"}
+{"goal":1,"output":" I need a key for this yellow door.","plan_id":"3.3.keys","prompt_id":"ea98f6d7f232a3ad","role":"noplanner"}
+{"goal":2,"output":" I need a key for this yellow door.","plan_id":"3.3.keys","prompt_id":"c4a1f23a3b1468c6","role":"noplanner"}
+{"goal":3,"output":" I need a key for this yellow door.","plan_id":"3.3.keys","prompt_id":"0873c5fa8a313bb2","role":"noplanner"}
+{"goal":4,"output":" I need a key for this yellow door.","plan_id":"3.3.keys","prompt_id":"a08a84ad172a5efb","role":"noplanner"}
+{"goal":1,"output":" Can you pass me the red keys?","plan_id":"4.1.keys","prompt_id":"040657b75bd6e9c7","role":"noplanner"}
+{"goal":2,"output":" Can you pass me the red keys?","plan_id":"4.1.keys","prompt_id":"65f016986da27714","role":"noplanner"}
+{"goal":3,"output":" Can you pass me the red keys?","plan_id":"4.1.keys","prompt_id":"1055052669590575","role":"noplanner"}
+{"goal":4,"output":" Can you pass me the red keys?","plan_id":"4.1.keys","prompt_id":"713ed42e1633a9bf","role":"noplanner"}
+{"goal":1,"output":" Can I have the blue keys?","plan_id":"4.2.keys","prompt_id":"040657b75bd6e9c7","role":"noplanner"}
+{"goal":2,"output":" Can I have the blue keys?","plan_id":"4.2.keys","prompt_id":"65f016986da27714","role":"noplanner"}
+{"goal":3,"output":" Can I have the blue keys?","plan_id":"4.2.keys","prompt_id":"1055052669590575","role":"noplanner"}
+{"goal":4,"output":" Can I have the blue keys?","plan_id":"4.2.keys","prompt_id":"713ed42e1633a9bf","role":"noplanner"}
+{"goal":1,"output":" Can you pass me the blue key?","plan_id":"5.1.keys","prompt_id":"b90b08a78523437d","role":"noplanner"}
+{"goal":2,"output":" Can you pass me the blue key?","plan_id":"5.1.keys","prompt_id":"cce74a188b805dbf","role":"noplanner"}
+{"goal":3,"output":" Can you pass me the blue key?","plan_id":"5.1.keys","prompt_id":"25629f8927f9fcdb","role":"noplanner"}
+{"goal":4,"output":" Can you pass me the blue key?","plan_id":"5.1.keys","prompt_id":"857d5ea35d9700c3","role":"noplanner"}
+{"goal":1,"output":" I'm going for the red key, can you get the yellow key?","plan_id":"6.1.keys","prompt_id":"41c3e0fd61b06b8d","role":"noplanner"}
+{"goal":2,"output":" I'm going for the red key, can you get the yellow key?","plan_id":"6.1.keys","prompt_id":"51ee792f64170678","role":"noplanner"}
+{"goal":3,"output":" I'm going for the red key, can you get the yellow key?","plan_id":"6.1.keys","prompt_id":"7047be591666b859","role":"noplanner"}
+{"goal":4,"output":" I'm going for the red key, can you get the yellow key?","plan_id":"6.1.keys","prompt_id":"e8a06398c09bb233","role":"noplanner"}
+{"goal":1,"output":" On my way to pick up the blue key, can you find a yellow key?","plan_id":"6.2.keys","prompt_id":"41c3e0fd61b06b8d","role":"noplanner"}
+{"goal":2,"output":" On my way to pick up the blue key, can you find a yellow key?","plan_id":"6.2.keys","prompt_id":"51ee792f64170678","role":"noplanner"}
+{"goal":3,"output":" On my way to pick up the blue key, can you find a yellow key?","plan_id":"6.2.keys","prompt_id":"7047be591666b859","role":"noplanner"}
+{"goal":4,"output":" On my way to pick up the blue key, can you find a yellow key?","plan_id":"6.2.keys","prompt_id":"e8a06398c09bb233","role":"noplanner"}
+{"goal":1,"output":" I'm picking up the yellow key. Can you get a red key?","plan_id":"7.1.keys","prompt_id":"9ac6dab8a16c49ef","role":"noplanner"}
+{"goal":2,"output":" I'm picking up the yellow key. Can you get a red key?","plan_id":"7.1.keys","prompt_id":"9cd6916dbfb1d734","role":"noplanner"}
+{"goal":3,"output":" I'm picking up the yellow key. Can you get a red key?","plan_id":"7.1.keys","prompt_id":"fce3cc53fb7271bb","role":"noplanner"}
+{"goal":4,"output":" I'm picking up the yellow key. Can you get a red key?","plan_id":"7.1.keys","prompt_id":"d80ad1b5649a1a72","role":"noplanner"}
+{"goal":1,"output":" I'll get the blue key. Can you pick up a red key?","plan_id":"8.1.keys","prompt_id":"9bc071e3585c2b36","role":"noplanner"}
+{"goal":2,"output":" I'll get the blue key. Can you pick up a red key?","plan_id":"8.1.keys","prompt_id":"915a49fd5c58fe62","role":"noplanner"}
+{"goal":3,"output":" I'll get the blue key. Can you pick up a red key?","plan_id":"8.1.keys","prompt_id":"03df058ab0eab225","role":"noplanner"}
+{"goal":4,"output":" I'll get the blue key. Can you pick up a red key?","plan_id":"8.1.keys","prompt_id":"a3411c54f4a05c29","role":"noplanner"}
+{"goal":1,"output":" I will pick up the red key. Can you get a blue one?","plan_id":"8b.2.keys","prompt_id":"fb0e1edb6b75aa9e","role":"noplanner"}
+{"goal":2,"output":" I will pick up the red key. Can you get a blue one?","plan_id":"8b.2.keys","prompt_id":"f82536b3951db8ed","role":"noplanner"}
+{"goal":3,"output":" I will pick up the red key. Can you get a blue one?","plan_id":"8b.2.keys","prompt_id":"da46dd312164e8ad","role":"noplanner"}
+{"goal":4,"output":" I will pick up the red key. Can you get a blue one?","plan_id":"8b.2.keys","prompt_id":"a79d27273e7b7b77","role":"noplanner"}
+{"goal":1,"output":" Can you go get the red key?","plan_id":"9.1.keys","prompt_id":"30553299795653d2","role":"noplanner"}
+{"goal":2,"output":" Can you go get the red key?","plan_id":"9.1.keys","prompt_id":"4f7f0152661bdc4a","role":"noplanner"}
+{"goal":3,"output":" Can you go get the red key?","plan_id":"9.1.keys","prompt_id":"cd6f0e05c86bcedf","role":"noplanner"}
+{"goal":4,"output":" Can you go get the red key?","plan_id":"9.1.keys","prompt_id":"5c528de958f1fca7","role":"noplanner"}
+{"goal":1,"output":" I will pick up this red key. Can you find a yellow one?","plan_id":"10.1.keys","prompt_id":"e1bf1124c3d14913","role":"noplanner"}
+{"goal":2,"output":" I will pick up this red key. Can you find a yellow one?","plan_id":"10.1.keys","prompt_id":"fbf18d43bb835807","role":"noplanner"}
+{"goal":3,"output":" I will pick up this red key. Can you find a yellow one?","plan_id":"10.1.keys","prompt_id":"e4fcd2348459acb0","role":"noplanner"}
+{"goal":4,"output":" I will pick up this red key. Can you find a yellow one?","plan_id":"10.1.keys","prompt_id":"010d019208fd305f","role":"noplanner"}
+{"goal":1,"output":" I will pick up this blue key. Can you find a yellow one?","plan_id":"10b.2.keys","prompt_id":"84c9779f8a1debba","role":"noplanner"}
+{"goal":2,"output":" I will pick up this blue key. Can you find a yellow one?","plan_id":"10b.2.keys","prompt_id":"61a4860241760002","role":"noplanner"}
+{"goal":3,"output":" I will pick up this blue key. Can you find a yellow one?","plan_id":"10b.2.keys","prompt_id":"1cac4fc2f6e3b8bc","role":"noplanner"}
+{"goal":4,"output":" I will pick up this blue key. Can you find a yellow one?","plan_id":"10b.2.keys","prompt_id":"980ea9e7fa7d379c","role":"noplanner"}
+{"goal":1,"output":" Can you get the key for this door?","plan_id":"11.1.keys","prompt_id":"d052fb6c03011b2a","role":"noplanner"}
+{"goal":2,"output":" Can you get the key for this door?","plan_id":"11.1.keys","prompt_id":"c8bda38cf5ae985a","role":"noplanner"}
+{"goal":3,"output":" Can you get the key for this door?","plan_id":"11.1.keys","prompt_id":"017b84a59dd91f6d","role":"noplanner"}
+{"goal":4,"output":" Can you get the key for this door?","plan_id":"11.1.keys","prompt_id":"c412a48828cf4770","role":"noplanner"}
+{"goal":1,"output":" Can you get me a key for this door?","plan_id":"11.2.keys","prompt_id":"6ed63d752a546c2f","role":"noplanner"}
+{"goal":2,"output":" Can you get me a key for this door?","plan_id":"11.2.keys","prompt_id":"a22e0cbe8773d897","role":"noplanner"}
+{"goal":3,"output":" Can you get me a key for this door?","plan_id":"11.2.keys","prompt_id":"f88e712c827867c4","role":"noplanner"}
+{"goal":4,"output":" Can you get me a key for this door?","plan_id":"11.2.keys","prompt_id":"b8c499e7214c8313","role":"noplanner"}
+{"goal":1,"output":" Can you come and unlock this door?","plan_id":"12.1.doors","prompt_id":"d26cdd610a25da21","role":"noplanner"}
+{"goal":2,"output":" Can you come and unlock this door?","plan_id":"12.1.doors","prompt_id":"09f088e5947da185","role":"noplanner"}
+{"goal":3,"output":" Can you come and unlock this door?","plan_id":"12.1.doors","prompt_id":"12065caf24317781","role":"noplanner"}
+{"goal":4,"output":" Can you come and unlock this door?","plan_id":"12.1.doors","prompt_id":"c2b2d22bae475112","role":"noplanner"}
+{"goal":1,"output":" Can you go and unlock that door?","plan_id":"12.2.doors","prompt_id":"c07fb68c4ad9ae41","role":"noplanner"}
+{"goal":2,"output":" Can you go and unlock that door?","plan_id":"12.2.doors","prompt_id":"e6ef2bf4fc31bca0","role":"noplanner"}
+{"goal":3,"output":" Can you go and unlock that door?","plan_id":"12.2.doors","prompt_id":"77d8d35364398a3b","role":"noplanner"}
+{"goal":4,"output":" Can you go and unlock that door?","plan_id":"12.2.doors","prompt_id":"d8ac5fdcc84091b9","role":"noplanner"}
+{"goal":1,"output":" Can you open the blue door?","plan_id":"13.1.doors","prompt_id":"7d3769e6d6a229d6","role":"noplanner"}
+{"goal":2,"output":" Can you open the blue door?","plan_id":"13.1.doors","prompt_id":"0190db40b8c11afb","role":"noplanner"}
+{"goal":3,"output":" Can you open the blue door?","plan_id":"13.1.doors","prompt_id":"28758caaa79d41bb","role":"noplanner"}
+{"goal":4,"output":" Can you open the blue door?","plan_id":"13.1.doors","prompt_id":"027f038a5c2b3024","role":"noplanner"}
+{"goal":1,"output":" Can you help me unlock the blue door there?","plan_id":"13.2.doors","prompt_id":"ae0e0cff3fde6ef7","role":"noplanner"}
+{"goal":2,"output":" Can you help me unlock the blue door there?","plan_id":"13.2.doors","prompt_id":"3d993839d6f1e33f","role":"noplanner"}
+{"goal":3,"output":" Can you help me unlock the blue door there?","plan_id":"13.2.doors","prompt_id":"4e1d7e47d2c58e72","role":"noplanner"}
+{"goal":4,"output":" Can you help me unlock the blue door there?","plan_id":"13.2.doors","prompt_id":"5f1695d23ec0bdf9","role":"noplanner"}
+{"goal":1,"output":" I'm picking up the red key. Can you get the blue door?","plan_id":"14.1.doors","prompt_id":"91008fda50ddc235","role":"noplanner"}
+{"goal":2,"output":" I'm picking up the red key. Can you get the blue door?","plan_id":"14.1.doors","prompt_id":"b43b6013afbbec89","role":"noplanner"}
+{"goal":3,"output":" I'm picking up the red key. Can you get the blue door?","plan_id":"14.1.doors","prompt_id":"5575b3d479b954f9","role":"noplanner"}
+{"goal":4,"output":" I'm picking up the red key. Can you get the blue door?","plan_id":"14.1.doors","prompt_id":"a091cf1a9c94214d","role":"noplanner"}
+{"goal":1,"output":" Can you open the red door there?","plan_id":"15.1.doors","prompt_id":"11834f79e578e3de","role":"noplanner"}
+{"goal":2,"output":" Can you open the red door there?","plan_id":"15.1.doors","prompt_id":"665b24b3c900e073","role":"noplanner"}
+{"goal":3,"output":" Can you open the red door there?","plan_id":"15.1.doors","prompt_id":"d4c2580243e61054","role":"noplanner"}
+{"goal":4,"output":" Can you open the red door there?","plan_id":"15.1.doors","prompt_id":"ba2e55a9ca4e24ea","role":"noplanner"}
+{"goal":1,"output":" Can you get the blue door there? I'll pick up the key for the red door.","plan_id":"16.1.doors","prompt_id":"f223f34339686f4c","role":"noplanner"}
+{"goal":2,"output":" Can you get the blue door there? I'll pick up the key for the red door.","plan_id":"16.1.doors","prompt_id":"06af2185713a827f","role":"noplanner"}
+{"goal":3,"output":" Can you get the blue door there? I'll pick up the key for the red door.","plan_id":"16.1.doors","prompt_id":"ad85a44a17fbe893","role":"noplanner"}
+{"goal":4,"output":" Can you get the blue door there? I'll pick up the key for the red door.","plan_id":"16.1.doors","prompt_id":"700e8206cf66188b","role":"noplanner"}
+{"goal":1,"output":" Can you come and get this red door?","plan_id":"17.1.doors","prompt_id":"f751ffbae363b0e1","role":"noplanner"}
+{"goal":2,"output":" Can you come and get this red door?","plan_id":"17.1.doors","prompt_id":"faacd7330d35cc67","role":"noplanner"}
+{"goal":3,"output":" Can you come and get this red door?","plan_id":"17.1.doors","prompt_id":"de2f7192977a77d9","role":"noplanner"}
+{"goal":4,"output":" Can you come and get this red door?","plan_id":"17.1.doors","prompt_id":"43a263e48edc67cd","role":"noplanner"}
+{"goal":1,"output":" Can you unlock this red door?","plan_id":"18.1.doors","prompt_id":"9d6b00a90a899913","role":"noplanner"}
+{"goal":2,"output":" Can you unlock this red door?","plan_id":"18.1.doors","prompt_id":"16c62596df67c1ab","role":"noplanner"}
+{"goal":3,"output":" Can you unlock this red door?","plan_id":"18.1.doors","prompt_id":"e3aa98f940b25b20","role":"noplanner"}
+{"goal":4,"output":" Can you unlock this red door?","plan_id":"18.1.doors","prompt_id":"d48632c7ebaedb44","role":"noplanner"}
+{"goal":1,"output":" Can you pass me the blue key?","plan_id":"19.1.keys","prompt_id":"eb451ddeba6cbd38","role":"noplanner"}
+{"goal":2,"output":" Can you pass me the blue key?","plan_id":"19.1.keys","prompt_id":"5816f6888186ed2a","role":"noplanner"}
+{"goal":3,"output":" Can you pass me the blue key?","plan_id":"19.1.keys","prompt_id":"dce2d22b55bacc59","role":"noplanner"}
+{"goal":4,"output":" Can you pass me the blue key?","plan_id":"19.1.keys","prompt_id":"0f018f73f771d556","role":"noplanner"}
+{"goal":1,"output":" Can you come and get this blue door?","plan_id":"20.1.doors","prompt_id":"8eb7d98c749830ee","role":"noplanner"}
+{"goal":2,"output":" Can you come and get this blue door?","plan_id":"20.1.doors","prompt_id":"b34a505b67f1e1be","role":"noplanner"}
+{"goal":3,"output":" Can you come and get this blue door?","plan_id":"20.1.doors","prompt_id":"8b30ad08f88caf97","role":"noplanner"}
+{"goal":4,"output":" Can you come and get this blue door?","plan_id":"20.1.doors","prompt_id":"98e9e2c021093d41","role":"noplanner"}
