@@ -21,7 +21,7 @@
 3. **There is no size effect from 0.6B to 8B (C2 fails).**
    - P(g_true) stays within 0.03 across the four Qwen3 base sizes in both domains. SmolLM2-1.7B matches them (0.67 and 0.63).
    - Human correlation falls slightly with size: 0.88 at 0.6B, 0.85 at 4B, 0.83 at 8B. The intervals overlap.
-   - Our reading: the instructions are short and mostly name the object or colour. So scoring an utterance against candidate commands needs lexical matching more than world knowledge, and a 0.6B model already does that. The optional Phase 6 (no planner, no commands) would test this.
+   - Our reading: the instructions are short and mostly name the object or colour. So scoring an utterance against candidate commands needs lexical matching more than world knowledge, and a 0.6B model already does that. The planner does the reasoning about which key opens the way to which gem. Phase 6 (note 8) agrees with this: without the planner's commands, no model can read the instruction at all.
 4. **One of the two instruct models is slightly worse (C3 passes narrowly).**
    - Qwen3-8B (instruct) against its base: mDKG P(g_true) 0.64 against 0.66, and r 0.79 against 0.83. On VH the gap is 0.6284 against 0.6290. That difference of 0.0006 is noise, so the "both domains" half of C3 holds in letter only.
    - Qwen2.5-7B-Instruct is the best model on VH: 0.69, with language-only IP 0.45 against 0.37. It is level with the base models on mDKG.
@@ -40,4 +40,14 @@
 7. **Cost.**
    - **Scoring:** 7,295 (prompt, instruction) pairs per model. All 8 models took 23 minutes on one H100 NVL MIG 3g.47gb slice, and the perturbed instructions took 57 minutes more.
    - **Replays:** these run on CPU. The planner dominates: the slowest mDKG problems take about an hour each in a single thread.
-8. **Not run:** Phase 6, which tests whether a small model can read the instruction without the planner and commands (prediction C7). The plan leaves it optional.
+8. **Without the planner, every model is at chance (Phase 6; C7 passes).**
+   - **Setup.** The model scores the instruction given an ASCII map of the state when it was spoken, plus a legend, what each agent holds and "Goal: the human wants gem k." There are no commands and no planner. P(g | u, map) is the softmax of the four goals' scores.
+   - **P(g_true):** 0.23–0.25 for all eight models, with chance at 0.25. The intervals are tight, for example [0.23, 0.27] for Qwen3-0.6B-Base.
+   - **Top-1 accuracy:** 0.10–0.33.
+   - **Goal correlation with humans:** between −0.11 and 0.09, and every interval includes 0.
+   - **Against language-only IP:** every model is 0.22–0.23 below it, and every paired interval excludes 0.
+   - **The scores do depend on the goal.** The four goals' scores span a median 0.4–1.1 nats. But the models favour particular gem numbers whatever the instruction says (mostly gems 1 and 2; gems 2 and 3 for Qwen3-8B instruct), not the gem the instruction points to.
+   - So with these models, reading "can you pass me the red key?" as "the human wants gem 2" needs CLIPS's planner and commands. The language model contributes the match between an instruction and a command, not the spatial inference. This is why size barely matters (note 3).
+   - **Caveats.**
+     - The map prompt is zero-shot, as the plan specifies. A few-shot version, or a chat model asked directly, might do better, but would no longer be the plan's P(u | goal, map).
+     - The four scores of one instruction were scored as one batch. Scored in another layout, a single score moves by up to 0.68 nats (median 0.08–0.12).

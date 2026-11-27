@@ -98,5 +98,44 @@
       "qwen3_8b": 0.03278688524590164,
       "qwen3_8b_inst": 0.08196721311475409
     }
+  },
+  {
+    "id": "C7",
+    "pass": true,
+    "statement": "without the planner, mDKG P(g_true) is below language-only IP's, for every model",
+    "value": {
+      "osim_mid": {
+        "language_only": 0.46340690386025346,
+        "no_planner": 0.24149121896147716
+      },
+      "qwen25_7b_inst": {
+        "language_only": 0.47850574062559376,
+        "no_planner": 0.2542143465109759
+      },
+      "qwen3_0p6b": {
+        "language_only": 0.47699221216414034,
+        "no_planner": 0.24996804673373935
+      },
+      "qwen3_1p7b": {
+        "language_only": 0.47321387392803316,
+        "no_planner": 0.2527218141210532
+      },
+      "qwen3_4b": {
+        "language_only": 0.46234810208447186,
+        "no_planner": 0.2348167901111432
+      },
+      "qwen3_8b": {
+        "language_only": 0.46847773627315253,
+        "no_planner": 0.247843591961087
+      },
+      "qwen3_8b_inst": {
+        "language_only": 0.4654311615977239,
+        "no_planner": 0.24750633139542744
+      },
+      "smollm2_1p7b": {
+        "language_only": 0.4738039044631927,
+        "no_planner": 0.2540481488762544
+      }
+    }
   }
 ]

@@ -1,0 +1,28 @@
+{
+  "device": "cuda:0",
+  "dtype": "bfloat16",
+  "elapsed_seconds": 39.5,
+  "finished_at": "2026-11-27T07:01:58Z",
+  "git": {
+    "commit": "22b985e112b22adf6b14bef2e1f02e99e3b385a3",
+    "dirty": false
+  },
+  "instructions": 30,
+  "instructions_with_uneven_prompt_lengths": 0,
+  "kind": "clips-score-noplanner",
+  "layout": "one batch per instruction: its four goal prompts",
+  "layout_check": {
+    "layout": "reversed order, batch size 7",
+    "max_abs_difference": 0.6378097534179688,
+    "median_abs_difference": 0.09432411193847656
+  },
+  "model": "cmu-lti/osim-8b-mid",
+  "model_key": "osim_mid",
+  "revision": "af9ef0347ede45b6ce0cfcf3851ea37da861bb13",
+  "sequences": 120,
+  "started_at": "2026-11-27T07:01:18Z",
+  "versions": {
+    "torch": "2.14.1+cu126",
+    "transformers": "4.57.6"
+  }
+}

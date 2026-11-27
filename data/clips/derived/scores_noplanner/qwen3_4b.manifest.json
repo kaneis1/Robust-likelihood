@@ -1,0 +1,28 @@
+{
+  "device": "cuda:0",
+  "dtype": "bfloat16",
+  "elapsed_seconds": 23.2,
+  "finished_at": "2026-11-27T06:59:12Z",
+  "git": {
+    "commit": "22b985e112b22adf6b14bef2e1f02e99e3b385a3",
+    "dirty": false
+  },
+  "instructions": 30,
+  "instructions_with_uneven_prompt_lengths": 0,
+  "kind": "clips-score-noplanner",
+  "layout": "one batch per instruction: its four goal prompts",
+  "layout_check": {
+    "layout": "reversed order, batch size 7",
+    "max_abs_difference": 0.5051345825195312,
+    "median_abs_difference": 0.08458232879638672
+  },
+  "model": "Qwen/Qwen3-4B-Base",
+  "model_key": "qwen3_4b",
+  "revision": "906bfd4b4dc7f14ee4320094d8b41684abff8539",
+  "sequences": 120,
+  "started_at": "2026-11-27T06:58:49Z",
+  "versions": {
+    "torch": "2.14.1+cu126",
+    "transformers": "4.57.6"
+  }
+}

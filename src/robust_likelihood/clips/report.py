@@ -1,7 +1,8 @@
-"""Phase 5 of docs/clips_small_lm_plan.md: docs/clips_results/summary.md, figures 1-4 and the scorecard.
+"""Phase 5 of docs/clips_small_lm_plan.md: docs/clips_results/summary.md, figures 1-5 and the scorecard.
 
 Inputs: metrics_phase3.json (python -m robust_likelihood.clips evaluate), metrics_phase4.json and
-effects/<model>.jsonl (python -m robust_likelihood.clips robustness), and the hand-written headline.md
+effects/<model>.jsonl (python -m robust_likelihood.clips robustness), metrics_phase6.json if Phase 6 ran
+(python -m robust_likelihood.clips noplanner; figure 5 and C7), and the hand-written headline.md
 (one sentence per question, K1-K3) and discussion.md (notes for Xuan), included verbatim.
 
 Eight models are too many series for one legend, so models sit on the x axis in a fixed order and the
@@ -28,8 +29,10 @@ LABELS = {"qwen3_0p6b": "Qwen3-0.6B-Base", "qwen3_1p7b": "Qwen3-1.7B-Base", "qwe
           "qwen3_8b": "Qwen3-8B-Base", "smollm2_1p7b": "SmolLM2-1.7B", "qwen3_8b_inst": "Qwen3-8B (instruct)",
           "qwen25_7b_inst": "Qwen2.5-7B-Instruct", "osim_mid": "OSim-8B-Mid"}
 TYPE_COLORS = {"base": "#2a78d6", "instruct": "#eb6834", "simulator": "#1baf7a"}
-METHOD_COLORS = {"clips": "#2a78d6", "language_only": "#eb6834", "action_only": "#1baf7a"}
+METHOD_COLORS = {"clips": "#2a78d6", "language_only": "#eb6834", "action_only": "#1baf7a", "no_planner": "#eda100"}
+METHOD_MARKERS = {"clips": "o", "language_only": "o", "action_only": "o", "no_planner": "D"}  # slot 4 sits by orange
 METHOD_LABELS = {"clips": "CLIPS", "language_only": "Language-only IP", "action_only": "Action-only IP",
+                 "no_planner": "No planner (Phase 6)",
                  "literal_naive": "Literal naive", "literal_efficient": "Literal efficient", "literal": "Literal listener"}
 DOMAIN_LABELS = {"mdkg": "Doors, Keys & Gems (mDKG)", "vh": "VirtualHome (VH)"}
 BASE_AT_LEAST_1P7B = ("qwen3_1p7b", "qwen3_4b", "qwen3_8b", "smollm2_1p7b")
@@ -136,7 +139,7 @@ def robustness_sections(phase4: dict, models: list[str]) -> list[str]:
     return parts
 
 
-def predictions(phase3: dict, phase4: dict) -> list[dict]:
+def predictions(phase3: dict, phase4: dict, phase6: dict | None = None) -> list[dict]:
     def replayed(model, domain):
         """A domain counts only when every problem's replay is in (partial replays score nothing)."""
         return _get(phase3, "models", model, domain, "clips", "problems") == PROBLEMS[domain]
@@ -198,7 +201,80 @@ def predictions(phase3: dict, phase4: dict) -> list[dict]:
     flips = {model: pooled(model, "para1", "argmax_flip", "rate") for model in ("qwen3_8b_inst", "qwen3_8b")}
     add("C6", "qwen3_8b_inst flips the argmax under para1 more often than qwen3_8b (both domains pooled)", flips,
         None if None in flips.values() else flips["qwen3_8b_inst"] > flips["qwen3_8b"])
+    if phase6 is not None:
+        pairs = {model: {"no_planner": _get(phase6, "models", model, "p_true", "mean"),
+                         "language_only": p_true(model, "mdkg", "language_only")} for model in models_in(phase3)}
+        complete = bool(pairs) and all(None not in pair.values() for pair in pairs.values())
+        add("C7", "without the planner, mDKG P(g_true) is below language-only IP's, for every model", pairs,
+            all(pair["no_planner"] < pair["language_only"] for pair in pairs.values()) if complete else None)
     return found
+
+
+def noplanner_section(phase3: dict, phase6: dict, models: list[str]) -> list[str]:
+    rows = []
+    for model in models:
+        block = _get(phase6, "models", model)
+        if not block:
+            continue
+        diff = block.get("minus_language_only") or {}
+        interval = diff.get("ci95")
+        rows.append([LABELS[model], mean_se(block.get("p_true")), num(_get(block, "top1", "mean")),
+                     f"{block.get('uniform_like', 0)}/{phase6.get('problems', PROBLEMS['mdkg'])}",
+                     corr(block.get("goal_correlation")),
+                     mean_se(_get(phase3, "models", model, "mdkg", "language_only", "p_true")),
+                     mean_se(_get(phase3, "models", model, "mdkg", "clips", "p_true")),
+                     "–" if diff.get("mean") is None else
+                     f"{diff['mean']:+.2f}" + (f" [{interval[0]:+.2f}, {interval[1]:+.2f}]" if interval else "")])
+    if not rows:
+        return []
+    return ["## Phase 6: the instruction without the planner (mDKG)", "",
+            "The model scores the instruction given an ASCII map of the state in which it was spoken, a legend, what "
+            "each agent holds and \"Goal: the human wants gem k.\"; no commands, no planner. P(g | u, map) is the "
+            f"softmax of the four goals' scores (chance {num(phase6.get('chance', 0.25))}). Flat: max − min of the "
+            "four probabilities below 0.05. The last column is the paired difference per problem, with its "
+            "bootstrap interval.", "",
+            table(["Model", "P(g_true), no planner", "Top-1", "Flat", "Goal r", "Language-only IP", "CLIPS",
+                   "No planner − language-only"], rows), ""]
+
+
+def figure_noplanner(plt, phase3: dict, phase6: dict, models: list[str], out: Path) -> list[Path]:
+    models = [model for model in models if _get(phase6, "models", model)]
+    figure, ax = plt.subplots(figsize=(8.4, 4.0))
+    rows = []
+    positions = list(range(len(models)))
+    for offset, method in zip((-0.2, 0.0, 0.2), ("clips", "language_only", "no_planner")):
+        blocks = [(_get(phase6, "models", model, "p_true") if method == "no_planner" else
+                   _get(phase3, "models", model, "mdkg", method, "p_true")) or {} for model in models]
+        shown = [(x + offset, block) for x, block in zip(positions, blocks) if block.get("mean") is not None]
+        ax.errorbar([x for x, _ in shown], [block["mean"] for _, block in shown],
+                    yerr=[[block["mean"] - block["ci95"][0] for _, block in shown],
+                          [block["ci95"][1] - block["mean"] for _, block in shown]],
+                    fmt=METHOD_MARKERS[method], color=METHOD_COLORS[method], ecolor=INK["secondary"], elinewidth=0.8,
+                    markersize=6, label=METHOD_LABELS[method])
+        for model, block in zip(models, blocks):
+            rows.append({"model": model, "method": method, "p_true": block.get("mean"),
+                         "low": (block.get("ci95") or [None, None])[0], "high": (block.get("ci95") or [None, None])[1]})
+    action = _get(phase3, "published", "mdkg", "action_only_p_true")
+    if action is not None:
+        ax.axhline(action, color=METHOD_COLORS["action_only"], linestyle=DASHED, linewidth=0.9,
+                   label=f"Action-only IP ({num(action)})")
+    chance = phase6.get("chance", 0.25)
+    ax.axhline(chance, color=INK["muted"], linestyle=":", linewidth=0.9, label=f"chance ({num(chance)})")
+    ax.set_xticks(positions)
+    ax.set_xticklabels([LABELS[model] for model in models], rotation=35, ha="right", fontsize=7.5)
+    ax.set_ylim(0, 1)
+    ax.grid(axis="y", color=INK["grid"], linewidth=0.6)
+    ax.set_ylabel("mDKG P(g_true) (mean over 30 problems, 95% CI)", fontsize=8)
+    handles, labels = ax.get_legend_handles_labels()
+    order = sorted(range(len(labels)), key=lambda index: (labels[index].startswith(("Action", "chance")), index))
+    ax.legend([handles[index] for index in order], [labels[index] for index in order], fontsize=7, frameon=False,
+              loc="upper right", ncol=2)
+    ax.set_title("Reading the instruction with and without CLIPS's planner (mDKG)", fontsize=10,
+                 color=INK["primary"])
+    write_csv(out / "fig5_noplanner.csv", rows)
+    paths = _save(figure, out / "fig5_noplanner")
+    plt.close(figure)
+    return paths
 
 
 def scorecard(found: list[dict]) -> list[str]:
@@ -397,7 +473,7 @@ def figure_examples(plt, effects: dict[str, list[dict]], units: list[dict], conf
 
 
 def summary_markdown(phase3: dict, phase4: dict, found: list[dict], models: list[str], headline: list[str] | None,
-                     discussion: str | None, phase4_units: dict | None) -> str:
+                     discussion: str | None, phase4_units: dict | None, phase6: dict | None = None) -> str:
     parts = ["# CLIPS with small local language models as the utterance likelihood", ""]
     if headline:
         parts += headline + [""]
@@ -412,6 +488,8 @@ def summary_markdown(phase3: dict, phase4: dict, found: list[dict], models: list
         rows = [[domain] + [str(_get(phase4_units, domain, kind, "valid") or 0) for kind in KINDS]
                 for domain in ("mdkg", "vh")]
         parts += ["**Valid perturbed instructions per kind**", "", table(["Domain"] + list(KINDS), rows), ""]
+    if phase6:
+        parts += noplanner_section(phase3, phase6, models)
     parts += scorecard(found)
     if discussion:
         parts += [discussion.strip(), ""]
@@ -422,8 +500,9 @@ def run_report(root: Path, out: Path, figures: bool = True) -> dict:
     config = read_json(root / "configs" / "clips.json")
     phase3 = read_json(out / "metrics_phase3.json")
     phase4 = read_json(out / "metrics_phase4.json") if (out / "metrics_phase4.json").exists() else {"models": {}}
+    phase6 = read_json(out / "metrics_phase6.json") if (out / "metrics_phase6.json").exists() else None
     models = models_in(phase3)
-    found = predictions(phase3, phase4)
+    found = predictions(phase3, phase4, phase6)
     counts_path = root / "data" / "clips" / "derived" / "perturbations_counts.json"
     phase4_units = read_json(counts_path)["units"] if counts_path.exists() else None
     headline_path, discussion_path = out / "headline.md", out / "discussion.md"
@@ -440,10 +519,12 @@ def run_report(root: Path, out: Path, figures: bool = True) -> dict:
         if phase4["models"]:
             paths += figure_robustness(plt, phase4, config, models, out)
             paths += figure_examples(plt, effects, units, config, models, out)
+        if phase6 and phase6.get("models"):
+            paths += figure_noplanner(plt, phase3, phase6, models, out)
     from robust_likelihood.storage import write_json
 
     write_json(out / "predictions.json", found)
-    (out / "summary.md").write_text(summary_markdown(phase3, phase4, found, models, headline, discussion, phase4_units),
-                                    encoding="utf-8", newline="\n")
+    (out / "summary.md").write_text(summary_markdown(phase3, phase4, found, models, headline, discussion, phase4_units,
+                                                     phase6), encoding="utf-8", newline="\n")
     return {"summary": str(out / "summary.md"), "figures": [str(path) for path in paths],
             "predictions": {row["id"]: row["pass"] for row in found}}

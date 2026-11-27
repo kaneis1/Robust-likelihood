@@ -318,3 +318,16 @@ paper's own result files on OSF; `tests/test_clips.py` checks this whenever the 
   planner is below that model's language-only IP P(g_true) on mDKG (Table 1). Reported with it: the
   paired difference per problem with a bootstrap interval, top-1 accuracy, goal correlation with
   humans, and how many posteriors are flat (max − min < 0.05).
+
+## Phase 6 runs (2026-11-27)
+
+- **Scores:** job 1211028, one H100 NVL MIG 3g.47gb slice, 4 minutes for all 8 models at 22b985e
+  (`data/clips/derived/scores_noplanner/`). The four goal prompts of every instruction have the same
+  token length for every model. The layout check moves a single score by at most 0.46–0.68 nats
+  (median 0.08–0.12), which is why the goals are compared within one batch.
+- **Result:** P(g_true) without the planner is 0.23–0.25 for every model (chance 0.25), goal
+  correlation with humans −0.11 to 0.09, and 0.22–0.23 below language-only IP with every paired
+  interval below 0. C7 passes. The four goals' scores differ by a median 0.4–1.1 nats, but the
+  favoured gem follows the gem number (mostly 1 and 2), not the instruction.
+- **Report:** `noplanner` writes `metrics_phase6.json`; `report` adds the Phase 6 table, C7 and figure 5
+  when that file exists.

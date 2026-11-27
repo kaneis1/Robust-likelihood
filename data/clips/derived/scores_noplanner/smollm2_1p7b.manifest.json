@@ -1,0 +1,28 @@
+{
+  "device": "cuda:0",
+  "dtype": "bfloat16",
+  "elapsed_seconds": 11.6,
+  "finished_at": "2026-11-27T06:58:47Z",
+  "git": {
+    "commit": "22b985e112b22adf6b14bef2e1f02e99e3b385a3",
+    "dirty": false
+  },
+  "instructions": 30,
+  "instructions_with_uneven_prompt_lengths": 0,
+  "kind": "clips-score-noplanner",
+  "layout": "one batch per instruction: its four goal prompts",
+  "layout_check": {
+    "layout": "reversed order, batch size 7",
+    "max_abs_difference": 0.5148086547851562,
+    "median_abs_difference": 0.0874929428100586
+  },
+  "model": "HuggingFaceTB/SmolLM2-1.7B",
+  "model_key": "smollm2_1p7b",
+  "revision": "effd688a12921b4cc83e3312b6feb579f70f9c71",
+  "sequences": 120,
+  "started_at": "2026-11-27T06:58:35Z",
+  "versions": {
+    "torch": "2.14.1+cu126",
+    "transformers": "4.57.6"
+  }
+}
